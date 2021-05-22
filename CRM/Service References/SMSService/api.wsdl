@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="about">
+        <s:complexType />
+      </s:element>
+      <s:element name="aboutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="aboutResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="checkClient">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="checkClientResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="checkClientResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="changePassword">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="oldPass" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newPass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="changePasswordResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="changePasswordResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listPhone" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="sender" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="isADs" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsGUID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="guidName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="sendSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sendSMSResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendRandomSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listPhone" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsGUID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="guidName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendRandomSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sendRandomSMSResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendRandomSMSDemo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listPhone" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsGUID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="guidName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="sendRandomSMSDemoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sendRandomSMSDemoResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="checksendSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listPhone" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="sender" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="isADs" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsGUID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="guidName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="checksendSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="checksendSMSResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="checkSMSRandom">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="listPhone" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="smsGUID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="guidName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="checkSMSRandomResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="checkSMSRandomResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="topup">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="amount" type="s:decimal" />
+            <s:element minOccurs="0" maxOccurs="1" name="secureCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="topupResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="topupResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getBalance">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getBalanceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getBalanceResult" type="s:decimal" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getBrandNames">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getBrandNamesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getBrandNamesResult" type="tns:ArrayOfBrandNames" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfBrandNames">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BrandNames" nillable="true" type="tns:BrandNames" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="BrandNames">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Sender" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsAD" nillable="true" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Notes" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="getListSMS">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getListSMSResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getListSMSResult" type="tns:ArrayOfSmsMessageItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSmsMessageItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SmsMessageItem" nillable="true" type="tns:SmsMessageItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SmsMessageItem">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Contents" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BrandName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SmsType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SmsCount" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SendCount" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="NotSendCount" nillable="true" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" nillable="true" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="SendDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="SmsGuid" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GuidName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="getPhoneList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="MsgID" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="status" type="s:unsignedByte" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getPhoneListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getPhoneListResult" type="tns:ArrayOfSmsPhoneListItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSmsPhoneListItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SmsPhoneListItem" nillable="true" type="tns:SmsPhoneListItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SmsPhoneListItem">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhoneNumber" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Price" nillable="true" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="TelName" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="getTopupHistory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="clientNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="clientPass" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="fromDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="toDate" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getTopupHistoryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getTopupHistoryResult" type="tns:ArrayOfTopUpHistoryItem" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTopUpHistoryItem">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TopUpHistoryItem" nillable="true" type="tns:TopUpHistoryItem" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TopUpHistoryItem">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TopUpDate" nillable="true" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="Amount" nillable="true" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TypeName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Active" nillable="true" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="aboutSoapIn">
+    <wsdl:part name="parameters" element="tns:about" />
+  </wsdl:message>
+  <wsdl:message name="aboutSoapOut">
+    <wsdl:part name="parameters" element="tns:aboutResponse" />
+  </wsdl:message>
+  <wsdl:message name="checkClientSoapIn">
+    <wsdl:part name="parameters" element="tns:checkClient" />
+  </wsdl:message>
+  <wsdl:message name="checkClientSoapOut">
+    <wsdl:part name="parameters" element="tns:checkClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="changePasswordSoapIn">
+    <wsdl:part name="parameters" element="tns:changePassword" />
+  </wsdl:message>
+  <wsdl:message name="changePasswordSoapOut">
+    <wsdl:part name="parameters" element="tns:changePasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:sendSMS" />
+  </wsdl:message>
+  <wsdl:message name="sendSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:sendSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendRandomSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:sendRandomSMS" />
+  </wsdl:message>
+  <wsdl:message name="sendRandomSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:sendRandomSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="sendRandomSMSDemoSoapIn">
+    <wsdl:part name="parameters" element="tns:sendRandomSMSDemo" />
+  </wsdl:message>
+  <wsdl:message name="sendRandomSMSDemoSoapOut">
+    <wsdl:part name="parameters" element="tns:sendRandomSMSDemoResponse" />
+  </wsdl:message>
+  <wsdl:message name="checksendSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:checksendSMS" />
+  </wsdl:message>
+  <wsdl:message name="checksendSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:checksendSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="checkSMSRandomSoapIn">
+    <wsdl:part name="parameters" element="tns:checkSMSRandom" />
+  </wsdl:message>
+  <wsdl:message name="checkSMSRandomSoapOut">
+    <wsdl:part name="parameters" element="tns:checkSMSRandomResponse" />
+  </wsdl:message>
+  <wsdl:message name="topupSoapIn">
+    <wsdl:part name="parameters" element="tns:topup" />
+  </wsdl:message>
+  <wsdl:message name="topupSoapOut">
+    <wsdl:part name="parameters" element="tns:topupResponse" />
+  </wsdl:message>
+  <wsdl:message name="getBalanceSoapIn">
+    <wsdl:part name="parameters" element="tns:getBalance" />
+  </wsdl:message>
+  <wsdl:message name="getBalanceSoapOut">
+    <wsdl:part name="parameters" element="tns:getBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="getBrandNamesSoapIn">
+    <wsdl:part name="parameters" element="tns:getBrandNames" />
+  </wsdl:message>
+  <wsdl:message name="getBrandNamesSoapOut">
+    <wsdl:part name="parameters" element="tns:getBrandNamesResponse" />
+  </wsdl:message>
+  <wsdl:message name="getListSMSSoapIn">
+    <wsdl:part name="parameters" element="tns:getListSMS" />
+  </wsdl:message>
+  <wsdl:message name="getListSMSSoapOut">
+    <wsdl:part name="parameters" element="tns:getListSMSResponse" />
+  </wsdl:message>
+  <wsdl:message name="getPhoneListSoapIn">
+    <wsdl:part name="parameters" element="tns:getPhoneList" />
+  </wsdl:message>
+  <wsdl:message name="getPhoneListSoapOut">
+    <wsdl:part name="parameters" element="tns:getPhoneListResponse" />
+  </wsdl:message>
+  <wsdl:message name="getTopupHistorySoapIn">
+    <wsdl:part name="parameters" element="tns:getTopupHistory" />
+  </wsdl:message>
+  <wsdl:message name="getTopupHistorySoapOut">
+    <wsdl:part name="parameters" element="tns:getTopupHistoryResponse" />
+  </wsdl:message>
+  <wsdl:portType name="APISoap">
+    <wsdl:operation name="about">
+      <wsdl:input message="tns:aboutSoapIn" />
+      <wsdl:output message="tns:aboutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="checkClient">
+      <wsdl:input message="tns:checkClientSoapIn" />
+      <wsdl:output message="tns:checkClientSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="changePassword">
+      <wsdl:input message="tns:changePasswordSoapIn" />
+      <wsdl:output message="tns:changePasswordSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="sendSMS">
+      <wsdl:input message="tns:sendSMSSoapIn" />
+      <wsdl:output message="tns:sendSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="sendRandomSMS">
+      <wsdl:input message="tns:sendRandomSMSSoapIn" />
+      <wsdl:output message="tns:sendRandomSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="sendRandomSMSDemo">
+      <wsdl:input message="tns:sendRandomSMSDemoSoapIn" />
+      <wsdl:output message="tns:sendRandomSMSDemoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="checksendSMS">
+      <wsdl:input message="tns:checksendSMSSoapIn" />
+      <wsdl:output message="tns:checksendSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="checkSMSRandom">
+      <wsdl:input message="tns:checkSMSRandomSoapIn" />
+      <wsdl:output message="tns:checkSMSRandomSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="topup">
+      <wsdl:input message="tns:topupSoapIn" />
+      <wsdl:output message="tns:topupSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBalance">
+      <wsdl:input message="tns:getBalanceSoapIn" />
+      <wsdl:output message="tns:getBalanceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getBrandNames">
+      <wsdl:input message="tns:getBrandNamesSoapIn" />
+      <wsdl:output message="tns:getBrandNamesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getListSMS">
+      <wsdl:input message="tns:getListSMSSoapIn" />
+      <wsdl:output message="tns:getListSMSSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getPhoneList">
+      <wsdl:input message="tns:getPhoneListSoapIn" />
+      <wsdl:output message="tns:getPhoneListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getTopupHistory">
+      <wsdl:input message="tns:getTopupHistorySoapIn" />
+      <wsdl:output message="tns:getTopupHistorySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="APISoap" type="tns:APISoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="about">
+      <soap:operation soapAction="http://tempuri.org/about" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkClient">
+      <soap:operation soapAction="http://tempuri.org/checkClient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="changePassword">
+      <soap:operation soapAction="http://tempuri.org/changePassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendSMS">
+      <soap:operation soapAction="http://tempuri.org/sendSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendRandomSMS">
+      <soap:operation soapAction="http://tempuri.org/sendRandomSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendRandomSMSDemo">
+      <soap:operation soapAction="http://tempuri.org/sendRandomSMSDemo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checksendSMS">
+      <soap:operation soapAction="http://tempuri.org/checksendSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkSMSRandom">
+      <soap:operation soapAction="http://tempuri.org/checkSMSRandom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="topup">
+      <soap:operation soapAction="http://tempuri.org/topup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBalance">
+      <soap:operation soapAction="http://tempuri.org/getBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBrandNames">
+      <soap:operation soapAction="http://tempuri.org/getBrandNames" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getListSMS">
+      <soap:operation soapAction="http://tempuri.org/getListSMS" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPhoneList">
+      <soap:operation soapAction="http://tempuri.org/getPhoneList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTopupHistory">
+      <soap:operation soapAction="http://tempuri.org/getTopupHistory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="APISoap12" type="tns:APISoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="about">
+      <soap12:operation soapAction="http://tempuri.org/about" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkClient">
+      <soap12:operation soapAction="http://tempuri.org/checkClient" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="changePassword">
+      <soap12:operation soapAction="http://tempuri.org/changePassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendSMS">
+      <soap12:operation soapAction="http://tempuri.org/sendSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendRandomSMS">
+      <soap12:operation soapAction="http://tempuri.org/sendRandomSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="sendRandomSMSDemo">
+      <soap12:operation soapAction="http://tempuri.org/sendRandomSMSDemo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checksendSMS">
+      <soap12:operation soapAction="http://tempuri.org/checksendSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkSMSRandom">
+      <soap12:operation soapAction="http://tempuri.org/checkSMSRandom" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="topup">
+      <soap12:operation soapAction="http://tempuri.org/topup" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBalance">
+      <soap12:operation soapAction="http://tempuri.org/getBalance" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBrandNames">
+      <soap12:operation soapAction="http://tempuri.org/getBrandNames" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getListSMS">
+      <soap12:operation soapAction="http://tempuri.org/getListSMS" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPhoneList">
+      <soap12:operation soapAction="http://tempuri.org/getPhoneList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTopupHistory">
+      <soap12:operation soapAction="http://tempuri.org/getTopupHistory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="API">
+    <wsdl:port name="APISoap" binding="tns:APISoap">
+      <soap:address location="http://sms.dip.vn/api.asmx" />
+    </wsdl:port>
+    <wsdl:port name="APISoap12" binding="tns:APISoap12">
+      <soap12:address location="http://sms.dip.vn/api.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
