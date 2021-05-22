@@ -65,7 +65,7 @@
             // 
             // soDuHangOBindingSource
             // 
-            this.soDuHangOBindingSource.DataSource = typeof(DataTransferObject.SoDu_HangO);
+            this.soDuHangOBindingSource.DataSource = typeof(DataTransferObject.O_SODU_HANG);
             // 
             // GVHBSD
             // 

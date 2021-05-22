@@ -1,4 +1,5 @@
-﻿using DataTransferObject;
+﻿using DataAccessLayer;
+using DataTransferObject;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
@@ -26,6 +27,7 @@ namespace CRM
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM");
             chlDG.Checked = !(key.GetValue("TKNC").ToString().ToLower() == "true");
 
+            Bdpi.Caption = "KPI: " + DuLieuTaoSan.NV.Diem;
             if (DuLieuTaoSan.Q.Lv2Ve)
             {
                 frmVe f = new frmVe();
@@ -39,7 +41,7 @@ namespace CRM
         #region Dữ liệu 
         void PhanQuyenHienThi()
         {
-            QuyenNhanVienO Q = DuLieuTaoSan.Q;
+            O_NHOMQUYEN Q = DuLieuTaoSan.Q;
             R1.Visible = Q.Lv1TheoDoi;
             R2.Visible = Q.Lv1ThongKe;
             R3.Visible = Q.Lv1ChucNang;

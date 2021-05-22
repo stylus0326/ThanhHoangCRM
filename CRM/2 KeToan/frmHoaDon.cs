@@ -21,35 +21,38 @@ namespace CRM
 
         private void frmHoaDon_Load(object sender, EventArgs e)
         {
-            tuyenBayOBindingSource.DataSource = new TuyenBayD().DuLieu();
+            tuyenBayOBindingSource.DataSource = new D_TUYENBAY().DuLieu();
             DSLoaiKhach.DataSource = DuLieuTaoSan.LoaiKhachHang_GiaoDich();
-            khachHangOBindingSource.DataSource = new DaiLyD().All();
-            nCCOBindingSource.DataSource = new NCCD().DuLieu();
+            khachHangOBindingSource.DataSource = new D_DAILY().All();
+            nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu();
             DuLieu();
         }
 
         #region Dữ liệu 
-        string _query = string.Empty;
+        string[] _SV_MC = new string[] { };
         public void DuLieu()
         {
+            string _Query = string.Empty;
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
 
             if (chk1.Checked)
-                _query = DuLieuTaoSan.ThoiGianRutGon("NgayThucHien")[idThoiGian].Substring(3);
-            if (chk2.Checked)
+                _Query = DuLieuTaoSan.ThoiGianRutGon("NgayThucHien")[idThoiGian].Substring(3);
+            else if (chk2.Checked)
             {
                 if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
-                    _query = string.Format("(convert(date, NgayThucHien) BETWEEN '{0}' AND '{1}')", ((DateTime)bdtpTu.EditValue).ToString("yyyyMMdd"), ((DateTime)bdtpDen.EditValue).ToString("yyyyMMdd"));
+                    _Query = string.Format("(convert(date, NgayThucHien) BETWEEN '{0}' AND '{1}')", ((DateTime)bdtpTu.EditValue).ToString("yyyyMMdd"), ((DateTime)bdtpDen.EditValue).ToString("yyyyMMdd"));
             }
-            else if (chk3.Checked && _SV_MC.Length > 4)
-                _query += string.Format("AND (SoVe = '{0}' or SoVe2 = '{0}')", _SV_MC);
-            else if (chk4.Checked && _SV_MC.Length > 4)
-                _query += string.Format("AND (MaCho = '{0}' or MaCho2 = '{0}')", _SV_MC);
+            else if (chk3.Checked && _SV_MC.Length > 0)
+                _Query += string.Format("REPLACE(COALESCE(SoVe,''),' ','') in ('{0}')", String.Join("' ,'", _SV_MC));
+            else if (chk4.Checked && _SV_MC.Length > 0)
+                _Query += string.Format("REPLACE(COALESCE(MaCho,''),' ','') in ('{0}')", String.Join("' ,'", _SV_MC));
+            else if (chk5.Checked && _SV_MC.Length > 0)
+                _Query += string.Format("REPLACE(COALESCE(MaHD,''),' ','') in ('{0}')", String.Join("' ,'", _SV_MC));
 
-            if (_query.Length > 0)
+            if (_Query.Length > 0)
             {
-                hoaDonOs = hoaDonD.DuLieu(_query);
+                hoaDonOs = hoaDonD.DuLieu(_Query);
                 hoaDonOBindingSource.DataSource = hoaDonOs;
                 GVHD.BestFitColumns();
             }
@@ -57,18 +60,14 @@ namespace CRM
             if (XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.CloseWaitForm();
         }
-        #endregion
 
-        #region Biến
-        int idThoiGian = 0;
-        HoaDonD hoaDonD = new HoaDonD();
-        List<HoaDonO> hoaDonOs = new List<HoaDonO>();
-        #endregion
-
-        #region Sự kiện nút
-        private void btnLoadDT_ItemClick(object sender, ItemClickEventArgs e)
+        private void aMaCho_Leave(object sender, EventArgs e)
         {
-            DuLieu();
+            string[] BB = _SV_MC;
+            _SV_MC = (sender as MemoExEdit).Text.Replace(" ", "").Replace("\r\n", "|").Split('|').ToArray();
+            _SV_MC = _SV_MC.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            if (String.Join("' ,'", BB) != String.Join("' ,'", _SV_MC))
+                DuLieu();
         }
 
         private void barCheckItem3_CheckedChanged(object sender, ItemClickEventArgs e)
@@ -76,17 +75,9 @@ namespace CRM
             bcmbThoiGian.Enabled = chk1.Checked;
             bdtpTu.Enabled = bdtpDen.Enabled = chk2.Checked;
             barSoVe.Enabled = chk3.Checked;
-            barMacho.Enabled = chk4.Checked;
+            barMaCho.Enabled = chk4.Checked;
+            barMHD.Enabled = chk5.Checked;
             DuLieu();
-
-            if (chk1.Checked)
-                bcmbThoiGian.Links[0].Focus();
-            else if (chk2.Checked)
-                bdtpTu.Links[0].Focus();
-            else if (chk3.Checked)
-                barSoVe.Links[0].Focus();
-            else if (chk4.Checked)
-                barMacho.Links[0].Focus();
         }
 
         private void ecmbThoiGian_SelectedIndexChanged(object sender, EventArgs e)
@@ -101,11 +92,25 @@ namespace CRM
         }
         #endregion
 
+        #region Biến
+        int idThoiGian = 0;
+        D_HOADON hoaDonD = new D_HOADON();
+        List<O_HOADON> hoaDonOs = new List<O_HOADON>();
+        #endregion
+
+        #region Sự kiện nút
+        private void btnLoadDT_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DuLieu();
+        }
+
+        #endregion
+
         #region Sự khiện bản 
         private void grvDatCho_DoubleClick(object sender, EventArgs e)
         {
-            HoaDonO GD = (GVHD.GetRow(GVHD.GetSelectedRows()[0]) as HoaDonO);
-            List<HoaDonO> lst = new List<HoaDonO>();
+            O_HOADON GD = (GVHD.GetRow(GVHD.GetSelectedRows()[0]) as O_HOADON);
+            List<O_HOADON> lst = new List<O_HOADON>();
             lst = hoaDonOs.Where(w => w.SoChungTu.Equals(GD.SoChungTu) && w.IDKhachHang.Equals(GD.IDKhachHang) && w.NgayThucHien.ToString("ddMMyyy").Equals(GD.NgayThucHien.ToString("ddMMyyy"))).ToList();
             if (lst.Count() > 1)
             {
@@ -126,7 +131,7 @@ namespace CRM
 
         private void btnThemRow_ItemClick(object sender, ItemClickEventArgs e)
         {
-            HoaDonO GD = (GVHD.GetRow(GVHD.GetSelectedRows()[0]) as HoaDonO);
+            O_HOADON GD = (GVHD.GetRow(GVHD.GetSelectedRows()[0]) as O_HOADON);
             frmHoaDonThem frm = new frmHoaDonThem(GD);
             frm.ShowDialog(ParentForm);
         }
@@ -140,18 +145,18 @@ namespace CRM
             }
         }
 
-        HoaDonD _HoaDonD = new HoaDonD();
+        D_HOADON _HoaDonD = new D_HOADON();
         private void btnXoa_ItemClick(object sender, ItemClickEventArgs e)
         {
             DialogResult da = XtraMessageBox.Show("Bạn muốn xóa tất cả trong HD", "Thông báo", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            HoaDonO GD = (GVHD.GetRow(GVHD.GetSelectedRows()[0]) as HoaDonO);
-            List<HoaDonO> lst = hoaDonOs.Where(w => w.SoChungTu.Equals(GD.SoChungTu) && w.IDKhachHang.Equals(GD.IDKhachHang) && w.NgayThucHien.ToString("ddMMyyy").Equals(GD.NgayThucHien.ToString("ddMMyyy"))).ToList();
+            O_HOADON GD = (GVHD.GetRow(GVHD.GetSelectedRows()[0]) as O_HOADON);
+            List<O_HOADON> lst = hoaDonOs.Where(w => w.SoChungTu.Equals(GD.SoChungTu) && w.IDKhachHang.Equals(GD.IDKhachHang) && w.NgayThucHien.ToString("ddMMyyy").Equals(GD.NgayThucHien.ToString("ddMMyyy"))).ToList();
             long A = 0;
             switch (da)
             {
                 case DialogResult.Yes:
                     List<object> s = new List<object>();
-                    foreach (HoaDonO z in lst)
+                    foreach (O_HOADON z in lst)
                     {
                         s.Add(z.ID);
                     }
@@ -192,14 +197,6 @@ namespace CRM
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
             XuLyGiaoDien.ExportExcel(GCHD, GVHD, "Bản HD " + DateTime.Now.ToString("dd-MM-yy HH-mm"));
-        }
-
-        string _SV_MC = string.Empty;
-        private void aMaCho_KeyDown(object sender, KeyEventArgs e)
-        {
-            _SV_MC = (sender as TextEdit).Text;
-            if (e.KeyCode == Keys.Enter)
-                DuLieu();
         }
     }
 }

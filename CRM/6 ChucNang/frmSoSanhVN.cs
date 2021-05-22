@@ -17,17 +17,17 @@ namespace CRM
             InitializeComponent();
         }
 
-        GiaoDichD giaoDich = new GiaoDichD();
-        List<GiaoDichO> lstGDSCty = new List<GiaoDichO>();
-        List<GiaoDichO> lstGDRCty = new List<GiaoDichO>();
-        List<GiaoDichO> lstGDVCty = new List<GiaoDichO>();
+        D_GIAODICH giaoDich = new D_GIAODICH();
+        List<O_GIAODICH> lstGDSCty = new List<O_GIAODICH>();
+        List<O_GIAODICH> lstGDRCty = new List<O_GIAODICH>();
+        List<O_GIAODICH> lstGDVCty = new List<O_GIAODICH>();
 
 
-        List<GiaoDichO> lstGDS3 = new List<GiaoDichO>();
-        List<GiaoDichO> lstGDR4 = new List<GiaoDichO>();
-        List<GiaoDichO> lstGDVHang = new List<GiaoDichO>();
-        List<GiaoDichO> lstGDSHang = new List<GiaoDichO>();
-        List<GiaoDichO> lstGDRHang = new List<GiaoDichO>();
+        List<O_GIAODICH> lstGDS3 = new List<O_GIAODICH>();
+        List<O_GIAODICH> lstGDR4 = new List<O_GIAODICH>();
+        List<O_GIAODICH> lstGDVHang = new List<O_GIAODICH>();
+        List<O_GIAODICH> lstGDSHang = new List<O_GIAODICH>();
+        List<O_GIAODICH> lstGDRHang = new List<O_GIAODICH>();
 
         private void SoSanhVN_Load(object sender, EventArgs e)
         {
@@ -37,9 +37,9 @@ namespace CRM
 
         private void btnex_Click(object sender, EventArgs e)
         {
-            lstGDVHang = new List<GiaoDichO>();
-            lstGDSHang = new List<GiaoDichO>();
-            lstGDRHang = new List<GiaoDichO>();
+            lstGDVHang = new List<O_GIAODICH>();
+            lstGDSHang = new List<O_GIAODICH>();
+            lstGDRHang = new List<O_GIAODICH>();
             XtraOpenFileDialog ofd = new XtraOpenFileDialog();
             ofd.Title = "Mở File";
             ofd.Filter = "Excel File (*.xls) | *.xls";
@@ -57,7 +57,7 @@ namespace CRM
                     da.Fill(dt);
                     foreach (DataRow row in dt.Rows)
                     {
-                        GiaoDichO gd = new GiaoDichO();
+                        O_GIAODICH gd = new O_GIAODICH();
                         switch (row[3].ToString())
                         {
                             case "S": //Vé
@@ -133,12 +133,12 @@ namespace CRM
             Ky(true);
         }
 
-        List<GiaoDichO> ChuyenDoi(List<GiaoDichO> lst)
+        List<O_GIAODICH> ChuyenDoi(List<O_GIAODICH> lst)
         {
-            List<GiaoDichO> giaoDichOs = new List<GiaoDichO>();
-            foreach (GiaoDichO giao in lst)
+            List<O_GIAODICH> giaoDichOs = new List<O_GIAODICH>();
+            foreach (O_GIAODICH giao in lst)
             {
-                GiaoDichO giaoDich = new GiaoDichO(giao);
+                O_GIAODICH giaoDich = new O_GIAODICH(giao);
                 giaoDichOs.Add(giaoDich);
             }
             return giaoDichOs.OrderBy(w => w.SoVeVN).ToList();
@@ -195,7 +195,7 @@ namespace CRM
         private void groupControl6_CustomButtonClick(object sender, DevExpress.XtraBars.Docking2010.BaseButtonEventArgs e)
         {
             lstGDS3 = ChuyenDoi(lstGDSHang);
-            List<GiaoDichO> lstGDS4 = ChuyenDoi(lstGDSCty);
+            List<O_GIAODICH> lstGDS4 = ChuyenDoi(lstGDSCty);
 
             for (int u = 0; u < lstGDS4.Count; u++)//thông tin từ cty
             {
@@ -246,7 +246,7 @@ namespace CRM
 
         private void groupControl2_CustomButtonClick(object sender, DevExpress.XtraBars.Docking2010.BaseButtonEventArgs e)
         {
-            List<GiaoDichO> lstGDR3 = ChuyenDoi(lstGDRHang);
+            List<O_GIAODICH> lstGDR3 = ChuyenDoi(lstGDRHang);
             lstGDR4 = ChuyenDoi(lstGDRCty);
 
             for (int i = 0; i < lstGDR3.Count; i++)//thông tin từ hãng
@@ -318,7 +318,7 @@ namespace CRM
         #region Chỉnh ngày
         private void groupControl4_CustomButtonClick(object sender, DevExpress.XtraBars.Docking2010.BaseButtonEventArgs e)
         {
-            GiaoDichD giaoDichD = new GiaoDichD();
+            D_GIAODICH giaoDichD = new D_GIAODICH();
             List<Dictionary<string, object>> lstDicS = new List<Dictionary<string, object>>();
             List<string> lstTb = new List<string>();
             List<string> lstCTV = new List<string>();
@@ -330,10 +330,10 @@ namespace CRM
 
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
-            List<GiaoDichO> sss = lstGDS3.Where(w => w.GhiChu.Contains("Khác kì") || w.GhiChu.Contains("Khác ngày")).ToList();
+            List<O_GIAODICH> sss = lstGDS3.Where(w => w.GhiChu.Contains("Khác kì") || w.GhiChu.Contains("Khác ngày")).ToList();
             for (int i = 0; i < sss.Count(); i++)
             {
-                GiaoDichO gd = sss[i];
+                O_GIAODICH gd = sss[i];
                 XuLyGiaoDien.wait.SetWaitFormDescription(string.Format("Đang chỉnh ngày GD {0}/{1}", i, sss.Count()));
                 Thread.Sleep(10);
 
@@ -364,7 +364,7 @@ namespace CRM
         }
         private void groupControl3_CustomButtonClick(object sender, DevExpress.XtraBars.Docking2010.BaseButtonEventArgs e)
         {
-            GiaoDichD giaoDichD = new GiaoDichD();
+            D_GIAODICH giaoDichD = new D_GIAODICH();
             List<Dictionary<string, object>> lstDicS = new List<Dictionary<string, object>>();
             List<string> lstTb = new List<string>();
             List<string> lstCTV = new List<string>();
@@ -377,13 +377,13 @@ namespace CRM
             lstTb.Add("LS_GIAODICH");
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
-            List<GiaoDichO> sss = lstGDR4.Where(w => w.GhiChu.Contains("Khác kì") || w.GhiChu.Contains("Khác ngày")).ToList();
+            List<O_GIAODICH> sss = lstGDR4.Where(w => w.GhiChu.Contains("Khác kì") || w.GhiChu.Contains("Khác ngày")).ToList();
             for (int i = 0; i < sss.Count(); i += 2)
             {
                 XuLyGiaoDien.wait.SetWaitFormDescription(string.Format("Đang chỉnh ngày GD {0}/{1}", i, sss.Count()));
                 Thread.Sleep(10);
-                GiaoDichO gd = sss[i];
-                GiaoDichO gd2 = sss[i + 1];
+                O_GIAODICH gd = sss[i];
+                O_GIAODICH gd2 = sss[i + 1];
                 Dictionary<string, object> dicS = new Dictionary<string, object>();
                 Dictionary<string, object> dicS3 = new Dictionary<string, object>();
                 dicS3.Add("NgayGD", gd2.NgayGD);
@@ -411,6 +411,8 @@ namespace CRM
                     lstCTV.Clear();
                 }
             }
+
+            XuLyGiaoDien.ExportExcel(gridControl4, gridView8, "ExHoan-" + DateTime.Now.ToString("dd-MM-yyy"));
             if (XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.CloseWaitForm();
         }

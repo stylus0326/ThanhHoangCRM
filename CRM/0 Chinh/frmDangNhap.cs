@@ -3,6 +3,7 @@ using DataTransferObject;
 using DevExpress.XtraEditors;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -46,11 +47,15 @@ namespace CRM
         {
             //string zPath = Path.GetDirectoryName(Application.ExecutablePath);
             //DirectoryInfo d = new DirectoryInfo(zPath);//Assuming Test is your Folder
-            //FileInfo[] Files = d.GetFiles("*.dll"); //Getting Text files
+            //FileInfo[] Files = d.GetFiles("*.xml"); //Getting Text files
             //foreach (FileInfo file in Files)
             //{
-            //    if (file.FullName.Contains("v18.2"))
-            //        File.Delete(file.FullName);
+            //    File.Delete(file.FullName);
+            //}
+            //Files = d.GetFiles("*.pdb"); //Getting Text files
+            //foreach (FileInfo file in Files)
+            //{
+            //    File.Delete(file.FullName);
             //}
 
             CheckBanQuyen();
@@ -88,12 +93,12 @@ namespace CRM
         #region Dữ liệu 
         void isLogin()
         {
-            QuyenNhanVienD nqb = new QuyenNhanVienD();
-            DaiLyD nvb = new DaiLyD();
-            DaiLyO nvo = nvb.DangNhap(txtUserName.Text, TMD5.TMd5Hash(txtPassword.Text));
-            if (nvo.TenDangNhapCty != null)
+            D_NHOMQUYEN nqb = new D_NHOMQUYEN();
+            D_DAILY nvb = new D_DAILY();
+            List<O_DAILY> nvo = nvb.NhanVien(txtUserName.Text, TMD5.TMd5Hash(txtPassword.Text));
+            if (nvo.Count == 1)
             {
-                if (!nvo.Nghi)
+                if (!nvo[0].Nghi)
                 {
                     RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM", true);
                     if (key == null)
@@ -111,8 +116,8 @@ namespace CRM
                     }
                     key.Close();
 
-                    DuLieuTaoSan.NV = nvo;
-                    DuLieuTaoSan.Q = (nvo.TenDangNhapCty.ToLower().Equals("itadmin")) ? nqb.QuyenAdmin() : nqb.LayQuyenNhanVien(nvo.ChinhSach);
+                    DuLieuTaoSan.NV = nvo[0];
+                    DuLieuTaoSan.Q = (nvo[0].TenDangNhapCty.ToLower().Equals("itadmin")) ? nqb.QuyenAdmin() : nqb.LayQuyenNhanVien(nvo[0].ChinhSach);
                     frmChinh f = new frmChinh();
                     XuLyGiaoDien.SplashScreen(f);
                     TopMost = false;

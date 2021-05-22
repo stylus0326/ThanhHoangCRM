@@ -16,7 +16,7 @@ namespace CRM
             Text += " thêm";
         }
 
-        public frmHangBayThem(HangBayO _hangBay)
+        public frmHangBayThem(O_HANGBAY _hangBay)
         {
             InitializeComponent();
             _HangBay = _hangBay;
@@ -31,8 +31,8 @@ namespace CRM
         }
 
         #region Biến
-        HangBayD _HangBayD = new HangBayD();
-        HangBayO _HangBay = new HangBayO();
+        D_HANGBAY _HangBayD = new D_HANGBAY();
+        O_HANGBAY _HangBay = new O_HANGBAY();
         #endregion
 
         #region sự kiện controls

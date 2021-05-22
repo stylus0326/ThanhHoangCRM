@@ -8,7 +8,7 @@ namespace CRM
         public frmHangChiTiet(string ID, DateTime d1, DateTime d2)
         {
             InitializeComponent();
-            soDuHangOBindingSource.DataSource = new SoDu_HangD().DuLieu(ID, d1, d2);
+            soDuHangOBindingSource.DataSource = new D_SODU_HANG().DuLieu(ID, d1, d2);
             GVHBSD.BestFitColumns();
         }
 

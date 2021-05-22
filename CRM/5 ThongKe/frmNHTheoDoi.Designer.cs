@@ -253,7 +253,7 @@ namespace CRM
             // 
             // theoDoiOBindingSource
             // 
-            this.theoDoiOBindingSource.DataSource = typeof(DataTransferObject.TheoDoiO);
+            this.theoDoiOBindingSource.DataSource = typeof(DataTransferObject.O_THEODOIHOAN);
             // 
             // bandedGridView1
             // 

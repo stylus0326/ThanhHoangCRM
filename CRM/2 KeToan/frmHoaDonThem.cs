@@ -12,7 +12,7 @@ namespace CRM
     public partial class frmHoaDonThem : DevExpress.XtraEditors.XtraForm
     {
         List<long> IDHD = new List<long>();
-        List<DaiLyO> daiLyDs = new List<DaiLyO>();
+        List<O_DAILY> daiLyDs = new List<O_DAILY>();
         public frmHoaDonThem()
         {
             InitializeComponent();
@@ -23,7 +23,7 @@ namespace CRM
             Text += " thêm";
         }
 
-        public frmHoaDonThem(HoaDonO HD)
+        public frmHoaDonThem(O_HOADON HD)
         {
             InitializeComponent();
             HD.ID = 0;
@@ -33,7 +33,7 @@ namespace CRM
             Text += " sửa";
         }
 
-        public frmHoaDonThem(List<HoaDonO> HD)
+        public frmHoaDonThem(List<O_HOADON> HD)
         {
             InitializeComponent();
             _HoaDonO = HD[0];
@@ -45,14 +45,14 @@ namespace CRM
 
         private void frmHoaDonThem_Load(object sender, EventArgs e)
         {
-            daiLyDs = new DaiLyD().All();
+            daiLyDs = new D_DAILY().All();
             daiLyOBindingSource1.DataSource = daiLyDs;
-            nCCOBindingSource.DataSource = new NCCD().DuLieu();
-            tuyenBayOBindingSource.DataSource = new TuyenBayD().DuLieu();
+            nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu();
+            tuyenBayOBindingSource.DataSource = new D_TUYENBAY().DuLieu();
             bindingSource1.DataSource = daiLyD.NhanVien();
             IntStringBindingSource.DataSource = DuLieuTaoSan.LoaiKhachHang_GiaoDich(false);
             hoaDonOBindingSource1.DataSource = _HoaDonD.LayThongTinMST();
-            hangBayOBindingSource.DataSource = new HangBayD().DuLieu();
+            hangBayOBindingSource.DataSource = new D_HANGBAY().DuLieu();
             XuLyGiaoDien.OpenForm(this);
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, _HoaDonO);
             daiLyOBindingSource.DataSource = daiLyDs.Where(w => w.LoaiKhachHang.Equals((int)iLoaiKhachHang.EditValue));
@@ -61,10 +61,10 @@ namespace CRM
 
 
         #region Biến
-        DaiLyD daiLyD = new DaiLyD();
-        HoaDonO _HoaDonO = new HoaDonO();
-        HoaDonD _HoaDonD = new HoaDonD();
-        GiaoDichO _GiaoDichO = new GiaoDichO();
+        D_DAILY daiLyD = new D_DAILY();
+        O_HOADON _HoaDonO = new O_HOADON();
+        D_HOADON _HoaDonD = new D_HOADON();
+        O_GIAODICH _GiaoDichO = new O_GIAODICH();
         #endregion
 
         #region Giao diện
@@ -80,7 +80,7 @@ namespace CRM
         {
             if (MaSoThue.EditValue != null)
             {
-                HoaDonO hoaDonO = MaSoThue.GetSelectedDataRow() as HoaDonO;
+                O_HOADON hoaDonO = MaSoThue.GetSelectedDataRow() as O_HOADON;
                 if (hoaDonO != null)
                 {
                     iMaSoThue.Text = hoaDonO.MaSoThue;
@@ -119,14 +119,9 @@ namespace CRM
                     HTV = (int)view.GetRowCellValue(e.RowHandle, view.Columns["HanhTrinhVe"]);
                     a = (long)view.GetRowCellValue(e.RowHandle, view.Columns["CL1"]) / (HTV > 0 ? 2 : 1);
 
-                    if (a > 50000 && a < 100001)
-                        view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 5);
-                    else if (a > 100000 && a < 150001)
+
+                    if (a > 50000)
                         view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 10);
-                    else if (a > 150000 && a < 250001)
-                        view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 15);
-                    else if (a > 250000 && a < 350001)
-                        view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 20);
                     a = 0;
                     bandedGridView1.BestFitColumns();
                     break;
@@ -140,14 +135,8 @@ namespace CRM
                     HTV = (int)view.GetRowCellValue(e.RowHandle, view.Columns["HanhTrinhVe"]);
                     a = (long)view.GetRowCellValue(e.RowHandle, view.Columns["CL1"]) / (HTV > 0 ? 2 : 1);
 
-                    if (a > 50000 && a < 100001)
-                        view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 5);
-                    else if (a > 100000 && a < 150001)
+                    if (a > 50000)
                         view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 10);
-                    else if (a > 150000 && a < 250001)
-                        view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 15);
-                    else if (a > 250000 && a < 350001)
-                        view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 20);
                     a = 0;
                     break;
             }
@@ -223,7 +212,7 @@ namespace CRM
             { iMaSoThue.Text = string.Empty; }
         }
 
-        GiaoDichD Giao = new GiaoDichD();
+        D_GIAODICH Giao = new D_GIAODICH();
         private void btnCode_Click(object sender, EventArgs e)
         {
             txtMC.Text = txtMC.Text.Replace(" ", string.Empty);
@@ -252,15 +241,15 @@ namespace CRM
             }
         }
 
-        List<HoaDonO> hoaDonOs = new List<HoaDonO>();
-        void Xuli(List<GiaoDichO> lstgd)
+        List<O_HOADON> hoaDonOs = new List<O_HOADON>();
+        void Xuli(List<O_GIAODICH> lstgd)
         {
-            foreach (GiaoDichO gd in lstgd)
+            foreach (O_GIAODICH gd in lstgd)
             {
                 if (hoaDonOs.Where(w => (w.SoVe ?? string.Empty).Equals((gd.SoVeVN ?? string.Empty)) && w.MaCho.Equals(gd.MaCho) && w.GiaHeThong.Equals(gd.GiaHeThong)).Count() > lstgd.Where(w => (w.SoVeVN ?? string.Empty).Equals((gd.SoVeVN ?? string.Empty)) && w.MaCho.Equals(gd.MaCho) && w.GiaHeThong.Equals(gd.GiaHeThong)).Count() - 1)
                     continue;
 
-                HoaDonO g1 = new HoaDonO();
+                O_HOADON g1 = new O_HOADON();
                 g1.GiaYeuCau = g1.GiaHeThong = gd.GiaHeThong;
                 g1.Hang = gd.Hang;
                 g1.GiaNet = gd.GiaNet;
@@ -317,7 +306,7 @@ namespace CRM
             }
         }
 
-        void Xuli2(List<GiaoDichO> lstgd)
+        void Xuli2(List<O_GIAODICH> lstgd)
         {
             if (lstgd.Count == 0)
                 return;

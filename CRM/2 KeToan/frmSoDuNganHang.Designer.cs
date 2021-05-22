@@ -93,7 +93,7 @@
             // 
             // soDuNganHangOBindingSource
             // 
-            this.soDuNganHangOBindingSource.DataSource = typeof(DataTransferObject.SoDu_NganHangO);
+            this.soDuNganHangOBindingSource.DataSource = typeof(DataTransferObject.O_SODU_NGANHANG);
             // 
             // labelControl2
             // 

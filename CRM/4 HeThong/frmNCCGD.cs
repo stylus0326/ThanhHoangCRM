@@ -7,15 +7,15 @@ namespace CRM
 {
     public partial class frmNCCGD : DevExpress.XtraEditors.XtraForm
     {
-        NCCGDO _nCCGDO = new NCCGDO();
-        NCCGDD _nCCGDD = new NCCGDD();
+        O_NHACUNGCAP_GIAODICHPHATSINH _nCCGDO = new O_NHACUNGCAP_GIAODICHPHATSINH();
+        D_NHACUNGCAP_GIAODICHPHATSINH _nCCGDD = new D_NHACUNGCAP_GIAODICHPHATSINH();
         public frmNCCGD()
         {
             InitializeComponent();
             Text += " thêm";
         }
 
-        public frmNCCGD(NCCGDO nCCGDO)
+        public frmNCCGD(O_NHACUNGCAP_GIAODICHPHATSINH nCCGDO)
         {
             InitializeComponent();
             Text += " sửa";
@@ -49,7 +49,7 @@ namespace CRM
 
         private void frmNCCGD_Load(object sender, EventArgs e)
         {
-            nCCOBindingSource.DataSource = new NCCD().DuLieu();
+            nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu();
             intStringBindingSource.DataSource = DuLieuTaoSan.LoaiPhi(false);
             XuLyGiaoDien.OpenForm(this);
             XuLyDuLieu.ConvertClassToTable(this, _nCCGDO);

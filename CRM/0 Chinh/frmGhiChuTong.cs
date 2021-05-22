@@ -17,8 +17,8 @@ namespace CRM
             DSGhiChu.DataSource = ghiChuD.LayDanhSach();
         }
 
-        GhiChuO ghiChu = new GhiChuO();
-        GhiChuD ghiChuD = new GhiChuD();
+        O_GHICHU ghiChu = new O_GHICHU();
+        D_GHICHU ghiChuD = new D_GHICHU();
         private void btnLuu_Click(object sender, EventArgs e)
         {
             Dictionary<string, object> dic = new Dictionary<string, object>();
@@ -39,14 +39,14 @@ namespace CRM
         //? "S" : "T"
         private void btnHuy_Click(object sender, EventArgs e)
         {
-            ghiChu = new GhiChuO();
+            ghiChu = new O_GHICHU();
             iTieuDe.Text = iNoiDung.Text = iGhiChu.Text = string.Empty;
             btnHuy.Enabled = false;
         }
 
         private void gridView1_DoubleClick(object sender, EventArgs e)
         {
-            ghiChu = gridView1.GetRow(gridView1.GetSelectedRows()[0]) as GhiChuO;
+            ghiChu = gridView1.GetRow(gridView1.GetSelectedRows()[0]) as O_GHICHU;
             if (ghiChu.TenNV.Equals(DuLieuTaoSan.NV.TenDangNhapCty))
             {
                 iTieuDe.Text = ghiChu.TieuDe;
@@ -55,7 +55,7 @@ namespace CRM
                 btnHuy.Enabled = true;
             }
             else
-                ghiChu = new GhiChuO();
+                ghiChu = new O_GHICHU();
         }
     }
 }

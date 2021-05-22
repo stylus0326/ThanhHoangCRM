@@ -23,11 +23,6 @@ namespace CRM
         #region Dữ liệu 
         private void frmVe_Load(object sender, EventArgs e)
         {
-            if (!DuLieuTaoSan.Q.VeAdmin)
-            {
-                GVGD.Columns.Remove(colEmail);
-                GVGD.Columns.Remove(colDienThoaiKhachHang);
-            }
 
             rLoaiKhach.DataSource = DuLieuTaoSan.LoaiKhachHang_Ve();
             rTrangThai.DataSource = DuLieuTaoSan.LoaiGiaoDich_Ve(true);
@@ -38,90 +33,46 @@ namespace CRM
             btnXoa.Visibility = DuLieuTaoSan.Q.VeXoa ? BarItemVisibility.Always : BarItemVisibility.Never;
             btnHoan.Visibility = DuLieuTaoSan.Q.TheoDoiHoanAdmin ? BarItemVisibility.Always : BarItemVisibility.Never;
 
-            tuyenBayOBindingSource.DataSource = new TuyenBayD().DuLieu();
-            nganHangOBindingSource.DataSource = new NganHangD().All();
-            hangBayOBindingSource.DataSource = new HangBayD().DuLieu();
-            nCCOBindingSource.DataSource = new NCCD().DuLieu_GiaoDich();
-            _ListKhoaNgayO = new KhoaNgayD().DuLieu();
+            tuyenBayOBindingSource.DataSource = new D_TUYENBAY().DuLieu();
+            nganHangOBindingSource.DataSource = new D_NGANHANG().All();
+            hangBayOBindingSource.DataSource = new D_HANGBAY().DuLieu();
+            nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu_GiaoDich();
+            _ListKhoaNgayO = new D_KHOANGAY().DuLieu();
             DuLieu();
         }
 
         private void btnLoad_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            tuyenBayOBindingSource.DataSource = new TuyenBayD().DuLieu();
-            nganHangOBindingSource.DataSource = new NganHangD().All();
-            hangBayOBindingSource.DataSource = new HangBayD().DuLieu();
-            nCCOBindingSource.DataSource = new NCCD().DuLieu_GiaoDich();
-            _ListKhoaNgayO = new KhoaNgayD().DuLieu();
+            tuyenBayOBindingSource.DataSource = new D_TUYENBAY().DuLieu();
+            nganHangOBindingSource.DataSource = new D_NGANHANG().All();
+            hangBayOBindingSource.DataSource = new D_HANGBAY().DuLieu();
+            nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu_GiaoDich();
+            _ListKhoaNgayO = new D_KHOANGAY().DuLieu();
             DuLieu();
         }
 
-        public void DuLieu()
-        {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
-
-            _index = GVGD.GetFocusedDataSourceRowIndex() - 10;
-
-            _Query = "LoaiGiaoDich in (4,8,9,13,14) AND TinhCongNo = 1";
-
-            if (chk1.Checked)
-                _Query += DuLieuTaoSan.MocThoiGian()[_IDThoiGian];
-            else if (chk2.Checked)
-            {
-                if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
-                    _Query += string.Format("AND (convert(date, NgayGD) BETWEEN '{0}' AND '{1}')", ((DateTime)bdtpTu.EditValue).ToString("yyyyMMdd"), ((DateTime)bdtpDen.EditValue).ToString("yyyyMMdd"));
-            }
-            else if (chk3.Checked && _SV_MC.Length > 4)
-                _Query += string.Format("AND SoVeVN = '{0}'", _SV_MC);
-            else if (chk4.Checked && _SV_MC.Length > 4)
-                _Query += string.Format("AND MaCho = '{0}'", _SV_MC);
-
-            if (_Query != "LoaiGiaoDich in (4,8,9,13,14) AND TinhCongNo = 1")
-            {
-                khachHangOBindingSource.DataSource = DaiLyD.All();
-                _ListGiaoDichO = new GiaoDichD().DuLieu(_Query, DuLieuTaoSan.Q.VeAdmin);
-                giaoDichOBindingSource.DataSource = _ListGiaoDichO;
-            }
-
-            Size textSize = TextRenderer.MeasureText(_ListGiaoDichO.Count.ToString(), new Font("Tahoma", 9, FontStyle.Regular));
-            GVGD.IndicatorWidth = textSize.Width + 5;
-            GVGD.FocusedRowHandle = _index;
-
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
-        }
         #endregion
 
         #region Biến
         int _index = 0;
         string _Query = string.Empty;
-        string _SV_MC = string.Empty;
-        DaiLyD DaiLyD = new DaiLyD();
-        List<GiaoDichO> _ListGiaoDichO = new List<GiaoDichO>();
-        List<KhoaNgayO> _ListKhoaNgayO = new List<KhoaNgayO>();
+        D_DAILY DaiLyD = new D_DAILY();
+        List<O_GIAODICH> _ListGiaoDichO = new List<O_GIAODICH>();
+        List<O_KHOANGAY> _ListKhoaNgayO = new List<O_KHOANGAY>();
         int _IDThoiGian = 0;
-        GiaoDichD _GiaoDichD = new GiaoDichD();
-        GiaoDichO _GiaoDichO = new GiaoDichO();
+        D_GIAODICH _GiaoDichD = new D_GIAODICH();
+        O_GIAODICH _GiaoDichO = new O_GIAODICH();
 
         #endregion
 
         #region Giao diện
-        private void GVGD_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
-        {
-            if (e.HitInfo.InRow)
-            {
-                Point p2 = MousePosition;
-                pMenu.ShowPopup(p2);
-            }
-        }
 
         private void GVGD_RowCellStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowCellStyleEventArgs e)
         {
             GridView View = sender as GridView;
             if (e.RowHandle >= 0)
             {
-                GiaoDichO dl = View.GetRow(e.RowHandle) as GiaoDichO;
+                O_GIAODICH dl = View.GetRow(e.RowHandle) as O_GIAODICH;
                 switch (e.Column.FieldName)
                 {
                     case "IDKhachHang":
@@ -136,7 +87,7 @@ namespace CRM
                             e.Appearance.BackColor = Color.Yellow;
                         break;
                     case "NgayGD":
-                        List<KhoaNgayO> khoaNgayO = _ListKhoaNgayO.Where(w => w.TuNgay.ToString("ddMMyy").Equals(dl.NgayGD.ToString("ddMMyy"))).ToList();
+                        List<O_KHOANGAY> khoaNgayO = _ListKhoaNgayO.Where(w => w.TuNgay.ToString("ddMMyy").Equals(dl.NgayGD.ToString("ddMMyy"))).ToList();
                         if (khoaNgayO.Count > 0)
                             if (khoaNgayO[0].HoatDong)
                                 e.Appearance.BackColor = Color.Gold;
@@ -170,12 +121,62 @@ namespace CRM
         }
         #endregion
 
-        #region Sự kiện nút
-
-        private void btnThem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        #region CongCuTimKiem
+        string[] _SV_MC = new string[] { };
+        public void DuLieu()
         {
-            frmVeThem frm = new frmVeThem();
-            frm.ShowDialog(ParentForm);
+            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
+                XuLyGiaoDien.wait.ShowWaitForm();
+
+            _index = GVGD.GetFocusedDataSourceRowIndex() - 10;
+
+            _Query = "LoaiGiaoDich in (4,8,9,13,14) AND TinhCongNo = 1";
+
+            if (chk1.Checked)
+                _Query += DuLieuTaoSan.MocThoiGian()[_IDThoiGian];
+            else if (chk2.Checked)
+            {
+                if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
+                    _Query += string.Format("AND (convert(date, NgayGD) BETWEEN '{0}' AND '{1}')", ((DateTime)bdtpTu.EditValue).ToString("yyyyMMdd"), ((DateTime)bdtpDen.EditValue).ToString("yyyyMMdd"));
+            }
+            else if (chk3.Checked && _SV_MC.Length > 0)
+                _Query += string.Format("AND REPLACE(COALESCE(SoVeVN,''),' ','') in ('{0}')", String.Join("' ,'", _SV_MC));
+            else if (chk4.Checked && _SV_MC.Length > 0)
+                _Query += string.Format("AND REPLACE(COALESCE(MaCho,''),' ','') in ('{0}')", String.Join("' ,'", _SV_MC));
+
+            if (_Query != "LoaiGiaoDich in (4,8,9,13,14) AND TinhCongNo = 1")
+            {
+                khachHangOBindingSource.DataSource = DaiLyD.All();
+                _ListGiaoDichO = new D_GIAODICH().DuLieu(_Query, DuLieuTaoSan.Q.VeAdmin);
+                giaoDichOBindingSource.DataSource = _ListGiaoDichO;
+            }
+
+            Size textSize = TextRenderer.MeasureText(_ListGiaoDichO.Count.ToString(), new Font("Tahoma", 9, FontStyle.Regular));
+            GVGD.IndicatorWidth = textSize.Width + 5;
+            GVGD.FocusedRowHandle = _index;
+
+            if (XuLyGiaoDien.wait.IsSplashFormVisible)
+                XuLyGiaoDien.wait.CloseWaitForm();
+        }
+
+        private void ecmbThoiGian_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _IDThoiGian = (sender as ComboBoxEdit).SelectedIndex;
+            DuLieu();
+        }
+
+        private void aMaCho_Leave(object sender, EventArgs e)
+        {
+            string[] BB = _SV_MC;
+            _SV_MC = (sender as MemoExEdit).Text.Replace(" ", "").Replace("\r\n", "|").Split('|').ToArray();
+            _SV_MC = _SV_MC.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+            if (String.Join("' ,'", BB) != String.Join("' ,'", _SV_MC))
+                DuLieu();
+        }
+
+        private void edtpTu_EditValueChanged(object sender, EventArgs e)
+        {
+            DuLieu();
         }
 
         private void CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -185,33 +186,19 @@ namespace CRM
             barSoVe.Enabled = chk3.Checked;
             barMacho.Enabled = chk4.Checked;
             DuLieu();
+        }
+        #endregion
 
-            if (chk1.Checked)
-                bcmbThoiGian.Links[0].Focus();
-            else if (chk2.Checked)
-                bdtpTu.Links[0].Focus();
-            else if (chk3.Checked)
-                barSoVe.Links[0].Focus();
-            else if (chk4.Checked)
-                barMacho.Links[0].Focus();
+        #region Sự kiện nút
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            new frmGoogleSheet().ShowDialog();
         }
 
-        private void ecmbThoiGian_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnThem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            _IDThoiGian = (sender as ComboBoxEdit).SelectedIndex;
-            DuLieu();
-        }
-
-        private void bdtpTu_EditValueChanged(object sender, EventArgs e)
-        {
-            DuLieu();
-        }
-
-        private void aMaCho_KeyDown(object sender, KeyEventArgs e)
-        {
-            _SV_MC = (sender as TextEdit).Text;
-            if (e.KeyCode == Keys.Enter)
-                DuLieu();
+            frmVeThem frm = new frmVeThem();
+            frm.ShowDialog(ParentForm);
         }
 
         private void btnHoan_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -221,9 +208,9 @@ namespace CRM
 
         private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            _GiaoDichO = GVGD.GetRow(GVGD.GetSelectedRows()[0]) as GiaoDichO;
+            _GiaoDichO = GVGD.GetRow(GVGD.GetSelectedRows()[0]) as O_GIAODICH;
 
-            KhoaNgayO kn = new KhoaNgayD().KiemTraNgayKhoa(_GiaoDichO.NgayGD);
+            O_KHOANGAY kn = new D_KHOANGAY().KiemTraNgayKhoa(_GiaoDichO.NgayGD);
             if (_GiaoDichO.TinhCongNo)
                 if (!DuLieuTaoSan.Q.VeAdmin)
                     if ((kn.HoatDong) && !(kn.Code ?? string.Empty).Contains(_GiaoDichO.MaCho.Replace(" ", string.Empty)))
@@ -239,7 +226,7 @@ namespace CRM
             }
 
             List<object> lstCtv = new List<object>();
-            List<GiaoDichO> lst = _ListGiaoDichO.Where(w => w.MaCho.Equals(_GiaoDichO.MaCho) && w.LoaiGiaoDich.Equals(_GiaoDichO.LoaiGiaoDich) && w.IDKhachHang.Equals(_GiaoDichO.IDKhachHang) && w.NgayGD.ToString("ddMMyyy").Equals(_GiaoDichO.NgayGD.ToString("ddMMyyy")) && w.NhaCungCap.Equals(_GiaoDichO.NhaCungCap) && w.TuyenBayDi.Equals(_GiaoDichO.TuyenBayDi)).ToList();
+            List<O_GIAODICH> lst = _ListGiaoDichO.Where(w => (w.MaCho ?? "").Equals(_GiaoDichO.MaCho ?? "") && w.LoaiGiaoDich.Equals(_GiaoDichO.LoaiGiaoDich) && w.IDKhachHang.Equals(_GiaoDichO.IDKhachHang) && w.NgayGD.ToString("ddMMyyy").Equals(_GiaoDichO.NgayGD.ToString("ddMMyyy")) && w.NhaCungCap.Equals(_GiaoDichO.NhaCungCap) && w.TuyenBayDi.Equals(_GiaoDichO.TuyenBayDi)).ToList();
 
             bool ThanhCong = false;
             if (lst.Count == 1)
@@ -260,7 +247,7 @@ namespace CRM
                 switch (dc)
                 {
                     case DialogResult.Yes:
-                        foreach (GiaoDichO gdoz in lst)
+                        foreach (O_GIAODICH gdoz in lst)
                         {
                             lstCtv.Add(gdoz.ID);
                         }
@@ -288,8 +275,8 @@ namespace CRM
                 dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
                 dic.Add("LoaiKhachHang", _GiaoDichO.LoaiKhachHang);
                 dic.Add("Ma", _GiaoDichO.IDKhachHang);
-                new LichSuD().ThemMoi(dic);
-                new DaiLyD().ChayLaiPhi(_GiaoDichO.NgayGD);
+                new D_LS_GIAODICH().ThemMoi(dic);
+                new D_DAILY().ChayLaiPhi(_GiaoDichO.NgayGD);
                 DuLieu();
             }
         }
@@ -316,8 +303,8 @@ namespace CRM
         {
             try
             {
-                _GiaoDichO = GVGD.GetRow(GVGD.GetSelectedRows()[0]) as GiaoDichO;
-                List<GiaoDichO> lst = _ListGiaoDichO.Where(w => w.MaCho.Equals(_GiaoDichO.MaCho) && w.LoaiGiaoDich.Equals(_GiaoDichO.LoaiGiaoDich) && w.IDKhachHang.Equals(_GiaoDichO.IDKhachHang) && w.NgayGD.ToString("ddMMyyy").Equals(_GiaoDichO.NgayGD.ToString("ddMMyyy")) && w.NhaCungCap.Equals(_GiaoDichO.NhaCungCap) && w.TuyenBayDi.Equals(_GiaoDichO.TuyenBayDi)).ToList();
+                _GiaoDichO = GVGD.GetRow(GVGD.GetSelectedRows()[0]) as O_GIAODICH;
+                List<O_GIAODICH> lst = _ListGiaoDichO.Where(w => w.MaCho.Equals(_GiaoDichO.MaCho) && w.LoaiGiaoDich.Equals(_GiaoDichO.LoaiGiaoDich) && w.IDKhachHang.Equals(_GiaoDichO.IDKhachHang) && w.NgayGD.ToString("ddMMyyy").Equals(_GiaoDichO.NgayGD.ToString("ddMMyyy")) && w.NhaCungCap.Equals(_GiaoDichO.NhaCungCap) && w.TuyenBayDi.Equals(_GiaoDichO.TuyenBayDi)).ToList();
                 frmInVe frm = new frmInVe(lst);
                 frm.ShowDialog();
             }
@@ -332,17 +319,14 @@ namespace CRM
             ChinhSua();
         }
 
-        private void GVGD_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == Convert.ToChar(Keys.Enter))
-                ChinhSua();
-        }
-
         void ChinhSua()
         {
-            _GiaoDichO = GVGD.GetRow(GVGD.GetSelectedRows()[0]) as GiaoDichO;
+            if (GVGD.GetSelectedRows().Count() < 1) return;
+            _GiaoDichO = GVGD.GetRow(GVGD.GetSelectedRows()[0]) as O_GIAODICH;
+            if (_GiaoDichO == null) return;
+            _index = GVGD.GetFocusedDataSourceRowIndex();
 
-            List<GiaoDichO> lst = _ListGiaoDichO.Where(w => w.MaCho.Equals(_GiaoDichO.MaCho) && w.LoaiGiaoDich.Equals(_GiaoDichO.LoaiGiaoDich) && w.IDKhachHang.Equals(_GiaoDichO.IDKhachHang) && w.NgayGD.ToString("ddMMyyy").Equals(_GiaoDichO.NgayGD.ToString("ddMMyyy")) && w.NhaCungCap.Equals(_GiaoDichO.NhaCungCap) && w.TuyenBayDi.Equals(_GiaoDichO.TuyenBayDi)).ToList();
+            List<O_GIAODICH> lst = _ListGiaoDichO.Where(w => w.MaCho.Equals(_GiaoDichO.MaCho) && w.LoaiGiaoDich.Equals(_GiaoDichO.LoaiGiaoDich) && w.IDKhachHang.Equals(_GiaoDichO.IDKhachHang) && w.NgayGD.ToString("ddMMyyy").Equals(_GiaoDichO.NgayGD.ToString("ddMMyyy")) && w.NhaCungCap.Equals(_GiaoDichO.NhaCungCap) && w.TuyenBayDi.Equals(_GiaoDichO.TuyenBayDi)).ToList();
 
             if (lst.Count > 1)
             {
@@ -370,5 +354,6 @@ namespace CRM
             }
         }
         #endregion
+
     }
 }

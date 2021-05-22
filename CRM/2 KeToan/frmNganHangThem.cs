@@ -15,7 +15,7 @@ namespace CRM
             Text += " thêm";
         }
 
-        public frmNganHangThem(NganHangO nh)
+        public frmNganHangThem(O_NGANHANG nh)
         {
             InitializeComponent();
             nho = nh;
@@ -29,7 +29,7 @@ namespace CRM
         }
 
         #region Biến
-        private NganHangO nho = new NganHangO();
+        private O_NGANHANG nho = new O_NGANHANG();
         #endregion
 
         #region Sự kiện nút
@@ -42,7 +42,7 @@ namespace CRM
                 return;
             }
 
-            NganHangD nhb = new NganHangD();
+            D_NGANHANG nhb = new D_NGANHANG();
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic = XuLyDuLieu.FormToDictionary(this, dic);
             long CapNhatNum = nho.ID > 0 ? nhb.CapNhat(dic, nho.ID) : nhb.ThemMoi(dic, true);
@@ -59,7 +59,7 @@ namespace CRM
                         dic.Add("Ngay", "getdate() - " + i);
                         lstDicS.Add(dic);
                     }
-                    new SoDu_NganHangD().ThemNhieu1Ban(lstDicS);
+                    new D_SODU_NGANHANG().ThemNhieu1Ban(lstDicS);
                 }
 
                 (Owner.ActiveMdiChild as frmNganHang).LayDLNganHang();
@@ -89,7 +89,7 @@ namespace CRM
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 if (NoiDung.Length > 10)
-                    new LichSuD().ThemMoi(dic);
+                    new D_LS_GIAODICH().ThemMoi(dic);
             }
         }
         #endregion

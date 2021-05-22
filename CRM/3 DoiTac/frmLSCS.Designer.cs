@@ -68,7 +68,7 @@
             // 
             // chinhSachOBindingSource
             // 
-            this.chinhSachOBindingSource.DataSource = typeof(DataTransferObject.ChinhSachO);
+            this.chinhSachOBindingSource.DataSource = typeof(DataTransferObject.O_CHINHSACH);
             // 
             // panelControl1
             // 
@@ -207,7 +207,7 @@
             // 
             // soDuDaiLyOBindingSource
             // 
-            this.soDuDaiLyOBindingSource.DataSource = typeof(DataTransferObject.SoDu_DaiLyO);
+            this.soDuDaiLyOBindingSource.DataSource = typeof(DataTransferObject.O_SODU_DAILY);
             // 
             // GVLSCS
             // 

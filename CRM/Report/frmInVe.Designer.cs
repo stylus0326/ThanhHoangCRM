@@ -986,7 +986,7 @@
             // 
             // nhanVienOBindingSource
             // 
-            this.nhanVienOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.nhanVienOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // gridView4
             // 

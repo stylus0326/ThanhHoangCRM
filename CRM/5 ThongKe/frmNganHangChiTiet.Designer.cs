@@ -41,16 +41,16 @@
             this.colNgayHT = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colLoaiGiaoDich = new DevExpress.XtraGrid.Columns.GridColumn();
             this.rHinhThuc = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
-            this.IntStringBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.colTen = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colGhiChuNV = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.loaiGiaoDichOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridCtNganHang)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cTNganHangOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvCtNganHang)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rHinhThuc)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IntStringBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loaiGiaoDichOBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // groupControl1
@@ -67,19 +67,19 @@
             // 
             this.gridCtNganHang.DataSource = this.cTNganHangOBindingSource;
             this.gridCtNganHang.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridCtNganHang.Location = new System.Drawing.Point(2, 20);
+            this.gridCtNganHang.Location = new System.Drawing.Point(2, 23);
             this.gridCtNganHang.MainView = this.grvCtNganHang;
             this.gridCtNganHang.Name = "gridCtNganHang";
             this.gridCtNganHang.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.rHinhThuc});
-            this.gridCtNganHang.Size = new System.Drawing.Size(1070, 554);
+            this.gridCtNganHang.Size = new System.Drawing.Size(1070, 551);
             this.gridCtNganHang.TabIndex = 0;
             this.gridCtNganHang.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grvCtNganHang});
             // 
             // cTNganHangOBindingSource
             // 
-            this.cTNganHangOBindingSource.DataSource = typeof(DataTransferObject.CTNganHangO);
+            this.cTNganHangOBindingSource.DataSource = typeof(DataTransferObject.O_CTNGANHANG);
             // 
             // grvCtNganHang
             // 
@@ -182,15 +182,11 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.rHinhThuc.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 37, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
-            this.rHinhThuc.DataSource = this.IntStringBindingSource;
+            this.rHinhThuc.DataSource = this.loaiGiaoDichOBindingSource;
             this.rHinhThuc.DisplayMember = "Name";
             this.rHinhThuc.Name = "rHinhThuc";
             this.rHinhThuc.NullText = "-";
             this.rHinhThuc.ValueMember = "ID";
-            // 
-            // IntStringBindingSource
-            // 
-            this.IntStringBindingSource.DataSource = typeof(CRM.IntString);
             // 
             // colTen
             // 
@@ -207,6 +203,10 @@
             this.colGhiChuNV.FieldName = "GhiChuNV";
             this.colGhiChuNV.Name = "colGhiChuNV";
             this.colGhiChuNV.Width = 210;
+            // 
+            // loaiGiaoDichOBindingSource
+            // 
+            this.loaiGiaoDichOBindingSource.DataSource = typeof(DataTransferObject.O_LOAIGIAODICH);
             // 
             // frmNganHangChiTiet
             // 
@@ -225,7 +225,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cTNganHangOBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grvCtNganHang)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rHinhThuc)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IntStringBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loaiGiaoDichOBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -245,7 +245,7 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit rHinhThuc;
         private DevExpress.XtraGrid.Columns.GridColumn colTen;
         private DevExpress.XtraGrid.Columns.GridColumn colGhiChuNV;
-        private System.Windows.Forms.BindingSource IntStringBindingSource;
         private System.Windows.Forms.BindingSource cTNganHangOBindingSource;
+        private System.Windows.Forms.BindingSource loaiGiaoDichOBindingSource;
     }
 }

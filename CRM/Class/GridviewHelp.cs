@@ -45,7 +45,7 @@ namespace CRM
                 var path = TEMP_PATH + "\\" + frm.Name + "\\" + GC.Name + "\\default_layout.xml";
                 GC.MainView.SaveLayoutToXml(path, OptionsLayoutBase.FullLayout);
                 GV.CustomDrawRowIndicator += GridView_CustomDrawRowIndicator;
-                GV.CustomDrawGroupRow += GridView_CustomDrawGroupRow;
+                GV.GroupSummary.AddRange(new GridSummaryItem[] {new GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "(Số dòng: {0:#,##0;-#,##0})", null, "")});
                 GV.CustomDrawCell += GridView_CustomDrawCell;
                 GV.MouseWheel += GV_MouseWheel; ;
                 CustomDrawEmptyForeground(GC, GV);
@@ -132,11 +132,14 @@ namespace CRM
         public static void GridView_CustomDrawGroupRow(object sender, DevExpress.XtraGrid.Views.Base.RowObjectCustomDrawEventArgs e)
         {
             GridView view = sender as GridView;
-            DevExpress.XtraGrid.Views.Grid.ViewInfo.GridGroupRowInfo info = e.Info as DevExpress.XtraGrid.Views.Grid.ViewInfo.GridGroupRowInfo;
-            string caption = info.Column.Caption;
-            if (info.Column.Caption == string.Empty)
-                caption = info.Column.ToString();
-            info.GroupText = string.Format("{0} : {1} (count= {2})", caption, info.GroupValueText, view.GetChildRowCount(e.RowHandle));
+            if (view.Name != "GVCTNH")
+            {
+                DevExpress.XtraGrid.Views.Grid.ViewInfo.GridGroupRowInfo info = e.Info as DevExpress.XtraGrid.Views.Grid.ViewInfo.GridGroupRowInfo;
+                string caption = info.Column.Caption;
+                if (info.Column.Caption == string.Empty)
+                    caption = info.Column.ToString();
+                info.GroupText = string.Format("{0} : {1} (Số dòng = {2})", caption, info.GroupValueText, view.GetChildRowCount(e.RowHandle));
+            }
         }
 
         public static bool cal(Int32 _Width, GridView _View)

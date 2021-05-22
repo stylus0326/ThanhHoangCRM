@@ -19,8 +19,8 @@ namespace CRM
 {
     public partial class frmHoaDonGui : DevExpress.XtraEditors.XtraForm
     {
-        List<HoaDonO> lst = new List<HoaDonO>();
-        List<DaiLyO> lstDaiLy = new List<DaiLyO>();
+        List<O_HOADON> lst = new List<O_HOADON>();
+        List<O_DAILY> lstDaiLy = new List<O_DAILY>();
         public frmHoaDonGui()
         {
             InitializeComponent();
@@ -29,11 +29,11 @@ namespace CRM
 
         private void frmHoaDonGui_Load(object sender, EventArgs e)
         {
-            txtMauEmail.HtmlText = new MauEmailD().DuLieu()[1].NoiDung;
+            txtMauEmail.HtmlText = new D_MAUEMAIL().DuLieu()[1].NoiDung;
             DateTime dtp = DateTime.Now;
             bdtpTu.EditValue = new DateTime(dtp.Year, dtp.Month == 1 ? 1 : dtp.Month - 1, 1);
             bdtpDen.EditValue = new DateTime(dtp.Year, dtp.Month == 1 ? 1 : dtp.Month - 1, 1).AddDays(-1);
-            tuyenBayOBindingSource.DataSource = new TuyenBayD().DuLieu();
+            tuyenBayOBindingSource.DataSource = new D_TUYENBAY().DuLieu();
         }
 
         private void btnM_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -133,7 +133,7 @@ namespace CRM
                 {
                     daily += string.Format(",{0}", lstDaiLyz.CheckedItems[i]);
                 }
-                lst = new HoaDonD().DuLieu(string.Format("CONVERT(date, NgayThucHien) BETWEEN '{0}' AND '{1}' AND MaHD <> '0' AND ((GiaYeuCau - GiaHeThong) * PhanTram / 100) > 0 AND IDKhachHang in ({2}) ORDER BY IDKhachHang,MaHD,MaCho,GiaHeThong Desc", bdtpTu.DateTime.ToString("yyyyMMdd"), bdtpDen.DateTime.ToString("yyyyMMdd"), daily));
+                lst = new D_HOADON().DuLieu(string.Format("CONVERT(date, NgayThucHien) BETWEEN '{0}' AND '{1}' AND MaHD <> '0' AND ((GiaYeuCau - GiaHeThong) * PhanTram / 100) > 0 AND IDKhachHang in ({2}) ORDER BY IDKhachHang,MaHD,MaCho,GiaHeThong Desc", bdtpTu.DateTime.ToString("yyyyMMdd"), bdtpDen.DateTime.ToString("yyyyMMdd"), daily));
                 hoaDonOBindingSource.DataSource = lst;
                 if (XuLyGiaoDien.wait.IsSplashFormVisible)
                     XuLyGiaoDien.wait.CloseWaitForm();
@@ -161,24 +161,24 @@ namespace CRM
                         daily += string.Format(",{0}", lstDaiLyz.CheckedItems[i]);
                     }
 
-                    lst = new HoaDonD().DuLieu(string.Format("CONVERT(date, NgayThucHien) BETWEEN '{0}' AND '{1}' AND MaHD <> '0' AND ((GiaYeuCau - GiaHeThong) * PhanTram / 100) > 0 AND IDKhachHang in ({2}) ORDER BY IDKhachHang,MaHD,MaCho,GiaHeThong Desc", bdtpTu.DateTime.ToString("yyyyMMdd"), bdtpDen.DateTime.ToString("yyyyMMdd"), daily));
+                    lst = new D_HOADON().DuLieu(string.Format("CONVERT(date, NgayThucHien) BETWEEN '{0}' AND '{1}' AND MaHD <> '0' AND ((GiaYeuCau - GiaHeThong) * PhanTram / 100) > 0 AND IDKhachHang in ({2}) ORDER BY IDKhachHang,MaHD,MaCho,GiaHeThong Desc", bdtpTu.DateTime.ToString("yyyyMMdd"), bdtpDen.DateTime.ToString("yyyyMMdd"), daily));
 
                     foreach (int b in a)
                     {
-                        DaiLyO dl = lstDaiLy.Where(w => w.ID.Equals(b)).ToList()[0];
+                        O_DAILY dl = lstDaiLy.Where(w => w.ID.Equals(b)).ToList()[0];
                         XuLyGiaoDien.wait.SetWaitFormDescription("Excel cho: " + dl.Ten);
-                        List<HoaDonO> lstTam1 = lst.Where(w => w.IDKhachHang.Equals(b)).OrderBy(w => w.MaHD.Replace(" ", string.Empty)).ToList();
-                        List<HoaDonO> lstTam = new List<HoaDonO>();
+                        List<O_HOADON> lstTam1 = lst.Where(w => w.IDKhachHang.Equals(b)).OrderBy(w => w.MaHD.Replace(" ", string.Empty)).ToList();
+                        List<O_HOADON> lstTam = new List<O_HOADON>();
                         string newrow = string.Empty;
-                        foreach (HoaDonO hd in lstTam1)
+                        foreach (O_HOADON hd in lstTam1)
                         {
                             if (newrow != hd.MaHD && newrow.Length > 0)
-                                lstTam.Add(new HoaDonO());
+                                lstTam.Add(new O_HOADON());
                             lstTam.Add(hd);
                             newrow = hd.MaHD;
                         }
 
-                        lstTam.Add(new HoaDonO()
+                        lstTam.Add(new O_HOADON()
                         {
                             ID = -1,
                             GiaHeThong = lstTam.Sum(w => w.GiaHeThong),
@@ -214,7 +214,7 @@ namespace CRM
         {
             if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
             {
-                lstDaiLy = new DaiLyD().HoaDon(bdtpTu.DateTime, bdtpDen.DateTime);
+                lstDaiLy = new D_DAILY().HoaDon(bdtpTu.DateTime, bdtpDen.DateTime);
                 daiLyOBindingSource.DataSource = lstDaiLy;
                 chkAll.Checked = false;
             }
@@ -233,7 +233,7 @@ namespace CRM
             lblChon.Text = string.Format("Đã chọn: {0} đại lý", lstDaiLyz.CheckedItems.Count);
         }
 
-        CauHinhSMTPD cauHinhSMTPD = new CauHinhSMTPD();
+        D_CAUHINHSMTP cauHinhSMTPD = new D_CAUHINHSMTP();
         private void btnGuiMail_Click(object sender, EventArgs e)
         {
             if (XtraMessageBox.Show("Bạn muốn gửi mail ?", "Câu hỏi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -243,8 +243,8 @@ namespace CRM
                     XuLyGiaoDien.Alert("Chưa chọn đại lý tìm", Form_Alert.enmType.Info);
                 else
                 {
-                    CauHinhSMTPO cauHinhSMTPO = cauHinhSMTPD.DuLieu();
-                    MauEmailO ma = new MauEmailD().DuLieu()[0];
+                    O_CAUHINHSMTP cauHinhSMTPO = cauHinhSMTPD.DuLieu();
+                    O_MAUEMAIL ma = new D_MAUEMAIL().DuLieu()[0];
 
                     SmtpClient client = new SmtpClient();
                     client.Port = cauHinhSMTPO.Port;
@@ -267,7 +267,7 @@ namespace CRM
                         daily += string.Format(",{0}", lstDaiLyz.CheckedItems[i]);
                     }
 
-                    lst = new HoaDonD().DuLieu(string.Format("CONVERT(date, NgayThucHien) BETWEEN '{0}' AND '{1}' AND MaHD <> '0' AND ((GiaYeuCau - GiaHeThong) * PhanTram / 100) > 0 AND IDKhachHang in ({2}) ORDER BY IDKhachHang,MaHD,MaCho,GiaHeThong Desc", bdtpTu.DateTime.ToString("yyyyMMdd"), bdtpDen.DateTime.ToString("yyyyMMdd"), daily));
+                    lst = new D_HOADON().DuLieu(string.Format("CONVERT(date, NgayThucHien) BETWEEN '{0}' AND '{1}' AND MaHD <> '0' AND ((GiaYeuCau - GiaHeThong) * PhanTram / 100) > 0 AND IDKhachHang in ({2}) ORDER BY IDKhachHang,MaHD,MaCho,GiaHeThong Desc", bdtpTu.DateTime.ToString("yyyyMMdd"), bdtpDen.DateTime.ToString("yyyyMMdd"), daily));
 
                     DevExpress.XtraPrinting.XlsxExportOptionsEx opt = new DevExpress.XtraPrinting.XlsxExportOptionsEx();
                     opt.CustomizeCell += op_CustomizeCell;
@@ -278,25 +278,25 @@ namespace CRM
                     bool sendOK = false;
                     foreach (int b in a)
                     {
-                        DaiLyO dl = lstDaiLy.Where(w => w.ID.Equals(b)).ToList()[0];
+                        O_DAILY dl = lstDaiLy.Where(w => w.ID.Equals(b)).ToList()[0];
                         txtMauEmail.HtmlText = ma.NoiDung.Replace("{0}", dl.MaDL).Replace("{1}", XuLyDuLieu.NotVietKey(dl.Ten));
                         string[] EmailKeToanString = System.Text.RegularExpressions.Regex.Replace(dl.EmailKeToan, @"\t|\n|\r", "|").Replace("||", "|").Split('|');
                         for (int ii = 0; ii < EmailKeToanString.Count(); ii++)
                         {
                             if (EmailKeToanString[ii].Length > 5)
                             {
-                                List<HoaDonO> lstTam1 = lst.Where(w => w.IDKhachHang.Equals(b)).OrderBy(w => w.MaHD.Replace(" ", string.Empty)).ToList();
-                                List<HoaDonO> lstTam = new List<HoaDonO>();
+                                List<O_HOADON> lstTam1 = lst.Where(w => w.IDKhachHang.Equals(b)).OrderBy(w => w.MaHD.Replace(" ", string.Empty)).ToList();
+                                List<O_HOADON> lstTam = new List<O_HOADON>();
                                 string newrow = string.Empty;
-                                foreach (HoaDonO hd in lstTam1)
+                                foreach (O_HOADON hd in lstTam1)
                                 {
                                     if (newrow != hd.MaHD && newrow.Length > 0)
-                                        lstTam.Add(new HoaDonO());
+                                        lstTam.Add(new O_HOADON());
                                     lstTam.Add(hd);
                                     newrow = hd.MaHD;
                                 }
 
-                                lstTam.Add(new HoaDonO()
+                                lstTam.Add(new O_HOADON()
                                 {
                                     ID = -1,
                                     GiaHeThong = lstTam.Sum(w => w.GiaHeThong),
@@ -363,21 +363,21 @@ namespace CRM
                         daily += string.Format(",{0}", lstDaiLyz.CheckedItems[i]);
                     }
 
-                    lst = new HoaDonD().DuLieu(string.Format("CONVERT(date, NgayThucHien) BETWEEN '{0}' AND '{1}' AND MaHD <> '0'  AND ((GiaYeuCau - GiaHeThong) * PhanTram / 100) > 0 AND IDKhachHang in ({2}) ORDER BY IDKhachHang,MaHD,MaCho,GiaHeThong Desc", bdtpTu.DateTime.ToString("yyyyMMdd"), bdtpDen.DateTime.ToString("yyyyMMdd"), daily));
+                    lst = new D_HOADON().DuLieu(string.Format("CONVERT(date, NgayThucHien) BETWEEN '{0}' AND '{1}' AND MaHD <> '0'  AND ((GiaYeuCau - GiaHeThong) * PhanTram / 100) > 0 AND IDKhachHang in ({2}) ORDER BY IDKhachHang,MaHD,MaCho,GiaHeThong Desc", bdtpTu.DateTime.ToString("yyyyMMdd"), bdtpDen.DateTime.ToString("yyyyMMdd"), daily));
 
-                    GiaoDichO gdo;
+                    O_GIAODICH gdo;
 
-                    KhoaNgayO kn = new KhoaNgayD().KiemTraNgayKhoa(bdtpTu.DateTime);
+                    O_KHOANGAY kn = new D_KHOANGAY().KiemTraNgayKhoa(bdtpTu.DateTime);
                     if (kn.KhoaAdmin)
                         return;
 
-                    GiaoDichD giaoDichD = new GiaoDichD();
+                    D_GIAODICH giaoDichD = new D_GIAODICH();
                     foreach (int b in a)
                     {
-                        DaiLyO dl = lstDaiLy.Where(w => w.ID.Equals(b)).ToList()[0];
+                        O_DAILY dl = lstDaiLy.Where(w => w.ID.Equals(b)).ToList()[0];
                         XuLyGiaoDien.wait.SetWaitFormDescription("Thu phí: " + dl.Ten);
 
-                        gdo = new GiaoDichO();
+                        gdo = new O_GIAODICH();
                         gdo.LoaiKhachHang = dl.LoaiKhachHang;
                         gdo.IDKhachHang = dl.ID;
                         gdo.MaCho = "HD";

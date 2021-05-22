@@ -10,16 +10,16 @@ namespace CRM
 {
     public partial class frmTuyenBayThem : DevExpress.XtraEditors.XtraForm
     {
-        List<SanBayO> _list = new List<SanBayO>();
-        TuyenBayO _TuyenBayO = new TuyenBayO();
-        TuyenBayD _TuyenBayD = new TuyenBayD();
+        List<O_SANBAY> _list = new List<O_SANBAY>();
+        O_TUYENBAY _TuyenBayO = new O_TUYENBAY();
+        D_TUYENBAY _TuyenBayD = new D_TUYENBAY();
         public frmTuyenBayThem()
         {
             InitializeComponent();
             Text += " thêm";
         }
 
-        public frmTuyenBayThem(TuyenBayO tb)
+        public frmTuyenBayThem(O_TUYENBAY tb)
         {
             InitializeComponent();
             iKyHieuDen.ReadOnly = iKyHieuDi.ReadOnly = true;
@@ -29,7 +29,7 @@ namespace CRM
 
         private void frmTuyenBayThem_Load(object sender, EventArgs e)
         {
-            _list = new SanBayD().DuLieu();
+            _list = new D_SANBAY().DuLieu();
             sanBayOBindingSource.DataSource = _list;
             XuLyDuLieu.ConvertClassToTable(this, _TuyenBayO);
             XuLyGiaoDien.OpenForm(this);

@@ -12,11 +12,11 @@ namespace CRM
     public partial class frmNhomKhachHang : DevExpress.XtraEditors.XtraForm
     {
         int _LoaiKhachHang = 1;
-        NhomDaiLyO _NhomDaiLyO = new NhomDaiLyO();
-        NhomDaiLyD _NhomDaiLyD = new NhomDaiLyD();
-        TinhTrangD _TinhTrangD = new TinhTrangD();
-        List<NhomDaiLyO> _ListNhomDaiLyO = new List<NhomDaiLyO>();
-        List<TinhTrangO> _ListTinhTrangO = new List<TinhTrangO>();
+        O_NHOMDAILY _NhomDaiLyO = new O_NHOMDAILY();
+        D_NHOMDAILY _NhomDaiLyD = new D_NHOMDAILY();
+        D_TRANGTHAI _TinhTrangD = new D_TRANGTHAI();
+        List<O_NHOMDAILY> _ListNhomDaiLyO = new List<O_NHOMDAILY>();
+        List<O_TRANGTHAI> _ListTinhTrangO = new List<O_TRANGTHAI>();
 
         public frmNhomKhachHang(int LoaiKhachHang)
         {
@@ -39,7 +39,7 @@ namespace CRM
         {
             if (GVNKH.GetSelectedRows().Count() > 0)
             {
-                _NhomDaiLyO = GVNKH.GetRow(GVNKH.GetSelectedRows()[0]) as NhomDaiLyO;
+                _NhomDaiLyO = GVNKH.GetRow(GVNKH.GetSelectedRows()[0]) as O_NHOMDAILY;
                 if (_NhomDaiLyO != null)
                 {
                     iTen.Text = _NhomDaiLyO.Ten;
@@ -97,7 +97,7 @@ namespace CRM
         {
             if (GVNKH.GetSelectedRows().Count() > 0)
             {
-                _NhomDaiLyO = GVNKH.GetRow(GVNKH.GetSelectedRows()[0]) as NhomDaiLyO;
+                _NhomDaiLyO = GVNKH.GetRow(GVNKH.GetSelectedRows()[0]) as O_NHOMDAILY;
                 if (_NhomDaiLyO != null)
                 {
                     XuLyGiaoDien.ThongBao(Text, _NhomDaiLyD.Xoa(_NhomDaiLyO.ID) > 0, true);
@@ -108,12 +108,12 @@ namespace CRM
 
         }
 
-        TinhTrangO _TinhTrangO = new TinhTrangO();
+        O_TRANGTHAI _TinhTrangO = new O_TRANGTHAI();
         private void GVTTKH_Click(object sender, EventArgs e)
         {
             if (GVTTKH.GetSelectedRows().Count() > 0)
             {
-                _TinhTrangO = GVTTKH.GetRow(GVTTKH.GetSelectedRows()[0]) as TinhTrangO;
+                _TinhTrangO = GVTTKH.GetRow(GVTTKH.GetSelectedRows()[0]) as O_TRANGTHAI;
                 if (_TinhTrangO != null)
                 {
                     iTenTrangThai.Text = _TinhTrangO.TenTrangThai;

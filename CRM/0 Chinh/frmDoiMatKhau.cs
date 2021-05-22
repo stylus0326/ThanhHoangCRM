@@ -35,7 +35,7 @@ namespace CRM
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("MatKhauCty", TMD5.TMd5Hash(iMatKhauCty.Text));
 
-            if (XuLyGiaoDien.ThongBao(Text, new DaiLyD().CapNhat(dic, DuLieuTaoSan.NV.ID) > 0))
+            if (XuLyGiaoDien.ThongBao(Text, new D_DAILY().CapNhat(dic, DuLieuTaoSan.NV.ID) > 0))
                 Close();
         }
     }

@@ -295,7 +295,7 @@
             // 
             // bieuDoOBindingSource
             // 
-            this.bieuDoOBindingSource.DataSource = typeof(DataTransferObject.BieuDoO);
+            this.bieuDoOBindingSource.DataSource = typeof(DataTransferObject.O_BieuDo);
             // 
             // iIDKhachHang
             // 
@@ -317,7 +317,7 @@
             // 
             // DaiLyDB
             // 
-            this.DaiLyDB.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.DaiLyDB.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // searchLookUpEdit1View
             // 

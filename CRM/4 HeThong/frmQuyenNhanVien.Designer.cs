@@ -216,7 +216,7 @@
             // 
             // QuyenNhanVienOBindingSource
             // 
-            this.QuyenNhanVienOBindingSource.DataSource = typeof(DataTransferObject.QuyenNhanVienO);
+            this.QuyenNhanVienOBindingSource.DataSource = typeof(DataTransferObject.O_NHOMQUYEN);
             // 
             // grvQuyenNhanVien
             // 

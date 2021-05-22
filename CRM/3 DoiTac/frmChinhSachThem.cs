@@ -10,8 +10,8 @@ namespace CRM
 {
     public partial class frmChinhSachThem : DevExpress.XtraEditors.XtraForm
     {
-        ChinhSachO _ChinhSachO = new ChinhSachO();
-        ChinhSachD _ChinhSachD = new ChinhSachD();
+        O_CHINHSACH _ChinhSachO = new O_CHINHSACH();
+        D_CHINHSACH _ChinhSachD = new D_CHINHSACH();
 
         public frmChinhSachThem(int LoaiKhachHang)
         {
@@ -20,7 +20,7 @@ namespace CRM
             Text += " thêm";
         }
 
-        public frmChinhSachThem(ChinhSachO chinhSach)
+        public frmChinhSachThem(O_CHINHSACH chinhSach)
         {
             InitializeComponent();
             _ChinhSachO = chinhSach;

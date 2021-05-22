@@ -8,7 +8,7 @@ namespace CRM
 
     public partial class frmNhanVien : DevExpress.XtraEditors.XtraForm
     {
-        DaiLyO _KhachHangO = new DaiLyO();
+        O_DAILY _KhachHangO = new O_DAILY();
         public frmNhanVien()
         {
             InitializeComponent();
@@ -17,6 +17,7 @@ namespace CRM
         private void frmNhanVien_Load(object sender, EventArgs e)
         {
             DuLieu();
+            btnAdd.Visibility = DuLieuTaoSan.Q.NhanVienThemSua ? DevExpress.XtraBars.BarItemVisibility.Always : DevExpress.XtraBars.BarItemVisibility.Never;
         }
 
         private void btnLoad_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -26,14 +27,14 @@ namespace CRM
 
         private void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            new frmNhanVienThem().ShowDialog(this);
+            new frmNhanVienThem(false).ShowDialog(this);
         }
 
         private void GVNV_DoubleClick(object sender, EventArgs e)
         {
-            if (GVNV.GetSelectedRows().Count() > 0)
+            if (GVNV.GetSelectedRows().Count() > 0 && DuLieuTaoSan.Q.NhanVienThemSua)
             {
-                _KhachHangO = GVNV.GetRow(GVNV.GetSelectedRows()[0]) as DaiLyO;
+                _KhachHangO = GVNV.GetRow(GVNV.GetSelectedRows()[0]) as O_DAILY;
                 if (_KhachHangO != null)
                     new frmNhanVienThem(_KhachHangO).ShowDialog(this);
             }
@@ -43,8 +44,8 @@ namespace CRM
         {
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
-            khachHangOBindingSource.DataSource = new DaiLyD().DuLieu(0);
-            quyenNhanVienOBindingSource.DataSource = new QuyenNhanVienD().DuLieu();
+            khachHangOBindingSource.DataSource = new D_DAILY().NhanVien(DuLieuTaoSan.NV.TenDangNhapCty.ToLower());
+            quyenNhanVienOBindingSource.DataSource = new D_NHOMQUYEN().DuLieu();
             gioiTinhBindingSource.DataSource = DuLieuTaoSan.GioiTinh();
             if (XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.CloseWaitForm();
@@ -52,8 +53,15 @@ namespace CRM
 
         private void rBut_Click(object sender, EventArgs e)
         {
-            DaiLyO dl = GVNV.GetRow(GVNV.GetSelectedRows()[0]) as DaiLyO;
+            O_DAILY dl = GVNV.GetRow(GVNV.GetSelectedRows()[0]) as O_DAILY;
             new frmCongNoPhu(dl).ShowDialog();
+        }
+
+        private void rSi_Click(object sender, EventArgs e)
+        {
+            O_DAILY dl = GVNV.GetRow(GVNV.GetSelectedRows()[0]) as O_DAILY;
+            if (dl.SIC > 0)
+                new frmSignIn(dl).ShowDialog();
         }
     }
 }

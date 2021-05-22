@@ -203,7 +203,7 @@ namespace CRM
             // 
             // bindingSource1
             // 
-            this.bindingSource1.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.bindingSource1.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // gridView2
             // 
@@ -273,7 +273,7 @@ namespace CRM
             // 
             // daiLyOBindingSource
             // 
-            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // searchLookUpEdit1View
             // 
@@ -409,7 +409,7 @@ namespace CRM
             // 
             // hoaDonOBindingSource
             // 
-            this.hoaDonOBindingSource.DataSource = typeof(DataTransferObject.HoaDonO);
+            this.hoaDonOBindingSource.DataSource = typeof(DataTransferObject.O_HOADON);
             // 
             // bandedGridView1
             // 
@@ -489,7 +489,7 @@ namespace CRM
             // 
             // nCCOBindingSource
             // 
-            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.NCCO);
+            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.O_NHACUNGCAP);
             // 
             // colHang
             // 
@@ -517,7 +517,7 @@ namespace CRM
             // 
             // hangBayOBindingSource
             // 
-            this.hangBayOBindingSource.DataSource = typeof(DataTransferObject.HangBayO);
+            this.hangBayOBindingSource.DataSource = typeof(DataTransferObject.O_HANGBAY);
             // 
             // colHanhTrinhDi
             // 
@@ -542,7 +542,7 @@ namespace CRM
             // 
             // tuyenBayOBindingSource
             // 
-            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.TuyenBayO);
+            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.O_TUYENBAY);
             // 
             // colHanhTrinhVe
             // 
@@ -819,7 +819,7 @@ namespace CRM
             // 
             // hoaDonOBindingSource1
             // 
-            this.hoaDonOBindingSource1.DataSource = typeof(DataTransferObject.HoaDonO);
+            this.hoaDonOBindingSource1.DataSource = typeof(DataTransferObject.O_HOADON);
             // 
             // iCongTy
             // 
@@ -1100,7 +1100,7 @@ namespace CRM
             // 
             // daiLyOBindingSource1
             // 
-            this.daiLyOBindingSource1.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource1.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // iActive2
             // 

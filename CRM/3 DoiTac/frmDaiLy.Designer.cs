@@ -45,6 +45,11 @@
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject10 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject11 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject12 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions4 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject13 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject14 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject15 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject16 = new DevExpress.Utils.SerializableAppearanceObject();
             this.repositoryItemLookUpEdit8 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.repositoryItemLookUpEdit9 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.repositoryItemLookUpEdit5 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
@@ -54,32 +59,35 @@
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.ibtnNap = new DevExpress.XtraBars.BarButtonItem();
             this.btnThem = new DevExpress.XtraBars.BarButtonItem();
+            this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
+            this.rCMB = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             this.btnDL = new DevExpress.XtraBars.BarCheckItem();
             this.btnCTV = new DevExpress.XtraBars.BarCheckItem();
             this.btnAn = new DevExpress.XtraBars.BarCheckItem();
             this.btnNhom = new DevExpress.XtraBars.BarButtonItem();
             this.btnSI = new DevExpress.XtraBars.BarButtonItem();
+            this.btneXCEL = new DevExpress.XtraBars.BarButtonItem();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.GCDL = new DevExpress.XtraGrid.GridControl();
             this.GVDL = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridView();
-            this.gridBand1 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
-            this.colChiTiet = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
-            this.btnChiTiet = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-            this.colThongKe = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
-            this.btnThonKe = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colQuyAGS = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.btnUpQuy = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            this.colSIC = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.btnSIC = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colID = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.colMaDL = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.colMaAGS = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.colTen = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.colLuuY = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.rM = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
             this.colNhomDaiLy = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.btnThonKe = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colNgayGDGN = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.colSoDuCuoi = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.btnChiTiet = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colSoDuCanhBao1 = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.colZalo = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.txtZalo = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
@@ -91,7 +99,6 @@
             this.txtEmailKeToan = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.colEmailGiaoDich = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.txtEmailGiaoDich = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
-            this.gridBand2 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
             this.colNguoiDaiDienHD = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.colChinhSach = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.lueChinhSach = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
@@ -109,17 +116,23 @@
             this.DSNhanVien = new System.Windows.Forms.BindingSource(this.components);
             this.colDuHoSo = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
+            this.colHanMuc = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.gridBand1 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
+            this.gridBand2 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.daiLyOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rCMB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GCDL)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GVDL)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnChiTiet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnThonKe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnUpQuy)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSIC)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rM)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnThonKe)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnChiTiet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtZalo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDienThoai)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDiDong)).BeginInit();
@@ -172,7 +185,7 @@
             // 
             // daiLyOBindingSource
             // 
-            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // barManager1
             // 
@@ -190,8 +203,12 @@
             this.btnCTV,
             this.btnAn,
             this.btnSI,
-            this.btnNhom});
-            this.barManager1.MaxItemId = 63;
+            this.btnNhom,
+            this.btneXCEL,
+            this.barEditItem1});
+            this.barManager1.MaxItemId = 66;
+            this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.rCMB});
             // 
             // bar1
             // 
@@ -202,11 +219,13 @@
             this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.ibtnNap, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnThem, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnDL, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.PaintStyle | DevExpress.XtraBars.BarLinkUserDefines.Width))), this.barEditItem1, "", true, true, true, 98, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnDL, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnCTV, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnAn, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnAn, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnNhom, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnSI, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnSI, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btneXCEL, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.bar1.OptionsBar.AllowQuickCustomization = false;
             this.bar1.OptionsBar.DrawDragBorder = false;
             this.bar1.OptionsBar.MultiLine = true;
@@ -230,6 +249,27 @@
             this.btnThem.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N));
             this.btnThem.Name = "btnThem";
             this.btnThem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnThem_ItemClick);
+            // 
+            // barEditItem1
+            // 
+            this.barEditItem1.Caption = "Mục hiển thị";
+            this.barEditItem1.Edit = this.rCMB;
+            this.barEditItem1.EditValue = "Còn giao dịch";
+            this.barEditItem1.Id = 65;
+            this.barEditItem1.Name = "barEditItem1";
+            // 
+            // rCMB
+            // 
+            this.rCMB.AutoHeight = false;
+            this.rCMB.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.rCMB.Items.AddRange(new object[] {
+            "Còn giao dịch",
+            "Nợ xấu",
+            "Nghỉ",
+            "Hiện tất cả"});
+            this.rCMB.Name = "rCMB";
+            this.rCMB.SelectedIndexChanged += new System.EventHandler(this.rCMB_SelectedIndexChanged);
             // 
             // btnDL
             // 
@@ -285,6 +325,15 @@
             this.btnSI.Name = "btnSI";
             this.btnSI.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSI_ItemClick);
             // 
+            // btneXCEL
+            // 
+            this.btneXCEL.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.btneXCEL.Caption = "Excel";
+            this.btneXCEL.Id = 64;
+            this.btneXCEL.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btneXCEL.ImageOptions.SvgImage")));
+            this.btneXCEL.Name = "btneXCEL";
+            this.btneXCEL.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btneXCEL_ItemClick);
+            // 
             // barDockControlTop
             // 
             this.barDockControlTop.CausesValidation = false;
@@ -336,7 +385,9 @@
             this.lueNhanVien,
             this.btnChiTiet,
             this.btnThonKe,
-            this.btnUpQuy});
+            this.btnUpQuy,
+            this.btnSIC,
+            this.rM});
             this.GCDL.Size = new System.Drawing.Size(955, 551);
             this.GCDL.TabIndex = 0;
             this.GCDL.ToolTipController = this.toolTipController1;
@@ -350,8 +401,6 @@
             this.gridBand1,
             this.gridBand2});
             this.GVDL.Columns.AddRange(new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn[] {
-            this.colChiTiet,
-            this.colThongKe,
             this.colID,
             this.colNVGiaoDich,
             this.colNgayKiQuy,
@@ -374,8 +423,10 @@
             this.colLuuY,
             this.colSoDuCuoi,
             this.colTinhTrang,
+            this.colSIC,
             this.colZalo,
-            this.colQuyAGS});
+            this.colQuyAGS,
+            this.colHanMuc});
             this.GVDL.GridControl = this.GCDL;
             this.GVDL.IndicatorWidth = 50;
             this.GVDL.Name = "GVDL";
@@ -393,66 +444,6 @@
             this.GVDL.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GVDL_KeyPress);
             this.GVDL.DoubleClick += new System.EventHandler(this.grvDaiLy_DoubleClick);
             // 
-            // gridBand1
-            // 
-            this.gridBand1.Caption = "Thông Tin Giao Dịch";
-            this.gridBand1.Columns.Add(this.colChiTiet);
-            this.gridBand1.Columns.Add(this.colThongKe);
-            this.gridBand1.Columns.Add(this.colQuyAGS);
-            this.gridBand1.Columns.Add(this.colID);
-            this.gridBand1.Columns.Add(this.colMaDL);
-            this.gridBand1.Columns.Add(this.colMaAGS);
-            this.gridBand1.Columns.Add(this.colTen);
-            this.gridBand1.Columns.Add(this.colLuuY);
-            this.gridBand1.Columns.Add(this.colNhomDaiLy);
-            this.gridBand1.Columns.Add(this.colNgayGDGN);
-            this.gridBand1.Columns.Add(this.colSoDuCuoi);
-            this.gridBand1.Columns.Add(this.colSoDuCanhBao1);
-            this.gridBand1.Columns.Add(this.colZalo);
-            this.gridBand1.Columns.Add(this.colDienThoai);
-            this.gridBand1.Columns.Add(this.colDiDong);
-            this.gridBand1.Columns.Add(this.colEmailKeToan);
-            this.gridBand1.Columns.Add(this.colEmailGiaoDich);
-            this.gridBand1.Name = "gridBand1";
-            this.gridBand1.VisibleIndex = 0;
-            this.gridBand1.Width = 1522;
-            // 
-            // colChiTiet
-            // 
-            this.colChiTiet.ColumnEdit = this.btnChiTiet;
-            this.colChiTiet.Name = "colChiTiet";
-            this.colChiTiet.OptionsColumn.FixedWidth = true;
-            this.colChiTiet.Visible = true;
-            this.colChiTiet.Width = 23;
-            // 
-            // btnChiTiet
-            // 
-            this.btnChiTiet.AutoHeight = false;
-            editorButtonImageOptions1.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("editorButtonImageOptions1.SvgImage")));
-            editorButtonImageOptions1.SvgImageSize = new System.Drawing.Size(16, 16);
-            this.btnChiTiet.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
-            this.btnChiTiet.Name = "btnChiTiet";
-            this.btnChiTiet.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
-            // 
-            // colThongKe
-            // 
-            this.colThongKe.ColumnEdit = this.btnThonKe;
-            this.colThongKe.Name = "colThongKe";
-            this.colThongKe.OptionsColumn.FixedWidth = true;
-            this.colThongKe.Visible = true;
-            this.colThongKe.Width = 23;
-            // 
-            // btnThonKe
-            // 
-            this.btnThonKe.AutoHeight = false;
-            editorButtonImageOptions2.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("editorButtonImageOptions2.SvgImage")));
-            editorButtonImageOptions2.SvgImageSize = new System.Drawing.Size(16, 16);
-            this.btnThonKe.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
-            this.btnThonKe.Name = "btnThonKe";
-            this.btnThonKe.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
-            // 
             // colQuyAGS
             // 
             this.colQuyAGS.ColumnEdit = this.btnUpQuy;
@@ -464,16 +455,38 @@
             // btnUpQuy
             // 
             this.btnUpQuy.AutoHeight = false;
-            editorButtonImageOptions3.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("editorButtonImageOptions3.SvgImage")));
-            editorButtonImageOptions3.SvgImageSize = new System.Drawing.Size(16, 16);
+            editorButtonImageOptions1.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("editorButtonImageOptions1.SvgImage")));
+            editorButtonImageOptions1.SvgImageSize = new System.Drawing.Size(16, 16);
             this.btnUpQuy.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.btnUpQuy.Name = "btnUpQuy";
             this.btnUpQuy.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
             // 
+            // colSIC
+            // 
+            this.colSIC.Caption = "SI Cấp";
+            this.colSIC.ColumnEdit = this.btnSIC;
+            this.colSIC.FieldName = "SIC";
+            this.colSIC.MinWidth = 21;
+            this.colSIC.Name = "colSIC";
+            this.colSIC.Visible = true;
+            this.colSIC.Width = 63;
+            // 
+            // btnSIC
+            // 
+            this.btnSIC.AutoHeight = false;
+            editorButtonImageOptions2.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("editorButtonImageOptions2.SvgImage")));
+            editorButtonImageOptions2.SvgImageSize = new System.Drawing.Size(16, 16);
+            this.btnSIC.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            this.btnSIC.Name = "btnSIC";
+            this.btnSIC.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            // 
             // colID
             // 
+            this.colID.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
             this.colID.FieldName = "ID";
+            this.colID.FilterMode = DevExpress.XtraGrid.ColumnFilterMode.DisplayText;
             this.colID.Name = "colID";
             this.colID.OptionsColumn.FixedWidth = true;
             this.colID.Visible = true;
@@ -506,20 +519,41 @@
             // colLuuY
             // 
             this.colLuuY.Caption = "Lưu ý";
+            this.colLuuY.ColumnEdit = this.rM;
             this.colLuuY.FieldName = "LuuY";
             this.colLuuY.Name = "colLuuY";
             this.colLuuY.OptionsColumn.FixedWidth = true;
             this.colLuuY.Visible = true;
             this.colLuuY.Width = 362;
             // 
+            // rM
+            // 
+            this.rM.AutoHeight = false;
+            this.rM.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.rM.Name = "rM";
+            this.rM.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.rM.ShowIcon = false;
+            // 
             // colNhomDaiLy
             // 
             this.colNhomDaiLy.Caption = "Nhóm";
+            this.colNhomDaiLy.ColumnEdit = this.btnThonKe;
             this.colNhomDaiLy.FieldName = "Nhom";
             this.colNhomDaiLy.FilterMode = DevExpress.XtraGrid.ColumnFilterMode.DisplayText;
             this.colNhomDaiLy.Name = "colNhomDaiLy";
             this.colNhomDaiLy.Visible = true;
-            this.colNhomDaiLy.Width = 101;
+            this.colNhomDaiLy.Width = 111;
+            // 
+            // btnThonKe
+            // 
+            this.btnThonKe.AutoHeight = false;
+            editorButtonImageOptions3.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("editorButtonImageOptions3.SvgImage")));
+            editorButtonImageOptions3.SvgImageSize = new System.Drawing.Size(16, 16);
+            this.btnThonKe.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            this.btnThonKe.Name = "btnThonKe";
+            this.btnThonKe.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             // 
             // colNgayGDGN
             // 
@@ -535,6 +569,7 @@
             this.colSoDuCuoi.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.colSoDuCuoi.AppearanceCell.Options.UseFont = true;
             this.colSoDuCuoi.Caption = "Số Dư Cuối";
+            this.colSoDuCuoi.ColumnEdit = this.btnChiTiet;
             this.colSoDuCuoi.DisplayFormat.FormatString = "{0:#,##0;(#,##0)}";
             this.colSoDuCuoi.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colSoDuCuoi.FieldName = "SoDu";
@@ -542,7 +577,21 @@
             this.colSoDuCuoi.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "SoDu", "{0:#,##0;(#,##0)}")});
             this.colSoDuCuoi.Visible = true;
-            this.colSoDuCuoi.Width = 82;
+            this.colSoDuCuoi.Width = 103;
+            // 
+            // btnChiTiet
+            // 
+            this.btnChiTiet.AutoHeight = false;
+            editorButtonImageOptions4.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("editorButtonImageOptions4.SvgImage")));
+            editorButtonImageOptions4.SvgImageSize = new System.Drawing.Size(16, 16);
+            this.btnChiTiet.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            this.btnChiTiet.DisplayFormat.FormatString = "{0:#,##0;(#,##0)}";
+            this.btnChiTiet.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.btnChiTiet.EditFormat.FormatString = "{0:#,##0;(#,##0)}";
+            this.btnChiTiet.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.btnChiTiet.Name = "btnChiTiet";
+            this.btnChiTiet.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             // 
             // colSoDuCanhBao1
             // 
@@ -633,22 +682,6 @@
             this.txtEmailGiaoDich.NullText = "-";
             this.txtEmailGiaoDich.EditValueChanged += new System.EventHandler(this.txtEmailGiaoDich_EditValueChanged);
             // 
-            // gridBand2
-            // 
-            this.gridBand2.Caption = "Thông Tin Hợp Đồng";
-            this.gridBand2.Columns.Add(this.colNguoiDaiDienHD);
-            this.gridBand2.Columns.Add(this.colChinhSach);
-            this.gridBand2.Columns.Add(this.colEmailHD);
-            this.gridBand2.Columns.Add(this.colDiaChiHD);
-            this.gridBand2.Columns.Add(this.colTinhTrang);
-            this.gridBand2.Columns.Add(this.colGhiChu);
-            this.gridBand2.Columns.Add(this.colNgayKiQuy);
-            this.gridBand2.Columns.Add(this.colNVGiaoDich);
-            this.gridBand2.Columns.Add(this.colDuHoSo);
-            this.gridBand2.Name = "gridBand2";
-            this.gridBand2.VisibleIndex = 1;
-            this.gridBand2.Width = 840;
-            // 
             // colNguoiDaiDienHD
             // 
             this.colNguoiDaiDienHD.Caption = "Tên";
@@ -680,7 +713,7 @@
             // 
             // chinhSachOBindingSource
             // 
-            this.chinhSachOBindingSource.DataSource = typeof(DataTransferObject.ChinhSachO);
+            this.chinhSachOBindingSource.DataSource = typeof(DataTransferObject.O_CHINHSACH);
             // 
             // colEmailHD
             // 
@@ -729,11 +762,12 @@
             // 
             // tinhTrangOBindingSource
             // 
-            this.tinhTrangOBindingSource.DataSource = typeof(DataTransferObject.TinhTrangO);
+            this.tinhTrangOBindingSource.DataSource = typeof(DataTransferObject.O_TRANGTHAI);
             // 
             // colGhiChu
             // 
             this.colGhiChu.Caption = "Ghi Chú";
+            this.colGhiChu.ColumnEdit = this.rM;
             this.colGhiChu.FieldName = "GhiChu";
             this.colGhiChu.Name = "colGhiChu";
             this.colGhiChu.Visible = true;
@@ -768,7 +802,7 @@
             // 
             // DSNhanVien
             // 
-            this.DSNhanVien.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.DSNhanVien.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // colDuHoSo
             // 
@@ -780,6 +814,56 @@
             // toolTipController1
             // 
             this.toolTipController1.GetActiveObjectInfo += new DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventHandler(this.toolTipController1_GetActiveObjectInfo);
+            // 
+            // colHanMuc
+            // 
+            this.colHanMuc.Caption = "Hạn mức";
+            this.colHanMuc.DisplayFormat.FormatString = "{0:#,##0;(#,##0)}";
+            this.colHanMuc.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colHanMuc.FieldName = "HanMuc";
+            this.colHanMuc.Name = "colHanMuc";
+            this.colHanMuc.Visible = true;
+            this.colHanMuc.Width = 102;
+            // 
+            // gridBand1
+            // 
+            this.gridBand1.Caption = "Thông Tin Giao Dịch";
+            this.gridBand1.Columns.Add(this.colQuyAGS);
+            this.gridBand1.Columns.Add(this.colSIC);
+            this.gridBand1.Columns.Add(this.colID);
+            this.gridBand1.Columns.Add(this.colMaDL);
+            this.gridBand1.Columns.Add(this.colMaAGS);
+            this.gridBand1.Columns.Add(this.colTen);
+            this.gridBand1.Columns.Add(this.colLuuY);
+            this.gridBand1.Columns.Add(this.colNhomDaiLy);
+            this.gridBand1.Columns.Add(this.colNgayGDGN);
+            this.gridBand1.Columns.Add(this.colHanMuc);
+            this.gridBand1.Columns.Add(this.colSoDuCuoi);
+            this.gridBand1.Columns.Add(this.colSoDuCanhBao1);
+            this.gridBand1.Columns.Add(this.colZalo);
+            this.gridBand1.Columns.Add(this.colDienThoai);
+            this.gridBand1.Columns.Add(this.colDiDong);
+            this.gridBand1.Columns.Add(this.colEmailKeToan);
+            this.gridBand1.Columns.Add(this.colEmailGiaoDich);
+            this.gridBand1.Name = "gridBand1";
+            this.gridBand1.VisibleIndex = 0;
+            this.gridBand1.Width = 1672;
+            // 
+            // gridBand2
+            // 
+            this.gridBand2.Caption = "Thông Tin Hợp Đồng";
+            this.gridBand2.Columns.Add(this.colNguoiDaiDienHD);
+            this.gridBand2.Columns.Add(this.colChinhSach);
+            this.gridBand2.Columns.Add(this.colEmailHD);
+            this.gridBand2.Columns.Add(this.colDiaChiHD);
+            this.gridBand2.Columns.Add(this.colTinhTrang);
+            this.gridBand2.Columns.Add(this.colGhiChu);
+            this.gridBand2.Columns.Add(this.colNgayKiQuy);
+            this.gridBand2.Columns.Add(this.colNVGiaoDich);
+            this.gridBand2.Columns.Add(this.colDuHoSo);
+            this.gridBand2.Name = "gridBand2";
+            this.gridBand2.VisibleIndex = 1;
+            this.gridBand2.Width = 840;
             // 
             // frmDaiLy
             // 
@@ -802,11 +886,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.daiLyOBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rCMB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GCDL)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GVDL)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnChiTiet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnThonKe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnUpQuy)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSIC)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rM)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnThonKe)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnChiTiet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtZalo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDienThoai)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDiDong)).EndInit();
@@ -879,16 +966,21 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit lueNhanVien;
         private System.Windows.Forms.BindingSource DSNhanVien;
         private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn colMaAGS;
-        private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn colChiTiet;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit btnChiTiet;
         private DevExpress.XtraBars.BarButtonItem btnNhom;
-        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand1;
-        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand2;
-        private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn colThongKe;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit btnThonKe;
         private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn colDuHoSo;
         private DevExpress.Utils.ToolTipController toolTipController1;
         private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn colQuyAGS;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit btnUpQuy;
+        private DevExpress.XtraBars.BarButtonItem btneXCEL;
+        private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit btnSIC;
+        private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn colSIC;
+        private DevExpress.XtraBars.BarEditItem barEditItem1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox rCMB;
+        private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit rM;
+        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand1;
+        private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn colHanMuc;
+        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand2;
     }
 }

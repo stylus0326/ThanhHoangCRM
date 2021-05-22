@@ -71,7 +71,7 @@
             // 
             // daiLyOBindingSource
             // 
-            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // gridView1
             // 

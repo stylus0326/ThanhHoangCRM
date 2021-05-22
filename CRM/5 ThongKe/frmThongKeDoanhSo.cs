@@ -21,8 +21,8 @@ namespace CRM
 
         private void frmThongKeDoanhSo_Load(object sender, EventArgs e)
         {
-            daiLyOBindingSource.DataSource = new DaiLyD().All();
-            nCCOBindingSource.DataSource = new NCCD().DuLieu();
+            daiLyOBindingSource.DataSource = new D_DAILY().All();
+            nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu(true);
             bdtpTu.EditValue = DateTime.Now.AddDays(-240);
             bdtpTu.EditValueChanged += BdtpTu_EditValueChanged;
             bdtpDen.EditValueChanged += BdtpTu_EditValueChanged;
@@ -178,14 +178,31 @@ namespace CRM
                     }
                     break;
             }
-            string az = string.Format(@"
+            string az = "";
+            if (barCheckItem2.Checked)
+            {
+                colHang.Visible = false;
+                   az = string.Format(@"
+        SET DATEFIRST 1
+        select * from (
+                    select IDKhachHang,dl.NVGiaoDich,{0} 'CotMoc',SUM({5}) Gia from GIAODICH
+                    left join (select ID MaIDDL,NVGiaoDich from DAILY where LoaiKhachHang = 1) dl on IDKhachHang = MaIDDL where MaIDDL is not null and LoaiGiaoDich in ({6}) and CONVERT(date,NgayGD) between '{2}' and '{3}' group by {1} ,IDKhachHang ,dl.NVGiaoDich
+                    ) Y pivot (max(Gia) for CotMoc in ([{4}])) as pv
+                    order by IDKhachHang", TenCotTao, TenCotTao2, startDate.ToString("yyyyMMdd"), endDate.ToString("yyyyMMdd"), String.Join("],[", ListTenCot.ToArray()), azs, azs == "GiaNet" ? "4" : "9");
+            }
+            else
+            {
+                colHang.Visible = true;
+                az = string.Format(@"
         SET DATEFIRST 1
         select * from (
                     select IDKhachHang,dl.NVGiaoDich,NhaCungCap,{0} 'CotMoc',SUM({5}) Gia from GIAODICH
                     left join (select ID MaIDDL,NVGiaoDich from DAILY where LoaiKhachHang = 1) dl on IDKhachHang = MaIDDL where MaIDDL is not null and LoaiGiaoDich in ({6}) and CONVERT(date,NgayGD) between '{2}' and '{3}' and coalesce(NhaCungCap,0)>0 group by {1} ,IDKhachHang,NhaCungCap ,dl.NVGiaoDich
                     ) Y pivot (max(Gia) for CotMoc in ([{4}])) as pv
-                    order by IDKhachHang,NhaCungCap", TenCotTao, TenCotTao2, startDate.ToString("yyyyMMdd"), endDate.ToString("yyyyMMdd"), String.Join("],[", ListTenCot.ToArray()), azs, azs == "GiaNet" ? "4,13,14" : "9");
-            dt = new GiaoDichD().LayDataTable(az);
+                    order by IDKhachHang,NhaCungCap", TenCotTao, TenCotTao2, startDate.ToString("yyyyMMdd"), endDate.ToString("yyyyMMdd"), String.Join("],[", ListTenCot.ToArray()), azs, azs == "GiaNet" ? "4" : "9");
+
+            }
+            dt = new D_GIAODICH().LayDataTable(az);
             GCTK.DataSource = dt;
             GVTK.BestFitColumns();
         }

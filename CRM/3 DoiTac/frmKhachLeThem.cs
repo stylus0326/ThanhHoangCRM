@@ -15,7 +15,7 @@ namespace CRM
             Text += " thêm";
         }
 
-        public frmKhachLeThem(DaiLyO _doiTuongO)
+        public frmKhachLeThem(O_DAILY _doiTuongO)
         {
             InitializeComponent();
             _DaiLyO = _doiTuongO;
@@ -30,8 +30,8 @@ namespace CRM
         }
 
         #region Biến
-        DaiLyD _DaiLyD = new DaiLyD();
-        DaiLyO _DaiLyO = new DaiLyO();
+        D_DAILY _DaiLyD = new D_DAILY();
+        O_DAILY _DaiLyO = new O_DAILY();
         #endregion
 
         private void btnLuu_Click(object sender, EventArgs e)
@@ -56,11 +56,14 @@ namespace CRM
             {
                 if (Owner.ActiveMdiChild is frmKhachLe)
                     (Owner.ActiveMdiChild as frmKhachLe).DuLieu();
-                else
+                else if (Owner is frmVeThem)
                     (Owner as frmVeThem).DuLieuKhachLe(a);
+                else
+                    (Owner as frmKhachSanThem).DuLieuKhachLe(a);
                 Close();
             }
         }
+
 
         private void frmKhachLeThem_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {

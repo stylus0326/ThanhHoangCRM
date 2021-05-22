@@ -29,7 +29,7 @@ namespace CRM
             LayDLNganHang();
             TaiLaiDuLieu();
             LayDLKhac();
-            DSNhanVien.DataSource = new DaiLyD().NhanVien();
+            DSNhanVien.DataSource = new D_DAILY().NhanVien();
         }
 
         #region Dữ liệu 
@@ -54,16 +54,26 @@ namespace CRM
                 if (chkNganHang.Checked)
                     CTV += " AND NganHangID = " + kh.ID;
             }
-            _listCTNganHangO = new CTNganHangD().DuLieu(CTV, false);
+
+            if (iCTKN.Checked)
+                _listCTNganHangO = new D_CTNGANHANG().DuLieu(CTV);
+            else
+                _listCTNganHangO = new D_CTNGANHANG().DuLieu(CTV, false);
+
             cTNganHangOBindingSource.DataSource = _listCTNganHangO;
 
             if (XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.CloseWaitForm();
         }
 
+
         public void LayDLNganHang()
         {
-            nganHangOBindingSource.DataSource = nhD.DuLieu(false);
+            if (iCTKN.Checked)
+                nganHangOBindingSource.DataSource = nhD.DuLieu();
+            else
+                nganHangOBindingSource.DataSource = nhD.DuLieu(false);
+
             GVNH.BestFitColumns();
             GVNH.ExpandAllGroups();
         }
@@ -71,7 +81,7 @@ namespace CRM
         public void LayDLKhac()
         {
             IntStringBindingSource.DataSource = DuLieuTaoSan.TrangThai_NganHang();
-            IntStringBindingSource1.DataSource = DuLieuTaoSan.LoaiGiaoDich_NganHang_TatCa();
+            loaiGiaoDichOBindingSource.DataSource = new D_LOAIGIAODICH().DuLieu();
             intStringBindingSource2.DataSource = DuLieuTaoSan.LoaiKhachHang_NganHang();
         }
         #endregion
@@ -79,22 +89,14 @@ namespace CRM
         #region Biến 
         int idThoiGian = 0;
         string CTV = string.Empty;
-        NganHangO kh;
+        O_NGANHANG kh;
         string B = string.Empty;
-        CTNganHangO cTNgan;
-        NganHangD nhD = new NganHangD();
-        List<CTNganHangO> _listCTNganHangO = new List<CTNganHangO>();
+        O_CTNGANHANG cTNgan;
+        D_NGANHANG nhD = new D_NGANHANG();
+        List<O_CTNGANHANG> _listCTNganHangO = new List<O_CTNGANHANG>();
         #endregion
 
         #region Giao diện
-        private void grvNganHang_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
-        {
-            if (e.HitInfo.InRow)
-            {
-                Point p2 = MousePosition;
-                pMenu.ShowPopup(p2);
-            }
-        }
 
         private void grvCtNganHang_RowCellStyle(object sender, RowCellStyleEventArgs e)
         {
@@ -103,7 +105,7 @@ namespace CRM
                 GridView View = sender as GridView;
                 if (e.RowHandle >= 0)
                 {
-                    CTNganHangO dl = View.GetRow(e.RowHandle) as CTNganHangO;
+                    O_CTNGANHANG dl = View.GetRow(e.RowHandle) as O_CTNGANHANG;
                     if (e.Column.FieldName == "TrangThaiID")
                         if (dl.TrangThaiID)
                             e.Appearance.BackColor = Color.Green;
@@ -128,7 +130,7 @@ namespace CRM
 
         private void ibtnThemMoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            new frmNganHangCTThem(false).ShowDialog(this.ParentForm);
+            new frmNHCTThem(false).ShowDialog(this.ParentForm);
         }
 
         private void chk1_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -171,51 +173,50 @@ namespace CRM
             if (XtraMessageBox.Show("Bạn có chắc xóa", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
                 return;
 
-            cTNgan = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as CTNganHangO);
-            CTNganHangD nh = new CTNganHangD();
+            cTNgan = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as O_CTNGANHANG);
+            D_CTNGANHANG nh = new D_CTNGANHANG();
 
             List<object> lstCtv = new List<object>();
 
-            switch (cTNgan.LoaiGiaoDich)
+            if (cTNgan.LoaiKhachHang == 7)
             {
-                case 24:
-                case 23:
-                    List<CTNganHangO> cTNganHangOs = new CTNganHangD().Dem($"WHERE MaLienKet = '{cTNgan.MaLienKet}'");
-                    if (cTNganHangOs.Count == 2)
-                    {
-                        lstCtv.Add(cTNganHangOs[0].ID);
-                        lstCtv.Add(cTNganHangOs[1].ID);
-                    }
-                    else
-                    {
-                        XuLyGiaoDien.Alert("Sai định dạng", Form_Alert.enmType.Info);
-                        return;
-                    }
-                    break;
-                default:
-                    lstCtv.Add(cTNgan.ID);
-                    break;
+                List<O_CTNGANHANG> cTNganHangOs = new D_CTNGANHANG().Dem($"WHERE MaLienKet = '{cTNgan.MaLienKet}'");
+                if (cTNganHangOs.Count == 2)
+                {
+                    lstCtv.Add(cTNganHangOs[0].ID);
+                    lstCtv.Add(cTNganHangOs[1].ID);
+                }
+                else
+                {
+                    XuLyGiaoDien.Alert("Sai định dạng", Form_Alert.enmType.Info);
+                    return;
+                }
+            }
+            else
+            {
+                lstCtv.Add(cTNgan.ID);
+                new D_BAOCAOCTNH().Xoa(cTNgan.ID, "WHERE IDCTNganHang = {0}");
             }
 
             if (XuLyGiaoDien.ThongBao(Text, nh.XoaNhieu1Ban(lstCtv, "CTNGANHANG") > 0, true))
             {
                 if (cTNgan.LoaiKhachHang == 1 || cTNgan.LoaiKhachHang == 2)
-                    new DaiLyD().ChayLaiPhi(cTNgan.NgayHT);
+                    new D_DAILY().ChayLaiPhi(cTNgan.NgayHT);
                 else if (cTNgan.LoaiKhachHang == 4 || cTNgan.LoaiKhachHang == 30)
                 {
-                    List<GiaoDichO> _GiaoDich = new GiaoDichD().DuLieuNganHang(cTNgan.IDGiaoDich);
+                    List<O_GIAODICH> _GiaoDich = new D_GIAODICH().DuLieuNganHang(cTNgan.IDGiaoDich);
                     List<Dictionary<string, object>> lstdic2 = new List<Dictionary<string, object>>();
                     List<string> CTV = new List<string>();
                     Dictionary<string, object> dic2 = new Dictionary<string, object>();
                     for (int i = 0; i < _GiaoDich.Count; i++)
                     {
-                        GiaoDichO gd = _GiaoDich[i];
+                        O_GIAODICH gd = _GiaoDich[i];
                         dic2 = new Dictionary<string, object>();
                         CTV.Add(string.Format("WHERE ID = {0}", gd.ID));
                         dic2.Add("Khoa", false);
                         lstdic2.Add(dic2);
                     }
-                    new GiaoDichD().SuaNhieu1Ban(lstdic2, CTV);
+                    new D_GIAODICH().SuaNhieu1Ban(lstdic2, CTV);
                 }
                 nhD.ChayLaiSD();
 
@@ -228,7 +229,7 @@ namespace CRM
                 dic.Add("LoaiKhachHang", cTNgan.LoaiKhachHang);
                 dic.Add("Ma", cTNgan.MaDL);
                 if (NoiDung.Length > 10)
-                    new LichSuD().ThemMoi(dic);
+                    new D_LS_GIAODICH().ThemMoi(dic);
                 TaiLaiDuLieu();
             }
         }
@@ -252,7 +253,7 @@ namespace CRM
         {
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
-            nhD.ChayLaiSoDu();
+            nhD.ChayLaiSD();
             LayDLNganHang();
 
             if (XuLyGiaoDien.wait.IsSplashFormVisible)
@@ -271,7 +272,7 @@ namespace CRM
 
         private void chkNganHang_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            kh = (GVNH.GetRow(GVNH.GetSelectedRows()[0]) as NganHangO);
+            kh = (GVNH.GetRow(GVNH.GetSelectedRows()[0]) as O_NGANHANG);
             TaiLaiDuLieu();
         }
         #endregion
@@ -280,7 +281,7 @@ namespace CRM
         private void gridCtNganHang_Click(object sender, EventArgs e)
         {
             if (GVCTNH.RowCount > 0)
-                cTNgan = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as CTNganHangO);
+                cTNgan = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as O_CTNGANHANG);
         }
 
         private void GVCTNH_KeyPress(object sender, KeyPressEventArgs e)
@@ -298,35 +299,35 @@ namespace CRM
         {
             if (DuLieuTaoSan.Q.NganHangThemSua)
             {
-                cTNgan = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as CTNganHangO);
+                cTNgan = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as O_CTNGANHANG);
                 int Ma = cTNgan.ID;
                 if (cTNgan.LoaiGiaoDich == 23 || cTNgan.LoaiGiaoDich == 24)
                 {
-                    List<CTNganHangO> cTNganHangOs = _listCTNganHangO.Where(w => (w.MaLienKet ?? string.Empty).Equals(cTNgan.MaLienKet)).ToList();
+                    List<O_CTNGANHANG> cTNganHangOs = _listCTNganHangO.Where(w => (w.MaLienKet ?? string.Empty).Equals(cTNgan.MaLienKet)).ToList();
                     if (cTNganHangOs.Count == 2)
                     {
                         Ma = cTNgan.ID == cTNganHangOs[0].ID ? Ma : cTNganHangOs[0].ID;
                         Ma = cTNgan.ID == cTNganHangOs[1].ID ? Ma : cTNganHangOs[1].ID;
-                        new frmNganHangCTThem(cTNgan, Ma).ShowDialog(ParentForm);
+                        new frmNHCTThem(cTNgan, Ma).ShowDialog(ParentForm);
                     }
                     else
                         XuLyGiaoDien.Alert("Sai định dạng", Form_Alert.enmType.Info);
                 }
                 else
-                    new frmNganHangCTThem(cTNgan, 0).ShowDialog(ParentForm);
+                    new frmNHCTThem(cTNgan, 0).ShowDialog(ParentForm);
             }
         }
 
         private void grvNganHang_DoubleClick(object sender, EventArgs e)
         {
-            kh = (GVNH.GetRow(GVNH.GetSelectedRows()[0]) as NganHangO);
+            kh = (GVNH.GetRow(GVNH.GetSelectedRows()[0]) as O_NGANHANG);
             frmSoDuNganHang frm = new frmSoDuNganHang(kh.ID);
             frm.ShowDialog();
         }
 
         private void grvNganHang_Click(object sender, EventArgs e)
         {
-            kh = (GVNH.GetRow(GVNH.GetSelectedRows()[0]) as NganHangO);
+            kh = (GVNH.GetRow(GVNH.GetSelectedRows()[0]) as O_NGANHANG);
             if (chkNganHang.Checked)
                 TaiLaiDuLieu();
         }
@@ -350,7 +351,7 @@ namespace CRM
             GridView View = sender as GridView;
             if (e.RowHandle >= 0)
             {
-                NganHangO dl = View.GetRow(e.RowHandle) as NganHangO;
+                O_NGANHANG dl = View.GetRow(e.RowHandle) as O_NGANHANG;
                 switch (e.Column.FieldName)
                 {
                     case "SoDuCuoi":
@@ -361,5 +362,17 @@ namespace CRM
             }
         }
 
+        private void iCTKN_CheckedChanged(object sender, ItemClickEventArgs e)
+        {
+            if (iCTKN.Checked)
+            {
+                colLoaiKhachHang.GroupIndex = 0;
+                colLoaiGiaoDich.GroupIndex = 1;
+            }
+            else
+                colLoaiKhachHang.GroupIndex = colLoaiGiaoDich.GroupIndex = -1;
+            LayDLNganHang();
+            TaiLaiDuLieu();
+        }
     }
 }

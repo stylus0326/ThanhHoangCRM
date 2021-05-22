@@ -15,7 +15,7 @@ namespace CRM
             TT = " thêm";
         }
 
-        public frmTongHopThem(GiaoDichO gd)
+        public frmTongHopThem(O_GIAODICH gd)
         {
             InitializeComponent();
             Gd = gd;
@@ -25,7 +25,7 @@ namespace CRM
 
         private void frmTongHopThem_Load(object sender, EventArgs e)
         {
-            daiLyOs = new DaiLyD().All();
+            daiLyOs = new D_DAILY().All();
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, Gd);
             loaiKhachOBindingSource.DataSource = DuLieuTaoSan.LoaiKhachHang_GiaoDich().Where(w => w.ID.Equals(1) || w.ID.Equals(2));
             loaiGiaoDichOBindingSource1.DataSource = DuLieuTaoSan.LoaiGiaoDich_Ve(false);
@@ -40,14 +40,14 @@ namespace CRM
 
         #region Biến
         string TT = string.Empty;
-        GiaoDichO Gd = new GiaoDichO();
-        List<DaiLyO> daiLyOs = new List<DaiLyO>();
+        O_GIAODICH Gd = new O_GIAODICH();
+        List<O_DAILY> daiLyOs = new List<O_DAILY>();
         #endregion
 
         #region Sự kiện nút
         private void simpleButton1_Click(object sender, EventArgs e)
         {
-            GiaoDichD nhb = new GiaoDichD();
+            D_GIAODICH nhb = new D_GIAODICH();
 
             switch (iLoaiGiaoDich.EditValue.ToString())
             {
@@ -124,7 +124,7 @@ namespace CRM
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 if (NoiDung.Length > 10)
-                    new LichSuD().ThemMoi(dic);
+                    new D_LS_GIAODICH().ThemMoi(dic);
             }
         }
         #endregion

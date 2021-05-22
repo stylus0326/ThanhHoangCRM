@@ -12,7 +12,7 @@ namespace CRM
             InitializeComponent();
         }
 
-        List<TheoDoiO> _lstTheoDoi = new List<TheoDoiO>();
+        List<O_THEODOIHOAN> _lstTheoDoi = new List<O_THEODOIHOAN>();
         public void TaiLaiDuLieu()
         {
             if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
@@ -20,7 +20,7 @@ namespace CRM
                 if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                     XuLyGiaoDien.wait.ShowWaitForm();
 
-                _lstTheoDoi = new TheoDoiD().DuLieuNCC((DateTime)bdtpTu.EditValue, (DateTime)bdtpDen.EditValue, barCheckItem1.Checked);
+                _lstTheoDoi = new D_THEODOIHOAN().DuLieuNCC((DateTime)bdtpTu.EditValue, (DateTime)bdtpDen.EditValue, barCheckItem1.Checked);
 
                 theoDoiOBindingSource.DataSource = _lstTheoDoi;
 
@@ -46,7 +46,7 @@ namespace CRM
 
         private void ibtnNap_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            new SoDu_HangD().ChayLaiSD();
+            new D_SODU_HANG().ChayLaiSD();
             TaiLaiDuLieu();
         }
 

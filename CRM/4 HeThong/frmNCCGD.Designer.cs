@@ -103,7 +103,7 @@
             // 
             // nCCOBindingSource
             // 
-            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.NCCO);
+            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.O_NHACUNGCAP);
             // 
             // iSoTien
             // 

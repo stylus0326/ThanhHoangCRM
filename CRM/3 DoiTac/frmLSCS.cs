@@ -11,7 +11,7 @@ namespace CRM
         {
             InitializeComponent();
             IDDaiLy = ID;
-            chinhSachOBindingSource.DataSource = new ChinhSachD().All();
+            chinhSachOBindingSource.DataSource = new D_CHINHSACH().All();
         }
 
         private void frmSoDuHang_Load(object sender, EventArgs e)
@@ -25,8 +25,8 @@ namespace CRM
 
         #region Biến
         int IDDaiLy = 0;
-        SoDu_DaiLyD _SODU_DAILYD = new SoDu_DaiLyD();
-        DaiLyD DaiLyD = new DaiLyD();
+        D_SODU_DAILY _SODU_DAILYD = new D_SODU_DAILY();
+        D_DAILY DaiLyD = new D_DAILY();
         #endregion
 
         #region Sự kiện nút

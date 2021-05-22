@@ -66,7 +66,7 @@
             // 
             // DSGhiChu
             // 
-            this.DSGhiChu.DataSource = typeof(DataTransferObject.GhiChuO);
+            this.DSGhiChu.DataSource = typeof(DataTransferObject.O_GHICHU);
             // 
             // splitContainerControl1
             // 

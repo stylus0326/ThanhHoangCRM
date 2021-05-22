@@ -102,7 +102,7 @@
             // 
             // nhomKhachHangOBindingSource
             // 
-            this.nhomKhachHangOBindingSource.DataSource = typeof(DataTransferObject.NhomDaiLyO);
+            this.nhomKhachHangOBindingSource.DataSource = typeof(DataTransferObject.O_NHOMDAILY);
             // 
             // GVNKH
             // 
@@ -389,7 +389,7 @@
             // 
             // trangThaiOBindingSource
             // 
-            this.trangThaiOBindingSource.DataSource = typeof(DataTransferObject.TinhTrangO);
+            this.trangThaiOBindingSource.DataSource = typeof(DataTransferObject.O_TRANGTHAI);
             // 
             // GVTTKH
             // 

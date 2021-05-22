@@ -30,37 +30,40 @@ namespace CRM
         private void frmCongNo_Load(object sender, EventArgs e)
         {
             //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM", true);
-            if ((key.GetValue("TepDinhKem") ?? string.Empty) != string.Empty)
+            try
             {
-                txtFileDinhKem.Properties.Tokens.Clear();
-                List<string> filenames = key.GetValue("TepDinhKem").ToString().Split(',').ToList();
+                Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM", true);
+                if ((key.GetValue("TepDinhKem") ?? string.Empty) != string.Empty)
+                {
+                    txtFileDinhKem.Properties.Tokens.Clear();
+                    List<string> filenames = key.GetValue("TepDinhKem").ToString().Split(',').ToList();
 
-                foreach (var item in filenames)
-                {
-                    string filename = Path.GetFileName(item);
-                    var token_item = new TokenEditToken(filename + $" [{GetFileSizeFromFileNameURL(item)}]", item);
-                    txtFileDinhKem.Properties.Tokens.Add(token_item);
+                    foreach (var item in filenames)
+                    {
+                        string filename = Path.GetFileName(item);
+                        var token_item = new TokenEditToken(filename + $" [{GetFileSizeFromFileNameURL(item)}]", item);
+                        txtFileDinhKem.Properties.Tokens.Add(token_item);
+                    }
+                    try
+                    {
+                        txtFileDinhKem.EditValue = string.Join(",", filenames);
+                        txtFileDinhKem.Properties.PopupPanel = flyEmail;
+                    }
+                    catch (Exception ex)
+                    {
+                        XuLyGiaoDien.Alert(ex.Message, Form_Alert.enmType.Warning);
+                    }
                 }
-                try
-                {
-                    txtFileDinhKem.EditValue = string.Join(",", filenames);
-                    txtFileDinhKem.Properties.PopupPanel = flyEmail;
-                }
-                catch (Exception ex)
-                {
-                    XuLyGiaoDien.Alert(ex.Message, Form_Alert.enmType.Warning);
-                }
+                key.Close();
             }
-            key.Close();
+            catch { }
             //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             dtpTuNgay.EditValue = DateTime.ParseExact("01/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Year.ToString(), "d/M/yyyy", null);
             dtpDenNgay.EditValue = (DateTime.Today.Day == 1) ? DateTime.Today : DateTime.Today.AddDays(-1);
             dateEdit1.EditValue = DateTime.ParseExact("01/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Year.ToString(), "d/M/yyyy", null).AddDays(-3);
             dateEdit2.EditValue = DateTime.Today;
-            tuyenBayOBindingSource.DataSource = new TuyenBayD().DuLieu();
-            loaiGiaoDichOBindingSource.DataSource = DuLieuTaoSan.LoaiGiaoDich_Ve_All(chk.Checked ? 1 : 2);
+            loaiGiaoDichOBindingSource.DataSource = new D_LOAIGIAODICH().DuLieu_CongNo_TheoLoai(chk.Checked ? 1 : 2);
+            tuyenBayOBindingSource.DataSource = new D_TUYENBAY().DuLieu();
             //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             btnExcel.Enabled = DuLieuTaoSan.Q.Lv2Excel;
             btnGuiMail.Enabled = DuLieuTaoSan.Q.Lv2GuiMail;
@@ -85,11 +88,11 @@ namespace CRM
 
         #region Biến
         public string NoiDungThem = string.Empty;
-        CauHinhSMTPD cauHinhSMTPD = new CauHinhSMTPD();
+        D_CAUHINHSMTP cauHinhSMTPD = new D_CAUHINHSMTP();
         DateTime testDT = new DateTime();
-        List<DaiLyO> lst = new List<DaiLyO>();
+        List<O_DAILY> lst = new List<O_DAILY>();
         int LoaiKhach = 1;
-        DaiLyD daiLyD = new DaiLyD();
+        D_DAILY daiLyD = new D_DAILY();
         #endregion
 
         #region Giao diện
@@ -98,7 +101,7 @@ namespace CRM
             GridView View = sender as GridView;
             if (e.RowHandle >= 0)
             {
-                GiaoDichO dl = View.GetRow(e.RowHandle) as GiaoDichO;
+                O_GIAODICH dl = View.GetRow(e.RowHandle) as O_GIAODICH;
                 if (dl.TenKhach.Equals("TỔNG CỘNG:"))
                     e.Appearance.FontStyleDelta = FontStyle.Bold;
             }
@@ -131,7 +134,7 @@ namespace CRM
             GridView View = sender as GridView;
             if (e.RowHandle >= 0)
             {
-                GiaoDichO dl = View.GetRow(e.RowHandle) as GiaoDichO;
+                O_GIAODICH dl = View.GetRow(e.RowHandle) as O_GIAODICH;
                 if (e.Column.FieldName == "LoaiGiaoDich")
                 {
                     switch (dl.LoaiGiaoDich)
@@ -179,7 +182,7 @@ namespace CRM
                 if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                     XuLyGiaoDien.wait.ShowWaitForm();
                 //simpleButton1.Text = "Cần chạy lại: " + daiLyD.DemNgayPhiSai().ToString();
-                GiaoDichD gdb = new GiaoDichD();
+                D_GIAODICH gdb = new D_GIAODICH();
                 string daily = string.Format("{0}", lstDaiLy.CheckedItems[0]);
                 int n = lstDaiLy.CheckedItems.Count;
                 for (int i = 1; i < n; i++)
@@ -210,8 +213,8 @@ namespace CRM
                     XuLyGiaoDien.Alert("Chưa chọn đại lý cần gửi", Form_Alert.enmType.Info);
                 else
                 {
-                    CauHinhSMTPO cauHinhSMTPO = cauHinhSMTPD.DuLieu();
-                    MauEmailO ma = new MauEmailD().DuLieu()[0];
+                    O_CAUHINHSMTP cauHinhSMTPO = cauHinhSMTPD.DuLieu();
+                    O_MAUEMAIL ma = new D_MAUEMAIL().DuLieu()[0];
 
                     SmtpClient client = new SmtpClient();
                     client.Port = cauHinhSMTPO.Port;
@@ -237,16 +240,23 @@ namespace CRM
                     opt.SheetName = "Bản Công Nợ";
 
 
-                    GiaoDichD gdb = new GiaoDichD();
+                    D_GIAODICH gdb = new D_GIAODICH();
                     bool sendOK = false;
                     if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                         XuLyGiaoDien.wait.ShowWaitForm();
 
                     for (int i = 0; i < n; i++)
                     {
-                        DaiLyO dl = lstDaiLy.GetItem(lstDaiLy.CheckedIndices[0]) as DaiLyO;
+                        O_DAILY dl = lstDaiLy.GetItem(lstDaiLy.CheckedIndices[0]) as O_DAILY;
+                        if (!dl.GuiMail)
+                        {
+                            int index1 = lstDaiLy.FindItem(0, true, delegate (ListBoxFindItemArgs ei) { ei.IsFound = object.Equals(dl.ID, ei.ItemValue); });
+                            lstDaiLy.SetItemChecked(index1, false);
+                            continue;
+                        }
+
                         string daily = string.Format("{0}", dl.ID);
-                        List<GiaoDichO> lstCongNo = gdb.LayDanhSachCN((DateTime)dtpTuNgay.EditValue, (DateTime)dtpDenNgay.EditValue, daily, true);
+                        List<O_GIAODICH> lstCongNo = gdb.LayDanhSachCN((DateTime)dtpTuNgay.EditValue, (DateTime)dtpDenNgay.EditValue, daily, true);
                         txtMauEmail.HtmlText = ma.NoiDung.Replace("{0}", dl.MaDL).Replace("{1}", XuLyDuLieu.NotVietKey(dl.Ten));
 
                         if ((dl.EmailKeToan ?? string.Empty) == string.Empty)
@@ -330,14 +340,14 @@ namespace CRM
             XtraFolderBrowserDialog fbd = new XtraFolderBrowserDialog();
             if (fbd.ShowDialog() == DialogResult.OK)
             {
-                GiaoDichD gdb = new GiaoDichD();
+                D_GIAODICH gdb = new D_GIAODICH();
                 bool isok = false;
                 int n = lstDaiLy.CheckedItems.Count;
                 for (int i = 0; i < n; i++)
                 {
-                    DaiLyO dl = lstDaiLy.GetItem(lstDaiLy.CheckedIndices[0]) as DaiLyO;
+                    O_DAILY dl = lstDaiLy.GetItem(lstDaiLy.CheckedIndices[0]) as O_DAILY;
                     string daily = string.Format("{0}", dl.ID);
-                    List<GiaoDichO> lstCongNo = gdb.LayDanhSachCN((DateTime)dtpTuNgay.EditValue, (DateTime)dtpDenNgay.EditValue, daily, true);
+                    List<O_GIAODICH> lstCongNo = gdb.LayDanhSachCN((DateTime)dtpTuNgay.EditValue, (DateTime)dtpDenNgay.EditValue, daily, true);
 
                     if (lstCongNo.Count > 1)
                     {

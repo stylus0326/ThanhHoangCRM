@@ -89,7 +89,7 @@
             // 
             // sanBayOBindingSource
             // 
-            this.sanBayOBindingSource.DataSource = typeof(DataTransferObject.SanBayO);
+            this.sanBayOBindingSource.DataSource = typeof(DataTransferObject.O_SANBAY);
             // 
             // searchLookUpEdit1View
             // 
@@ -140,7 +140,7 @@
             // 
             // bindingSource1
             // 
-            this.bindingSource1.DataSource = typeof(DataTransferObject.SanBayO);
+            this.bindingSource1.DataSource = typeof(DataTransferObject.O_SANBAY);
             // 
             // gridView1
             // 

@@ -8,8 +8,8 @@ namespace CRM
 {
     public partial class frmKhachLe : XtraForm
     {
-        DaiLyO _DaiLyO = new DaiLyO();
-        DaiLyD _DaiLyD = new DaiLyD();
+        O_DAILY _DaiLyO = new O_DAILY();
+        D_DAILY _DaiLyD = new D_DAILY();
         public frmKhachLe()
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace CRM
         {
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
-            daiLyOBindingSource.DataSource = new DaiLyD().KhachLe();
+            daiLyOBindingSource.DataSource = new D_DAILY().KhachLe();
 
             if (XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.CloseWaitForm();
@@ -51,7 +51,7 @@ namespace CRM
         {
             if (GVKL.GetSelectedRows().Count() > 0)
             {
-                _DaiLyO = GVKL.GetRow(GVKL.GetSelectedRows()[0]) as DaiLyO;
+                _DaiLyO = GVKL.GetRow(GVKL.GetSelectedRows()[0]) as O_DAILY;
                 if (_DaiLyO != null)
                     new frmKhachLeThem(_DaiLyO).ShowDialog(this);
             }

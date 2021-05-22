@@ -10,8 +10,8 @@ namespace CRM
 {
     public partial class frmCauHinhEmail : DevExpress.XtraEditors.XtraForm
     {
-        MauEmailD mauEmailD = new MauEmailD();
-        CauHinhSMTPD cauHinhSMTPD = new CauHinhSMTPD();
+        D_MAUEMAIL mauEmailD = new D_MAUEMAIL();
+        D_CAUHINHSMTP cauHinhSMTPD = new D_CAUHINHSMTP();
         public frmCauHinhEmail()
         {
             InitializeComponent();
@@ -22,7 +22,7 @@ namespace CRM
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
             mauEmailOBindingSource.DataSource = mauEmailD.DuLieu();
-            CauHinhSMTPO cauHinhSMTPO = cauHinhSMTPD.DuLieu();
+            O_CAUHINHSMTP cauHinhSMTPO = cauHinhSMTPD.DuLieu();
             if (cauHinhSMTPO.Port > 0)
             {
                 txtHost.Text = cauHinhSMTPO.Host;
@@ -82,7 +82,7 @@ namespace CRM
 
         private void iMau_EditValueChanged(object sender, EventArgs e)
         {
-            MauEmailO mau = iMau.GetSelectedDataRow() as MauEmailO;
+            O_MAUEMAIL mau = iMau.GetSelectedDataRow() as O_MAUEMAIL;
             txtMauEmail.HtmlText = mau.NoiDung;
             iTen.Text = mau.TenMau;
         }

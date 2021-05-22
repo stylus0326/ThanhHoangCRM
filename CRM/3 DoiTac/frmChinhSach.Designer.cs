@@ -78,6 +78,10 @@
             this.colID1 = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.hangBayOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.igroupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.checkEdit1 = new DevExpress.XtraEditors.CheckEdit();
+            this.iTruTuyenBay = new DevExpress.XtraEditors.CheckEdit();
+            this.iDauVe = new DevExpress.XtraEditors.TextEdit();
+            this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
             this.iHaiChieu = new DevExpress.XtraEditors.CheckEdit();
             this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl9 = new DevExpress.XtraEditors.LabelControl();
@@ -133,8 +137,7 @@
             this.labelControl16 = new DevExpress.XtraEditors.LabelControl();
             this.iNgayB = new DevExpress.XtraEditors.DateEdit();
             this.dxValidationProvider1 = new DevExpress.XtraEditors.DXErrorProvider.DXValidationProvider(this.components);
-            this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
-            this.iDauVe = new DevExpress.XtraEditors.TextEdit();
+            this.colTruTuyenBay = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grpc1)).BeginInit();
             this.grpc1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GCCS)).BeginInit();
@@ -152,6 +155,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.hangBayOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.igroupControl1)).BeginInit();
             this.igroupControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.checkEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iTruTuyenBay.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iDauVe.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iHaiChieu.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iPhiCoDinhAm.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iPhiCoDinh.Properties)).BeginInit();
@@ -188,7 +194,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.iNgayB.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNgayB.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dxValidationProvider1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iDauVe.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // grpc1
@@ -230,7 +235,7 @@
             // 
             // chinhSachOBindingSource
             // 
-            this.chinhSachOBindingSource.DataSource = typeof(DataTransferObject.ChinhSachO);
+            this.chinhSachOBindingSource.DataSource = typeof(DataTransferObject.O_CHINHSACH);
             // 
             // GVCS
             // 
@@ -326,7 +331,7 @@
             // 
             // cTChinhSachOBindingSource
             // 
-            this.cTChinhSachOBindingSource.DataSource = typeof(DataTransferObject.CTChinhSachO);
+            this.cTChinhSachOBindingSource.DataSource = typeof(DataTransferObject.O_CTCHINHSACH);
             // 
             // GVCTCS
             // 
@@ -351,6 +356,7 @@
             this.colBayTu,
             this.colBayDen,
             this.colDSDen,
+            this.colTruTuyenBay,
             this.colDSTu,
             this.colGioiHanTien,
             this.colMocAm,
@@ -379,11 +385,12 @@
             this.gridBand2.Caption = "Chi tiết";
             this.gridBand2.Columns.Add(this.colNCC);
             this.gridBand2.Columns.Add(this.colHangBay);
+            this.gridBand2.Columns.Add(this.colTruTuyenBay);
             this.gridBand2.Columns.Add(this.colHanhTrinh);
             this.gridBand2.Columns.Add(this.colHangCho);
             this.gridBand2.Name = "gridBand2";
             this.gridBand2.VisibleIndex = 0;
-            this.gridBand2.Width = 290;
+            this.gridBand2.Width = 319;
             // 
             // colNCC
             // 
@@ -405,7 +412,7 @@
             // 
             // nCCOBindingSource
             // 
-            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.NCCO);
+            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.O_NHACUNGCAP);
             // 
             // colHangBay
             // 
@@ -612,12 +619,14 @@
             // 
             // hangBayOBindingSource
             // 
-            this.hangBayOBindingSource.DataSource = typeof(DataTransferObject.HangBayO);
+            this.hangBayOBindingSource.DataSource = typeof(DataTransferObject.O_HANGBAY);
             // 
             // igroupControl1
             // 
             this.igroupControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.igroupControl1.Controls.Add(this.checkEdit1);
+            this.igroupControl1.Controls.Add(this.iTruTuyenBay);
             this.igroupControl1.Controls.Add(this.iDauVe);
             this.igroupControl1.Controls.Add(this.labelControl12);
             this.igroupControl1.Controls.Add(this.iHaiChieu);
@@ -672,6 +681,43 @@
             this.igroupControl1.TabIndex = 15;
             this.igroupControl1.Text = "Chi tiết chính sách";
             // 
+            // checkEdit1
+            // 
+            this.checkEdit1.Location = new System.Drawing.Point(748, 29);
+            this.checkEdit1.Name = "checkEdit1";
+            this.checkEdit1.Properties.Caption = "Tự chọn";
+            this.checkEdit1.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.CheckBox;
+            this.checkEdit1.Properties.RadioGroupIndex = 1;
+            this.checkEdit1.Size = new System.Drawing.Size(62, 20);
+            this.checkEdit1.TabIndex = 75;
+            this.checkEdit1.TabStop = false;
+            // 
+            // iTruTuyenBay
+            // 
+            this.iTruTuyenBay.Location = new System.Drawing.Point(873, 28);
+            this.iTruTuyenBay.Name = "iTruTuyenBay";
+            this.iTruTuyenBay.Properties.Caption = "Trừ";
+            this.iTruTuyenBay.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.CheckBox;
+            this.iTruTuyenBay.Properties.RadioGroupIndex = 1;
+            this.iTruTuyenBay.Size = new System.Drawing.Size(45, 20);
+            this.iTruTuyenBay.TabIndex = 74;
+            this.iTruTuyenBay.TabStop = false;
+            // 
+            // iDauVe
+            // 
+            this.iDauVe.Location = new System.Drawing.Point(88, 159);
+            this.iDauVe.Name = "iDauVe";
+            this.iDauVe.Size = new System.Drawing.Size(100, 20);
+            this.iDauVe.TabIndex = 73;
+            // 
+            // labelControl12
+            // 
+            this.labelControl12.Location = new System.Drawing.Point(25, 162);
+            this.labelControl12.Name = "labelControl12";
+            this.labelControl12.Size = new System.Drawing.Size(57, 13);
+            this.labelControl12.TabIndex = 72;
+            this.labelControl12.Text = "Trừ đầu vé:";
+            // 
             // iHaiChieu
             // 
             this.iHaiChieu.Location = new System.Drawing.Point(194, 133);
@@ -709,7 +755,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.iPhiCoDinhAm.Properties.DisplayFormat.FormatString = "{0:#,##0;(#,##0)}";
             this.iPhiCoDinhAm.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.iPhiCoDinhAm.Size = new System.Drawing.Size(126, 20);
+            this.iPhiCoDinhAm.Size = new System.Drawing.Size(110, 20);
             this.iPhiCoDinhAm.TabIndex = 70;
             this.iPhiCoDinhAm.Tag = "Tự xuất (+)";
             // 
@@ -726,13 +772,13 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.iPhiCoDinh.Properties.DisplayFormat.FormatString = "{0:#,##0;(#,##0)}";
             this.iPhiCoDinh.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.iPhiCoDinh.Size = new System.Drawing.Size(126, 20);
+            this.iPhiCoDinh.Size = new System.Drawing.Size(110, 20);
             this.iPhiCoDinh.TabIndex = 70;
             this.iPhiCoDinh.Tag = "Tự xuất (+)";
             // 
             // lookUpEdit2
             // 
-            this.lookUpEdit2.Location = new System.Drawing.Point(772, 28);
+            this.lookUpEdit2.Location = new System.Drawing.Point(748, 55);
             this.lookUpEdit2.Name = "lookUpEdit2";
             this.lookUpEdit2.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -743,17 +789,17 @@
             this.lookUpEdit2.Properties.DropDownRows = 10;
             this.lookUpEdit2.Properties.NullText = "";
             this.lookUpEdit2.Properties.ValueMember = "ID";
-            this.lookUpEdit2.Size = new System.Drawing.Size(141, 20);
+            this.lookUpEdit2.Size = new System.Drawing.Size(165, 20);
             this.lookUpEdit2.TabIndex = 68;
             this.lookUpEdit2.EditValueChanged += new System.EventHandler(this.searchLookUpEdit1_EditValueChanged);
             // 
             // tuyenBayOBindingSource
             // 
-            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.TuyenBayO);
+            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.O_TUYENBAY);
             // 
             // lookUpEdit1
             // 
-            this.lookUpEdit1.Location = new System.Drawing.Point(923, 27);
+            this.lookUpEdit1.Location = new System.Drawing.Point(923, 54);
             this.lookUpEdit1.Name = "lookUpEdit1";
             this.lookUpEdit1.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -930,7 +976,7 @@
             // iTatCaHangCho
             // 
             this.iTatCaHangCho.EditValue = true;
-            this.iTatCaHangCho.Location = new System.Drawing.Point(923, 157);
+            this.iTatCaHangCho.Location = new System.Drawing.Point(923, 29);
             this.iTatCaHangCho.Name = "iTatCaHangCho";
             this.iTatCaHangCho.Properties.Caption = "Tất cả";
             this.iTatCaHangCho.Size = new System.Drawing.Size(56, 20);
@@ -941,18 +987,19 @@
             // iTatCaTuyenBay
             // 
             this.iTatCaTuyenBay.EditValue = true;
-            this.iTatCaTuyenBay.Location = new System.Drawing.Point(772, 157);
+            this.iTatCaTuyenBay.Location = new System.Drawing.Point(816, 28);
             this.iTatCaTuyenBay.Name = "iTatCaTuyenBay";
             this.iTatCaTuyenBay.Properties.Caption = "Tất cả";
+            this.iTatCaTuyenBay.Properties.CheckBoxOptions.Style = DevExpress.XtraEditors.Controls.CheckBoxStyle.CheckBox;
+            this.iTatCaTuyenBay.Properties.RadioGroupIndex = 1;
             this.iTatCaTuyenBay.Size = new System.Drawing.Size(64, 20);
             this.iTatCaTuyenBay.TabIndex = 55;
-            this.iTatCaTuyenBay.TabStop = false;
             this.iTatCaTuyenBay.CheckedChanged += new System.EventHandler(this.iTatCaTuyenBay_CheckedChanged);
             // 
             // iHangCho
             // 
             this.iHangCho.Enabled = false;
-            this.iHangCho.Location = new System.Drawing.Point(923, 53);
+            this.iHangCho.Location = new System.Drawing.Point(923, 80);
             this.iHangCho.Name = "iHangCho";
             this.iHangCho.Size = new System.Drawing.Size(85, 98);
             this.iHangCho.TabIndex = 54;
@@ -961,9 +1008,9 @@
             // iHanhTrinh
             // 
             this.iHanhTrinh.Enabled = false;
-            this.iHanhTrinh.Location = new System.Drawing.Point(772, 53);
+            this.iHanhTrinh.Location = new System.Drawing.Point(748, 80);
             this.iHanhTrinh.Name = "iHanhTrinh";
-            this.iHanhTrinh.Size = new System.Drawing.Size(141, 98);
+            this.iHanhTrinh.Size = new System.Drawing.Size(165, 98);
             this.iHanhTrinh.TabIndex = 53;
             this.iHanhTrinh.Tag = "Hành trình";
             // 
@@ -980,7 +1027,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.iBkAm.Properties.DisplayFormat.FormatString = "{0:#,##0.#;(#,##0.#)}";
             this.iBkAm.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.iBkAm.Size = new System.Drawing.Size(126, 20);
+            this.iBkAm.Size = new System.Drawing.Size(110, 20);
             this.iBkAm.TabIndex = 48;
             this.iBkAm.Tag = "Bker xuất (-)";
             // 
@@ -1005,7 +1052,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.iBkDuong.Properties.DisplayFormat.FormatString = "{0:#,##0.#;(#,##0.#)}";
             this.iBkDuong.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.iBkDuong.Size = new System.Drawing.Size(126, 20);
+            this.iBkDuong.Size = new System.Drawing.Size(110, 20);
             this.iBkDuong.TabIndex = 47;
             this.iBkDuong.Tag = "Bker xuất (+)";
             // 
@@ -1038,7 +1085,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.iDuong.Properties.DisplayFormat.FormatString = "{0:#,##0.#;(#,##0.#)}";
             this.iDuong.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.iDuong.Size = new System.Drawing.Size(126, 20);
+            this.iDuong.Size = new System.Drawing.Size(110, 20);
             this.iDuong.TabIndex = 45;
             this.iDuong.Tag = "Tự xuất (+)";
             // 
@@ -1063,7 +1110,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.iAm.Properties.DisplayFormat.FormatString = "{0:#,##0.#;(#,##0.#)}";
             this.iAm.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.iAm.Size = new System.Drawing.Size(126, 20);
+            this.iAm.Size = new System.Drawing.Size(110, 20);
             this.iAm.TabIndex = 46;
             this.iAm.Tag = "Tự xuất (-)";
             // 
@@ -1309,20 +1356,13 @@
             this.iNgayB.Tag = "Ngày GD đến";
             this.iNgayB.EditValueChanged += new System.EventHandler(this.iNgayB_EditValueChanged);
             // 
-            // labelControl12
+            // colTruTuyenBay
             // 
-            this.labelControl12.Location = new System.Drawing.Point(25, 162);
-            this.labelControl12.Name = "labelControl12";
-            this.labelControl12.Size = new System.Drawing.Size(57, 13);
-            this.labelControl12.TabIndex = 72;
-            this.labelControl12.Text = "Trừ đầu vé:";
-            // 
-            // iDauVe
-            // 
-            this.iDauVe.Location = new System.Drawing.Point(88, 159);
-            this.iDauVe.Name = "iDauVe";
-            this.iDauVe.Size = new System.Drawing.Size(100, 20);
-            this.iDauVe.TabIndex = 73;
+            this.colTruTuyenBay.Caption = "Trừ";
+            this.colTruTuyenBay.FieldName = "TruTuyenBay";
+            this.colTruTuyenBay.Name = "colTruTuyenBay";
+            this.colTruTuyenBay.Visible = true;
+            this.colTruTuyenBay.Width = 29;
             // 
             // frmChinhSach
             // 
@@ -1356,6 +1396,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.igroupControl1)).EndInit();
             this.igroupControl1.ResumeLayout(false);
             this.igroupControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.checkEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iTruTuyenBay.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iDauVe.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iHaiChieu.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iPhiCoDinhAm.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iPhiCoDinh.Properties)).EndInit();
@@ -1392,7 +1435,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.iNgayB.Properties.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iNgayB.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dxValidationProvider1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iDauVe.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1498,5 +1540,8 @@
         private DevExpress.XtraEditors.SpinEdit iPhiCoDinhAm;
         private DevExpress.XtraEditors.TextEdit iDauVe;
         private DevExpress.XtraEditors.LabelControl labelControl12;
+        private DevExpress.XtraEditors.CheckEdit iTruTuyenBay;
+        private DevExpress.XtraEditors.CheckEdit checkEdit1;
+        private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn colTruTuyenBay;
     }
 }

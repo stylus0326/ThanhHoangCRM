@@ -31,10 +31,7 @@ namespace CRM
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCapSignIn));
-            DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions5 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
-            DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions6 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
-            DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions7 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
-            DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions8 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
+            DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions1 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
             this.GCSI = new DevExpress.XtraGrid.GridControl();
             this.GVSI = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colSignIn = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -50,10 +47,10 @@ namespace CRM
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.signInOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-            this.iDaiLy = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colTen = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.iIDKhachHang = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colName2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.labelControl6 = new DevExpress.XtraEditors.LabelControl();
             this.icmb = new DevExpress.XtraEditors.ComboBoxEdit();
             this.lSignIn = new DevExpress.XtraEditors.LookUpEdit();
@@ -104,6 +101,9 @@ namespace CRM
             this.txtFileDinhKem = new DevExpress.XtraEditors.TokenEdit();
             this.labelControl10 = new DevExpress.XtraEditors.LabelControl();
             this.btnGuiMail = new DevExpress.XtraEditors.SimpleButton();
+            this.btnAddServer = new DevExpress.XtraEditors.SimpleButton();
+            this.btnNhapExcel = new DevExpress.XtraEditors.SimpleButton();
+            this.btnXuatExcel = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.GCSI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GVSI)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lueHangBay)).BeginInit();
@@ -113,8 +113,8 @@ namespace CRM
             ((System.ComponentModel.ISupportInitialize)(this.signInOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.iDaiLy.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iIDKhachHang.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.icmb.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lSignIn.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iHangBay.Properties)).BeginInit();
@@ -159,7 +159,7 @@ namespace CRM
             this.GCSI.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.lueHangBay,
             this.lueDaiLy});
-            this.GCSI.Size = new System.Drawing.Size(428, 511);
+            this.GCSI.Size = new System.Drawing.Size(428, 482);
             this.GCSI.TabIndex = 5;
             this.GCSI.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.GVSI});
@@ -223,7 +223,7 @@ namespace CRM
             // 
             // hangBayOBindingSource
             // 
-            this.hangBayOBindingSource.DataSource = typeof(DataTransferObject.HangBayO);
+            this.hangBayOBindingSource.DataSource = typeof(DataTransferObject.O_HANGBAY);
             // 
             // colChinh
             // 
@@ -259,7 +259,7 @@ namespace CRM
             // 
             // daiLyOBindingSource
             // 
-            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // colMatKhau
             // 
@@ -290,11 +290,11 @@ namespace CRM
             // 
             // signInOBindingSource
             // 
-            this.signInOBindingSource.DataSource = typeof(DataTransferObject.SignInO);
+            this.signInOBindingSource.DataSource = typeof(DataTransferObject.O_SIGNIN);
             // 
             // groupControl1
             // 
-            this.groupControl1.Controls.Add(this.iDaiLy);
+            this.groupControl1.Controls.Add(this.iIDKhachHang);
             this.groupControl1.Controls.Add(this.labelControl6);
             this.groupControl1.Controls.Add(this.icmb);
             this.groupControl1.Controls.Add(this.lSignIn);
@@ -314,54 +314,48 @@ namespace CRM
             this.groupControl1.TabIndex = 6;
             this.groupControl1.Text = "Thêm SignIn";
             // 
-            // iDaiLy
+            // iIDKhachHang
             // 
-            this.iDaiLy.EditValue = "";
-            this.iDaiLy.Location = new System.Drawing.Point(61, 26);
-            this.iDaiLy.Name = "iDaiLy";
-            this.iDaiLy.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.iIDKhachHang.EditValue = "";
+            this.iIDKhachHang.Location = new System.Drawing.Point(61, 26);
+            this.iIDKhachHang.Name = "iIDKhachHang";
+            this.iIDKhachHang.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.iDaiLy.Properties.DataSource = this.daiLyOBindingSource;
-            this.iDaiLy.Properties.DisplayMember = "Ten";
-            this.iDaiLy.Properties.NullText = "";
-            this.iDaiLy.Properties.PopupFilterMode = DevExpress.XtraEditors.PopupFilterMode.Contains;
-            this.iDaiLy.Properties.PopupView = this.searchLookUpEdit1View;
-            this.iDaiLy.Properties.ValueMember = "ID";
-            this.iDaiLy.Size = new System.Drawing.Size(120, 20);
-            this.iDaiLy.TabIndex = 23;
-            this.iDaiLy.Tag = "Khách";
-            this.iDaiLy.EditValueChanged += new System.EventHandler(this.iDaiLy_EditValueChanged);
+            this.iIDKhachHang.Properties.DataSource = this.daiLyOBindingSource;
+            this.iIDKhachHang.Properties.DisplayMember = "Ten";
+            this.iIDKhachHang.Properties.PopupView = this.gridView2;
+            this.iIDKhachHang.Properties.ValueMember = "ID";
+            this.iIDKhachHang.Size = new System.Drawing.Size(120, 20);
+            this.iIDKhachHang.TabIndex = 24;
+            this.iIDKhachHang.Tag = "Khách";
+            this.iIDKhachHang.EditValueChanged += new System.EventHandler(this.iDaiLy_EditValueChanged);
             // 
-            // searchLookUpEdit1View
+            // gridView2
             // 
-            this.searchLookUpEdit1View.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colTen,
-            this.gridColumn5});
-            this.searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.searchLookUpEdit1View.Name = "searchLookUpEdit1View";
-            this.searchLookUpEdit1View.OptionsFilter.AllowAutoFilterConditionChange = DevExpress.Utils.DefaultBoolean.False;
-            this.searchLookUpEdit1View.OptionsFind.AllowFindPanel = false;
-            this.searchLookUpEdit1View.OptionsFind.FindNullPrompt = "Nhập vào đây tên cần tìm ...";
-            this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
+            this.gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colName2,
+            this.colName});
+            this.gridView2.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView2.Name = "gridView2";
+            this.gridView2.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView2.OptionsView.ShowAutoFilterRow = true;
+            this.gridView2.OptionsView.ShowGroupPanel = false;
             // 
-            // colTen
+            // colName2
             // 
-            this.colTen.Caption = "Tên";
-            this.colTen.FieldName = "Ten";
-            this.colTen.Name = "colTen";
-            this.colTen.Visible = true;
-            this.colTen.VisibleIndex = 1;
-            this.colTen.Width = 1450;
+            this.colName2.Caption = "Mã";
+            this.colName2.FieldName = "MaDL";
+            this.colName2.Name = "colName2";
+            this.colName2.Visible = true;
+            this.colName2.VisibleIndex = 0;
             // 
-            // gridColumn5
+            // colName
             // 
-            this.gridColumn5.Caption = "Mã DL";
-            this.gridColumn5.FieldName = "MaDL";
-            this.gridColumn5.Name = "gridColumn5";
-            this.gridColumn5.Visible = true;
-            this.gridColumn5.VisibleIndex = 0;
-            this.gridColumn5.Width = 165;
+            this.colName.Caption = "Tên";
+            this.colName.FieldName = "Ten";
+            this.colName.Name = "colName";
+            this.colName.Visible = true;
+            this.colName.VisibleIndex = 1;
             // 
             // labelControl6
             // 
@@ -513,23 +507,14 @@ namespace CRM
             | System.Windows.Forms.AnchorStyles.Left)));
             this.groupControl2.Controls.Add(this.flyEmail);
             this.groupControl2.Controls.Add(this.GCSI);
-            buttonImageOptions5.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("buttonImageOptions5.SvgImage")));
-            buttonImageOptions5.SvgImageSize = new System.Drawing.Size(16, 16);
-            buttonImageOptions6.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("buttonImageOptions6.SvgImage")));
-            buttonImageOptions6.SvgImageSize = new System.Drawing.Size(16, 16);
-            buttonImageOptions7.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("buttonImageOptions7.SvgImage")));
-            buttonImageOptions7.SvgImageSize = new System.Drawing.Size(16, 16);
-            buttonImageOptions8.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("buttonImageOptions8.SvgImage")));
-            buttonImageOptions8.SvgImageSize = new System.Drawing.Size(16, 16);
+            buttonImageOptions1.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("buttonImageOptions1.SvgImage")));
+            buttonImageOptions1.SvgImageSize = new System.Drawing.Size(16, 16);
             this.groupControl2.CustomHeaderButtons.AddRange(new DevExpress.XtraEditors.ButtonPanel.IBaseButton[] {
-            new DevExpress.XtraEditors.ButtonsPanelControl.GroupBoxButton("Nhập tệp", true, buttonImageOptions5, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, "0", -1),
-            new DevExpress.XtraEditors.ButtonsPanelControl.GroupBoxButton("Xuất tệp", true, buttonImageOptions6, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, "1", -1),
-            new DevExpress.XtraEditors.ButtonsPanelControl.GroupBoxButton("TVHT", true, buttonImageOptions7, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, "2", -1),
-            new DevExpress.XtraEditors.ButtonsPanelControl.GroupBoxButton("Bắt đầu", true, buttonImageOptions8, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, "3", -1)});
+            new DevExpress.XtraEditors.ButtonsPanelControl.GroupBoxButton("Bắt đầu", true, buttonImageOptions1, DevExpress.XtraBars.Docking2010.ButtonStyle.PushButton, "", -1, true, null, true, false, true, "3", -1)});
             this.groupControl2.CustomHeaderButtonsLocation = DevExpress.Utils.GroupElementLocation.AfterText;
             this.groupControl2.Location = new System.Drawing.Point(8, 155);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(432, 536);
+            this.groupControl2.Size = new System.Drawing.Size(432, 507);
             this.groupControl2.TabIndex = 7;
             this.groupControl2.Text = "Sign In";
             this.groupControl2.CustomButtonClick += new DevExpress.XtraBars.Docking2010.BaseButtonEventHandler(this.groupControl2_CustomButtonClick);
@@ -774,7 +759,7 @@ namespace CRM
             // 
             // daiLyOBindingSource1
             // 
-            this.daiLyOBindingSource1.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource1.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // gridView1
             // 
@@ -915,11 +900,59 @@ namespace CRM
             this.btnGuiMail.Text = "Gửi mail";
             this.btnGuiMail.Click += new System.EventHandler(this.btnGuiMail_Click);
             // 
+            // btnAddServer
+            // 
+            this.btnAddServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAddServer.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnAddServer.Appearance.Options.UseFont = true;
+            this.btnAddServer.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton2.ImageOptions.SvgImage")));
+            this.btnAddServer.ImageOptions.SvgImageSize = new System.Drawing.Size(18, 18);
+            this.btnAddServer.Location = new System.Drawing.Point(302, 668);
+            this.btnAddServer.Name = "btnAddServer";
+            this.btnAddServer.Size = new System.Drawing.Size(138, 23);
+            this.btnAddServer.TabIndex = 26;
+            this.btnAddServer.TabStop = false;
+            this.btnAddServer.Text = "Thêm vào hệ thống";
+            this.btnAddServer.Click += new System.EventHandler(this.btnAddServer_Click);
+            // 
+            // btnNhapExcel
+            // 
+            this.btnNhapExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnNhapExcel.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnNhapExcel.Appearance.Options.UseFont = true;
+            this.btnNhapExcel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton3.ImageOptions.SvgImage")));
+            this.btnNhapExcel.ImageOptions.SvgImageSize = new System.Drawing.Size(18, 18);
+            this.btnNhapExcel.Location = new System.Drawing.Point(203, 668);
+            this.btnNhapExcel.Name = "btnNhapExcel";
+            this.btnNhapExcel.Size = new System.Drawing.Size(93, 23);
+            this.btnNhapExcel.TabIndex = 27;
+            this.btnNhapExcel.TabStop = false;
+            this.btnNhapExcel.Text = "Nhập Excel";
+            this.btnNhapExcel.Click += new System.EventHandler(this.btnNhapExcel_Click);
+            // 
+            // btnXuatExcel
+            // 
+            this.btnXuatExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnXuatExcel.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnXuatExcel.Appearance.Options.UseFont = true;
+            this.btnXuatExcel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton4.ImageOptions.SvgImage")));
+            this.btnXuatExcel.ImageOptions.SvgImageSize = new System.Drawing.Size(18, 18);
+            this.btnXuatExcel.Location = new System.Drawing.Point(107, 668);
+            this.btnXuatExcel.Name = "btnXuatExcel";
+            this.btnXuatExcel.Size = new System.Drawing.Size(91, 23);
+            this.btnXuatExcel.TabIndex = 28;
+            this.btnXuatExcel.TabStop = false;
+            this.btnXuatExcel.Text = "Xuất Excel";
+            this.btnXuatExcel.Click += new System.EventHandler(this.btnXuatExcel_Click);
+            // 
             // frmCapSignIn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1082, 703);
+            this.Controls.Add(this.btnXuatExcel);
+            this.Controls.Add(this.btnNhapExcel);
+            this.Controls.Add(this.btnAddServer);
             this.Controls.Add(this.xtraTabControl1);
             this.Controls.Add(this.groupControl2);
             this.Controls.Add(this.groupControl1);
@@ -942,8 +975,8 @@ namespace CRM
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             this.groupControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.iDaiLy.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iIDKhachHang.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.icmb.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lSignIn.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iHangBay.Properties)).EndInit();
@@ -1024,10 +1057,6 @@ namespace CRM
         private DevExpress.XtraBars.BarDockControl barDockControlBottom;
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
-        private DevExpress.XtraEditors.SearchLookUpEdit iDaiLy;
-        private DevExpress.XtraGrid.Views.Grid.GridView searchLookUpEdit1View;
-        private DevExpress.XtraGrid.Columns.GridColumn colTen;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private System.Windows.Forms.WebBrowser wVJ;
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
@@ -1057,5 +1086,12 @@ namespace CRM
         private DevExpress.XtraEditors.SimpleButton btn_open_file;
         private DevExpress.XtraEditors.LabelControl lblName;
         private DevExpress.XtraEditors.PictureEdit pic_extension_file;
+        private DevExpress.XtraEditors.SearchLookUpEdit iIDKhachHang;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+        private DevExpress.XtraGrid.Columns.GridColumn colName2;
+        private DevExpress.XtraGrid.Columns.GridColumn colName;
+        private DevExpress.XtraEditors.SimpleButton btnXuatExcel;
+        private DevExpress.XtraEditors.SimpleButton btnNhapExcel;
+        private DevExpress.XtraEditors.SimpleButton btnAddServer;
     }
 }

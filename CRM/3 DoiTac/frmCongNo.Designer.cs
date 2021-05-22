@@ -335,7 +335,7 @@
             // 
             // daiLyOBindingSource
             // 
-            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // btnExcel
             // 
@@ -450,7 +450,7 @@
             // 
             // loaiGiaoDichOBindingSource
             // 
-            this.loaiGiaoDichOBindingSource.DataSource = typeof(CRM.IntString);
+            this.loaiGiaoDichOBindingSource.DataSource = typeof(DataTransferObject.O_LOAIGIAODICH);
             // 
             // gridCTCongNo
             // 
@@ -472,7 +472,7 @@
             // 
             // CTGiaoDichDindingSource
             // 
-            this.CTGiaoDichDindingSource.DataSource = typeof(DataTransferObject.GiaoDichO);
+            this.CTGiaoDichDindingSource.DataSource = typeof(DataTransferObject.O_GIAODICH);
             // 
             // grvCTCongNo
             // 
@@ -551,7 +551,7 @@
             this.rLoaiGiaoDich.DataSource = this.loaiGiaoDichOBindingSource;
             this.rLoaiGiaoDich.DisplayMember = "Name";
             this.rLoaiGiaoDich.Name = "rLoaiGiaoDich";
-            this.rLoaiGiaoDich.ValueMember = "ID";
+            this.rLoaiGiaoDich.ValueMember = "IDGiaoDich";
             // 
             // gridColumn3
             // 
@@ -629,7 +629,7 @@
             // 
             // tuyenBayOBindingSource
             // 
-            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.TuyenBayO);
+            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.O_TUYENBAY);
             // 
             // gridColumn11
             // 
@@ -801,7 +801,7 @@
             // 
             // giaoDichOBindingSource
             // 
-            this.giaoDichOBindingSource.DataSource = typeof(DataTransferObject.GiaoDichO);
+            this.giaoDichOBindingSource.DataSource = typeof(DataTransferObject.O_GIAODICH);
             // 
             // GVCN
             // 
@@ -1095,7 +1095,7 @@
             this.rLoaiGiaoDich1.DataSource = this.loaiGiaoDichOBindingSource;
             this.rLoaiGiaoDich1.DisplayMember = "Name";
             this.rLoaiGiaoDich1.Name = "rLoaiGiaoDich1";
-            this.rLoaiGiaoDich1.ValueMember = "ID";
+            this.rLoaiGiaoDich1.ValueMember = "IDGiaoDich";
             // 
             // colLuyKeVN
             // 
@@ -1151,7 +1151,7 @@
             // 
             // bindingSource1
             // 
-            this.bindingSource1.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.bindingSource1.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // splitterControl1
             // 

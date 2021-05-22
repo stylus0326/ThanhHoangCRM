@@ -38,7 +38,12 @@
             this.edtpTu = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.bdtpDen = new DevExpress.XtraBars.BarEditItem();
             this.edtpDen = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
+            this.barHeaderItem1 = new DevExpress.XtraBars.BarHeaderItem();
+            this.barCheckItem2 = new DevExpress.XtraBars.BarCheckItem();
+            this.barCheckItem3 = new DevExpress.XtraBars.BarCheckItem();
             this.chk = new DevExpress.XtraBars.BarCheckItem();
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.barCheckItem1 = new DevExpress.XtraBars.BarCheckItem();
             this.bar3 = new DevExpress.XtraBars.Bar();
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
             this.barStaticItem2 = new DevExpress.XtraBars.BarStaticItem();
@@ -57,8 +62,6 @@
             this.colHang = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.rNhaCungCap = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.nCCOBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-            this.barCheckItem1 = new DevExpress.XtraBars.BarCheckItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ecmbThoiGian)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtpTu)).BeginInit();
@@ -93,9 +96,12 @@
             this.barStaticItem2,
             this.chk,
             this.barButtonItem1,
-            this.barCheckItem1});
+            this.barCheckItem1,
+            this.barHeaderItem1,
+            this.barCheckItem2,
+            this.barCheckItem3});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 11;
+            this.barManager1.MaxItemId = 16;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.edtpTu,
             this.edtpDen,
@@ -112,6 +118,9 @@
             new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.PaintStyle | DevExpress.XtraBars.BarLinkUserDefines.Width))), this.bcmbThoiGian, "", false, true, true, 75, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.PaintStyle | DevExpress.XtraBars.BarLinkUserDefines.Width))), this.bdtpTu, "", true, true, true, 98, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.PaintStyle | DevExpress.XtraBars.BarLinkUserDefines.Width))), this.bdtpDen, "", false, true, true, 105, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barHeaderItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barCheckItem2, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barCheckItem3, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.chk, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem1, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barCheckItem1, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
@@ -173,12 +182,55 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.edtpDen.Name = "edtpDen";
             // 
+            // barHeaderItem1
+            // 
+            this.barHeaderItem1.Caption = "Tính tổng theo:";
+            this.barHeaderItem1.Id = 12;
+            this.barHeaderItem1.Name = "barHeaderItem1";
+            // 
+            // barCheckItem2
+            // 
+            this.barCheckItem2.Caption = "Đại lý";
+            this.barCheckItem2.GroupIndex = 1;
+            this.barCheckItem2.Id = 13;
+            this.barCheckItem2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barCheckItem2.ImageOptions.SvgImage")));
+            this.barCheckItem2.Name = "barCheckItem2";
+            this.barCheckItem2.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barCheckItem1_CheckedChanged);
+            // 
+            // barCheckItem3
+            // 
+            this.barCheckItem3.BindableChecked = true;
+            this.barCheckItem3.Caption = "Mặc định";
+            this.barCheckItem3.Checked = true;
+            this.barCheckItem3.GroupIndex = 1;
+            this.barCheckItem3.Id = 15;
+            this.barCheckItem3.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barCheckItem3.ImageOptions.SvgImage")));
+            this.barCheckItem3.Name = "barCheckItem3";
+            this.barCheckItem3.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barCheckItem1_CheckedChanged);
+            // 
             // chk
             // 
             this.chk.Caption = "Tắt màu";
             this.chk.Id = 7;
             this.chk.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("chk.ImageOptions.SvgImage")));
             this.chk.Name = "chk";
+            // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.barButtonItem1.Caption = "Excel";
+            this.barButtonItem1.Id = 8;
+            this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+            this.barButtonItem1.Name = "barButtonItem1";
+            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            // 
+            // barCheckItem1
+            // 
+            this.barCheckItem1.Caption = "Hoàn";
+            this.barCheckItem1.Id = 10;
+            this.barCheckItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barCheckItem1.ImageOptions.SvgImage")));
+            this.barCheckItem1.Name = "barCheckItem1";
+            this.barCheckItem1.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barCheckItem1_CheckedChanged);
             // 
             // bar3
             // 
@@ -329,7 +381,7 @@
             // 
             // daiLyOBindingSource
             // 
-            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // colDaiLy
             // 
@@ -361,24 +413,7 @@
             // 
             // nCCOBindingSource
             // 
-            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.NCCO);
-            // 
-            // barButtonItem1
-            // 
-            this.barButtonItem1.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            this.barButtonItem1.Caption = "Excel";
-            this.barButtonItem1.Id = 8;
-            this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-            this.barButtonItem1.Name = "barButtonItem1";
-            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
-            // 
-            // barCheckItem1
-            // 
-            this.barCheckItem1.Caption = "Hoàn";
-            this.barCheckItem1.Id = 10;
-            this.barCheckItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barCheckItem1.ImageOptions.SvgImage")));
-            this.barCheckItem1.Name = "barCheckItem1";
-            this.barCheckItem1.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barCheckItem1_CheckedChanged);
+            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.O_NHACUNGCAP);
             // 
             // frmThongKeDoanhSo
             // 
@@ -444,5 +479,8 @@
         private DevExpress.XtraBars.BarCheckItem chk;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarCheckItem barCheckItem1;
+        private DevExpress.XtraBars.BarHeaderItem barHeaderItem1;
+        private DevExpress.XtraBars.BarCheckItem barCheckItem2;
+        private DevExpress.XtraBars.BarCheckItem barCheckItem3;
     }
 }

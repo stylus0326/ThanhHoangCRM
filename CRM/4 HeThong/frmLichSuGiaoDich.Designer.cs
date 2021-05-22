@@ -200,7 +200,7 @@
             // 
             // lichSuGDOBindingSource
             // 
-            this.lichSuGDOBindingSource.DataSource = typeof(DataTransferObject.LichSuO);
+            this.lichSuGDOBindingSource.DataSource = typeof(DataTransferObject.O_LS_GIAODICH);
             // 
             // GVLS
             // 
@@ -273,7 +273,7 @@
             // 
             // DSNhanVien
             // 
-            this.DSNhanVien.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.DSNhanVien.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // colNoiDung
             // 

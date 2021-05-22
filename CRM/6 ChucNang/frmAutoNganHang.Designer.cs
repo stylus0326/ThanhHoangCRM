@@ -178,7 +178,7 @@
             // 
             // nganHangOBindingSource
             // 
-            this.nganHangOBindingSource.DataSource = typeof(DataTransferObject.NganHangO);
+            this.nganHangOBindingSource.DataSource = typeof(DataTransferObject.O_NGANHANG);
             // 
             // eNgay
             // 
@@ -342,7 +342,7 @@
             // 
             // cTNganHangOBindingSource
             // 
-            this.cTNganHangOBindingSource.DataSource = typeof(DataTransferObject.CTNganHangO);
+            this.cTNganHangOBindingSource.DataSource = typeof(DataTransferObject.O_CTNGANHANG);
             // 
             // pMenu
             // 

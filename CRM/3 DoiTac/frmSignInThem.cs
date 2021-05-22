@@ -16,14 +16,14 @@ namespace CRM
             iDaiLy.Properties.ReadOnly = false;
         }
 
-        public frmSignInThem(DaiLyO dl)
+        public frmSignInThem(O_DAILY dl)
         {
             InitializeComponent();
             _SignInO.DaiLy = dl.ID;
             Text += " thêm";
         }
 
-        public frmSignInThem(SignInO si)
+        public frmSignInThem(O_SIGNIN si)
         {
             InitializeComponent();
             _SignInO = si;
@@ -33,8 +33,8 @@ namespace CRM
 
         private void frmThemSignIn_Load(object sender, EventArgs e)
         {
-            daiLyOBindingSource.DataSource = new DaiLyD().All(false);
-            hangBayOBindingSource.DataSource = new HangBayD().DuLieu().Where(w => w.SapXep);
+            daiLyOBindingSource.DataSource = new D_DAILY().All(false);
+            hangBayOBindingSource.DataSource = new D_HANGBAY().DuLieu().Where(w => w.SapXep);
             if (hangBayOBindingSource.Count < 21)
                 iHangBay.Properties.DropDownRows = hangBayOBindingSource.Count;
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, _SignInO);
@@ -42,15 +42,15 @@ namespace CRM
         }
 
         #region Biến
-        SignInO _SignInO = new SignInO();
-        SignInD _SignInD = new SignInD();
+        O_SIGNIN _SignInO = new O_SIGNIN();
+        D_SIGNIN _SignInD = new D_SIGNIN();
         #endregion
 
         #region Sự kiện nút
         private void btnLuu_Click(object sender, EventArgs e)
         {
             List<KiemTra> kiemTras = new List<KiemTra>() {
-            new KiemTra() { _Control = iSignIn,_Tu=2,_Den = 20,_ChoQuaThang = !new SignInD().DaTonTai(string.Format("WHERE SignIn='{0}' AND ID <> {1}",iSignIn.Text,_SignInO.ID)), _ThongBao2 = "Đã tồn tại" }};
+            new KiemTra() { _Control = iSignIn,_Tu=2,_Den = 20,_ChoQua = !new D_SIGNIN().DaTonTai(string.Format("WHERE SignIn='{0}' AND ID <> {1}",iSignIn.Text,_SignInO.ID)), _ThongBao2 = "Đã tồn tại" }};
 
             XuLyGiaoDien.KiemTra(kiemTras, dxValidationProvider1);
             if (!dxValidationProvider1.Validate())
@@ -65,10 +65,6 @@ namespace CRM
             {
                 if (Owner is frmSignIn)
                     (Owner as frmSignIn).TaiLaiSignIn();
-                else if (Owner is frmDaiLyThem)
-                    (Owner as frmDaiLyThem).TaiLaiSignIn();
-                else if (Owner is frmNhanVienThem)
-                    (Owner as frmNhanVienThem).TaiLaiSignIn();
                 Close();
             }
         }

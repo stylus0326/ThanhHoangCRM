@@ -13,7 +13,6 @@ namespace CRM
         {
             InitializeComponent();
             gridView1.CustomDrawRowIndicator += GridViewHelper.GridView_CustomDrawRowIndicator;
-            gridView1.CustomDrawGroupRow += GridViewHelper.GridView_CustomDrawGroupRow;
         }
 
         private void frmNo3Ngay_Load(object sender, EventArgs e)
@@ -24,7 +23,7 @@ namespace CRM
         }
 
         #region Biến
-        List<DaiLyO> lstDaiLy;
+        List<O_DAILY> lstDaiLy;
         int num = 0;
         #endregion
 
@@ -36,7 +35,7 @@ namespace CRM
 
         private void btnn_Click(object sender, EventArgs e)
         {
-            if (new DaiLyD().KiemTraNgay(num) > 0)
+            if (new D_DAILY().KiemTraNgay(num) > 0)
                 XtraMessageBox.Show("Đã phạt âm quỹ ngày này", "Thông báo");
             else
             {
@@ -54,7 +53,7 @@ namespace CRM
                     dic.Add("GiaHeThong", lstDaiLy[i].TienPhat);
                     dic.Add("GiaThu", lstDaiLy[i].TienPhat);
                     dic.Add("CoDinh", 1);
-                    new GiaoDichD().ThemMoi(dic);
+                    new D_GIAODICH().ThemMoi(dic);
                 };
                 XtraMessageBox.Show("Thực thi thành công", "Thông báo");
                 (Owner.ActiveMdiChild as frmTongHop).NapDatCho();
@@ -65,7 +64,7 @@ namespace CRM
         private void simpleButton1_Click(object sender, EventArgs e)
         {
             btnn.Enabled = true;
-            lstDaiLy = new DaiLyD().LayDanhSachNo3NgayLienTiep(dateEdit1.DateTime);
+            lstDaiLy = new D_DAILY().LayDanhSachNo3NgayLienTiep(dateEdit1.DateTime);
             daiLyOBindingSource.DataSource = lstDaiLy;
             try
             {
@@ -83,7 +82,7 @@ namespace CRM
         #region Sự khiện bản 
         private void gridView1_PopupMenuShowing(object sender, DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventArgs e)
         {
-            DaiLyO gd = (DaiLyO)gridView1.GetRow(gridView1.GetSelectedRows()[0]);
+            O_DAILY gd = (O_DAILY)gridView1.GetRow(gridView1.GetSelectedRows()[0]);
             GridView view = sender as GridView;
             view.FocusedRowHandle = e.HitInfo.RowHandle;
             contextMenu.Show(view.GridControl, e.Point);

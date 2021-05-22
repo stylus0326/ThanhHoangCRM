@@ -112,7 +112,7 @@
             // 
             // sanBayOBindingSource
             // 
-            this.sanBayOBindingSource.DataSource = typeof(DataTransferObject.SanBayO);
+            this.sanBayOBindingSource.DataSource = typeof(DataTransferObject.O_SANBAY);
             // 
             // GVSB
             // 
@@ -264,7 +264,7 @@
             // 
             // tuyenBayOBindingSource
             // 
-            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.TuyenBayO);
+            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.O_TUYENBAY);
             // 
             // GVTB
             // 

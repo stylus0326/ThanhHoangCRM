@@ -117,64 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="signInOBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>212, 16</value>
-  </metadata>
-  <metadata name="hangBayOBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>25, 8</value>
-  </metadata>
   <assembly alias="DevExpress.Data.v20.1" name="DevExpress.Data.v20.1, Version=20.1.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="buttonImageOptions1.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v20.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIwLjEsIFZlcnNpb249MjAuMS4z
-        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
-        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAK0BAAAC77u/
-        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
-        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBlbmFibGUt
-        YmFja2dyb3VuZD0ibmV3IDAgMCAzMiAzMiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgaWQ9IkxheWVyXzEi
-        Pg0KICA8ZyBpZD0iQWRkQ2lyY2xlZCI+DQogICAgPHBhdGggZD0iTTE2LDRDOS40LDQsNCw5LjQsNCwx
-        NnM1LjQsMTIsMTIsMTJzMTItNS40LDEyLTEyUzIyLjYsNCwxNiw0eiBNMjQsMThoLTZ2NmgtNHYtNkg4
-        di00aDZWOGg0djZoNlYxOHoiIGZpbGw9IiMwMzlDMjMiIGNsYXNzPSJHcmVlbiIgLz4NCiAgPC9nPg0K
-        PC9zdmc+Cw==
-</value>
-  </data>
-  <data name="buttonImageOptions2.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v20.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIwLjEsIFZlcnNpb249MjAuMS4z
-        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
-        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAJQCAAAC77u/
-        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
-        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBlbmFibGUt
-        YmFja2dyb3VuZD0ibmV3IDAgMCAzMiAzMiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgaWQ9IkxheWVyXzEi
-        Pg0KICA8ZyBpZD0iRWRpdCI+DQogICAgPHBhdGggZD0iTTI3LjYsOC4ybC0zLjgtMy44Yy0wLjUtMC41
-        LTEuNC0wLjUtMS45LDBsLTIuNSwyLjVsNS44LDUuOGwyLjUtMi41QzI4LjEsOS42LDI4LjEsOC44LDI3
-        LjYsOC4yeiIgZmlsbD0iIzExNzdENyIgY2xhc3M9IkJsdWUiIC8+DQogICAgPHBvbHlnb24gcG9pbnRz
-        PSI0LDI4IDkuOCwyOCA0LDIyLjIgICIgZmlsbD0iIzExNzdENyIgY2xhc3M9IkJsdWUiIC8+DQogICAg
-        PHJlY3QgeD0iNS44IiB5PSIxMy40IiB3aWR0aD0iMTcuNiIgaGVpZ2h0PSI4LjIiIHJ4PSIwIiByeT0i
-        MCIgZmlsbD0iIzExNzdENyIgY2xhc3M9IkJsdWUiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3LCAtMC43
-        MDcyLCAwLjcwNzIsIDAuNzA3LCAtOC4wNzIxLCAxNS40MDQ4KSIgLz4NCiAgPC9nPg0KPC9zdmc+Cw==
-</value>
-  </data>
-  <data name="buttonImageOptions3.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v20.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIwLjEsIFZlcnNpb249MjAuMS4z
-        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
-        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAHECAAAC77u/
-        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
-        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBlbmFibGUt
-        YmFja2dyb3VuZD0ibmV3IDAgMCAzMiAzMiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgaWQ9IkxheWVyXzEi
-        Pg0KICA8ZyBpZD0iRGVsZXRlIj4NCiAgICA8Zz4NCiAgICAgIDxwYXRoIGQ9Ik0xOC44LDE2bDYuOS02
-        LjljMC40LTAuNCwwLjQtMSwwLTEuNGwtMS40LTEuNGMtMC40LTAuNC0xLTAuNC0xLjQsMEwxNiwxMy4y
-        TDkuMSw2LjNjLTAuNC0wLjQtMS0wLjQtMS40LDAgICAgTDYuMyw3LjdjLTAuNCwwLjQtMC40LDEsMCwx
-        LjRsNi45LDYuOWwtNi45LDYuOWMtMC40LDAuNC0wLjQsMSwwLDEuNGwxLjQsMS40YzAuNCwwLjQsMSww
-        LjQsMS40LDBsNi45LTYuOWw2LjksNi45ICAgIGMwLjQsMC40LDEsMC40LDEuNCwwbDEuNC0xLjRjMC40
-        LTAuNCwwLjQtMSwwLTEuNEwxOC44LDE2eiIgZmlsbD0iI0QxMUMxQyIgY2xhc3M9IlJlZCIgLz4NCiAg
-        ICA8L2c+DQogIDwvZz4NCjwvc3ZnPgs=
-</value>
-  </data>
   <data name="btnLS.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v20.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIwLjEsIFZlcnNpb249MjAuMS4z
@@ -193,6 +136,12 @@
         MDcyLCAwLjcwNzIsIDAuNzA3LCAtOC4wNzIxLCAxNS40MDQ4KSIgLz4NCiAgPC9nPg0KPC9zdmc+Cw==
 </value>
   </data>
+  <metadata name="signInOBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>212, 16</value>
+  </metadata>
+  <metadata name="hangBayOBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>25, 8</value>
+  </metadata>
   <data name="btnLuu.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v20.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjIwLjEsIFZlcnNpb249MjAuMS4z
@@ -213,6 +162,6 @@
     <value>17, 56</value>
   </metadata>
   <metadata name="NhanVienDB.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>188, 56</value>
+    <value>424, 19</value>
   </metadata>
 </root>

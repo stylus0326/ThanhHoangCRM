@@ -60,18 +60,20 @@
             this.bdtpDen = new DevExpress.XtraBars.BarEditItem();
             this.edtpDen = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.chk3 = new DevExpress.XtraBars.BarCheckItem();
-            this.txtSV = new DevExpress.XtraBars.BarEditItem();
-            this.aSoVe = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.barSoVe = new DevExpress.XtraBars.BarEditItem();
+            this.aSoVe = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
             this.chk4 = new DevExpress.XtraBars.BarCheckItem();
-            this.txtMC = new DevExpress.XtraBars.BarEditItem();
-            this.aMaCho = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.barMaCho = new DevExpress.XtraBars.BarEditItem();
+            this.aMaCho = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
             this.chkAll = new DevExpress.XtraBars.BarCheckItem();
+            this.btnEx = new DevExpress.XtraBars.BarButtonItem();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl1 = new DevExpress.XtraBars.BarDockControl();
             this.btnDel = new DevExpress.XtraBars.BarButtonItem();
-            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.barEditItem2 = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemTextEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.GCH = new DevExpress.XtraGrid.GridControl();
             this.giaoDichOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.GVH = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -97,8 +99,6 @@
             this.colLoaiKhachHang = new DevExpress.XtraGrid.Columns.GridColumn();
             this.rLoaiKhach = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.loaiKhachOBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.pMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.btnEx = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.rdptTuNgay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdptTuNgay.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rchkTuNgay)).BeginInit();
@@ -113,7 +113,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.edtpDen.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.aSoVe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.aMaCho)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GCH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.giaoDichOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GVH)).BeginInit();
@@ -121,7 +121,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.rNhanVien)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rLoaiKhach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.loaiKhachOBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pMenu)).BeginInit();
             this.SuspendLayout();
             // 
             // rdptTuNgay
@@ -181,13 +180,13 @@
             // 
             // daiLyOBindingSource
             // 
-            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1211, 24);
+            this.barDockControlRight.Location = new System.Drawing.Point(1286, 24);
             this.barDockControlRight.Manager = null;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 512);
             // 
@@ -289,23 +288,24 @@
             this.chk1,
             this.chk3,
             this.chk4,
-            this.txtSV,
-            this.txtMC,
             this.btnDel,
             this.chkAll,
             this.chk2,
             this.bdtpTu,
             this.bdtpDen,
-            this.btnEx});
+            this.btnEx,
+            this.barEditItem2,
+            this.barSoVe,
+            this.barMaCho});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 36;
+            this.barManager1.MaxItemId = 39;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.ecmbThoiGian,
-            this.aSoVe,
-            this.aMaCho,
             this.edtpTu,
-            this.repositoryItemTextEdit1,
-            this.edtpDen});
+            this.edtpDen,
+            this.repositoryItemTextEdit2,
+            this.aSoVe,
+            this.aMaCho});
             // 
             // bar2
             // 
@@ -322,11 +322,12 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.bdtpTu, "", false, true, true, 81),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.bdtpDen, "", false, true, true, 78),
             new DevExpress.XtraBars.LinkPersistInfo(this.chk3),
-            new DevExpress.XtraBars.LinkPersistInfo(this.txtSV),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.barSoVe, "", false, true, true, 109),
             new DevExpress.XtraBars.LinkPersistInfo(this.chk4),
-            new DevExpress.XtraBars.LinkPersistInfo(this.txtMC),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.barMaCho, "", false, true, true, 102),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.chkAll, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEx, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEx, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnDel, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.bar2.OptionsBar.AllowQuickCustomization = false;
             this.bar2.OptionsBar.DisableClose = true;
             this.bar2.OptionsBar.DisableCustomization = true;
@@ -437,19 +438,22 @@
             this.chk3.Name = "chk3";
             this.chk3.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barCheckItem1_CheckedChanged);
             // 
-            // txtSV
+            // barSoVe
             // 
-            this.txtSV.Edit = this.aSoVe;
-            this.txtSV.EditWidth = 100;
-            this.txtSV.Enabled = false;
-            this.txtSV.Id = 25;
-            this.txtSV.Name = "txtSV";
+            this.barSoVe.Caption = "Số vé";
+            this.barSoVe.Edit = this.aSoVe;
+            this.barSoVe.Enabled = false;
+            this.barSoVe.Id = 37;
+            this.barSoVe.Name = "barSoVe";
             // 
             // aSoVe
             // 
             this.aSoVe.AutoHeight = false;
+            this.aSoVe.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.aSoVe.Name = "aSoVe";
-            this.aSoVe.KeyDown += new System.Windows.Forms.KeyEventHandler(this.aSoVe_KeyDown);
+            this.aSoVe.ShowIcon = false;
+            this.aSoVe.Leave += new System.EventHandler(this.aMaCho_Leave);
             // 
             // chk4
             // 
@@ -464,19 +468,22 @@
             this.chk4.Name = "chk4";
             this.chk4.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barCheckItem1_CheckedChanged);
             // 
-            // txtMC
+            // barMaCho
             // 
-            this.txtMC.Edit = this.aMaCho;
-            this.txtMC.EditWidth = 100;
-            this.txtMC.Enabled = false;
-            this.txtMC.Id = 26;
-            this.txtMC.Name = "txtMC";
+            this.barMaCho.Caption = "Mã chỗ";
+            this.barMaCho.Edit = this.aMaCho;
+            this.barMaCho.Enabled = false;
+            this.barMaCho.Id = 38;
+            this.barMaCho.Name = "barMaCho";
             // 
             // aMaCho
             // 
             this.aMaCho.AutoHeight = false;
+            this.aMaCho.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.aMaCho.Name = "aMaCho";
-            this.aMaCho.KeyDown += new System.Windows.Forms.KeyEventHandler(this.aMaCho_KeyDown);
+            this.aMaCho.ShowIcon = false;
+            this.aMaCho.Leave += new System.EventHandler(this.aMaCho_Leave);
             // 
             // chkAll
             // 
@@ -487,13 +494,22 @@
             this.chkAll.Name = "chkAll";
             this.chkAll.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.chkAll_CheckedChanged);
             // 
+            // btnEx
+            // 
+            this.btnEx.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.btnEx.Caption = "Excel";
+            this.btnEx.Id = 35;
+            this.btnEx.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnEx.ImageOptions.SvgImage")));
+            this.btnEx.Name = "btnEx";
+            this.btnEx.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnEx_ItemClick);
+            // 
             // barDockControlTop
             // 
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1211, 24);
+            this.barDockControlTop.Size = new System.Drawing.Size(1286, 24);
             // 
             // barDockControlBottom
             // 
@@ -501,7 +517,7 @@
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.barDockControlBottom.Location = new System.Drawing.Point(0, 536);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(1211, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1286, 0);
             // 
             // barDockControlLeft
             // 
@@ -515,7 +531,7 @@
             // 
             this.barDockControl1.CausesValidation = false;
             this.barDockControl1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControl1.Location = new System.Drawing.Point(1211, 24);
+            this.barDockControl1.Location = new System.Drawing.Point(1286, 24);
             this.barDockControl1.Manager = this.barManager1;
             this.barDockControl1.Size = new System.Drawing.Size(0, 512);
             // 
@@ -528,10 +544,17 @@
             this.btnDel.Name = "btnDel";
             this.btnDel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDel_ItemClick);
             // 
-            // repositoryItemTextEdit1
+            // barEditItem2
             // 
-            this.repositoryItemTextEdit1.AutoHeight = false;
-            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+            this.barEditItem2.Caption = "barEditItem2";
+            this.barEditItem2.Edit = this.repositoryItemTextEdit2;
+            this.barEditItem2.Id = 36;
+            this.barEditItem2.Name = "barEditItem2";
+            // 
+            // repositoryItemTextEdit2
+            // 
+            this.repositoryItemTextEdit2.AutoHeight = false;
+            this.repositoryItemTextEdit2.Name = "repositoryItemTextEdit2";
             // 
             // GCH
             // 
@@ -544,14 +567,14 @@
             this.rDaiLy,
             this.rLoaiKhach,
             this.rNhanVien});
-            this.GCH.Size = new System.Drawing.Size(1211, 512);
+            this.GCH.Size = new System.Drawing.Size(1286, 512);
             this.GCH.TabIndex = 6;
             this.GCH.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.GVH});
             // 
             // giaoDichOBindingSource
             // 
-            this.giaoDichOBindingSource.DataSource = typeof(DataTransferObject.GiaoDichO);
+            this.giaoDichOBindingSource.DataSource = typeof(DataTransferObject.O_GIAODICH);
             // 
             // GVH
             // 
@@ -585,7 +608,6 @@
             this.GVH.OptionsView.ShowGroupPanel = false;
             this.GVH.RowHeight = 25;
             this.GVH.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.gridView1_RowCellStyle);
-            this.GVH.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.GVH_PopupMenuShowing);
             this.GVH.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);
             // 
             // colID
@@ -805,27 +827,11 @@
             // 
             this.loaiKhachOBindingSource.DataSource = typeof(CRM.IntString);
             // 
-            // pMenu
-            // 
-            this.pMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnDel)});
-            this.pMenu.Manager = this.barManager1;
-            this.pMenu.Name = "pMenu";
-            // 
-            // btnEx
-            // 
-            this.btnEx.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            this.btnEx.Caption = "Excel";
-            this.btnEx.Id = 35;
-            this.btnEx.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
-            this.btnEx.Name = "btnEx";
-            this.btnEx.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnEx_ItemClick);
-            // 
             // frmTheoDoiHoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1211, 536);
+            this.ClientSize = new System.Drawing.Size(1286, 536);
             this.Controls.Add(this.GCH);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlLeft);
@@ -851,7 +857,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.edtpDen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.aSoVe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.aMaCho)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GCH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.giaoDichOBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GVH)).EndInit();
@@ -859,7 +865,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.rNhanVien)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rLoaiKhach)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.loaiKhachOBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pMenu)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -918,22 +923,22 @@
         private DevExpress.XtraGrid.Columns.GridColumn colNVHoTro;
         private DevExpress.XtraBars.BarCheckItem chk1;
         private DevExpress.XtraBars.BarCheckItem chk3;
-        private DevExpress.XtraBars.BarEditItem txtSV;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit aSoVe;
         private DevExpress.XtraBars.BarCheckItem chk4;
-        private DevExpress.XtraBars.BarEditItem txtMC;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit aMaCho;
         private System.Windows.Forms.BindingSource giaoDichOBindingSource;
         private DevExpress.XtraBars.BarButtonItem btnDel;
-        private DevExpress.XtraBars.PopupMenu pMenu;
         private DevExpress.XtraBars.BarCheckItem chkAll;
         private DevExpress.XtraBars.BarCheckItem chk2;
         private DevExpress.XtraBars.BarEditItem bdtpTu;
         private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit edtpTu;
         private DevExpress.XtraBars.BarEditItem bdtpDen;
         private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit edtpDen;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
         private DevExpress.XtraGrid.Columns.GridColumn colAgent;
         private DevExpress.XtraBars.BarButtonItem btnEx;
+        private DevExpress.XtraBars.BarEditItem barSoVe;
+        private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit aSoVe;
+        private DevExpress.XtraBars.BarEditItem barMaCho;
+        private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit aMaCho;
+        private DevExpress.XtraBars.BarEditItem barEditItem2;
+        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit2;
     }
 }

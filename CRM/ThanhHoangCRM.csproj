@@ -102,33 +102,37 @@
     <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis, Version=1.49.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.49.0\lib\net45\Google.Apis.dll</HintPath>
+    <Reference Include="Google.Apis, Version=1.43.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.43.0\lib\net45\Google.Apis.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Auth, Version=1.49.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Auth.1.49.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+    <Reference Include="Google.Apis.Auth, Version=1.43.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.43.0\lib\net45\Google.Apis.Auth.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.49.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Auth.1.49.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.43.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.43.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Core, Version=1.49.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Core.1.49.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    <Reference Include="Google.Apis.Core, Version=1.43.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.43.0\lib\net45\Google.Apis.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Drive.v3, Version=1.49.0.2194, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Drive.v3.1.49.0.2194\lib\net45\Google.Apis.Drive.v3.dll</HintPath>
+    <Reference Include="Google.Apis.Drive.v3, Version=1.43.0.1863, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Drive.v3.1.43.0.1863\lib\net45\Google.Apis.Drive.v3.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.PlatformServices, Version=1.49.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.49.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.43.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.43.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Apis.Sheets.v4, Version=1.49.0.2175, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Sheets.v4.1.49.0.2175\lib\net45\Google.Apis.Sheets.v4.dll</HintPath>
+    <Reference Include="Google.Apis.Sheets.v4, Version=1.43.0.1867, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Sheets.v4.1.43.0.1867\lib\net45\Google.Apis.Sheets.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="IronOcr, Version=4.4.0.21181, Culture=neutral, PublicKeyToken=5f366048dc436899, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\IronOcr.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -153,9 +157,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Tesseract, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Tesseract.4.1.1\lib\net45\Tesseract.dll</HintPath>
-    </Reference>
     <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
     </Reference>
@@ -165,6 +166,30 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="4 HeThong\frmKPIHangMuc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="4 HeThong\frmKPIHangMuc.Designer.cs">
+      <DependentUpon>frmKPIHangMuc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="3 DoiTac\frmSignInTrongThem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="3 DoiTac\frmSignInTrongThem.Designer.cs">
+      <DependentUpon>frmSignInTrongThem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="4 HeThong\frmKPIHangMucThem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="4 HeThong\frmKPIHangMucThem.Designer.cs">
+      <DependentUpon>frmKPIHangMucThem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="4 HeThong\frmKPIThem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="4 HeThong\frmKPIThem.Designer.cs">
+      <DependentUpon>frmKPIThem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Class\XuLyDuLieu.cs" />
     <Compile Include="Class\XuLyGiaoDien.cs" />
     <Compile Include="Class\DuLieuTaoSan.cs" />
@@ -174,11 +199,11 @@
     <Compile Include="0 Chinh\CRMWaitForm.Designer.cs">
       <DependentUpon>CRMWaitForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="2 KeToan\frmNganHangKL.cs">
+    <Compile Include="2 KeToan\frmNHV.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="2 KeToan\frmNganHangKL.Designer.cs">
-      <DependentUpon>frmNganHangKL.cs</DependentUpon>
+    <Compile Include="2 KeToan\frmNHV.Designer.cs">
+      <DependentUpon>frmNHV.cs</DependentUpon>
     </Compile>
     <Compile Include="3 DoiTac\frmCongNoPhu.cs">
       <SubType>Form</SubType>
@@ -285,10 +310,10 @@
     <Compile Include="6 ChucNang\frmCapSignIn.Designer.cs">
       <DependentUpon>frmCapSignIn.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmGoogleSheet.cs">
+    <Compile Include="1 GiaoDich\frmGoogleSheet.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmGoogleSheet.Designer.cs">
+    <Compile Include="1 GiaoDich\frmGoogleSheet.Designer.cs">
       <DependentUpon>frmGoogleSheet.cs</DependentUpon>
     </Compile>
     <Compile Include="3 DoiTac\frmQuyAGS.cs">
@@ -297,17 +322,53 @@
     <Compile Include="3 DoiTac\frmQuyAGS.Designer.cs">
       <DependentUpon>frmQuyAGS.cs</DependentUpon>
     </Compile>
-    <Compile Include="5 ThongKe\frmThongKe.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="5 ThongKe\frmThongKe.Designer.cs">
-      <DependentUpon>frmThongKe.cs</DependentUpon>
-    </Compile>
     <Compile Include="5 ThongKe\frmThongKeDoanhSo.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="5 ThongKe\frmThongKeDoanhSo.Designer.cs">
       <DependentUpon>frmThongKeDoanhSo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="1 GiaoDich\frmKhachSanThem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="1 GiaoDich\frmKhachSanThem.Designer.cs">
+      <DependentUpon>frmKhachSanThem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="1 GiaoDich\frmKhachSan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="1 GiaoDich\frmKhachSan.Designer.cs">
+      <DependentUpon>frmKhachSan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="2 KeToan\frmNHKS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="2 KeToan\frmNHKS.Designer.cs">
+      <DependentUpon>frmNHKS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="2 KeToan\frmNHCTThem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="2 KeToan\frmNHCTThem.Designer.cs">
+      <DependentUpon>frmNHCTThem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="2 KeToan\frmNHKSCT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="2 KeToan\frmNHKSCT.Designer.cs">
+      <DependentUpon>frmNHKSCT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="2 KeToan\frmNHVH.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="2 KeToan\frmNHVH.Designer.cs">
+      <DependentUpon>frmNHVH.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCongNoKS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCongNoKS.Designer.cs">
+      <DependentUpon>frmCongNoKS.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -393,12 +454,6 @@
     <Compile Include="3 DoiTac\frmKhachLe.Designer.cs">
       <DependentUpon>frmKhachLe.cs</DependentUpon>
     </Compile>
-    <Compile Include="2 KeToan\frmNganHangCTThem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="2 KeToan\frmNganHangCTThem.Designer.cs">
-      <DependentUpon>frmNganHangCTThem.cs</DependentUpon>
-    </Compile>
     <Compile Include="3 DoiTac\frmDaiLyThem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -466,10 +521,10 @@
     <Compile Include="4 HeThong\frmHangBay.Designer.cs">
       <DependentUpon>frmHangBay.cs</DependentUpon>
     </Compile>
-    <Compile Include="3 DoiTac\frmKhacLeNo.cs">
+    <Compile Include="5 ThongKe\frmKhacLeNo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="3 DoiTac\frmKhacLeNo.Designer.cs">
+    <Compile Include="5 ThongKe\frmKhacLeNo.Designer.cs">
       <DependentUpon>frmKhacLeNo.cs</DependentUpon>
     </Compile>
     <Compile Include="Class\ClsVJ.cs" />
@@ -628,6 +683,15 @@
     <EmbeddedResource Include="0 Chinh\CRMWaitForm.resx">
       <DependentUpon>CRMWaitForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="4 HeThong\frmKPIHangMuc.resx">
+      <DependentUpon>frmKPIHangMuc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3 DoiTac\frmSignInTrongThem.resx">
+      <DependentUpon>frmSignInTrongThem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="4 HeThong\frmKPIHangMucThem.resx">
+      <DependentUpon>frmKPIHangMucThem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="4 HeThong\frmNCCThem.resx">
       <DependentUpon>frmNCCThem.cs</DependentUpon>
     </EmbeddedResource>
@@ -639,6 +703,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="4 HeThong\frmSanBayThem.resx">
       <DependentUpon>frmSanBayThem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="4 HeThong\frmKPIThem.resx">
+      <DependentUpon>frmKPIThem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="4 HeThong\frmTuyenBayThem.resx">
       <DependentUpon>frmTuyenBayThem.cs</DependentUpon>
@@ -676,17 +743,35 @@
     <EmbeddedResource Include="6 ChucNang\frmCapSignIn.resx">
       <DependentUpon>frmCapSignIn.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmGoogleSheet.resx">
+    <EmbeddedResource Include="1 GiaoDich\frmGoogleSheet.resx">
       <DependentUpon>frmGoogleSheet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="3 DoiTac\frmQuyAGS.resx">
       <DependentUpon>frmQuyAGS.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="5 ThongKe\frmThongKe.resx">
-      <DependentUpon>frmThongKe.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="5 ThongKe\frmThongKeDoanhSo.resx">
       <DependentUpon>frmThongKeDoanhSo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="1 GiaoDich\frmKhachSan.resx">
+      <DependentUpon>frmKhachSan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="1 GiaoDich\frmKhachSanThem.resx">
+      <DependentUpon>frmKhachSanThem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="2 KeToan\frmNHKS.resx">
+      <DependentUpon>frmNHKS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="2 KeToan\frmNHCTThem.resx">
+      <DependentUpon>frmNHCTThem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="2 KeToan\frmNHKSCT.resx">
+      <DependentUpon>frmNHKSCT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="2 KeToan\frmNHVH.resx">
+      <DependentUpon>frmNHVH.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCongNoKS.resx">
+      <DependentUpon>frmCongNoKS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resource.resx">
@@ -703,8 +788,8 @@
     <EmbeddedResource Include="2 KeToan\frmHoaDonThem.resx">
       <DependentUpon>frmHoaDonThem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="2 KeToan\frmNganHangKL.resx">
-      <DependentUpon>frmNganHangKL.cs</DependentUpon>
+    <EmbeddedResource Include="2 KeToan\frmNHV.resx">
+      <DependentUpon>frmNHV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="3 DoiTac\frmCongNoPhu.resx">
       <DependentUpon>frmCongNoPhu.cs</DependentUpon>
@@ -741,9 +826,6 @@
       <DependentUpon>frmKhachLe.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="2 KeToan\frmNganHangCTThem.resx">
-      <DependentUpon>frmNganHangCTThem.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="3 DoiTac\frmDaiLyThem.resx">
       <DependentUpon>frmDaiLyThem.cs</DependentUpon>
     </EmbeddedResource>
@@ -771,7 +853,7 @@
     <EmbeddedResource Include="1 GiaoDich\TongHop\frmTongHop.resx">
       <DependentUpon>frmTongHop.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="3 DoiTac\frmKhacLeNo.resx">
+    <EmbeddedResource Include="5 ThongKe\frmKhacLeNo.resx">
       <DependentUpon>frmKhacLeNo.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -872,6 +954,8 @@
     <None Include="Properties\DataSources\DataAccessLayer.CHIETKHAUTHANG10.datasource" />
     <None Include="Properties\DataSources\DataNgoaiTuyenO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.BanTongHopO.datasource" />
+    <None Include="Properties\DataSources\DataTransferObject.BaoCaoCTNHO.datasource" />
+    <None Include="Properties\DataSources\DataTransferObject.BaoCoCTNHO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.BieuDoO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.ChinhSachO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.CTNganHangO.datasource" />
@@ -880,14 +964,20 @@
     <None Include="Properties\DataSources\DataTransferObject.GiaoDichO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.HangBayO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.HoaDonO.datasource" />
+    <None Include="Properties\DataSources\DataTransferObject.KhachSanO.datasource" />
+    <None Include="Properties\DataSources\DataTransferObject.KPIHangMucO.datasource" />
+    <None Include="Properties\DataSources\DataTransferObject.KPIO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.LichSuO.datasource" />
+    <None Include="Properties\DataSources\DataTransferObject.LoaiGiaoDichO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.NCCGDO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.NCCO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.NganHangO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.NhomDaiLyO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.PhieuO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.QuyenNhanVienO.datasource" />
+    <None Include="Properties\DataSources\DataTransferObject.SanBayO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.SignInO.datasource" />
+    <None Include="Properties\DataSources\DataTransferObject.SignInTrongO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.SoDu_DaiLyO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.TheoDoiO.datasource" />
     <None Include="Properties\DataSources\DataTransferObject.TheoDoiPhanMemO.datasource" />
@@ -967,7 +1057,6 @@
     <Content Include="chromedriver.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Class\frmVN.txt" />
     <Content Include="Logo.ico" />
     <None Include="Service References\SMSService\CRM.SMSService.BrandNames.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -996,15 +1085,10 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\SMSService\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Quản lý\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Tesseract.4.1.1\build\Tesseract.targets" Condition="Exists('..\packages\Tesseract.4.1.1\build\Tesseract.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Tesseract.4.1.1\build\Tesseract.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Tesseract.4.1.1\build\Tesseract.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -12,20 +12,23 @@ namespace CRM
         {
             InitializeComponent();
             A = a;
-            DaiLyDB.DataSource = new DaiLyD().All(false).Where(w => w.LoaiKhachHang.Equals(1)).ToList();
         }
 
         private void frmBieuDoDaiLy_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
+                XuLyGiaoDien.wait.ShowWaitForm();
+            DaiLyDB.DataSource = new D_DAILY().All(false).Where(w => w.LoaiKhachHang.Equals(1)).ToList();
             iIDKhachHang.EditValue = A;
+            XuLyGiaoDien.OpenForm(this);
+            XuLyGiaoDien.wait.CloseWaitForm();
         }
 
         private void iIDKhachHang_EditValueChanged(object sender, EventArgs e)
         {
             if (iIDKhachHang.EditValue != null)
             {
-                DaiLyO dl = (DaiLyO)iIDKhachHang.Properties.GetRowByKeyValue(iIDKhachHang.EditValue);
+                O_DAILY dl = (O_DAILY)iIDKhachHang.Properties.GetRowByKeyValue(iIDKhachHang.EditValue);
                 if (dl != null)
                     bieuDoOBindingSource.DataSource = new BieuDoD().DuLieu1(dl.ID, dl.NgayKiQuy);
             }

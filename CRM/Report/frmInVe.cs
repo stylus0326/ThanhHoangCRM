@@ -10,10 +10,10 @@ namespace CRM
 {
     public partial class frmInVe : DevExpress.XtraEditors.XtraForm
     {
-        List<GiaoDichO> data1;
-        GiaoDichO data;
+        List<O_GIAODICH> data1;
+        O_GIAODICH data;
 
-        public frmInVe(List<GiaoDichO> dr)
+        public frmInVe(List<O_GIAODICH> dr)
         {
             InitializeComponent();
             data1 = dr;
@@ -22,19 +22,19 @@ namespace CRM
             panelControl1.Visible = false;
         }
 
-        public frmInVe(CTNganHangO dr)
+        public frmInVe(O_CTNGANHANG dr)
         {
             InitializeComponent();
             if (dr == null)
                 return;
-            nhanVienOBindingSource.DataSource = new DaiLyD().NhanVien();
+            nhanVienOBindingSource.DataSource = new D_DAILY().NhanVien();
             if (dr.LoaiKhachHang < 3)
             {
-                DaiLyO dl = new DaiLyD().LayDaiLy(true, dr.MaDL.ToString());
+                O_DAILY dl = new D_DAILY().LayDaiLy(true, dr.MaDL.ToString());
                 txtHoTen.Text = dl.Ten;
                 if (dl.DiaChiHD != string.Empty)
                     txtDiaChi.Text = dl.DiaChiHD;
-                txtLyDo.Text = DuLieuTaoSan.HinhThuc_NganHang(dr.LoaiKhachHang).Where(w => w.ID.Equals(dr.LoaiGiaoDich)).ToList()[0].Name + " ngày " + dr.NgayGD.ToString("dd/MM/yyyy");
+                txtLyDo.Text = new D_LOAIGIAODICH().DuLieu_NganHang_TheoLoai(dr.LoaiKhachHang,false).Where(w => w.ID.Equals(dr.LoaiGiaoDich)).ToList()[0].Name + " ngày " + dr.NgayGD.ToString("dd/MM/yyyy");
             }
             else
                 txtLyDo.Text = dr.GhiChu;
@@ -46,8 +46,8 @@ namespace CRM
 
         private void frmInVe_Load(object sender, EventArgs e)
         {
-            SanBayD sbb = new SanBayD();
-            HangBayO hb = new HangBayD().LayHangBay(data.Hang);
+            D_SANBAY sbb = new D_SANBAY();
+            O_HANGBAY hb = new D_HANGBAY().LayHangBay(data.Hang);
             Design1 rpt = new Design1(hb.MauChu, hb.MauNen, hb.MauChinh, hb.HanhLy);
             if (hb.LogoHang != null)
             {
@@ -73,8 +73,8 @@ namespace CRM
             rpt.paNgayGD.Value = NgayGD;
 
 
-            TuyenBayO tb = new TuyenBayD().LayTuyenBay(data.TuyenBayDi);
-            SanBayO sbo = sbb.SanBay(tb.Ten.Split('-')[0]);
+            O_TUYENBAY tb = new D_TUYENBAY().LayTuyenBay(data.TuyenBayDi);
+            O_SANBAY sbo = sbb.SanBay(tb.Ten.Split('-')[0]);
             rpt.paSoHieuDi.Value = data.SoHieuDi.Replace(" ", string.Empty);
             rpt.paKhoiHanhDi.Value = string.Format("{0} ({1}) {2}\n{3}", sbo.TenDayDu, sbo.KyHieu, data.GioBayDi.ToString("H:mm"), NgayDi);
             sbo = sbb.SanBay(tb.Ten.Split('-')[1]);
@@ -86,7 +86,7 @@ namespace CRM
                 rpt.gTuyenVe.Visible = false;
             if (rpt.gTuyenVe.Visible)
             {
-                tb = new TuyenBayD().LayTuyenBay(data.TuyenBayVe);
+                tb = new D_TUYENBAY().LayTuyenBay(data.TuyenBayVe);
                 sbo = sbb.SanBay(tb.Ten.Split('-')[0]);
                 rpt.paSoHieuVe.Value = data.SoHieuVe.Replace(" ", string.Empty);
                 rpt.paKhoiHanhVe.Value = string.Format("{0} ({1}) {2}\n{3}", sbo.TenDayDu, sbo.KyHieu, data.GioBayVe.ToString("H:mm"), NgayVe);
@@ -104,8 +104,8 @@ namespace CRM
 
         List<ClsHanhKhach> LayHanhKhach2()
         {
-            GiaoDichD gdb = new GiaoDichD();
-            List<GiaoDichO> lstGD = data1;
+            D_GIAODICH gdb = new D_GIAODICH();
+            List<O_GIAODICH> lstGD = data1;
             List<ClsHanhKhach> lstHK = new List<ClsHanhKhach>();
             // Danh sách hành khách
             List<string> hks = new List<string>();

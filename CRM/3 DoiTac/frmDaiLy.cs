@@ -6,6 +6,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace CRM
@@ -20,31 +21,43 @@ namespace CRM
         private void frmDaiLy_Load(object sender, EventArgs e)//
         {
             btnSI.Visibility = DuLieuTaoSan.Q.Lv2SignIn ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btneXCEL.Visibility = DuLieuTaoSan.Q.DaiLyAdmin ? BarItemVisibility.Always : BarItemVisibility.Never;
             DuLieu();
             DSNhanVien.DataSource = _DaiLyD.NhanVien();
             btnChiTiet.Click += BtnChiTiet_Click;
             btnThonKe.Click += BtnThonKe_Click;
             btnUpQuy.Click += BtnUpQuy_Click;
+            btnSIC.Click += BtnSIC_Click;
+        }
+
+        private void BtnSIC_Click(object sender, EventArgs e)
+        {
+            O_DAILY dl = GVDL.GetRow(GVDL.GetSelectedRows()[0]) as O_DAILY;
+            if (dl.SIC > 0)
+                new frmSignIn(dl).ShowDialog();
         }
 
 
         #region Dữ liệu 
+        int KieuHienThi = 0;
         public void DuLieu()
         {
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
-            tinhTrangOBindingSource.DataSource = new TinhTrangD().DuLieu(0, true);
-            chinhSachOBindingSource.DataSource = new ChinhSachD().All();
+            tinhTrangOBindingSource.DataSource = new D_TRANGTHAI().DuLieu(0, true);
+            chinhSachOBindingSource.DataSource = new D_CHINHSACH().All();
             _DaiLyD.ChaySoDu();
-            daiLyOBindingSource.DataSource = _DaiLyD.DuLieu(index);
+            if (KieuHienThi == 3)
+                daiLyOBindingSource.DataSource = _DaiLyD.DuLieu(index);
+            else
+                daiLyOBindingSource.DataSource = _DaiLyD.DuLieu(index).Where(w => w.TrangThaiHoatDong.Equals(KieuHienThi));
             XuLyGiaoDien.wait.CloseWaitForm();
-            colThongKe.Visible = index == 1;
             colQuyAGS.Visible = DuLieuTaoSan.Q.NganHangThemSua;
         }
         #endregion
 
         #region Biến
-        DaiLyD _DaiLyD = new DaiLyD();
+        D_DAILY _DaiLyD = new D_DAILY();
         int index = 1;
         #endregion
 
@@ -54,11 +67,14 @@ namespace CRM
             GridView View = sender as GridView;
             if (e.RowHandle >= 0 && index != 3)
             {
-                DaiLyO dl = View.GetRow(e.RowHandle) as DaiLyO;
+                O_DAILY dl = View.GetRow(e.RowHandle) as O_DAILY;
                 if (dl != null)
                 {
                     if (dl.SoDu < 0 - dl.QuyChet)
                         if (e.Column.FieldName == "Ten" || e.Column.FieldName == "SoDu")
+                            e.Appearance.BackColor = Color.IndianRed;
+                    if (dl.SoDu < 0 - dl.HanMuc && dl.HanMuc > 0)
+                        if (e.Column.FieldName == "HanMuc")
                             e.Appearance.BackColor = Color.IndianRed;
                 }
             }
@@ -175,19 +191,22 @@ namespace CRM
         #region Sự kiện nút
         private void BtnChiTiet_Click(object sender, EventArgs e)
         {
-            DaiLyO dl = GVDL.GetRow(GVDL.GetSelectedRows()[0]) as DaiLyO;
+            O_DAILY dl = GVDL.GetRow(GVDL.GetSelectedRows()[0]) as O_DAILY;
             new frmCongNoPhu(dl).ShowDialog();
         }
 
         private void BtnThonKe_Click(object sender, EventArgs e)
         {
-            DaiLyO dl = GVDL.GetRow(GVDL.GetSelectedRows()[0]) as DaiLyO;
-            new frmBieuDoDaiLy(dl.ID).ShowDialog();
+            if (index == 1)
+            {
+                O_DAILY dl = GVDL.GetRow(GVDL.GetSelectedRows()[0]) as O_DAILY;
+                new frmBieuDoDaiLy(dl.ID).ShowDialog();
+            }
         }
 
         private void BtnUpQuy_Click(object sender, EventArgs e)
         {
-            DaiLyO dl = GVDL.GetRow(GVDL.GetSelectedRows()[0]) as DaiLyO;
+            O_DAILY dl = GVDL.GetRow(GVDL.GetSelectedRows()[0]) as O_DAILY;
             new frmQuyAGS(dl).ShowDialog(this);
         }
 
@@ -226,11 +245,11 @@ namespace CRM
         private void GVDL_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
-                new frmDaiLyThem(GVDL.GetRow(GVDL.GetSelectedRows()[0]) as DaiLyO).ShowDialog(ParentForm);
+                new frmDaiLyThem(GVDL.GetRow(GVDL.GetSelectedRows()[0]) as O_DAILY).ShowDialog(ParentForm);
         }
         private void grvDaiLy_DoubleClick(object sender, EventArgs e)
         {
-            new frmDaiLyThem(GVDL.GetRow(GVDL.GetSelectedRows()[0]) as DaiLyO).ShowDialog(ParentForm);
+            new frmDaiLyThem(GVDL.GetRow(GVDL.GetSelectedRows()[0]) as O_DAILY).ShowDialog(ParentForm);
         }
 
         private void grvDaiLy_KeyDown(object sender, KeyEventArgs e)
@@ -271,6 +290,17 @@ namespace CRM
                     }
                 }
             }
+        }
+
+        private void btneXCEL_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            XuLyGiaoDien.ExportExcel(GCDL, GVDL, "DS khách-" + DateTime.Now.ToString("dd-MM-yyy"));
+        }
+
+        private void rCMB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            KieuHienThi = (sender as ComboBoxEdit).SelectedIndex;
+            DuLieu();
         }
     }
 }

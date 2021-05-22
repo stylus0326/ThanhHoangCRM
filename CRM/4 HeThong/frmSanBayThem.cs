@@ -8,19 +8,23 @@ namespace CRM
 {
     public partial class frmSanBayThem : DevExpress.XtraEditors.XtraForm
     {
-        SanBayO _SanBayO = new SanBayO();
-        SanBayD _SanBayD = new SanBayD();
-        public frmSanBayThem()
+        O_SANBAY _SanBayO = new O_SANBAY();
+        D_SANBAY _SanBayD = new D_SANBAY();
+        public frmSanBayThem(bool a = false)
         {
             InitializeComponent();
+            if (a)
+                Text = "Khu vực";
             Text += " thêm";
         }
 
-        public frmSanBayThem(SanBayO sanBayO)
+        public frmSanBayThem(O_SANBAY sanBayO, bool a = false)
         {
             InitializeComponent();
             iKyHieu.ReadOnly = true;
             _SanBayO = sanBayO;
+            if (a)
+                Text = "Khu vực";
             Text += " sửa";
         }
 
@@ -47,10 +51,14 @@ namespace CRM
             dic.Add("TenDayDu", iTenDayDu.Text);
             dic.Add("KyHieu", iKyHieu.Text);
             dic.Add("NoiDia", iNoiDia.Checked);
+            dic.Add("KhuVuc", (Text.StartsWith("Khu vực")));
             long CapNhatNum = (_SanBayO.ID > 0) ? (_SanBayD.CapNhat(dic, _SanBayO.ID) > 0 ? _SanBayO.ID : 0) : _SanBayD.ThemMoi(dic, true);
             if (XuLyGiaoDien.ThongBao(Text, CapNhatNum > 0))
             {
-                (Owner.ActiveMdiChild as frmTuyenBay).DuLieuSanBay();
+                if (Text.StartsWith("Khu vực"))
+                    (Owner as frmNCCThem).KhuVuc();
+                else
+                    (Owner.ActiveMdiChild as frmTuyenBay).DuLieuSanBay();
                 Close();
             }
         }

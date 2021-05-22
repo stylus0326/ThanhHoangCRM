@@ -23,11 +23,11 @@ namespace CRM
 {
     public partial class frmCapSignIn : DevExpress.XtraEditors.XtraForm
     {
-        MauEmailO ma = new MauEmailO();
-        List<SignInO> lstSI = new List<SignInO>();
-        List<SignInO> _lstSIChinh = new List<SignInO>();
-        List<DaiLyO> _lstDL = new List<DaiLyO>();
-        List<HangBayO> _lstHB = new List<HangBayO>();
+        O_MAUEMAIL ma = new O_MAUEMAIL();
+        List<O_SIGNIN> lstSI = new List<O_SIGNIN>();
+        List<O_SIGNIN> _lstSIChinh = new List<O_SIGNIN>();
+        List<O_DAILY> _lstDL = new List<O_DAILY>();
+        List<O_HANGBAY> _lstHB = new List<O_HANGBAY>();
         ChromeDriver driver;
         IJavaScriptExecutor js;
         WebDriverWait wait;
@@ -38,8 +38,8 @@ namespace CRM
 
         private void frmCapSignIn_Load(object sender, EventArgs e)
         {
-            ma = new MauEmailD().DuLieu()[5];
-            _lstDL = new DaiLyD().All(false).Where(w => w.LoaiKhachHang.Equals(1)).ToList();
+            ma = new D_MAUEMAIL().DuLieu()[5];
+            _lstDL = new D_DAILY().All(false).Where(w => w.LoaiKhachHang.Equals(1)).ToList();
 
             for (int i = 0; i < _lstDL.Count; i++)
             {
@@ -47,10 +47,10 @@ namespace CRM
             }
 
             daiLyOBindingSource.DataSource = _lstDL;
-            _lstHB = new HangBayD().DuLieu().Where(w => w.SapXep).ToList(); ;
+            _lstHB = new D_HANGBAY().DuLieu().Where(w => w.SapXep).ToList(); ;
             hangBayOBindingSource.DataSource = _lstHB;
-            List<NCCO> nc = new NCCD().DuLieu();
-            lstSI = new SignInD().DuLieu();
+            List<O_NHACUNGCAP> nc = new D_NHACUNGCAP().DuLieu();
+            lstSI = new D_SIGNIN().DuLieu();
 
             Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM", true);
             if ((key.GetValue("TepDinhKemSignIn") ?? string.Empty) != string.Empty)
@@ -58,14 +58,14 @@ namespace CRM
                 txtFileDinhKem.Properties.Tokens.Clear();
                 List<string> filenames = key.GetValue("TepDinhKemSignIn").ToString().Split(',').ToList();
 
-                foreach (var item in filenames)
-                {
-                    string filename = Path.GetFileName(item);
-                    var token_item = new TokenEditToken(filename + $" [{GetFileSizeFromFileNameURL(item)}]", item);
-                    txtFileDinhKem.Properties.Tokens.Add(token_item);
-                }
                 try
                 {
+                    foreach (var item in filenames)
+                    {
+                        string filename = Path.GetFileName(item);
+                        var token_item = new TokenEditToken(filename + $" [{GetFileSizeFromFileNameURL(item)}]", item);
+                        txtFileDinhKem.Properties.Tokens.Add(token_item);
+                    }
                     txtFileDinhKem.EditValue = string.Join(",", filenames);
                     txtFileDinhKem.Properties.PopupPanel = flyEmail;
                 }
@@ -78,7 +78,7 @@ namespace CRM
 
         private void iDaiLy_EditValueChanged(object sender, EventArgs e)
         {
-            DaiLyO dl = iDaiLy.GetSelectedDataRow() as DaiLyO;
+            O_DAILY dl = iIDKhachHang.GetSelectedDataRow() as O_DAILY;
             lSignIn.EditValue = null;
             signInOBindingSource.DataSource = lstSI.Where(w => w.DaiLy.Equals(dl.ID)).ToList();
             iMatKhau.Text = RandomPassword();
@@ -86,7 +86,7 @@ namespace CRM
 
         private void lookUpEdit1_EditValueChanged(object sender, EventArgs e)
         {
-            SignInO si = lSignIn.GetSelectedDataRow() as SignInO;
+            O_SIGNIN si = lSignIn.GetSelectedDataRow() as O_SIGNIN;
             if (si != null)
             {
                 iHangBay.EditValue = si.HangBay;
@@ -137,7 +137,7 @@ namespace CRM
 
         void XulyDulieuKhiThem()
         {
-            List<DaiLyO> dloz = _lstDL.Where(w => (_lstSIChinh.Select(u => u.DaiLy)).Contains(w.ID)).ToList();
+            List<O_DAILY> dloz = _lstDL.Where(w => (_lstSIChinh.Select(u => u.DaiLy)).Contains(w.ID)).ToList();
             daiLyOBindingSource1.DataSource = dloz;
         }
 
@@ -157,9 +157,9 @@ namespace CRM
                     return;
                 }
 
-                SignInO si = new SignInO();
+                O_SIGNIN si = new O_SIGNIN();
                 si.CanLam = icmb.SelectedIndex;
-                si.DaiLy = (int)iDaiLy.EditValue;
+                si.DaiLy = (int)iIDKhachHang.EditValue;
                 si.HangBay = (int)iHangBay.EditValue;
                 si.SignIn = iSignIn.Text;
                 si.MatKhau = iMatKhau.Text;
@@ -168,6 +168,8 @@ namespace CRM
                 GCSI.DataSource = _lstSIChinh;
                 GVSI.ExpandAllGroups();
                 XulyDulieuKhiThem();
+                iMatKhau.Text = RandomPassword();
+                iSignIn.Text = "";
             }
         }
 
@@ -182,7 +184,7 @@ namespace CRM
 
         private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            SignInO si = GVSI.GetRow(GVSI.GetSelectedRows()[0]) as SignInO;
+            O_SIGNIN si = GVSI.GetRow(GVSI.GetSelectedRows()[0]) as O_SIGNIN;
             if (si != null)
             {
                 _lstSIChinh.Remove(si);
@@ -196,6 +198,19 @@ namespace CRM
         {
             if (icmb.SelectedIndex > 0 && lSignIn.EditValue == null)
                 icmb.SelectedIndex = 0;
+        }
+
+        private HtmlElement GetElementByClass(string tag, string classname)
+        {
+            HtmlElementCollection eles = wVJ.Document.GetElementsByTagName(tag);
+            foreach (HtmlElement ele in eles)
+            {
+                if (ele.GetAttribute("className") == classname)
+                {
+                    return ele;
+                }
+            }
+            return null;
         }
 
         IWebElement ChromeFindElementByClassName(string _TagName, string _ClassName, int _ViTri = 0)
@@ -236,90 +251,19 @@ namespace CRM
 
         private void groupControl2_CustomButtonClick(object sender, DevExpress.XtraBars.Docking2010.BaseButtonEventArgs e)
         {
+            _lstSIChinh = _lstSIChinh.OrderBy(w => w.HangBay).OrderBy(w => w.CanLam).ToList();
 
-            switch (int.Parse(e.Button.Properties.Tag.ToString()))
+            if (_lstSIChinh.Where(w => w.HangBay.Equals(2) && !w.End).OrderBy(w => w.CanLam).ToList().Count > 0)
             {
-                case 0:
-                    XtraOpenFileDialog ofd = new XtraOpenFileDialog();
-                    ofd.Title = "Mở File";
-                    ofd.Filter = "Excel File (*.xlsx, *.xls) | *.xlsx; *.xls";
-                    ofd.DefaultExt = ".xlsx";
-                    if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        string ChuoiKetNoi = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ofd.FileName + "; Extended Properties='Excel 12.0 Xml;HDR=YES';";
-                        using (OleDbConnection conn = new OleDbConnection(ChuoiKetNoi))
-                        {
-                            conn.Open();
-                            DataTable dbSchema = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-                            string CauTruyVan = "SELECT * FROM [" + dbSchema.Rows[0].Field<string>("TABLE_NAME").Replace("'", string.Empty) + ']';
-                            OleDbDataAdapter da = new OleDbDataAdapter(CauTruyVan, conn);
-                            DataTable dt = new DataTable();
-                            da.Fill(dt);
-                            _lstSIChinh.Clear();
-                            foreach (DataRow row in dt.Rows)
-                            {
-                                SignInO signInO = new SignInO();
-                                signInO.DaiLy = _lstDL.Where(w => w.TenTam.ToUpper().Equals(row[0].ToString().ToUpper())).First().ID;
-                                signInO.HangBay = _lstHB.Where(w => w.TenTat.Equals(row[1].ToString())).First().ID;
-                                signInO.SignIn = ((row[2] ?? null) ?? string.Empty).ToString();
-                                signInO.MatKhau = row[3].ToString();
-                                signInO.Chinh = row[4].ToString() != "False";
-                                signInO.CanLam = int.Parse(row[5].ToString());
-                                signInO.End = row[6].ToString() != "False";
-                                _lstSIChinh.Add(signInO);
-                            }
-                            GCSI.DataSource = null;
-                            GCSI.DataSource = _lstSIChinh;
-                            _lstSIChinh = _lstSIChinh.OrderBy(w => w.HangBay).OrderBy(w => w.Khoa).ToList();
-                            XulyDulieuKhiThem();
-                            GVSI.ExpandAllGroups();
-                        }
-                    }
-                    break;
-                case 1:
-                    colDaiLyTT.GroupIndex = -1;
-                    XuLyGiaoDien.ExportExcel(GCSI, GVSI, "Cấp Sign-" + DateTime.Now.ToString("dd-MM-yyy"));
-                    colDaiLyTT.GroupIndex = 0;
-                    GVSI.ExpandAllGroups();
-                    break;
-                case 2:
-                    List<Dictionary<string, object>> lstdic = new List<Dictionary<string, object>>();
-                    for (int i = 0; i < _lstSIChinh.Count; i++)
-                    {
-                        if (lstSI.Where(w => w.SignIn.Equals(_lstSIChinh[i].SignIn)).Count() == 0)
-                        {
-                            Dictionary<string, object> keyValues = new Dictionary<string, object>();
-                            keyValues.Add("DaiLy", _lstSIChinh[i].DaiLy);
-                            keyValues.Add("SignIn", _lstSIChinh[i].SignIn);
-                            keyValues.Add("HangBay", _lstSIChinh[i].HangBay);
-                            keyValues.Add("Chinh", _lstSIChinh[i].Chinh);
-                            keyValues.Add("Khoa", _lstSIChinh[i].Khoa);
-                            keyValues.Add("MatKhau", _lstSIChinh[i].MatKhau);
-                            lstdic.Add(keyValues);
-                        }
-                    }
-                    if (lstdic.Count > 0)
-                    {
-                        if (new SignInD().ThemNhieu1Ban(lstdic) > 0)
-                            XuLyGiaoDien.Alert("Thêm sign in thành công", Form_Alert.enmType.Success);
-                    }
-                    break;
-                default:
-                    _lstSIChinh = _lstSIChinh.OrderBy(w => w.HangBay).OrderBy(w => w.CanLam).ToList();
-
-                    if (_lstSIChinh.Where(w => w.HangBay.Equals(2)).OrderBy(w => w.CanLam).ToList().Count > 0)
-                    {
-                        Thread thread1 = new Thread(Wb);
-                        thread1.Start();
-                    }
-                    if (_lstSIChinh.Where(w => w.HangBay.Equals(3)).OrderBy(w => w.CanLam).ToList().Count > 0)
-                    {
-                        iVN = 0;
-                        wVJ.Navigate("http://ags.thanhhoang.vn/Login.aspx");
-                        List<int> lstA = _lstSIChinh.Where(w => w.HangBay.Equals(3)).Select(w => w.DaiLy).ToList();
-                        lstDLAGS = _lstDL.Where(w => lstA.Contains(w.ID)).Select(w => w.MaAGS).ToList();
-                    }
-                    break;
+                Thread thread1 = new Thread(Wb);
+                thread1.Start();
+            }
+            if (_lstSIChinh.Where(w => w.HangBay.Equals(3) && !w.End).OrderBy(w => w.CanLam).ToList().Count > 0)
+            {
+                iVN = 0;
+                wVJ.Navigate("http://ags.thanhhoang.vn/Login.aspx");
+                List<int> lstA = _lstSIChinh.Where(w => w.HangBay.Equals(3)).Select(w => w.DaiLy).ToList();
+                lstDLAGS = _lstDL.Where(w => lstA.Contains(w.ID)).Select(w => w.MaAGS).ToList();
             }
         }
 
@@ -329,6 +273,7 @@ namespace CRM
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
             var options = new ChromeOptions();
             //chromeDriverService.HideCommandPromptWindow = true;
+            O_NHACUNGCAP cCO = new D_NHACUNGCAP().DuLieu().Where(w => w.Ten.Equals("VJ")).First();
 
             try { driver = new ChromeDriver(chromeDriverService, options, TimeSpan.FromSeconds(300)); }
             catch { options.BinaryLocation = @"C:\Program Files\Google\Chrome\Application\chrome.exe"; driver = new ChromeDriver(chromeDriverService, options, TimeSpan.FromSeconds(300)); }
@@ -348,8 +293,8 @@ namespace CRM
                     wait.Until(d => d.PageSource.Contains("https://agents.vietjetair.com/sitelogin.aspx?lang=vi"));
                     js.ExecuteScript("location.href = 'https://agents.vietjetair.com/sitelogin.aspx?lang=vi';");
                     wait.Until(d => d.PageSource.Contains("javascript:SubmitForm();"));
-                    driver.FindElement(By.CssSelector("input[name='txtAgentID']")).SendKeys("AG38261201");//thẻ có tên là
-                    driver.FindElement(By.CssSelector("#txtAgentPswd")).SendKeys("Doimoi2021$");// # ID
+                    driver.FindElement(By.CssSelector("input[name='txtAgentID']")).SendKeys(cCO.TaiKhoan);//thẻ có tên là
+                    driver.FindElement(By.CssSelector("#txtAgentPswd")).SendKeys(cCO.MatKhau);// # ID
                     driver.FindElement(By.CssSelector(".button")).Click();// . Class
                     wait.Until(d => d.PageSource.Contains("button_big subAgencgyBtn"));
                     driver.FindElement(By.LinkText("Đại lý con")).Click();
@@ -359,7 +304,7 @@ namespace CRM
                     wait.Until(d => d.PageSource.Contains("base-loading-class") == false);
                 }
 
-                DaiLyO dl = _lstDL.Where(w => w.ID.Equals(_lstSIChinh[i].DaiLy)).ToList()[0];
+                O_DAILY dl = _lstDL.Where(w => w.ID.Equals(_lstSIChinh[i].DaiLy)).ToList()[0];
 
                 switch (_lstSIChinh[i].CanLam)
                 {
@@ -392,13 +337,18 @@ namespace CRM
                         {
                             wait.Until(d => d.PageSource.Contains("base-loading-class") == false);
                             js.ExecuteScript("document.getElementsByClassName('ui-select-search input-xs ng-pristine ng-valid ng-touched')[0].click()");
-                            driver.FindElement(By.LinkText("TA")).Click();
+                            try
+                            {
+                                driver.FindElement(By.LinkText("TA")).Click();
+                            }
+                            catch { }
                         }
 
                         ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-invalid ng-invalid-required", 0).SendKeys(_lstSIChinh[i].MatKhau);
                         ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required", 0).SendKeys(_lstSIChinh[i].MatKhau);
-                        ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required ng-valid-maxlength ng-valid-email", 0).SendKeys((dl.EmailGiaoDich ?? "tungtranims@gmail.com").Replace("\r\n", "|").Split('|')[0]);
-                        ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required ng-valid-maxlength", 0).SendKeys(dl.DiDong ?? "0778516185");
+
+                        ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required ng-valid-maxlength ng-valid-email", 0).SendKeys((dl.EmailGiaoDich ?? "vemaybay@thanhhoang.vn").Replace("\r\n", "|").Split('|')[0]);
+                        ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required ng-valid-maxlength", 0).SendKeys(dl.DiDong ?? "0919415995");
                         ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength", 0).SendKeys(_lstSIChinh[i].SignIn + "-" + XuLyDuLieu.NotVietKey(dl.Ten).Replace(" ", string.Empty));
 
                         new SelectElement(ChromeFindElementByClassName("select", "form-control ng-pristine ng-untouched ng-invalid ng-invalid-required")).SelectByIndex(47);
@@ -428,8 +378,9 @@ namespace CRM
         List<string> lstDLAGS = new List<string>();
         List<string> lstQAGS = new List<string>();
         List<string> lstMaAGSW = new List<string>();//lưu mã ags trên web
+        int SoLanDangNhap = 0;
         int iVN = 0;
-        DaiLyO dldl = new DaiLyO();
+        O_DAILY dldl = new O_DAILY();
         private void wVJ_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             if (wVJ.ReadyState == WebBrowserReadyState.Complete && !wVJ.IsBusy)
@@ -442,25 +393,34 @@ namespace CRM
                     wVJ.Document.GetElementById("txtUsernameVNiSC").SetAttribute("value", "admin");
                     wVJ.Document.GetElementById("txtMatKhau").SetAttribute("value", "11223399");
                     wVJ.Document.GetElementById("txtAgentCode").SetAttribute("value", "THD");
-
-                    dynamic body = wVJ.Document.Body.DomElement;
-                    dynamic controlRange = body.createControlRange();
-                    dynamic element1 = wVJ.Document.GetElementById("imgImageValidate").DomElement;
-                    controlRange.add(element1);
-                    controlRange.execCommand("Copy", false, null);
-
-                    string res = string.Empty;
-                RetunA:
-                    try
+                    SoLanDangNhap++;
+                    if (SoLanDangNhap < 4)
                     {
-                        res = XuLyGiaoDien.ConvertImgToText((Bitmap)Clipboard.GetDataObject().GetData(DataFormats.Bitmap));
-                        if (res.Length < 3)
+                        dynamic body = wVJ.Document.Body.DomElement;
+                        dynamic controlRange = body.createControlRange();
+                        dynamic element1 = wVJ.Document.GetElementById("imgImageValidate").DomElement;
+                        controlRange.add(element1);
+                        controlRange.execCommand("Copy", false, null);
+
+                        string res = string.Empty;
+                    RetunA:
+                        try
+                        {
+                            res = XuLyGiaoDien.ConvertImgToText((Bitmap)Clipboard.GetDataObject().GetData(DataFormats.Bitmap));
+                            if (res.Length < 3)
+                                goto RetunA;
+                        }
+                        catch { wVJ.Navigate("http://ags.thanhhoang.vn/Login.aspx"); }
+
+                        if (wVJ.Document.GetElementById("RequiredFieldValidator3").OuterHtml.Contains("VISIBILITY: hidden"))
+                        {
+                            wVJ.Document.GetElementById("txtImageValidate").SetAttribute("value", res);
+                            wVJ.Visible = true;
+                            wVJ.Document.GetElementById("btnLogin").InvokeMember("click");
+                        }
+                        else
                             goto RetunA;
                     }
-                    catch { wVJ.Navigate("http://ags.thanhhoang.vn/Login.aspx"); }
-                    wVJ.Document.GetElementById("txtImageValidate").SetAttribute("value", res);
-                    wVJ.Visible = true;
-                    wVJ.Document.GetElementById("btnLogin").InvokeMember("click");
                 }  // Đăng nhập
                 else if (wVJ.Url.ToString().Contains("/Default.aspx") || wVJ.Url.AbsolutePath.Contains("/Booking.aspx")) //Vào trang thêm đại lý
                     wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=SubAgent");
@@ -494,7 +454,7 @@ namespace CRM
                             for (int i = 0; i < hc.Count; i++)
                             {
                                 if (hc[i].GetAttribute("classname") == "item first")
-                                    if (lstDLAGS.Contains(hc[i].InnerText))
+                                    if (lstDLAGS.Equals(hc[i].InnerText))
                                         lstDLAGS.Remove(hc[i].InnerText);
                             }
                         }
@@ -533,7 +493,7 @@ namespace CRM
                         wVJ.Document.Window.ScrollTo(0, 170);
                         Dictionary<string, object> dic = new Dictionary<string, object>();
                         dic.Add("SoCT", 2);
-                        new DaiLyD().CapNhat(dic, _lstDL.Where(w => w.MaAGS.Equals(lstDLAGS[0])).First().ID);
+                        new D_DAILY().CapNhat(dic, _lstDL.Where(w => w.MaAGS.Equals(lstDLAGS[0])).First().ID);
                     }
                 }// Thêm quỹ
                 else if (wVJ.Url.ToString().Contains("Accounting.aspx?Do=Deposit"))
@@ -589,13 +549,12 @@ namespace CRM
                 }
                 else if (wVJ.Url.ToString().EndsWith("Agent.aspx?Do=Ticketing"))
                 {
-                    if (lstMaAGSW.Count == 0)
+                    lstMaAGSW.Clear();
+
+                    HtmlElementCollection hc = GetElementByClass("table", "table table-bordered").GetElementsByTagName("tr");
+                    for (int i = 1; i < hc.Count; i++)
                     {
-                        HtmlElementCollection hc = wVJ.Document.GetElementsByTagName("tr");
-                        for (int i = 1; i < hc.Count; i++)
-                        {
-                            lstMaAGSW.Add(hc[i].Document.GetElementsByTagName("tr")[1].InnerText);
-                        }
+                        lstMaAGSW.Add(hc[i].GetElementsByTagName("td")[1].InnerText);
                     }
 
                     for (; iVN < _lstSIChinh.Count; iVN++)
@@ -614,7 +573,7 @@ namespace CRM
 
         private void searchLookUpEdit1_EditValueChanged(object sender, EventArgs e)
         {
-            DaiLyO dl = searchLookUpEdit1.GetSelectedDataRow() as DaiLyO;
+            O_DAILY dl = searchLookUpEdit1.GetSelectedDataRow() as O_DAILY;
             string[] EmailKeToanString = Regex.Replace(dl.EmailKeToan ?? string.Empty, @"\t|\n|\r", "|").Replace("||", "|").Split('|');
             if (EmailKeToanString.Count() > 0)
                 txtTen.Text = (checkEdit1.Checked) ? EmailKeToanString[0] : "cuongdt@thanhhoang.vn";
@@ -622,7 +581,7 @@ namespace CRM
                 txtTen.Text = "cuongdt@thanhhoang.vn";
             txtTieuDe.Text = "{Quan Trọng} CẤP SIGIN-IN ĐẠI LÝ " + dl.Ten.ToUpper() + " " + dl.MaDL.ToUpper();
 
-            List<SignInO> signInOs = _lstSIChinh.Where(w => w.DaiLy.Equals(dl.ID)).OrderBy(w => w.HangBay).OrderBy(w => w.Khoa).ToList();
+            List<O_SIGNIN> signInOs = _lstSIChinh.Where(w => w.DaiLy.Equals(dl.ID)).OrderBy(w => w.HangBay).OrderBy(w => w.Khoa).ToList();
 
 
             string VJ = string.Empty;
@@ -636,40 +595,35 @@ namespace CRM
                 {
                     case 1:
                         BL += string.Format(@"<span class='csD4C8F03B'>
-                                                   TK {2}     : {0}<br />
-                                                   Mật khẩu    : {1}
+                                                   TK {2}     : {0}<br/>
+                                                   Mật khẩu    : {1}<br/><br/>
                                               </span>", signInOs[i].SignIn, signInOs[i].MatKhau, signInOs[i].Chinh ? "Xuất" : "Book");
-                        BL += @"<p class='cs5E94DF1'><span class='csA16174BA'>&nbsp;</span></p>";
                         break;
                     case 2:
                         VJ += string.Format(@"<span class='csD4C8F03B'>
-                                                   TK {2}     : {0}<br />
-                                                   Mật khẩu    : {1}
+                                                   TK {2}     : {0}<br/>
+                                                   Mật khẩu    : {1}<br/><br/>
                                               </span>", signInOs[i].SignIn, signInOs[i].MatKhau, signInOs[i].Chinh ? "Xuất" : "Book");
-                        VJ += @"<p class='cs5E94DF1'><span class='csA16174BA'>&nbsp;</span></p>";
                         break;
                     case 3:
                         VN += string.Format(@"<span class='csD4C8F03B'>
-                                                   Mã đại lý   : THD<br />
-                                                   TK {2}     : {0}<br />
-                                                   Mật khẩu    : {1}
+                                                   Mã đại lý   : THD<br/>
+                                                   TK {2}     : {0}<br/>
+                                                   Mật khẩu    : {1}<br/><br/>
                                               </span>", signInOs[i].SignIn, signInOs[i].MatKhau, signInOs[i].Chinh ? "Xuất" : "Book");
-                        VN += @"<p class='cs5E94DF1'><span class='csA16174BA'>&nbsp;</span></p>";
                         break;
                     case 6013:
                         QH += string.Format(@"<span class='csD4C8F03B'>
-                                                   Mã đại lý   : 3780054 <br />
-                                                   TK {2}     : {0}<br />
-                                                   Mật khẩu    : {1}
+                                                   Mã đại lý   : 3780054 <br/>
+                                                   TK {2}     : {0}<br/>
+                                                   Mật khẩu    : {1}<br/><br/>
                                               </span>", signInOs[i].SignIn, signInOs[i].MatKhau, signInOs[i].Chinh ? "Xuất" : "Book");
-                        QH += @"<p class='cs5E94DF1'><span class='csA16174BA'>&nbsp;</span></p>";
                         break;
                     default:
                         VU += string.Format(@"<span class='csD4C8F03B'>
-                                                   TK {2}     : {0}<br />
-                                                   Mật khẩu    : {1}
+                                                   TK {2}     : {0}<br/>
+                                                   Mật khẩu    : {1}<br/><br/>
                                               </span>", signInOs[i].SignIn, signInOs[i].MatKhau, signInOs[i].Chinh ? "Xuất" : "Book");
-                        VU += @"<p class='cs5E94DF1'><span class='csA16174BA'>&nbsp;</span></p>";
                         break;
                 }
             }
@@ -681,7 +635,7 @@ namespace CRM
                 <span class='cs5D2DD445'>
                     <a class='cs2356F87D' href='https://booking.vietravelairlines.vn/vi/ta' target='_blank'><span class='csA47FD31'>https://booking.vietravelairlines.vn/vi/ta</span></a>
                 </span> 
-                <span class='csD4C8F03B'>&nbsp;&nbsp;</span><span class='cs7AFC66BE'><br /></span>
+                <span class='csD4C8F03B'>&nbsp;&nbsp;</span><span class='cs7AFC66BE'><br/></span>
                 {0}
                 </span>
             </p>", VU);
@@ -693,7 +647,7 @@ namespace CRM
                 <span class='cs5D2DD445'>
                     <a class='cs2356F87D' href='https://booking.jetstar.com/agenthub/#/login?culture=vi-VN' target='_blank'><span class='csA47FD31'>https://booking.jetstar.com/agenthub/#/login?culture=vi-VN</span></a>
                 </span> 
-                <span class='csD4C8F03B'>&nbsp;&nbsp;</span><span class='cs7AFC66BE'><br /></span>
+                <span class='csD4C8F03B'>&nbsp;&nbsp;</span><span class='cs7AFC66BE'><br/></span>
                 {0}
                 </span>
             </p>", BL);
@@ -705,7 +659,7 @@ namespace CRM
                 <span class='cs5D2DD445'>
                     <a class='cs2356F87D' href='https://www.vietjetair.com/Sites/Web/vi-VN/Home' target='_blank'><span class='csA47FD31'>https://www.vietjetair.com/Sites/Web/vi-VN/Home</span></a>
                 </span> 
-                <span class='csD4C8F03B'>&nbsp;&nbsp;</span><span class='cs7AFC66BE'><br /></span>
+                <span class='csD4C8F03B'>&nbsp;&nbsp;</span><span class='cs7AFC66BE'><br/></span>
                 {0}
                 </span>
             </p>", VJ);
@@ -718,7 +672,7 @@ namespace CRM
                     <a class='cs2356F87D' href='http://ags.thanhhoang.vn/Login.aspx' target='_blank'><span class='csA47FD31'>http://ags.thanhhoang.vn/Login.aspx</span></a>
                 </span> | 
                     <a class='cs2356F87D' href='http://muadi.com.vn/Login.aspx' target='_blank'><span class='csA47FD31'>http://muadi.com.vn/Login.aspx</span></a>
-                <span class='csD4C8F03B'>&nbsp;&nbsp;</span><span class='cs7AFC66BE'><br /></span>
+                <span class='csD4C8F03B'>&nbsp;&nbsp;</span><span class='cs7AFC66BE'><br/></span>
                 {0}
                 </span>
             </p>", VN);
@@ -730,7 +684,7 @@ namespace CRM
                 <span class='cs5D2DD445'>
                     <a class='cs2356F87D' href='https://www.bambooairways.com/reservation/ibe/login?locale=vi' target='_blank'><span class='csA47FD31'>https://www.bambooairways.com/reservation/ibe/login?locale=vi</span></a>
                 </span> 
-                <span class='csD4C8F03B'>&nbsp;&nbsp;</span><span class='cs7AFC66BE'><br /></span>
+                <span class='csD4C8F03B'>&nbsp;&nbsp;</span><span class='cs7AFC66BE'><br/></span>
                 <span class='csD4C8F03B'>
                 {0}
                 </span>
@@ -827,8 +781,8 @@ namespace CRM
                 if ((txtFileDinhKem.EditValue ?? string.Empty) != string.Empty)
                     vs = txtFileDinhKem.EditValue.ToString().Split(',').ToList();
 
-                CauHinhSMTPO cauHinhSMTPO = new CauHinhSMTPD().DuLieu();
-                MauEmailO ma = new MauEmailD().DuLieu()[0];
+                O_CAUHINHSMTP cauHinhSMTPO = new D_CAUHINHSMTP().DuLieu();
+                O_MAUEMAIL ma = new D_MAUEMAIL().DuLieu()[0];
 
                 SmtpClient client = new SmtpClient();
                 client.Port = cauHinhSMTPO.Port;
@@ -863,6 +817,79 @@ namespace CRM
                     }
                     catch (Exception ex) { XuLyGiaoDien.Alert(ex.Message, Form_Alert.enmType.Error); }
                 }
+            }
+        }
+
+        private void btnXuatExcel_Click(object sender, EventArgs e)
+        {
+            colDaiLyTT.GroupIndex = -1;
+            XuLyGiaoDien.ExportExcel(GCSI, GVSI, "Cấp Sign-" + DateTime.Now.ToString("dd-MM-yyy"));
+            colDaiLyTT.GroupIndex = 0;
+            GVSI.ExpandAllGroups();
+        }
+
+        private void btnNhapExcel_Click(object sender, EventArgs e)
+        {
+            XtraOpenFileDialog ofd = new XtraOpenFileDialog();
+            ofd.Title = "Mở File";
+            ofd.Filter = "Excel File (*.xlsx, *.xls) | *.xlsx; *.xls";
+            ofd.DefaultExt = ".xlsx";
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string ChuoiKetNoi = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ofd.FileName + "; Extended Properties='Excel 12.0 Xml;HDR=YES';";
+                using (OleDbConnection conn = new OleDbConnection(ChuoiKetNoi))
+                {
+                    conn.Open();
+                    DataTable dbSchema = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                    string CauTruyVan = "SELECT * FROM [" + dbSchema.Rows[0].Field<string>("TABLE_NAME").Replace("'", string.Empty) + ']';
+                    OleDbDataAdapter da = new OleDbDataAdapter(CauTruyVan, conn);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    _lstSIChinh.Clear();
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        O_SIGNIN signInO = new O_SIGNIN();
+                        signInO.DaiLy = _lstDL.Where(w => w.TenTam.ToUpper().Equals(row[0].ToString().ToUpper())).First().ID;
+                        signInO.HangBay = _lstHB.Where(w => w.TenTat.Equals(row[1].ToString())).First().ID;
+                        signInO.SignIn = ((row[2] ?? null) ?? string.Empty).ToString();
+                        signInO.MatKhau = row[3].ToString();
+                        signInO.Chinh = row[4].ToString() != "False";
+                        signInO.CanLam = int.Parse(row[5].ToString());
+                        signInO.End = row[6].ToString() != "False";
+                        _lstSIChinh.Add(signInO);
+                    }
+                    GCSI.DataSource = null;
+                    GCSI.DataSource = _lstSIChinh;
+                    _lstSIChinh = _lstSIChinh.OrderBy(w => w.HangBay).OrderBy(w => w.Khoa).ToList();
+                    XulyDulieuKhiThem();
+                    GVSI.ExpandAllGroups();
+                }
+            }
+        }
+
+        private void btnAddServer_Click(object sender, EventArgs e)
+        {
+            List<Dictionary<string, object>> lstdic = new List<Dictionary<string, object>>();
+            for (int i = 0; i < _lstSIChinh.Count; i++)
+            {
+                if (lstSI.Where(w => w.SignIn.Equals(_lstSIChinh[i].SignIn)).Count() == 0)
+                {
+                    Dictionary<string, object> keyValues = new Dictionary<string, object>();
+                    keyValues.Add("DaiLy", _lstSIChinh[i].DaiLy);
+                    keyValues.Add("SignIn", _lstSIChinh[i].SignIn);
+                    keyValues.Add("HangBay", _lstSIChinh[i].HangBay);
+                    keyValues.Add("Chinh", _lstSIChinh[i].Chinh);
+                    keyValues.Add("Khoa", _lstSIChinh[i].Khoa);
+                    keyValues.Add("MatKhau", _lstSIChinh[i].MatKhau);
+                    lstdic.Add(keyValues);
+                }
+                else
+                    XuLyGiaoDien.Alert("Đã tồn tại " + _lstSIChinh[i].SignIn, Form_Alert.enmType.Warning);
+            }
+            if (lstdic.Count > 0)
+            {
+                if (new D_SIGNIN().ThemNhieu1Ban(lstdic) > 0)
+                    XuLyGiaoDien.Alert("Thêm sign in thành công", Form_Alert.enmType.Success);
             }
         }
     }

@@ -1,6 +1,5 @@
 ﻿using DataAccessLayer;
 using DataTransferObject;
-using DevExpress.XtraEditors;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
@@ -8,7 +7,6 @@ using Google.Apis.Sheets.v4.Data;
 using Google.Apis.Util.Store;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
@@ -21,31 +19,28 @@ namespace CRM
         {
             InitializeComponent();
             Text += " thêm";
-            iNghi.Enabled = Grp3.Enabled = false;
             _DaiLyO.LoaiKhachHang = LoaiKhach;
             _DaiLyO.NVGiaoDich = DuLieuTaoSan.NV.ID;
         }
 
-        public frmDaiLyThem(DaiLyO Dl)
+        public frmDaiLyThem(O_DAILY Dl)
         {
             InitializeComponent();
             Text += " sửa";
             _DaiLyO = Dl;
             iNgayKiQuy.Enabled = false;
-            TaiLaiSignIn();
         }
 
         private void frmDaiLyThem_Load(object sender, EventArgs e)
         {
-            GVSI.CustomDrawRowIndicator += GridViewHelper.GridView_CustomDrawRowIndicator;
-            hangBayOBindingSource.DataSource = new HangBayD().DuLieu();
+            hangBayOBindingSource.DataSource = new D_HANGBAY().DuLieu();
             XuLyGiaoDien.OpenForm(this);
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, _DaiLyO);
-            iTinhTrang.Properties.DataSource = new TinhTrangD().DuLieu(_DaiLyO.LoaiKhachHang);
-            iChinhSach.Properties.DataSource = new ChinhSachD().DuLieuDL(_DaiLyO.LoaiKhachHang);
+            iTinhTrang.Properties.DataSource = new D_TRANGTHAI().DuLieu(_DaiLyO.LoaiKhachHang);
+            iChinhSach.Properties.DataSource = new D_CHINHSACH().DuLieuDL(_DaiLyO.LoaiKhachHang);
             btnLuu.Visible = DuLieuTaoSan.Q.DaiLyThemSua;
-            lbl15.Visible = iNVGiaoDich.Visible = iDuHoSo.Visible = DuLieuTaoSan.Q.DaiLyAdmin;
-            NhanVienDB.DataSource = new DaiLyD().NhanVien();
+            lbl15.Visible = iDuHoSo.Visible = iNVGiaoDich.Visible = DuLieuTaoSan.NV.TenDangNhapCty.ToUpper().Equals("ITADMIN");
+            NhanVienDB.DataSource = new D_DAILY().NhanVien();
         }
 
         void DaiLy()
@@ -89,75 +84,14 @@ namespace CRM
             appendRequest.Execute();
         }
 
-        #region Dữ liệu    
-        public void TaiLaiSignIn()
-        {
-            signInOBindingSource.DataSource = new SignInD().TimSignIn(_DaiLyO.ID);
-        }
-        #endregion
 
         #region Biến
-        DaiLyD _DaiLyD = new DaiLyD();
-        SignInO _SignInOz = new SignInO();
-        DaiLyO _DaiLyO = new DaiLyO();
+        D_DAILY _DaiLyD = new D_DAILY();
+        O_DAILY _DaiLyO = new O_DAILY();
         TypeAssistant assistant;
         #endregion
 
         #region Sự kiện nút
-
-        private void Grp3_CustomButtonClick(object sender, DevExpress.XtraBars.Docking2010.BaseButtonEventArgs e)
-        {
-            if (DuLieuTaoSan.Q.SignInThemSua)
-            {
-                switch (int.Parse(e.Button.Properties.Tag.ToString()))
-                {
-                    case 1:
-                        new frmSignInThem(_DaiLyO).ShowDialog(this);
-                        break;
-                    case 2:
-                        _SignInOz = GVSI.GetRow(GVSI.GetSelectedRows()[0]) as SignInO;
-                        new frmSignInThem(_SignInOz).ShowDialog(this);
-                        break;
-                    case 3:
-                        if (DuLieuTaoSan.Q.SignInXoa)
-                            if (signInOBindingSource.Count > 0)
-                            {
-                                _SignInOz = GVSI.GetRow(GVSI.GetSelectedRows()[0]) as SignInO;
-                                XuLyGiaoDien.ThongBao("Sign in", new SignInD().Xoa(_SignInOz.ID) > 0, true);
-                                TaiLaiSignIn();
-                            }
-                        break;
-                }
-            }
-        }
-
-        private void iAnhCty_MouseClick(object sender, MouseEventArgs e)
-        {
-            XtraOpenFileDialog open = new XtraOpenFileDialog();
-            open.Title = "Open Image";
-            open.Filter = "Image files (*.jpg;*.jpeg,*.png)|*.JPG;*.JPEG;*.PNG";
-            switch (e.Button)
-            {
-                case MouseButtons.Left:
-                    if (iAnhCty.Image != null)
-                        new frmXemAnh(iAnhCty.Image).ShowDialog();
-                    else
-                    {
-                        if (open.ShowDialog() == DialogResult.OK)
-                            iAnhCty.Image = new Bitmap(open.FileName);
-                    }
-                    break;
-
-                case MouseButtons.Right:
-                    if (open.ShowDialog() == DialogResult.OK)
-                        iAnhCty.Image = new Bitmap(open.FileName);
-                    break;
-            }
-        }
-
-        private void iTen_EditValueChanged(object sender, EventArgs e)
-        {
-        }
 
         private void simpleButton3_Click(object sender, EventArgs e)
         {
@@ -171,6 +105,11 @@ namespace CRM
             kiemTras.Add(new KiemTra() { _Control = iNguoiDaiDienHD, _Tu = 3, _Den = 1000 });
             kiemTras.Add(new KiemTra() { _Control = iDienThoaiHD, _SDT = true });
             kiemTras.Add(new KiemTra() { _Control = iEmailHD, _Mail = true });
+            kiemTras.Add(new KiemTra() { _Control = iEmailGiaoDich, _Tu = 10, _Den = 1000 });
+
+            if (iEmailGiaoDich.Text.StartsWith("\r\n"))
+                iEmailGiaoDich.Text = iEmailGiaoDich.Text.Substring(4);
+
             XuLyGiaoDien.KiemTra(kiemTras, dxValidationProvider1);
             if (!dxValidationProvider1.Validate())
             {
@@ -189,7 +128,7 @@ namespace CRM
                 if (_DaiLyO.ID < 1)
                 {
                     List<Dictionary<string, object>> lstDicS = new List<Dictionary<string, object>>();
-                    for (int i = 0; i < 30; i++)
+                    for (int i = 0; i < 90; i++)
                     {
                         dic = new Dictionary<string, object>();
                         dic.Add("LoaiKhachHangSD", _DaiLyO.LoaiKhachHang);
@@ -198,7 +137,7 @@ namespace CRM
                         dic.Add("Ngay", "getdate() - " + i);
                         lstDicS.Add(dic);
                     }
-                    new SoDu_DaiLyD().ThemNhieu1Ban(lstDicS);
+                    new D_SODU_DAILY().ThemNhieu1Ban(lstDicS);
                     DaiLy();
                 }
                 (Owner.ActiveMdiChild as frmDaiLy).DuLieu();
@@ -212,17 +151,6 @@ namespace CRM
             frm.ShowDialog(this);
         }
 
-        #endregion
-
-        #region Sự khiện bản 
-        private void grvSignIn_DoubleClick(object sender, EventArgs e)
-        {
-            if (signInOBindingSource.Count > 0)
-            {
-                _SignInOz = GVSI.GetRow(GVSI.GetSelectedRows()[0]) as SignInO;
-                new frmSignInThem(_SignInOz).ShowDialog(this);
-            }
-        }
         #endregion
 
         private void iTinhTrang_KeyDown(object sender, KeyEventArgs e)
@@ -250,7 +178,6 @@ namespace CRM
            {
                if (_DaiLyO.ID == 0)
                    iMaAGS.Text = iMaDL.Text;
-               iKeyCty.Text = TMD5.Base64Encode(TMD5.Base64Encode(TMD5.Base64Encode(iTen.Text + iMaDL.Text)));
            }));
         }
 

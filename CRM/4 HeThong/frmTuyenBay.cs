@@ -23,7 +23,7 @@ namespace CRM
         {
             if (GVSB.GetSelectedRows().Length > 0)
             {
-                sanBayO = GVSB.GetRow(GVSB.GetSelectedRows()[0]) as SanBayO;
+                sanBayO = GVSB.GetRow(GVSB.GetSelectedRows()[0]) as O_SANBAY;
                 if (sanBayO != null)
                 {
                     frmSanBayThem f = new frmSanBayThem(sanBayO);
@@ -32,8 +32,8 @@ namespace CRM
             }
         }
 
-        SanBayD sanBayD = new SanBayD();
-        SanBayO sanBayO = new SanBayO();
+        D_SANBAY sanBayD = new D_SANBAY();
+        O_SANBAY sanBayO = new O_SANBAY();
         private void btnLoad1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             DuLieuSanBay();
@@ -55,7 +55,7 @@ namespace CRM
         {
             if (GVTB.GetSelectedRows().Length > 0)
             {
-                tuyenBayO = GVTB.GetRow(GVTB.GetSelectedRows()[0]) as TuyenBayO;
+                tuyenBayO = GVTB.GetRow(GVTB.GetSelectedRows()[0]) as O_TUYENBAY;
                 if (tuyenBayO != null)
                 {
                     frmTuyenBayThem f = new frmTuyenBayThem(tuyenBayO);
@@ -64,8 +64,8 @@ namespace CRM
             }
         }
 
-        TuyenBayD tuyenBayD = new TuyenBayD();
-        TuyenBayO tuyenBayO = new TuyenBayO();
+        D_TUYENBAY tuyenBayD = new D_TUYENBAY();
+        O_TUYENBAY tuyenBayO = new O_TUYENBAY();
 
         private void btnLoad2_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {

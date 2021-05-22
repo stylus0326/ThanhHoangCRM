@@ -20,11 +20,11 @@ namespace CRM
 
         private void frmChinhSach_Load(object sender, EventArgs e)
         {
-            nCCOBindingSource.DataSource = new NCCD().DuLieu();
+            nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu();
             loaiPhiBindingSource.DataSource = DuLieuTaoSan.LoaiPhi();
-            TuyenBayOs = new TuyenBayD().DuLieu();
+            TuyenBayOs = new D_TUYENBAY().DuLieu();
             tuyenBayOBindingSource.DataSource = TuyenBayOs;
-            _ListHangBayO = new HangBayD().DuLieu();
+            _ListHangBayO = new D_HANGBAY().DuLieu();
             DuLieu();
             XuLyGiaoDien.OpenForm(this);
             btnLuu.Enabled = DuLieuTaoSan.Q.ChinhSachThemSua;
@@ -42,7 +42,7 @@ namespace CRM
 
         public void DuLieu()
         {
-            List<ChinhSachO> chinhSachOs = new ChinhSachD().DuLieu(HienDu, _LoaiKhachHang);
+            List<O_CHINHSACH> chinhSachOs = new D_CHINHSACH().DuLieu(HienDu, _LoaiKhachHang);
             chinhSachOBindingSource.DataSource = chinhSachOs;
             if (_ChinhSachO == null && chinhSachOs.Count > 0)
                 _ChinhSachO = chinhSachOs[0];
@@ -53,12 +53,12 @@ namespace CRM
         #region Biến
         bool HienDu = false;
         bool HienDu2 = false;
-        List<TuyenBayO> TuyenBayOs = new List<TuyenBayO>();
+        List<O_TUYENBAY> TuyenBayOs = new List<O_TUYENBAY>();
         DateTime Date = new DateTime();
-        CTChinhSachO _CTchinhSachO = new CTChinhSachO();
-        ChinhSachO _ChinhSachO;
-        CTChinhSachD _CTChinhSachD = new CTChinhSachD();
-        List<HangBayO> _ListHangBayO = new List<HangBayO>();
+        O_CTCHINHSACH _CTchinhSachO = new O_CTCHINHSACH();
+        O_CHINHSACH _ChinhSachO;
+        D_CTCHINHSACH _CTChinhSachD = new D_CTCHINHSACH();
+        List<O_HANGBAY> _ListHangBayO = new List<O_HANGBAY>();
         int _LoaiKhachHang = 1;
         #endregion
 
@@ -67,7 +67,7 @@ namespace CRM
         {
             if (nCCOBindingSource.Count > 0)
             {
-                NCCO _NCCO = iNCC.GetSelectedDataRow() as NCCO;
+                O_NHACUNGCAP _NCCO = iNCC.GetSelectedDataRow() as O_NHACUNGCAP;
                 if (_NCCO != null)
                 {
                     if ((_NCCO.HangBay ?? string.Empty).Length > 1)
@@ -171,7 +171,7 @@ namespace CRM
         {
             if (GVCTCS.GetSelectedRows().Count() > 0)
             {
-                _CTchinhSachO = GVCTCS.GetRow(GVCTCS.GetSelectedRows()[0]) as CTChinhSachO;
+                _CTchinhSachO = GVCTCS.GetRow(GVCTCS.GetSelectedRows()[0]) as O_CTCHINHSACH;
                 if (_CTchinhSachO != null)
                 {
                     btnHuy.Enabled = btnLuu.Enabled = true;
@@ -185,7 +185,7 @@ namespace CRM
         {
             if (GVCTCS.GetSelectedRows().Count() > 0)
             {
-                _CTchinhSachO = GVCTCS.GetRow(GVCTCS.GetSelectedRows()[0]) as CTChinhSachO;
+                _CTchinhSachO = GVCTCS.GetRow(GVCTCS.GetSelectedRows()[0]) as O_CTCHINHSACH;
                 if (_CTchinhSachO != null)
                 {
                     XuLyDuLieu.ConvertClassToTable(this, _CTchinhSachO);
@@ -204,7 +204,7 @@ namespace CRM
         {
             if (GVCS.GetSelectedRows().Count() > 0)
             {
-                _ChinhSachO = GVCS.GetRow(GVCS.GetSelectedRows()[0]) as ChinhSachO;
+                _ChinhSachO = GVCS.GetRow(GVCS.GetSelectedRows()[0]) as O_CHINHSACH;
                 if (_ChinhSachO != null)
                     LayChiTiet();
             }
@@ -228,7 +228,7 @@ namespace CRM
         {
             if (GVCS.GetSelectedRows().Count() > 0)
             {
-                _ChinhSachO = GVCS.GetRow(GVCS.GetSelectedRows()[0]) as ChinhSachO;
+                _ChinhSachO = GVCS.GetRow(GVCS.GetSelectedRows()[0]) as O_CHINHSACH;
                 if (_ChinhSachO != null)
                     new frmChinhSachThem(_ChinhSachO).ShowDialog(this);
             }
@@ -241,7 +241,7 @@ namespace CRM
                 switch (e.Button.Properties.Caption)
                 {
                     case "Thêm":
-                        XuLyDuLieu.ConvertClassToTable(this, new CTChinhSachO());
+                        XuLyDuLieu.ConvertClassToTable(this, new O_CTCHINHSACH());
                         igroupControl1.Text = "Chi tiết chính sách thêm";
                         btnHuy.Enabled = btnLuu.Enabled = true;
                         chk.Checked = true;
@@ -249,7 +249,7 @@ namespace CRM
                     default:
                         if (GVCTCS.GetSelectedRows().Count() > 0)
                         {
-                            _CTchinhSachO = GVCTCS.GetRow(GVCTCS.GetSelectedRows()[0]) as CTChinhSachO;
+                            _CTchinhSachO = GVCTCS.GetRow(GVCTCS.GetSelectedRows()[0]) as O_CTCHINHSACH;
                             if (_CTchinhSachO != null)
                             {
                                 btnHuy.Enabled = btnLuu.Enabled = true;
@@ -267,7 +267,7 @@ namespace CRM
 
         private void iHang_EditValueChanged(object sender, EventArgs e)
         {
-            HangBayO hb = (HangBayO)iHang.Properties.GetRowByKeyValue(iHang.EditValue);
+            O_HANGBAY hb = (O_HANGBAY)iHang.Properties.GetRowByKeyValue(iHang.EditValue);
             List<IntString> lstis = new List<IntString>();
             if (hb != null)
             {
@@ -295,7 +295,7 @@ namespace CRM
         {
             if (!iTatCaTuyenBay.Checked)
             {
-                TuyenBayO tb = lookUpEdit2.GetSelectedDataRow() as TuyenBayO;
+                O_TUYENBAY tb = lookUpEdit2.GetSelectedDataRow() as O_TUYENBAY;
                 string[] a = tb.Ten.Split('-');
                 if (!iHanhTrinh.Text.Contains(a[0] + "-" + a[1]))
                     iHanhTrinh.Text += a[0] + "-" + a[1] + "\r\n";
@@ -319,7 +319,7 @@ namespace CRM
             GridView View = sender as GridView;
             if (e.RowHandle >= 0)
             {
-                CTChinhSachO dl = View.GetRow(e.RowHandle) as CTChinhSachO;
+                O_CTCHINHSACH dl = View.GetRow(e.RowHandle) as O_CTCHINHSACH;
                 if (dl.NgayB.Date > DateTime.Now.Date && e.Column.FieldName == "NgayB")
                     e.Appearance.BackColor = Color.Gold;
                 if (dl.NgayA.Date > DateTime.Now.Date && e.Column.FieldName == "NgayA")

@@ -182,7 +182,7 @@
             // 
             // hoaDonOBindingSource
             // 
-            this.hoaDonOBindingSource.DataSource = typeof(DataTransferObject.HoaDonO);
+            this.hoaDonOBindingSource.DataSource = typeof(DataTransferObject.O_HOADON);
             // 
             // GVHD
             // 
@@ -280,7 +280,7 @@
             // 
             // tuyenBayOBindingSource
             // 
-            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.TuyenBayO);
+            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.O_TUYENBAY);
             // 
             // colHanhTrinhVe
             // 
@@ -355,7 +355,7 @@
             // 
             // daiLyOBindingSource
             // 
-            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // colMaCho
             // 
@@ -865,7 +865,7 @@
             // 
             // guiOBindingSource
             // 
-            this.guiOBindingSource.DataSource = typeof(DataTransferObject.HoaDonO);
+            this.guiOBindingSource.DataSource = typeof(DataTransferObject.O_HOADON);
             // 
             // GVG
             // 

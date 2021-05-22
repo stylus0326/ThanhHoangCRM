@@ -13,11 +13,11 @@ namespace CRM
 {
     public partial class frmVeHoanThem : DevExpress.XtraEditors.XtraForm
     {
-        GiaoDichO _GiaoDichO = new GiaoDichO();
-        GiaoDichD _GiaoDichD = new GiaoDichD();
-        List<DaiLyO> _ListDaiLyO = new List<DaiLyO>();
-        List<HangBayO> _ListHangBayO = new List<HangBayO>();
-        List<TuyenBayO> _ListTuyenBayO = new List<TuyenBayO>();
+        O_GIAODICH _GiaoDichO = new O_GIAODICH();
+        D_GIAODICH _GiaoDichD = new D_GIAODICH();
+        List<O_DAILY> _ListDaiLyO = new List<O_DAILY>();
+        List<O_HANGBAY> _ListHangBayO = new List<O_HANGBAY>();
+        List<O_TUYENBAY> _ListTuyenBayO = new List<O_TUYENBAY>();
         List<Dictionary<string, object>> _LSTDIC = new List<Dictionary<string, object>>();
         int LoaiKhachHang = 1;
         public frmVeHoanThem()
@@ -26,7 +26,7 @@ namespace CRM
             Text += " thêm";
         }
 
-        public frmVeHoanThem(List<GiaoDichO> lst)
+        public frmVeHoanThem(List<O_GIAODICH> lst)
         {
             InitializeComponent();
             _GiaoDichO = lst[0];
@@ -34,12 +34,12 @@ namespace CRM
             Text += " sửa";
             if (lst[0].Hang == "VN")
             {
-                List<GiaoDichO> Sos = _GiaoDichD.VeThuongVN(lst);
-                foreach (GiaoDichO a in lst)
+                List<O_GIAODICH> Sos = _GiaoDichD.VeThuongVN(lst);
+                foreach (O_GIAODICH a in lst)
                 {
                     if (Sos.Where(w => (w.SoVeVN ?? string.Empty).Equals(a.SoVeVN)).Count() > 0)
                     {
-                        GiaoDichO b = Sos.Where(w => (w.SoVeVN ?? string.Empty).Equals(a.SoVeVN)).ToList()[0];
+                        O_GIAODICH b = Sos.Where(w => (w.SoVeVN ?? string.Empty).Equals(a.SoVeVN)).ToList()[0];
                         if (b.GiaThu != a.GiaHoan)
                         {
                             memoEdit1.Text += string.Format("Số vé {0} thay đổi giá {1} sang {2}\r\n", a.SoVeVN, b.GiaThu.ToString("#,##0"), a.GiaHoan.ToString("#,##0"));
@@ -53,15 +53,18 @@ namespace CRM
         {
             chkDen.Checked = _GiaoDichO.SoLuongVe == 2;
             DuLieuKhachLe();
-            _ListHangBayO = new HangBayD().DuLieu();
-            _ListTuyenBayO = new TuyenBayD().DuLieu();
+            _ListHangBayO = new D_HANGBAY().DuLieu();
+            _ListTuyenBayO = new D_TUYENBAY().DuLieu();
             LoaiKhachDB.DataSource = DuLieuTaoSan.LoaiKhachHang_Ve();
-            NCCDB.DataSource = new NCCD().DuLieu();
-            NhanVienDB.DataSource = new DaiLyD().NhanVien();
+            NCCDB.DataSource = new D_NHACUNGCAP().DuLieu();
+            NhanVienDB.DataSource = new D_DAILY().NhanVien();
             tuyenBayOBindingSource.DataSource = _ListTuyenBayO;
-            if (Owner.ActiveMdiChild is frmVe)
-                iTinhCongNo.Checked = true;
             iTinhCongNo.Visible = DuLieuTaoSan.Q.TheoDoiHoanAdmin;
+            if (Owner.ActiveMdiChild is frmVe)
+            {
+                iTinhCongNo.Visible = true;
+                iTinhCongNo.Checked = true;
+            }
             iAn.Visible = DuLieuTaoSan.Q.VeAdmin;
 
             #region NVGiaoDich
@@ -83,7 +86,7 @@ namespace CRM
 
         public void DuLieuKhachLe()
         {
-            _ListDaiLyO = new DaiLyD().All();
+            _ListDaiLyO = new D_DAILY().All();
             DaiLyDB.DataSource = _ListDaiLyO.Where(w => w.LoaiKhachHang.Equals(LoaiKhachHang));
         }
 
@@ -101,12 +104,12 @@ namespace CRM
             switch ((int)iHTTT.EditValue)
             {
                 case 3:
-                    NganHangDB.DataSource = new NganHangD().DuLieu(true);
+                    NganHangDB.DataSource = new D_NGANHANG().DuLieu(true);
                     iNganHang.Properties.ReadOnly = false;
                     iNganHang.EditValue = 1;
                     break;
                 case 4:
-                    NganHangDB.DataSource = new NganHangD().DuLieu(false);
+                    NganHangDB.DataSource = new D_NGANHANG().DuLieu(false);
                     iNganHang.Properties.ReadOnly = false;
                     break;
                 default:
@@ -121,7 +124,7 @@ namespace CRM
         {
             if (NCCDB.Count > 0)
             {
-                NCCO _NCCO = iNhaCungCap.GetSelectedDataRow() as NCCO;
+                O_NHACUNGCAP _NCCO = iNhaCungCap.GetSelectedDataRow() as O_NHACUNGCAP;
                 if (_NCCO != null)
                 {
                     if ((_NCCO.HangBay ?? string.Empty).Length > 1)
@@ -135,7 +138,7 @@ namespace CRM
                                 iHang.EditValue = _ListHangBayO.Where(w => NCCA.Contains(w.ID.ToString())).ToList()[0].TenTat;
                                 if (iHang.EditValue.ToString() == _GiaoDichO.Hang)
                                 {
-                                    HangBayO hb = (HangBayO)iHang.Properties.GetRowByKeyValue(iHang.EditValue);
+                                    O_HANGBAY hb = (O_HANGBAY)iHang.Properties.GetRowByKeyValue(iHang.EditValue);
                                     List<IntString> lstis = new List<IntString>();
                                     if (hb != null)
                                     {
@@ -166,7 +169,7 @@ namespace CRM
 
         private void iHang_EditValueChanged(object sender, EventArgs e)
         {
-            HangBayO hb = (HangBayO)iHang.Properties.GetRowByKeyValue(iHang.EditValue);
+            O_HANGBAY hb = (O_HANGBAY)iHang.Properties.GetRowByKeyValue(iHang.EditValue);
             List<IntString> lstis = new List<IntString>();
             if (hb != null)
             {
@@ -220,24 +223,23 @@ namespace CRM
             #region Bước kiểm tra nhập
             Dictionary<string, object> dic = new Dictionary<string, object>();
 
-            KhoaNgayO kn = new KhoaNgayD().KiemTraNgayKhoa(_GiaoDichO.NgayGD);
+            O_KHOANGAY kn = new D_KHOANGAY().KiemTraNgayKhoa(_GiaoDichO.NgayGD);
 
-            if (!(iLoaiKhachHang.EditValue.ToString() == "3" && _GiaoDichO.Khoa))
-                if (_GiaoDichO.TinhCongNo)
-                {
-                    if (!DuLieuTaoSan.Q.TheoDoiHoanAdmin)
-                        if ((kn.HoatDong) && !(kn.Code ?? string.Empty).Contains(iMaCho.Text.Replace(" ", string.Empty)))
-                        {
-                            XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
-                            return;
-                        }
-
-                    if (DateTime.Now.Date.Subtract(iNgayGD.DateTime.Date).Days > 30 || DateTime.Now.Date.Subtract(_GiaoDichO.NgayGD.Date).Days > 30)
+            if (_GiaoDichO.TinhCongNo)
+            {
+                if (!DuLieuTaoSan.Q.TheoDoiHoanAdmin)
+                    if ((kn.HoatDong) && !(kn.Code ?? string.Empty).Contains(iMaCho.Text.Replace(" ", string.Empty)))
                     {
                         XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
                         return;
                     }
+
+                if (DateTime.Now.Date.Subtract(iNgayGD.DateTime.Date).Days > 30 || DateTime.Now.Date.Subtract(_GiaoDichO.NgayGD.Date).Days > 30)
+                {
+                    XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
+                    return;
                 }
+            }
 
             List<KiemTra> kiemTras = new List<KiemTra>();
             kiemTras.Add(new KiemTra() { _Control = iNganHang, _Tu = 1, _Den = 50, _ChoQuaThang = iNganHang.Properties.ReadOnly });
@@ -318,7 +320,7 @@ namespace CRM
             {
                 GhiChuCmt(_GiaoDichO.ID);
                 if (iLoaiKhachHang.EditValue.ToString() != "3")
-                    new DaiLyD().ChayLaiPhi((_GiaoDichO.NgayGD > iNgayGD.DateTime) ? iNgayGD.DateTime : _GiaoDichO.NgayGD);
+                    new D_DAILY().ChayLaiPhi((_GiaoDichO.NgayGD > iNgayGD.DateTime) ? iNgayGD.DateTime : _GiaoDichO.NgayGD);
                 if (Owner.ActiveMdiChild is frmVe)
                     (Owner.ActiveMdiChild as frmVe).DuLieu();
                 else
@@ -340,7 +342,7 @@ namespace CRM
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 if (NoiDung.Length > 10)
-                    new LichSuD().ThemMoi(dic);
+                    new D_LS_GIAODICH().ThemMoi(dic);
             }
         }
 
@@ -427,14 +429,14 @@ namespace CRM
             iTheoDoi.Checked = !(Owner.ActiveMdiChild is frmVe);
         }
 
-        List<GiaoDichO> _ListGiaoDichO = new List<GiaoDichO>();
-        void Xuli(List<GiaoDichO> lstgd)
+        List<O_GIAODICH> _ListGiaoDichO = new List<O_GIAODICH>();
+        void Xuli(List<O_GIAODICH> lstgd)
         {
-            foreach (GiaoDichO gd in lstgd)
+            foreach (O_GIAODICH gd in lstgd)
             {
                 if (_ListGiaoDichO.Where(w => (w.SoVeVN ?? string.Empty).Equals(gd.SoVeVN) && w.GiaHoan.Equals(gd.GiaThu)).Count() > 0)
                     continue;
-                GiaoDichO g1 = new GiaoDichO(gd);
+                O_GIAODICH g1 = new O_GIAODICH(gd);
                 g1.GiaHoan = g1.GiaThu;
                 g1.GiaNet = g1.GiaHeThong = g1.GiaThu = 0;
                 g1.LoiNhuan = g1.GiaHeThong + g1.HangHoan - g1.GiaNet + g1.GiaHoan;
@@ -457,6 +459,12 @@ namespace CRM
 
                 iTinhCongNo.Checked = false;
                 btnLuu.Visible = true;
+            }
+
+            if (Owner.ActiveMdiChild is frmVe)
+            {
+                iTinhCongNo.Visible = true;
+                iTinhCongNo.Checked = true;
             }
         }
 

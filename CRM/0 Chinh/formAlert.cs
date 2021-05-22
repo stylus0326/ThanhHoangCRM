@@ -119,7 +119,6 @@ namespace CRM
 
 
             this.lblMsg.Text = msg;
-
             this.Show();
             this.action = enmAction.start;
             this.timer1.Interval = 1;

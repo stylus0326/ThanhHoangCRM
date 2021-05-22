@@ -45,11 +45,14 @@
             this.edtpDen = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.chk3 = new DevExpress.XtraBars.BarCheckItem();
             this.barSoVe = new DevExpress.XtraBars.BarEditItem();
-            this.aSoVe = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.aSoVe = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
             this.chk4 = new DevExpress.XtraBars.BarCheckItem();
             this.barMacho = new DevExpress.XtraBars.BarEditItem();
-            this.aMaCho = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.aMaCho = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
             this.btnExportExcel = new DevExpress.XtraBars.BarButtonItem();
+            this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -117,10 +120,6 @@
             this.rNCC = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.nCCOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.hangBayOBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.pMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
-            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ecmbThoiGian)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.edtpTu)).BeginInit();
@@ -145,7 +144,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.rNCC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hangBayOBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pMenu)).BeginInit();
             this.SuspendLayout();
             // 
             // barManager1
@@ -167,23 +165,23 @@
             this.chk3,
             this.chk4,
             this.bdtpTu,
-            this.barMacho,
             this.bdtpDen,
-            this.barSoVe,
             this.bcmbThoiGian,
             this.btnIn,
             this.btnXoa,
             this.barSubItem1,
             this.barButtonItem1,
-            this.barButtonItem2});
+            this.barButtonItem2,
+            this.barMacho,
+            this.barSoVe});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 20;
+            this.barManager1.MaxItemId = 22;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.edtpTu,
-            this.aMaCho,
             this.edtpDen,
-            this.aSoVe,
-            this.ecmbThoiGian});
+            this.ecmbThoiGian,
+            this.aMaCho,
+            this.aSoVe});
             // 
             // bar2
             // 
@@ -201,9 +199,9 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.bdtpTu, "", false, true, true, 84),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.bdtpDen, "", false, true, true, 84),
             new DevExpress.XtraBars.LinkPersistInfo(this.chk3),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.barSoVe, "", false, true, true, 93),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.barSoVe, "", false, true, true, 76),
             new DevExpress.XtraBars.LinkPersistInfo(this.chk4),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.barMacho, "", false, true, true, 52),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.barMacho, "", false, true, true, 79),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnExportExcel, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barSubItem1, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.bar2.OptionsBar.DrawBorder = false;
@@ -320,7 +318,7 @@
             this.bdtpTu.Enabled = false;
             this.bdtpTu.Id = 10;
             this.bdtpTu.Name = "bdtpTu";
-            this.bdtpTu.EditValueChanged += new System.EventHandler(this.bdtpTu_EditValueChanged);
+            this.bdtpTu.EditValueChanged += new System.EventHandler(this.edtpTu_EditValueChanged);
             // 
             // edtpTu
             // 
@@ -341,7 +339,7 @@
             this.bdtpDen.Enabled = false;
             this.bdtpDen.Id = 12;
             this.bdtpDen.Name = "bdtpDen";
-            this.bdtpDen.EditValueChanged += new System.EventHandler(this.bdtpTu_EditValueChanged);
+            this.bdtpDen.EditValueChanged += new System.EventHandler(this.edtpTu_EditValueChanged);
             // 
             // edtpDen
             // 
@@ -370,18 +368,21 @@
             // 
             // barSoVe
             // 
-            this.barSoVe.Caption = "barEditItem4";
+            this.barSoVe.Caption = "Số vé";
             this.barSoVe.Edit = this.aSoVe;
-            this.barSoVe.EditValue = "";
             this.barSoVe.Enabled = false;
-            this.barSoVe.Id = 13;
+            this.barSoVe.Id = 21;
             this.barSoVe.Name = "barSoVe";
             // 
             // aSoVe
             // 
             this.aSoVe.AutoHeight = false;
+            this.aSoVe.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.aSoVe.Name = "aSoVe";
-            this.aSoVe.KeyDown += new System.Windows.Forms.KeyEventHandler(this.aMaCho_KeyDown);
+            this.aSoVe.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.aSoVe.ShowIcon = false;
+            this.aSoVe.Leave += new System.EventHandler(this.aMaCho_Leave);
             // 
             // chk4
             // 
@@ -398,18 +399,21 @@
             // 
             // barMacho
             // 
-            this.barMacho.Caption = "barEditItem2";
+            this.barMacho.Caption = "Mã chỗ";
             this.barMacho.Edit = this.aMaCho;
-            this.barMacho.EditValue = "";
             this.barMacho.Enabled = false;
-            this.barMacho.Id = 11;
+            this.barMacho.Id = 20;
             this.barMacho.Name = "barMacho";
             // 
             // aMaCho
             // 
             this.aMaCho.AutoHeight = false;
+            this.aMaCho.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.aMaCho.Name = "aMaCho";
-            this.aMaCho.KeyDown += new System.Windows.Forms.KeyEventHandler(this.aMaCho_KeyDown);
+            this.aMaCho.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.aMaCho.ShowIcon = false;
+            this.aMaCho.Leave += new System.EventHandler(this.aMaCho_Leave);
             // 
             // btnExportExcel
             // 
@@ -420,6 +424,32 @@
             this.btnExportExcel.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S));
             this.btnExportExcel.Name = "btnExportExcel";
             this.btnExportExcel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnExportExcel_ItemClick);
+            // 
+            // barSubItem1
+            // 
+            this.barSubItem1.Caption = "Chức năng hỗ trợ";
+            this.barSubItem1.Id = 17;
+            this.barSubItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barSubItem1.ImageOptions.SvgImage")));
+            this.barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem2, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnXoa)});
+            this.barSubItem1.Name = "barSubItem1";
+            // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Caption = "Cập nhật từ Google Sheets";
+            this.barButtonItem1.Id = 18;
+            this.barButtonItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem1.ImageOptions.SvgImage")));
+            this.barButtonItem1.Name = "barButtonItem1";
+            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            // 
+            // barButtonItem2
+            // 
+            this.barButtonItem2.Caption = "Tải vé lên từ Excel";
+            this.barButtonItem2.Id = 19;
+            this.barButtonItem2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem2.ImageOptions.SvgImage")));
+            this.barButtonItem2.Name = "barButtonItem2";
             // 
             // barDockControlTop
             // 
@@ -495,7 +525,7 @@
             // 
             // giaoDichOBindingSource
             // 
-            this.giaoDichOBindingSource.DataSource = typeof(DataTransferObject.GiaoDichO);
+            this.giaoDichOBindingSource.DataSource = typeof(DataTransferObject.O_GIAODICH);
             // 
             // GVGD
             // 
@@ -556,9 +586,7 @@
             this.GVGD.OptionsView.ShowGroupPanel = false;
             this.GVGD.RowHeight = 24;
             this.GVGD.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.GVGD_RowCellStyle);
-            this.GVGD.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.GVGD_PopupMenuShowing);
             this.GVGD.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.GVGD_CustomColumnDisplayText);
-            this.GVGD.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GVGD_KeyPress);
             this.GVGD.DoubleClick += new System.EventHandler(this.GVGD_DoubleClick);
             // 
             // colID
@@ -637,7 +665,7 @@
             // 
             // khachHangOBindingSource
             // 
-            this.khachHangOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.khachHangOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // colNVGiaoDich
             // 
@@ -730,7 +758,7 @@
             // 
             // nganHangOBindingSource
             // 
-            this.nganHangOBindingSource.DataSource = typeof(DataTransferObject.NganHangO);
+            this.nganHangOBindingSource.DataSource = typeof(DataTransferObject.O_NGANHANG);
             // 
             // colHang
             // 
@@ -847,7 +875,7 @@
             // 
             // tuyenBayOBindingSource
             // 
-            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.TuyenBayO);
+            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.O_TUYENBAY);
             // 
             // colGioBayDi
             // 
@@ -1030,6 +1058,7 @@
             this.colGiaThu.Name = "colGiaThu";
             this.colGiaThu.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "GiaThu", "{0:#,##0;(#,##0)}")});
+            this.colGiaThu.ToolTip = "Giá hệ thống + Phí + Chiết khấu + Hoa hồng";
             this.colGiaThu.Visible = true;
             this.colGiaThu.VisibleIndex = 35;
             // 
@@ -1066,6 +1095,7 @@
             this.colLoiNhuan.Name = "colLoiNhuan";
             this.colLoiNhuan.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "LoiNhuan", "{0:#,##0;(#,##0)}")});
+            this.colLoiNhuan.ToolTip = "Giá Thu - Giá net - Giá hoàn + Hãng hoàn";
             this.colLoiNhuan.Visible = true;
             this.colLoiNhuan.VisibleIndex = 38;
             // 
@@ -1164,43 +1194,11 @@
             // 
             // nCCOBindingSource
             // 
-            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.NCCO);
+            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.O_NHACUNGCAP);
             // 
             // hangBayOBindingSource
             // 
-            this.hangBayOBindingSource.DataSource = typeof(DataTransferObject.HangBayO);
-            // 
-            // pMenu
-            // 
-            this.pMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnIn),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnXoa)});
-            this.pMenu.Manager = this.barManager1;
-            this.pMenu.Name = "pMenu";
-            // 
-            // barSubItem1
-            // 
-            this.barSubItem1.Caption = "Chức năng hỗ trợ";
-            this.barSubItem1.Id = 17;
-            this.barSubItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barSubItem1.ImageOptions.SvgImage")));
-            this.barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.barButtonItem1),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem2, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
-            this.barSubItem1.Name = "barSubItem1";
-            // 
-            // barButtonItem1
-            // 
-            this.barButtonItem1.Caption = "Cập nhật từ Google Sheets";
-            this.barButtonItem1.Id = 18;
-            this.barButtonItem1.ImageOptions.SvgImage = global::CRM.Properties.Resources.google_sheets;
-            this.barButtonItem1.Name = "barButtonItem1";
-            // 
-            // barButtonItem2
-            // 
-            this.barButtonItem2.Caption = "Tải vé lên từ Excel";
-            this.barButtonItem2.Id = 19;
-            this.barButtonItem2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem2.ImageOptions.SvgImage")));
-            this.barButtonItem2.Name = "barButtonItem2";
+            this.hangBayOBindingSource.DataSource = typeof(DataTransferObject.O_HANGBAY);
             // 
             // frmVe
             // 
@@ -1241,7 +1239,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.rNCC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCOBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hangBayOBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pMenu)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1266,11 +1263,7 @@
         private DevExpress.XtraBars.BarEditItem bdtpDen;
         private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit edtpDen;
         private DevExpress.XtraBars.BarCheckItem chk3;
-        private DevExpress.XtraBars.BarEditItem barSoVe;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit aSoVe;
         private DevExpress.XtraBars.BarCheckItem chk4;
-        private DevExpress.XtraBars.BarEditItem barMacho;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit aMaCho;
         private DevExpress.XtraBars.BarButtonItem btnHoan;
         private DevExpress.XtraBars.BarButtonItem btnExportExcel;
         private DevExpress.XtraGrid.GridControl GCGD;
@@ -1333,12 +1326,15 @@
         private System.Windows.Forms.BindingSource nCCOBindingSource;
         private DevExpress.XtraBars.BarButtonItem btnIn;
         private DevExpress.XtraBars.BarButtonItem btnXoa;
-        private DevExpress.XtraBars.PopupMenu pMenu;
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit rTuyenBay;
         private System.Windows.Forms.BindingSource tuyenBayOBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colPhiCoDinh;
         private DevExpress.XtraBars.BarSubItem barSubItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraBars.BarEditItem barMacho;
+        private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit aMaCho;
+        private DevExpress.XtraBars.BarEditItem barSoVe;
+        private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit aSoVe;
     }
 }

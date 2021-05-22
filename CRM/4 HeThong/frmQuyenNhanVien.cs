@@ -20,7 +20,7 @@ namespace CRM
 
         public void LoadDL()
         {
-            QuyenNhanVienOBindingSource.DataSource = new QuyenNhanVienD().DuLieu();
+            QuyenNhanVienOBindingSource.DataSource = new D_NHOMQUYEN().DuLieu();
         }
         #endregion
 
@@ -39,7 +39,7 @@ namespace CRM
         #region Sự khiện bản 
         private void grvQuyenNhanVien_DoubleClick(object sender, System.EventArgs e)
         {
-            new frmQuyenNhanVienThem(grvQuyenNhanVien.GetRow(grvQuyenNhanVien.GetSelectedRows()[0]) as QuyenNhanVienO).ShowDialog(ParentForm);
+            new frmQuyenNhanVienThem(grvQuyenNhanVien.GetRow(grvQuyenNhanVien.GetSelectedRows()[0]) as O_NHOMQUYEN).ShowDialog(ParentForm);
         }
         #endregion
 

@@ -12,8 +12,8 @@ namespace CRM
 {
     public partial class frmQuyAGS : DevExpress.XtraEditors.XtraForm
     {
-        DaiLyO dl = new DaiLyO();
-        public frmQuyAGS(DaiLyO _dl)
+        O_DAILY dl = new O_DAILY();
+        public frmQuyAGS(O_DAILY _dl)
         {
             InitializeComponent();
             dl = _dl;
@@ -23,6 +23,7 @@ namespace CRM
 
         bool DaSave = false;
         int _SoCT = 0;
+        int SoLanDangNhap = 0;
         private void wVJ_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             Text = wVJ.Url.ToString();
@@ -36,31 +37,34 @@ namespace CRM
                     wVJ.Document.GetElementById("txtUsernameVNiSC").SetAttribute("value", "admin");
                     wVJ.Document.GetElementById("txtMatKhau").SetAttribute("value", "11223399");
                     wVJ.Document.GetElementById("txtAgentCode").SetAttribute("value", "THD");
-
-                    dynamic body = wVJ.Document.Body.DomElement;
-                    dynamic controlRange = body.createControlRange();
-                    dynamic element1 = wVJ.Document.GetElementById("imgImageValidate").DomElement;
-                    controlRange.add(element1);
-                    controlRange.execCommand("Copy", false, null);
-
-                    string res = string.Empty;
-                RetunA:
-                    try
+                    SoLanDangNhap++;
+                    if (SoLanDangNhap < 4)
                     {
-                        res = XuLyGiaoDien.ConvertImgToText((Bitmap)Clipboard.GetDataObject().GetData(DataFormats.Bitmap));
-                        if (res.Length < 3)
+                        dynamic body = wVJ.Document.Body.DomElement;
+                        dynamic controlRange = body.createControlRange();
+                        dynamic element1 = wVJ.Document.GetElementById("imgImageValidate").DomElement;
+                        controlRange.add(element1);
+                        controlRange.execCommand("Copy", false, null);
+
+                        string res = string.Empty;
+                    RetunA:
+                        try
+                        {
+                            res = XuLyGiaoDien.ConvertImgToText((Bitmap)Clipboard.GetDataObject().GetData(DataFormats.Bitmap));
+                            if (res.Length < 3)
+                                goto RetunA;
+                        }
+                        catch { wVJ.Navigate("http://ags.thanhhoang.vn/Login.aspx"); }
+
+                        if (wVJ.Document.GetElementById("RequiredFieldValidator3").OuterHtml.Contains("VISIBILITY: hidden"))
+                        {
+                            wVJ.Document.GetElementById("txtImageValidate").SetAttribute("value", res);
+                            wVJ.Visible = true;
+                            wVJ.Document.GetElementById("btnLogin").InvokeMember("click");
+                        }
+                        else
                             goto RetunA;
                     }
-                    catch { wVJ.Navigate("http://ags.thanhhoang.vn/Login.aspx"); }
-
-                    if (wVJ.Document.GetElementById("RequiredFieldValidator3").OuterHtml.Contains("VISIBILITY: hidden"))
-                    {
-                        wVJ.Document.GetElementById("txtImageValidate").SetAttribute("value", res);
-                        wVJ.Visible = true;
-                        wVJ.Document.GetElementById("btnLogin").InvokeMember("click");
-                    }
-                    else
-                        goto RetunA;
                 }
                 else if (wVJ.Url.AbsolutePath.Contains("/Default.aspx") || wVJ.Url.AbsolutePath.Contains("/Booking.aspx"))
                 {
@@ -106,7 +110,7 @@ namespace CRM
                     {
                         Dictionary<string, object> dic = new Dictionary<string, object>();
                         dic.Add("SoCT", _SoCT);
-                        new DaiLyD().CapNhat(dic, dl.ID);
+                        new D_DAILY().CapNhat(dic, dl.ID);
                         XuLyGiaoDien.Alert("Nhập quỹ AGS thành công", Form_Alert.enmType.Success);
                         Close();
                     }

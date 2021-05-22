@@ -17,8 +17,8 @@ namespace CRM
 {
     public partial class frmSoSanh : DevExpress.XtraEditors.XtraForm
     {
-        List<NCCO> _ListNCC = new List<NCCO>();
-        NCCO _NCCO = new NCCO();
+        List<O_NHACUNGCAP> _ListNCC = new List<O_NHACUNGCAP>();
+        O_NHACUNGCAP _NCCO = new O_NHACUNGCAP();
         public frmSoSanh()
         {
             InitializeComponent();
@@ -27,7 +27,7 @@ namespace CRM
         private void frmNganHangAuto_Load(object sender, EventArgs e)
         {
             eDate1.EditValue = eDate2.EditValue = DateTime.Now.AddDays(-1);
-            _ListNCC = new NCCD().DuLieu();
+            _ListNCC = new D_NHACUNGCAP().DuLieu();
             if (_ListNCC.Count < 21)
                 rNCC.DropDownRows = _ListNCC.Count;
             NCCDB.DataSource = _ListNCC;
@@ -36,8 +36,8 @@ namespace CRM
 
         private void btnCH_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            List<GiaoDichO> l1 = new GiaoDichD().GDRutGon(_NCCO.ID, ((DateTime)eDate1.EditValue), ((DateTime)eDate2.EditValue), false) as List<GiaoDichO>;
-            List<GiaoDichO> l2 = new GiaoDichD().GDRutGon(_NCCO.ID, ((DateTime)eDate1.EditValue), ((DateTime)eDate2.EditValue), true) as List<GiaoDichO>;
+            List<O_GIAODICH> l1 = new D_GIAODICH().GDRutGon(_NCCO.ID, ((DateTime)eDate1.EditValue), ((DateTime)eDate2.EditValue), false) as List<O_GIAODICH>;
+            List<O_GIAODICH> l2 = new D_GIAODICH().GDRutGon(_NCCO.ID, ((DateTime)eDate1.EditValue), ((DateTime)eDate2.EditValue), true) as List<O_GIAODICH>;
             if (!chkMC.Checked)
             {
                 for (int i = 0; i < l1.Count; i++) { l1[i].MaCho = l1[i].SoVeVN; }
@@ -52,7 +52,7 @@ namespace CRM
 
         private void rNganHang_EditValueChanged(object sender, EventArgs e)
         {
-            _NCCO = (sender as LookUpEdit).GetSelectedDataRow() as NCCO;
+            _NCCO = (sender as LookUpEdit).GetSelectedDataRow() as O_NHACUNGCAP;
         }
 
 
@@ -74,20 +74,20 @@ namespace CRM
 
         private void btnThem_ItemClick(object sender, ItemClickEventArgs e)
         {
-            List<GiaoDichO> VTCT = new List<GiaoDichO>();
-            List<GiaoDichO> VTNCC = new List<GiaoDichO>();
-            List<GiaoDichO> VHCT = new List<GiaoDichO>();
-            List<GiaoDichO> VHNCC = new List<GiaoDichO>();
+            List<O_GIAODICH> VTCT = new List<O_GIAODICH>();
+            List<O_GIAODICH> VTNCC = new List<O_GIAODICH>();
+            List<O_GIAODICH> VHCT = new List<O_GIAODICH>();
+            List<O_GIAODICH> VHNCC = new List<O_GIAODICH>();
 
             for (int i1 = 0; i1 < GVVTNCC.DataRowCount; i1++)
             {
-                GiaoDichO gd = GVVTNCC.GetRow(i1) as GiaoDichO;
+                O_GIAODICH gd = GVVTNCC.GetRow(i1) as O_GIAODICH;
                 gd.GhiChu = "Công ty thiếu vé";
                 VTNCC.Add(gd);
             }// vé NCC
             for (int i1 = 0; i1 < GVVHNCC.DataRowCount; i1++)
             {
-                GiaoDichO gd = GVVHNCC.GetRow(i1) as GiaoDichO;
+                O_GIAODICH gd = GVVHNCC.GetRow(i1) as O_GIAODICH;
                 gd.GhiChu = "Công ty thiếu hoàn";
                 VHNCC.Add(gd);
             }
@@ -95,7 +95,7 @@ namespace CRM
 
             for (int i1 = 0; i1 < GVVTCT.DataRowCount; i1++)
             {
-                GiaoDichO gd = GVVTCT.GetRow(i1) as GiaoDichO;
+                O_GIAODICH gd = GVVTCT.GetRow(i1) as O_GIAODICH;
                 if (VTNCC.Where(w => w.GiaNet.Equals(gd.GiaNet)
                 && w.MaCho.Replace(" ", string.Empty).Equals(gd.MaCho.Replace(" ", string.Empty))).Count() == 0)
                 {
@@ -110,7 +110,7 @@ namespace CRM
 
             for (int i1 = 0; i1 < GVVHCT.DataRowCount; i1++)
             {
-                GiaoDichO gd = GVVHCT.GetRow(i1) as GiaoDichO;
+                O_GIAODICH gd = GVVHCT.GetRow(i1) as O_GIAODICH;
                 if (VHNCC.Where(w => w.HangHoan.Equals(gd.HangHoan)
                 && w.MaCho.Replace(" ", string.Empty).Equals(gd.MaCho.Replace(" ", string.Empty))).Count() == 0)
                 {
@@ -130,12 +130,12 @@ namespace CRM
 
         int step = 0;
         int stepGetData = 0;
-        List<GiaoDichO> gdL = new List<GiaoDichO>();
+        List<O_GIAODICH> gdL = new List<O_GIAODICH>();
         string _Name = string.Empty;
         private void btnNCC_ItemClick(object sender, ItemClickEventArgs e)
         {
             DataVJ = new DataTable();
-            gdL = new List<GiaoDichO>();
+            gdL = new List<O_GIAODICH>();
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
             if (_NCCO.ID == 1)
@@ -217,7 +217,7 @@ namespace CRM
                                     DataVJ.Columns.Add(eleth[u].InnerText, (new int[] { 9, 10, 11, 13, 14, 15 }.Contains(u)) ? typeof(double) : typeof(string));
                                 }
                             HtmlElementCollection ele = wQH.Document.GetElementsByTagName("tr");
-                            List<GiaoDichO> lst1 = new List<GiaoDichO>();
+                            List<O_GIAODICH> lst1 = new List<O_GIAODICH>();
 
                             foreach (HtmlElement eles in ele)
                             {
@@ -247,7 +247,7 @@ namespace CRM
                                 if (lststr1.Count == DataVJ.Columns.Count)
                                     DataVJ.Rows.Add(lststr1.ToArray());
 
-                                GiaoDichO gd = new GiaoDichO();
+                                O_GIAODICH gd = new O_GIAODICH();
                                 string[] ten = elez[7].InnerText.Split('/');
                                 gd.TenKhach = ten[1] + " " + ten[0];
                                 gd.MaCho = elez[4].InnerText;
@@ -323,7 +323,7 @@ namespace CRM
                                         case "GridPayDetsEven":
                                         case "GridPayDetsOdd":
                                             HtmlElementCollection tds = ele.GetElementsByTagName("TD");
-                                            GiaoDichO gd = new GiaoDichO();
+                                            O_GIAODICH gd = new O_GIAODICH();
 
                                             gd.NgayGD = DateTime.ParseExact(tds[3].InnerText.Substring(0, tds[3].InnerText.IndexOf(' ')), "dd/MM/yyyy", null);
                                             gd.MaCho = tds[1].InnerText;
@@ -421,13 +421,13 @@ namespace CRM
                     int Dong = 0;
                     string Loi = string.Empty;
                     da.Fill(dt);
-                    List<GiaoDichO> lst = new List<GiaoDichO>();
+                    List<O_GIAODICH> lst = new List<O_GIAODICH>();
                     foreach (DataRow row in dt.Rows)
                     {
                         Dong++;
                         if (row["MaCho"].ToString().Length > 0 && (row["TienVe"].ToString().Length + row["TienHoan"].ToString().Length) > 0 && row["TenKhach"].ToString().Length > 0)
                         {
-                            GiaoDichO CVJ = new GiaoDichO();
+                            O_GIAODICH CVJ = new O_GIAODICH();
                             CVJ.TenKhach = row["TenKhach"].ToString();
                             CVJ.MaCho = row["MaCho"].ToString().Replace(" ", string.Empty);
                             if (long.Parse(row["TienVe"].ToString().Split('.')[0].Replace(",", string.Empty).Replace("-", string.Empty)) > 0)

@@ -18,7 +18,7 @@ namespace CRM
             Text += " thêm";
         }
 
-        public frmQuyenNhanVienThem(QuyenNhanVienO Nq)
+        public frmQuyenNhanVienThem(O_NHOMQUYEN Nq)
         {
             InitializeComponent();
             iTen.Text = Nq.Ten;
@@ -49,7 +49,7 @@ namespace CRM
             }
         }
 
-        void Check(Control ctl, QuyenNhanVienO Nq)
+        void Check(Control ctl, O_NHOMQUYEN Nq)
         {
             foreach (PropertyInfo propertyInfo in Nq.GetType().GetProperties())
             {
@@ -83,7 +83,7 @@ namespace CRM
             }
             #endregion
 
-            QuyenNhanVienD cvb = new QuyenNhanVienD();
+            D_NHOMQUYEN cvb = new D_NHOMQUYEN();
 
             #region Kiểm tra tên tắt hãng bay
             if (cvb.KiemTraTonTai(iTen.Text, ID))
@@ -120,7 +120,7 @@ namespace CRM
             }
             if (XuLyGiaoDien.ThongBao(Text, (ID != 0) ? (cvb.CapNhat(dic, ID) > 0) : (cvb.ThemMoi(dic) > 0)))
             {
-                (Owner.ActiveMdiChild as frmQuyenNhanVien).QuyenNhanVienOBindingSource.DataSource = new QuyenNhanVienD().DuLieu();
+                (Owner.ActiveMdiChild as frmQuyenNhanVien).QuyenNhanVienOBindingSource.DataSource = new D_NHOMQUYEN().DuLieu();
                 Close();
             }
             #endregion

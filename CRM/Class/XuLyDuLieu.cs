@@ -397,6 +397,7 @@ namespace CRM
                         case "DevExpress.XtraEditors.SearchLookUpEdit":
                         case "DevExpress.XtraEditors.LookUpEdit":
                         case "DevExpress.XtraEditors.TextEdit":
+                        case "DevExpress.XtraEditors.MemoEdit":
                             if (ctl.Text != dic.ToString() && !ctl.Text.Contains("Chọn"))
                                 VanBan += string.Format(" [{0}->{1}]\r\n", dic.ToString(), ctl.Text);
                             break;

@@ -40,6 +40,7 @@
             this.colIDNganHang1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSoDu = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colNhomstring = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colSoDu1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.barDockControl5 = new DevExpress.XtraBars.BarDockControl();
             this.barManager2 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar3 = new DevExpress.XtraBars.Bar();
@@ -52,13 +53,11 @@
             this.barDockControl3 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl4 = new DevExpress.XtraBars.BarDockControl();
             this.repositoryItemCheckEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
-            this.repositoryItemTextEdit4 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.barDockControl6 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl7 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl8 = new DevExpress.XtraBars.BarDockControl();
             this.cTNganHangOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DSNhanVien = new System.Windows.Forms.BindingSource(this.components);
-            this.IntStringBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.ibtnNap = new DevExpress.XtraBars.BarButtonItem();
@@ -71,29 +70,30 @@
             this.rdptTuNgay = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.bdtpDen = new DevExpress.XtraBars.BarEditItem();
             this.rdptDenNgay = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
-            this.chk3 = new DevExpress.XtraBars.BarCheckItem();
-            this.txtC = new DevExpress.XtraBars.BarEditItem();
-            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.btnXuat = new DevExpress.XtraBars.BarButtonItem();
             this.btnHienAn = new DevExpress.XtraBars.BarButtonItem();
             this.chkKLT = new DevExpress.XtraBars.BarCheckItem();
+            this.iCTKN = new DevExpress.XtraBars.BarCheckItem();
+            this.btnDel = new DevExpress.XtraBars.BarButtonItem();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.barButtonItem5 = new DevExpress.XtraBars.BarButtonItem();
             this.ibtnExcelHD = new DevExpress.XtraBars.BarButtonItem();
-            this.btnDel = new DevExpress.XtraBars.BarButtonItem();
             this.bdtpDen12 = new DevExpress.XtraBars.BarEditItem();
             this.bdtpDen1 = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
+            this.chk3 = new DevExpress.XtraBars.BarCheckItem();
+            this.txtC = new DevExpress.XtraBars.BarEditItem();
+            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.btnNapSD = new DevExpress.XtraBars.BarButtonItem();
             this.IntStringBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.barSubItem2 = new DevExpress.XtraBars.BarSubItem();
             this.barEditItem4 = new DevExpress.XtraBars.BarEditItem();
-            this.pMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             this.rBank = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.rHinhThuc = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
+            this.loaiGiaoDichOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.rNhanVien = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.GVCTNH = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colID = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -112,6 +112,8 @@
             this.colLoaiKhachHang = new DevExpress.XtraGrid.Columns.GridColumn();
             this.rLoaiKhachHang = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.intStringBindingSource2 = new System.Windows.Forms.BindingSource(this.components);
+            this.colLienKet = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.repositoryItemMemoExEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
             this.GCCTNH = new DevExpress.XtraGrid.GridControl();
             ((System.ComponentModel.ISupportInitialize)(this.apan1)).BeginInit();
             this.apan1.SuspendLayout();
@@ -122,27 +124,26 @@
             ((System.ComponentModel.ISupportInitialize)(this.GVNH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cTNganHangOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DSNhanVien)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IntStringBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ecmbThoiGian)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdptTuNgay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdptTuNgay.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdptDenNgay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdptDenNgay.CalendarTimeProperties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdtpDen1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdtpDen1.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.IntStringBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pMenu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rBank)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rHinhThuc)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loaiGiaoDichOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rNhanVien)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GVCTNH)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rLoaiKhachHang)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.intStringBindingSource2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoExEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GCCTNH)).BeginInit();
             this.SuspendLayout();
             // 
@@ -158,7 +159,7 @@
             this.apan1.Controls.Add(this.barDockControl4);
             this.apan1.Controls.Add(this.barDockControl2);
             this.apan1.Controls.Add(this.barDockControl1);
-            this.apan1.Location = new System.Drawing.Point(670, 24);
+            this.apan1.Location = new System.Drawing.Point(753, 24);
             this.apan1.Name = "apan1";
             this.apan1.Size = new System.Drawing.Size(482, 516);
             this.apan1.TabIndex = 3;
@@ -188,7 +189,7 @@
             // 
             // nganHangOBindingSource
             // 
-            this.nganHangOBindingSource.DataSource = typeof(DataTransferObject.NganHangO);
+            this.nganHangOBindingSource.DataSource = typeof(DataTransferObject.O_NGANHANG);
             // 
             // GVNH
             // 
@@ -197,9 +198,12 @@
             this.colIDNganHang,
             this.colIDNganHang1,
             this.colSoDu,
-            this.colNhomstring});
+            this.colNhomstring,
+            this.colSoDu1});
             this.GVNH.GridControl = this.GCNH;
             this.GVNH.GroupCount = 1;
+            this.GVNH.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "SoDuCuoi", null, "- [{0:#,##0;(#,##0)} VNĐ]")});
             this.GVNH.Name = "GVNH";
             this.GVNH.OptionsBehavior.ReadOnly = true;
             this.GVNH.OptionsView.EnableAppearanceEvenRow = true;
@@ -207,7 +211,8 @@
             this.GVNH.OptionsView.ShowGroupPanel = false;
             this.GVNH.RowHeight = 25;
             this.GVNH.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
-            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colNhomstring, DevExpress.Data.ColumnSortOrder.Ascending)});
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colNhomstring, DevExpress.Data.ColumnSortOrder.Ascending),
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colID1, DevExpress.Data.ColumnSortOrder.Descending)});
             this.GVNH.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.GVNH_RowCellStyle);
             this.GVNH.Click += new System.EventHandler(this.grvNganHang_Click);
             this.GVNH.DoubleClick += new System.EventHandler(this.grvNganHang_DoubleClick);
@@ -218,7 +223,7 @@
             this.colID1.Name = "colID1";
             this.colID1.Visible = true;
             this.colID1.VisibleIndex = 0;
-            this.colID1.Width = 160;
+            this.colID1.Width = 42;
             // 
             // colIDNganHang
             // 
@@ -227,7 +232,7 @@
             this.colIDNganHang.Name = "colIDNganHang";
             this.colIDNganHang.Visible = true;
             this.colIDNganHang.VisibleIndex = 1;
-            this.colIDNganHang.Width = 485;
+            this.colIDNganHang.Width = 128;
             // 
             // colIDNganHang1
             // 
@@ -236,7 +241,7 @@
             this.colIDNganHang1.Name = "colIDNganHang1";
             this.colIDNganHang1.Visible = true;
             this.colIDNganHang1.VisibleIndex = 2;
-            this.colIDNganHang1.Width = 485;
+            this.colIDNganHang1.Width = 43;
             // 
             // colSoDu
             // 
@@ -249,7 +254,7 @@
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "SoDuCuoi", "{0:#,##0;(#,##0)}")});
             this.colSoDu.Visible = true;
             this.colSoDu.VisibleIndex = 3;
-            this.colSoDu.Width = 492;
+            this.colSoDu.Width = 108;
             // 
             // colNhomstring
             // 
@@ -258,6 +263,17 @@
             this.colNhomstring.Name = "colNhomstring";
             this.colNhomstring.Visible = true;
             this.colNhomstring.VisibleIndex = 4;
+            // 
+            // colSoDu1
+            // 
+            this.colSoDu1.Caption = "SD Thực tế";
+            this.colSoDu1.DisplayFormat.FormatString = "{0:#,##0;(#,##0)}";
+            this.colSoDu1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colSoDu1.FieldName = "SoDu";
+            this.colSoDu1.Name = "colSoDu1";
+            this.colSoDu1.Visible = true;
+            this.colSoDu1.VisibleIndex = 4;
+            this.colSoDu1.Width = 130;
             // 
             // barDockControl5
             // 
@@ -284,8 +300,7 @@
             this.barManager2.MainMenu = this.bar3;
             this.barManager2.MaxItemId = 9;
             this.barManager2.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemCheckEdit2,
-            this.repositoryItemTextEdit4});
+            this.repositoryItemCheckEdit2});
             // 
             // bar3
             // 
@@ -377,11 +392,6 @@
             this.repositoryItemCheckEdit2.AutoHeight = false;
             this.repositoryItemCheckEdit2.Name = "repositoryItemCheckEdit2";
             // 
-            // repositoryItemTextEdit4
-            // 
-            this.repositoryItemTextEdit4.AutoHeight = false;
-            this.repositoryItemTextEdit4.Name = "repositoryItemTextEdit4";
-            // 
             // barDockControl6
             // 
             this.barDockControl6.CausesValidation = false;
@@ -408,11 +418,11 @@
             // 
             // cTNganHangOBindingSource
             // 
-            this.cTNganHangOBindingSource.DataSource = typeof(DataTransferObject.CTNganHangO);
+            this.cTNganHangOBindingSource.DataSource = typeof(DataTransferObject.O_CTNGANHANG);
             // 
             // DSNhanVien
             // 
-            this.DSNhanVien.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.DSNhanVien.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // barManager1
             // 
@@ -440,9 +450,10 @@
             this.chkKLT,
             this.btnXuat,
             this.btnHienAn,
-            this.btnNapSD});
+            this.btnNapSD,
+            this.iCTKN});
             this.barManager1.MainMenu = this.bar1;
-            this.barManager1.MaxItemId = 66;
+            this.barManager1.MaxItemId = 68;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.ecmbThoiGian,
             this.rdptTuNgay,
@@ -465,11 +476,11 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.chk2),
             new DevExpress.XtraBars.LinkPersistInfo(this.bdtpTu),
             new DevExpress.XtraBars.LinkPersistInfo(this.bdtpDen),
-            new DevExpress.XtraBars.LinkPersistInfo(this.chk3),
-            new DevExpress.XtraBars.LinkPersistInfo(this.txtC),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnXuat, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnHienAn, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.chkKLT, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.chkKLT, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.iCTKN, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnDel, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.bar1.OptionsBar.AllowQuickCustomization = false;
             this.bar1.OptionsBar.DisableClose = true;
             this.bar1.OptionsBar.DisableCustomization = true;
@@ -622,34 +633,6 @@
             this.rdptDenNgay.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             this.rdptDenNgay.Name = "rdptDenNgay";
             // 
-            // chk3
-            // 
-            this.chk3.Caption = "Mã chỗ:";
-            this.chk3.GroupIndex = 1;
-            this.chk3.Id = 58;
-            this.chk3.ItemAppearance.Normal.FontStyleDelta = System.Drawing.FontStyle.Bold;
-            this.chk3.ItemAppearance.Normal.ForeColor = System.Drawing.Color.Crimson;
-            this.chk3.ItemAppearance.Normal.Options.UseFont = true;
-            this.chk3.ItemAppearance.Normal.Options.UseForeColor = true;
-            this.chk3.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D3));
-            this.chk3.Name = "chk3";
-            this.chk3.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.chk1_CheckedChanged);
-            // 
-            // txtC
-            // 
-            this.txtC.Caption = "barEditItem1";
-            this.txtC.Edit = this.repositoryItemTextEdit1;
-            this.txtC.EditWidth = 100;
-            this.txtC.Enabled = false;
-            this.txtC.Id = 59;
-            this.txtC.Name = "txtC";
-            // 
-            // repositoryItemTextEdit1
-            // 
-            this.repositoryItemTextEdit1.AutoHeight = false;
-            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
-            this.repositoryItemTextEdit1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.repositoryItemTextEdit1_KeyDown);
-            // 
             // btnXuat
             // 
             this.btnXuat.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
@@ -681,13 +664,31 @@
             this.chkKLT.Name = "chkKLT";
             this.chkKLT.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.chk1_CheckedChanged);
             // 
+            // iCTKN
+            // 
+            this.iCTKN.Caption = "Thống kê nhanh";
+            this.iCTKN.Id = 66;
+            this.iCTKN.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("iCTKN.ImageOptions.SvgImage")));
+            this.iCTKN.Name = "iCTKN";
+            this.iCTKN.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.iCTKN_CheckedChanged);
+            // 
+            // btnDel
+            // 
+            this.btnDel.Caption = "Xóa";
+            this.btnDel.Hint = "Delete";
+            this.btnDel.Id = 49;
+            this.btnDel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnDel.ImageOptions.SvgImage")));
+            this.btnDel.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Delete);
+            this.btnDel.Name = "btnDel";
+            this.btnDel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDel_ItemClick);
+            // 
             // barDockControlTop
             // 
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1152, 24);
+            this.barDockControlTop.Size = new System.Drawing.Size(1235, 24);
             // 
             // barDockControlBottom
             // 
@@ -695,7 +696,7 @@
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.barDockControlBottom.Location = new System.Drawing.Point(0, 759);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(1152, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1235, 0);
             // 
             // barDockControlLeft
             // 
@@ -709,7 +710,7 @@
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1152, 24);
+            this.barDockControlRight.Location = new System.Drawing.Point(1235, 24);
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 735);
             // 
@@ -725,16 +726,6 @@
             this.ibtnExcelHD.Id = 40;
             this.ibtnExcelHD.Name = "ibtnExcelHD";
             // 
-            // btnDel
-            // 
-            this.btnDel.Caption = "Xóa";
-            this.btnDel.Hint = "Delete";
-            this.btnDel.Id = 49;
-            this.btnDel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnDel.ImageOptions.SvgImage")));
-            this.btnDel.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.Delete);
-            this.btnDel.Name = "btnDel";
-            this.btnDel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDel_ItemClick);
-            // 
             // bdtpDen12
             // 
             this.bdtpDen12.Edit = this.bdtpDen1;
@@ -749,6 +740,34 @@
             this.bdtpDen1.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.bdtpDen1.Name = "bdtpDen1";
+            // 
+            // chk3
+            // 
+            this.chk3.Caption = "GD Liên kết:";
+            this.chk3.GroupIndex = 1;
+            this.chk3.Id = 58;
+            this.chk3.ItemAppearance.Normal.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.chk3.ItemAppearance.Normal.ForeColor = System.Drawing.Color.Crimson;
+            this.chk3.ItemAppearance.Normal.Options.UseFont = true;
+            this.chk3.ItemAppearance.Normal.Options.UseForeColor = true;
+            this.chk3.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.D3));
+            this.chk3.Name = "chk3";
+            this.chk3.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.chk1_CheckedChanged);
+            // 
+            // txtC
+            // 
+            this.txtC.Caption = "barEditItem1";
+            this.txtC.Edit = this.repositoryItemTextEdit1;
+            this.txtC.EditWidth = 100;
+            this.txtC.Enabled = false;
+            this.txtC.Id = 59;
+            this.txtC.Name = "txtC";
+            // 
+            // repositoryItemTextEdit1
+            // 
+            this.repositoryItemTextEdit1.AutoHeight = false;
+            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
+            this.repositoryItemTextEdit1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.repositoryItemTextEdit1_KeyDown);
             // 
             // btnNapSD
             // 
@@ -784,14 +803,6 @@
             this.barEditItem4.Id = 4;
             this.barEditItem4.Name = "barEditItem4";
             // 
-            // pMenu
-            // 
-            this.pMenu.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnDel)});
-            this.pMenu.Manager = this.barManager1;
-            this.pMenu.MinWidth = 200;
-            this.pMenu.Name = "pMenu";
-            // 
             // rBank
             // 
             this.rBank.AutoHeight = false;
@@ -812,11 +823,15 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.rHinhThuc.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
             new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "", 37, DevExpress.Utils.FormatType.None, "", true, DevExpress.Utils.HorzAlignment.Near, DevExpress.Data.ColumnSortOrder.None, DevExpress.Utils.DefaultBoolean.Default)});
-            this.rHinhThuc.DataSource = this.IntStringBindingSource1;
+            this.rHinhThuc.DataSource = this.loaiGiaoDichOBindingSource;
             this.rHinhThuc.DisplayMember = "Name";
             this.rHinhThuc.Name = "rHinhThuc";
             this.rHinhThuc.NullText = "-";
             this.rHinhThuc.ValueMember = "ID";
+            // 
+            // loaiGiaoDichOBindingSource
+            // 
+            this.loaiGiaoDichOBindingSource.DataSource = typeof(DataTransferObject.O_LOAIGIAODICH);
             // 
             // rNhanVien
             // 
@@ -846,8 +861,11 @@
             this.colLoaiGiaoDich,
             this.colTen,
             this.colGhiChuNV,
-            this.colLoaiKhachHang});
+            this.colLoaiKhachHang,
+            this.colLienKet});
             this.GVCTNH.GridControl = this.GCCTNH;
+            this.GVCTNH.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "SoTien", null, "(Số tiền: {0:#,##0;-#,##0})")});
             this.GVCTNH.IndicatorWidth = 50;
             this.GVCTNH.Name = "GVCTNH";
             this.GVCTNH.OptionsBehavior.ReadOnly = true;
@@ -860,7 +878,6 @@
             this.GVCTNH.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colTen, DevExpress.Data.ColumnSortOrder.Ascending)});
             this.GVCTNH.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.grvCtNganHang_RowCellStyle);
-            this.GVCTNH.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.grvNganHang_PopupMenuShowing);
             this.GVCTNH.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GVCTNH_KeyPress);
             this.GVCTNH.DoubleClick += new System.EventHandler(this.grvGiaoDich_DoubleClick);
             // 
@@ -1014,6 +1031,27 @@
             // 
             this.intStringBindingSource2.DataSource = typeof(CRM.IntString);
             // 
+            // colLienKet
+            // 
+            this.colLienKet.Caption = "GD liên kết";
+            this.colLienKet.ColumnEdit = this.repositoryItemMemoExEdit1;
+            this.colLienKet.FieldName = "LienKet";
+            this.colLienKet.Name = "colLienKet";
+            this.colLienKet.ToolTip = "ID | Mã chỗ | Số tiền";
+            this.colLienKet.Visible = true;
+            this.colLienKet.VisibleIndex = 12;
+            this.colLienKet.Width = 250;
+            // 
+            // repositoryItemMemoExEdit1
+            // 
+            this.repositoryItemMemoExEdit1.AutoHeight = false;
+            this.repositoryItemMemoExEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.repositoryItemMemoExEdit1.ExportMode = DevExpress.XtraEditors.Repository.ExportMode.DisplayText;
+            this.repositoryItemMemoExEdit1.Name = "repositoryItemMemoExEdit1";
+            this.repositoryItemMemoExEdit1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.repositoryItemMemoExEdit1.ShowIcon = false;
+            // 
             // GCCTNH
             // 
             this.GCCTNH.DataSource = this.cTNganHangOBindingSource;
@@ -1025,8 +1063,9 @@
             this.rBank,
             this.rHinhThuc,
             this.rNhanVien,
-            this.rLoaiKhachHang});
-            this.GCCTNH.Size = new System.Drawing.Size(1152, 735);
+            this.rLoaiKhachHang,
+            this.repositoryItemMemoExEdit1});
+            this.GCCTNH.Size = new System.Drawing.Size(1235, 735);
             this.GCCTNH.TabIndex = 0;
             this.GCCTNH.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.GVCTNH});
@@ -1036,7 +1075,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1152, 759);
+            this.ClientSize = new System.Drawing.Size(1235, 759);
             this.Controls.Add(this.apan1);
             this.Controls.Add(this.GCCTNH);
             this.Controls.Add(this.barDockControlLeft);
@@ -1058,27 +1097,26 @@
             ((System.ComponentModel.ISupportInitialize)(this.GVNH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemCheckEdit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cTNganHangOBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DSNhanVien)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IntStringBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ecmbThoiGian)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdptTuNgay.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdptTuNgay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdptDenNgay.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rdptDenNgay)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdtpDen1.CalendarTimeProperties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdtpDen1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.IntStringBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pMenu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rBank)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rHinhThuc)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loaiGiaoDichOBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rNhanVien)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GVCTNH)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rLoaiKhachHang)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.intStringBindingSource2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemMemoExEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GCCTNH)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1086,6 +1124,7 @@
         }
 
         #endregion
+
         private DevExpress.XtraBars.BarManager barManager1;
         private DevExpress.XtraBars.Bar bar1;
         private DevExpress.XtraBars.BarButtonItem ibtnNap;
@@ -1112,7 +1151,6 @@
         private DevExpress.XtraGrid.GridControl GCNH;
         private DevExpress.XtraGrid.Views.Grid.GridView GVNH;
         private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit repositoryItemCheckEdit2;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit4;
         private DevExpress.XtraBars.BarEditItem barEditItem4;
         private System.Windows.Forms.BindingSource nganHangOBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colIDNganHang;
@@ -1122,11 +1160,9 @@
         private System.Windows.Forms.BindingSource cTNganHangOBindingSource;
         private System.Windows.Forms.BindingSource IntStringBindingSource;
         private DevExpress.XtraBars.BarButtonItem btnDel;
-        private System.Windows.Forms.BindingSource IntStringBindingSource1;
         private DevExpress.XtraGrid.Columns.GridColumn colID1;
         private System.Windows.Forms.BindingSource DSNhanVien;
         private DevExpress.XtraBars.BarCheckItem chkNganHang;
-        private DevExpress.XtraBars.PopupMenu pMenu;
         private DevExpress.XtraEditors.Repository.RepositoryItemDateEdit bdtpDen1;
         private DevExpress.XtraBars.BarEditItem bdtpDen12;
         private DevExpress.XtraBars.BarCheckItem chk1;
@@ -1169,5 +1205,10 @@
         private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit rLoaiKhachHang;
         private System.Windows.Forms.BindingSource intStringBindingSource2;
         private DevExpress.XtraGrid.Columns.GridColumn colNhomstring;
+        private System.Windows.Forms.BindingSource loaiGiaoDichOBindingSource;
+        private DevExpress.XtraGrid.Columns.GridColumn colLienKet;
+        private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit repositoryItemMemoExEdit1;
+        private DevExpress.XtraBars.BarCheckItem iCTKN;
+        private DevExpress.XtraGrid.Columns.GridColumn colSoDu1;
     }
 }

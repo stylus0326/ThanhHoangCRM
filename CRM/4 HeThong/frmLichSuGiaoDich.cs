@@ -17,21 +17,21 @@ namespace CRM
         {
             InitializeComponent();
             bar1.Visible = colMaCho.Visible = colFormName.Visible = false;
-            lichSuGDOBindingSource.DataSource = new LichSuD().LayDanhSachTheoCode(code);
+            lichSuGDOBindingSource.DataSource = new D_LS_GIAODICH().LayDanhSachTheoCode(code);
         }
 
         void DuLieu()
         {
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
-            lichSuGDOBindingSource.DataSource = new LichSuD().LayDanhSach(ChonThoiGian[idThoiGian], btnHeThong.Checked);
+            lichSuGDOBindingSource.DataSource = new D_LS_GIAODICH().LayDanhSach(ChonThoiGian[idThoiGian], btnHeThong.Checked);
             if (XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.CloseWaitForm();
         }
 
         private void frmLichSu_Load(object sender, EventArgs e)
         {
-            DSNhanVien.DataSource = new DaiLyD().NhanVien();
+            DSNhanVien.DataSource = new D_DAILY().NhanVien();
         }
 
         #region Biến

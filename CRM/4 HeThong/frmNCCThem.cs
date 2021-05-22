@@ -10,15 +10,15 @@ namespace CRM
 {
     public partial class frmNCCThem : DevExpress.XtraEditors.XtraForm
     {
-        NCCO _NCCO = new NCCO();
-        NCCD _NCCD = new NCCD();
+        O_NHACUNGCAP _NCCO = new O_NHACUNGCAP();
+        D_NHACUNGCAP _NCCD = new D_NHACUNGCAP();
         public frmNCCThem()
         {
             InitializeComponent();
             Text += " thêm";
         }
 
-        public frmNCCThem(NCCO nCCO)
+        public frmNCCThem(O_NHACUNGCAP nCCO)
         {
             InitializeComponent();
             _NCCO = nCCO;
@@ -27,9 +27,10 @@ namespace CRM
 
         private void frmNCCThem_Load(object sender, EventArgs e)
         {
+            KhuVuc();
             _DataHangBay.Columns.Add("ID", typeof(int));
             _DataHangBay.Columns.Add("Ten", typeof(string));
-            _lstHangBayO = new HangBayD().DuLieu();
+            _lstHangBayO = new D_HANGBAY().DuLieu();
             hangBayOBindingSource.DataSource = _lstHangBayO;
 
             if ((_NCCO.HangBay ?? string.Empty).Length > 1)
@@ -42,8 +43,14 @@ namespace CRM
                 }
                 GCNCC.DataSource = _DataHangBay;
             }
+            DSNH.DataSource = new D_NGANHANG().All();
             XuLyDuLieu.ConvertClassToTable(this, _NCCO);
             XuLyGiaoDien.OpenForm(this);
+        }
+
+        public void KhuVuc()
+        {
+            sanBayOBindingSource.DataSource = new D_SANBAY().DuLieu(1);
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
@@ -77,7 +84,7 @@ namespace CRM
                 if (_NCCO.ID < 1)
                 {
                     List<Dictionary<string, object>> lstDicS = new List<Dictionary<string, object>>();
-                    for (int i = 0; i < 30; i++)
+                    for (int i = 0; i < 180; i++)
                     {
                         dic = new Dictionary<string, object>();
                         dic.Add("NCCID", CapNhatNum);
@@ -86,7 +93,7 @@ namespace CRM
                         dic.Add("Ngay", "getdate() - " + i);
                         lstDicS.Add(dic);
                     }
-                    new SoDu_HangD().ThemNhieu1Ban(lstDicS);
+                    new D_SODU_HANG().ThemNhieu1Ban(lstDicS);
                 }
 
                 (Owner.ActiveMdiChild as frmHangBay).DuLieu();
@@ -95,11 +102,11 @@ namespace CRM
         }
 
         DataTable _DataHangBay = new DataTable();
-        HangBayO _HangBayO = new HangBayO();
-        List<HangBayO> _lstHangBayO = new List<HangBayO>();
+        O_HANGBAY _HangBayO = new O_HANGBAY();
+        List<O_HANGBAY> _lstHangBayO = new List<O_HANGBAY>();
         private void lueNCC_EditValueChanged(object sender, EventArgs e)
         {
-            _HangBayO = (HangBayO)lueNCC.GetSelectedDataRow();
+            _HangBayO = (O_HANGBAY)lueNCC.GetSelectedDataRow();
             if ((from row in _DataHangBay.AsEnumerable() where row.Field<int>("ID") == _HangBayO.ID select row.Field<int>("ID")).Count() == 0)
                 _DataHangBay.Rows.Add(_HangBayO.ID, _HangBayO.TenHang);
             GCNCC.DataSource = _DataHangBay;
@@ -111,6 +118,12 @@ namespace CRM
                 Close();
             else if (e.Control && e.KeyCode == Keys.S)
                 btnLuu.PerformClick();
+        }
+
+        private void iHang_CheckedChanged(object sender, EventArgs e)
+        {
+            iG2.Enabled = iHang.Checked;
+            iG3.Enabled = !iHang.Checked;
         }
     }
 }

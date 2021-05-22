@@ -172,11 +172,11 @@
             // 
             // daiLyOBindingSource
             // 
-            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // hangBayOBindingSource
             // 
-            this.hangBayOBindingSource.DataSource = typeof(DataTransferObject.HangBayO);
+            this.hangBayOBindingSource.DataSource = typeof(DataTransferObject.O_HANGBAY);
             // 
             // iKhoa
             // 

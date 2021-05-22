@@ -2,6 +2,7 @@
 using DevExpress.XtraEditors.DXErrorProvider;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
+using IronOcr;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using Tesseract;
 
 namespace CRM
 {
@@ -29,6 +29,37 @@ namespace CRM
         }
         #endregion
 
+        public static void ShowToolTip(Control textEdit, string body, int duration = 2000)
+        {
+            Cursor.Position = textEdit.PointToScreen(new Point(20, 10));
+            ToolTip toolTip = new ToolTip();
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 1000;
+            toolTip.ReshowDelay = 500;
+            toolTip.ShowAlways = true;
+            toolTip.IsBalloon = true;
+            toolTip.ToolTipIcon = ToolTipIcon.Info;
+            toolTip.ToolTipTitle = "Thông báo";
+
+
+
+            toolTip.Show(body, textEdit, 0, -70, duration);
+
+            if (textEdit is LookUpEdit)
+            {
+                (textEdit as LookUpEdit).ShowPopup();
+                Cursor.Position = textEdit.PointToScreen(new Point(20, 10));
+            }
+            else if (textEdit is SearchLookUpEdit)
+            {
+                (textEdit as SearchLookUpEdit).ShowPopup();
+                Cursor.Position = textEdit.PointToScreen(new Point(40, 132));
+            }
+            else
+                textEdit.Focus();
+        }
+
+
         public static void ChiNhapSo(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
@@ -41,13 +72,23 @@ namespace CRM
 
         public static string ConvertImgToText(Bitmap bt)
         {
-            string res = string.Empty;
-            using (var engine = new TesseractEngine(@"./", "eng", EngineMode.TesseractOnly))
+            var Ocr = new IronTesseract();
+            // Fast Dictionary
+            Ocr.Language = OcrLanguage.EnglishFast;
+            // Latest Engine 
+            Ocr.Configuration.TesseractVersion = TesseractVersion.Tesseract5;
+            //AI OCR only without font analysis
+            //Ocr.Configuration.EngineMode = TesseractEngineMode.LstmOnly;
+            //Turn off unneeded options
+            Ocr.Configuration.ReadBarCodes = false;
+            Ocr.Configuration.RenderSearchablePdfsAndHocr = false;
+            // Assume text is laid out neatly in an orthagonal document
+            Ocr.Configuration.PageSegmentationMode = TesseractPageSegmentationMode.Auto;
+            using (var Input = new OcrInput(bt))
             {
-                using (var page = engine.Process(bt, PageSegMode.AutoOnly))
-                    res = page.GetText();
+                var Result = Ocr.Read(Input);
+                return Result.Text;
             }
-            return res;
         }
 
         #region Mở Form mờ
@@ -161,7 +202,7 @@ namespace CRM
                 }
                 else if (ctl._KiemTraChuoi)
                 {
-                    int Te = ctl._Control.Text.Replace(" ", string.Empty).Length;
+                    int Te = ctl._Control.Text.Replace(" ", string.Empty).Replace("\r\n", "").Length;
                     if (Te > ctl._Tu - 1 && ctl._Den + 1 > Te)
                         dx.SetValidationRule(ctl._Control, new TextValidationRule(ctl._ThongBao2, ctl._ChoQua));
                     else

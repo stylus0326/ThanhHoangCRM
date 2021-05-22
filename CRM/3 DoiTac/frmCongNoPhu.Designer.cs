@@ -37,7 +37,6 @@
             this.dtp1 = new DevExpress.XtraEditors.DateEdit();
             this.giaoDichOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tuyenBayOBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.IntStringBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.GCCN = new DevExpress.XtraGrid.GridControl();
             this.GVCN = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -60,17 +59,18 @@
             this.gridColumn19 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colGiaHoan1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPhiCoDinh1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.loaiGiaoDichOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dtp2.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp1.Properties.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtp1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.giaoDichOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tuyenBayOBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IntStringBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GCCN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GVCN)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rLoaiGiaoDich)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rTuyenBay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loaiGiaoDichOBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // btnTim
@@ -124,15 +124,11 @@
             // 
             // giaoDichOBindingSource
             // 
-            this.giaoDichOBindingSource.DataSource = typeof(DataTransferObject.GiaoDichO);
+            this.giaoDichOBindingSource.DataSource = typeof(DataTransferObject.O_GIAODICH);
             // 
             // tuyenBayOBindingSource
             // 
-            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.TuyenBayO);
-            // 
-            // IntStringBindingSource
-            // 
-            this.IntStringBindingSource.DataSource = typeof(CRM.IntString);
+            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.O_TUYENBAY);
             // 
             // GCCN
             // 
@@ -227,10 +223,10 @@
             this.rLoaiGiaoDich.AutoHeight = false;
             this.rLoaiGiaoDich.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.rLoaiGiaoDich.DataSource = this.IntStringBindingSource;
+            this.rLoaiGiaoDich.DataSource = this.loaiGiaoDichOBindingSource;
             this.rLoaiGiaoDich.DisplayMember = "Name";
             this.rLoaiGiaoDich.Name = "rLoaiGiaoDich";
-            this.rLoaiGiaoDich.ValueMember = "ID";
+            this.rLoaiGiaoDich.ValueMember = "IDGiaoDich";
             // 
             // gridColumn3
             // 
@@ -424,6 +420,10 @@
             this.colPhiCoDinh1.Visible = true;
             this.colPhiCoDinh1.VisibleIndex = 11;
             // 
+            // loaiGiaoDichOBindingSource
+            // 
+            this.loaiGiaoDichOBindingSource.DataSource = typeof(DataTransferObject.O_LOAIGIAODICH);
+            // 
             // frmCongNoPhu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -447,11 +447,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dtp1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.giaoDichOBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tuyenBayOBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.IntStringBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GCCN)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GVCN)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rLoaiGiaoDich)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rTuyenBay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.loaiGiaoDichOBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -464,7 +464,6 @@
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.DateEdit dtp2;
         private DevExpress.XtraEditors.DateEdit dtp1;
-        private System.Windows.Forms.BindingSource IntStringBindingSource;
         private System.Windows.Forms.BindingSource giaoDichOBindingSource;
         private System.Windows.Forms.BindingSource tuyenBayOBindingSource;
         private DevExpress.XtraGrid.GridControl GCCN;
@@ -489,5 +488,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn19;
         private DevExpress.XtraGrid.Columns.GridColumn colGiaHoan1;
         private DevExpress.XtraGrid.Columns.GridColumn colPhiCoDinh1;
+        private System.Windows.Forms.BindingSource loaiGiaoDichOBindingSource;
     }
 }

@@ -11,7 +11,7 @@ namespace CRM
 {
     public partial class frmKhoaNgay : DevExpress.XtraEditors.XtraForm
     {
-        KhoaNgayO _KhoaNgayO = new KhoaNgayO();
+        O_KHOANGAY _KhoaNgayO = new O_KHOANGAY();
         public frmKhoaNgay()
         {
             InitializeComponent();
@@ -30,7 +30,7 @@ namespace CRM
             GridView View = sender as GridView;
             if (e.RowHandle >= 0)
             {
-                KhoaNgayO dl = View.GetRow(e.RowHandle) as KhoaNgayO;
+                O_KHOANGAY dl = View.GetRow(e.RowHandle) as O_KHOANGAY;
                 if (e.Column.FieldName == "StrTrangThai")
                 {
                     if (dl.HoatDong)
@@ -51,7 +51,7 @@ namespace CRM
         private void main_Click(object sender, EventArgs e)
         {
             dt.Clear();
-            _KhoaNgayO = (KhoaNgayO)main.GetRow(main.GetSelectedRows()[0]);
+            _KhoaNgayO = (O_KHOANGAY)main.GetRow(main.GetSelectedRows()[0]);
             if (_KhoaNgayO.Code != null)
                 if (_KhoaNgayO.Code.Length > 1)
                 {
@@ -89,7 +89,7 @@ namespace CRM
                 if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
                     _Query += string.Format("AND (convert(date, TuNgay) BETWEEN '{0}' AND '{1}')", ((DateTime)bdtpTu.EditValue).ToString("yyyyMMdd"), ((DateTime)bdtpDen.EditValue).ToString("yyyyMMdd"));
             }
-            khoaNgayOBindingSource.DataSource = new KhoaNgayD().DuLieu(_Query);
+            khoaNgayOBindingSource.DataSource = new D_KHOANGAY().DuLieu(_Query);
         }
 
         private void ecmbThoiGian_SelectedIndexChanged(object sender, EventArgs e)
@@ -110,7 +110,7 @@ namespace CRM
                 CoDe = CoDe.Substring(0, CoDe.Length - 2);
             }
 
-            KhoaNgayD bus = new KhoaNgayD();
+            D_KHOANGAY bus = new D_KHOANGAY();
             Dictionary<string, object> dic = new Dictionary<string, object>()
                 {
                     {"HoatDong",chkGD.Checked},

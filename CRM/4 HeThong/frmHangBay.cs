@@ -25,20 +25,22 @@ namespace CRM
         {
             if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.ShowWaitForm();
-            hangBindingSource.DataSource = new HangBayD().DuLieu();
-            _lstNCCO = new NCCD().DuLieu();
+            _NCCD.ChayLaiSD();
+            hangBindingSource.DataSource = new D_HANGBAY().DuLieu();
+            _lstNCCO = _NCCD.DuLieu(true);
             nCCOBindingSource.DataSource = _lstNCCO;
-            nCCGDOBindingSource.DataSource = new NCCGDD().DuLieu();
+            nCCGDOBindingSource.DataSource = new D_NHACUNGCAP_GIAODICHPHATSINH().DuLieu();
             if (XuLyGiaoDien.wait.IsSplashFormVisible)
                 XuLyGiaoDien.wait.CloseWaitForm();
         }
         #endregion
 
         #region Biến
-        NCCGDO _NCCGDO = new NCCGDO();
-        HangBayO _HangBay = new HangBayO();
-        List<NCCO> _lstNCCO = new List<NCCO>();
-        NCCO _NCC = new NCCO();
+        O_NHACUNGCAP_GIAODICHPHATSINH _NCCGDO = new O_NHACUNGCAP_GIAODICHPHATSINH();
+        O_HANGBAY _HangBay = new O_HANGBAY();
+        List<O_NHACUNGCAP> _lstNCCO = new List<O_NHACUNGCAP>();
+        O_NHACUNGCAP _NCC = new O_NHACUNGCAP();
+        D_NHACUNGCAP _NCCD = new D_NHACUNGCAP();
         #endregion
 
         #region Sự kiện nút
@@ -49,7 +51,7 @@ namespace CRM
 
         private void GVHB_DoubleClick(object sender, EventArgs e)
         {
-            _HangBay = GVHB.GetRow(GVHB.GetSelectedRows()[0]) as HangBayO;
+            _HangBay = GVHB.GetRow(GVHB.GetSelectedRows()[0]) as O_HANGBAY;
             if (_HangBay != null)
                 new frmHangBayThem(_HangBay).ShowDialog(this);
         }
@@ -58,9 +60,11 @@ namespace CRM
         {
             if (GVNCC.GetSelectedRows().Count() > 0)
             {
-                _NCC = GVNCC.GetRow(GVNCC.GetSelectedRows()[0]) as NCCO;
+                _NCC = GVNCC.GetRow(GVNCC.GetSelectedRows()[0]) as O_NHACUNGCAP;
                 if (_NCC != null)
+                {
                     new frmNCCThem(_NCC).ShowDialog(this);
+                }
             }
         }
         #endregion
@@ -70,7 +74,7 @@ namespace CRM
         {
             if (GVNCCGD.GetSelectedRows().Count() > 0)
             {
-                _NCCGDO = GVNCCGD.GetRow(GVNCCGD.GetSelectedRows()[0]) as NCCGDO;
+                _NCCGDO = GVNCCGD.GetRow(GVNCCGD.GetSelectedRows()[0]) as O_NHACUNGCAP_GIAODICHPHATSINH;
                 if (_NCCGDO != null)
                     new frmNCCGD(_NCCGDO).ShowDialog(this);
             }
@@ -89,6 +93,22 @@ namespace CRM
         private void GrHang_CustomButtonClick(object sender, DevExpress.XtraBars.Docking2010.BaseButtonEventArgs e)
         {
             new frmHangBayThem().ShowDialog(this);
+        }
+
+        private void barCheckItem1_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            GrHang.Visible = barCheckItem1.Checked;
+        }
+
+        private void rbtn_Click(object sender, EventArgs e)
+        {
+            if (GVNCC.GetSelectedRows().Count() > 0)
+            {
+                O_NHACUNGCAP _NCCO = GVNCC.GetRow(GVNCC.GetSelectedRows()[0]) as O_NHACUNGCAP;
+                if (_NCCO != null)
+                    if (_NCCO.KhachSan)
+                        new frmCongNoKS(_NCCO).ShowDialog(this);
+            }
         }
     }
 }

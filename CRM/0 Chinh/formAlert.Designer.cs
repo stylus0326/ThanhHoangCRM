@@ -40,13 +40,13 @@ namespace CRM
             // 
             // lblMsg
             // 
-            this.lblMsg.AutoSize = true;
             this.lblMsg.ForeColor = System.Drawing.Color.White;
-            this.lblMsg.Location = new System.Drawing.Point(59, 28);
+            this.lblMsg.Location = new System.Drawing.Point(59, 15);
             this.lblMsg.Name = "lblMsg";
-            this.lblMsg.Size = new System.Drawing.Size(108, 20);
+            this.lblMsg.Size = new System.Drawing.Size(245, 47);
             this.lblMsg.TabIndex = 0;
             this.lblMsg.Text = "Message Text";
+            this.lblMsg.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // timer1
             // 
@@ -55,7 +55,7 @@ namespace CRM
             // pictureBox2
             // 
             this.pictureBox2.Image = global::CRM.Properties.Resources.icons8_cancel_25px;
-            this.pictureBox2.Location = new System.Drawing.Point(298, 22);
+            this.pictureBox2.Location = new System.Drawing.Point(310, 22);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(26, 30);
             this.pictureBox2.TabIndex = 3;
@@ -91,7 +91,6 @@ namespace CRM
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

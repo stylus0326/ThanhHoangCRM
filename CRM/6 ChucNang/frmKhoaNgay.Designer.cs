@@ -360,7 +360,7 @@ namespace CRM
             // 
             // khoaNgayOBindingSource
             // 
-            this.khoaNgayOBindingSource.DataSource = typeof(DataTransferObject.KhoaNgayO);
+            this.khoaNgayOBindingSource.DataSource = typeof(DataTransferObject.O_KHOANGAY);
             // 
             // main
             // 

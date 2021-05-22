@@ -3,10 +3,10 @@ using DataTransferObject;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
-using mshtml;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,13 +15,13 @@ namespace CRM
 {
     public partial class frmVeThem : DevExpress.XtraEditors.XtraForm
     {
-        GiaoDichO _GiaoDichO = new GiaoDichO();
-        GiaoDichD _GiaoDichD = new GiaoDichD();
-        List<DaiLyO> _ListDaiLyO = new List<DaiLyO>();
-        List<HangBayO> _ListHangBayO = new List<HangBayO>();
-        List<TuyenBayO> _ListTuyenBayO = new List<TuyenBayO>();
+        O_GIAODICH _GiaoDichO = new O_GIAODICH();
+        D_GIAODICH _GiaoDichD = new D_GIAODICH();
+        List<O_DAILY> _ListDaiLyO = new List<O_DAILY>();
+        List<O_HANGBAY> _ListHangBayO = new List<O_HANGBAY>();
+        List<O_TUYENBAY> _ListTuyenBayO = new List<O_TUYENBAY>();
         List<Dictionary<string, object>> _LSTDIC = new List<Dictionary<string, object>>();
-        List<NCCO> _ListNCC = new List<NCCO>();
+        List<O_NHACUNGCAP> _ListNCC = new List<O_NHACUNGCAP>();
         int LoaiKhachHang = 0;
         public frmVeThem()
         {
@@ -30,7 +30,7 @@ namespace CRM
             btnLS.Visible = false;
         }
 
-        public frmVeThem(List<GiaoDichO> lst)
+        public frmVeThem(List<O_GIAODICH> lst)
         {
             InitializeComponent();
             GCGD.EmbeddedNavigator.Buttons.Append.Visible = false;
@@ -40,17 +40,28 @@ namespace CRM
             Text += " sửa";
         }
 
+        public frmVeThem(O_GIAODICH lst)
+        {
+            InitializeComponent();
+            GCGD.EmbeddedNavigator.Buttons.Append.Visible = false;
+            GCGD.EmbeddedNavigator.Buttons.Remove.Visible = false;
+            _GiaoDichO = lst;
+            DSGiaoDich.DataSource = lst;
+            Text += " xem";
+            btnLuu.Visible = false;
+        }
+
         private void frmVeThem_Load(object sender, EventArgs e)
         {
             chkDen.Checked = _GiaoDichO.SoLuongVe == 2;
-            _ListDaiLyO = new DaiLyD().All();
-            _ListHangBayO = new HangBayD().DuLieu();
-            _ListTuyenBayO = new TuyenBayD().DuLieu();
-            NhanVienDB.DataSource = new DaiLyD().NhanVien();
+            _ListDaiLyO = new D_DAILY().All();
+            _ListHangBayO = new D_HANGBAY().DuLieu();
+            _ListTuyenBayO = new D_TUYENBAY().DuLieu();
+            NhanVienDB.DataSource = new D_DAILY().NhanVien();
             LoaiKhachDB.DataSource = DuLieuTaoSan.LoaiKhachHang_Ve();
             LoaiVeDB.DataSource = DuLieuTaoSan.LoaiGiaoDich_Ve(true).Where(w => !w.ID.Equals(8) && !w.ID.Equals(9));
             DaiLyDB.DataSource = _ListDaiLyO.Where(w => w.LoaiKhachHang.Equals(LoaiKhachHang));
-            _ListNCC = new NCCD().DuLieu();
+            _ListNCC = new D_NHACUNGCAP().DuLieu();
             NCCDB.DataSource = _ListNCC;
             tuyenBayOBindingSource.DataSource = _ListTuyenBayO;
             rHD.DataSource = DuLieuTaoSan.HinhThucHoaDon();
@@ -74,7 +85,7 @@ namespace CRM
 
         public void DuLieuKhachLe(long a)
         {
-            _ListDaiLyO = new DaiLyD().All();
+            _ListDaiLyO = new D_DAILY().All();
             DaiLyDB.DataSource = _ListDaiLyO.Where(w => w.LoaiKhachHang.Equals(LoaiKhachHang));
             iIDKhachHang.EditValue = a;
         }
@@ -90,7 +101,6 @@ namespace CRM
                 if (_GiaoDichO.ID == 0)
                     _GiaoDichO.HTTT = (int)iHTTT.EditValue;
             }
-            btnAdd.Visible = LoaiKhachHang == 3;
         }
 
         private void iHTTT_EditValueChanged(object sender, EventArgs e)
@@ -98,12 +108,12 @@ namespace CRM
             switch ((int)iHTTT.EditValue)
             {
                 case 3:
-                    NganHangDB.DataSource = new NganHangD().DuLieu(true);
+                    NganHangDB.DataSource = new D_NGANHANG().DuLieu(true);
                     iNganHang.Properties.ReadOnly = false;
                     iNganHang.EditValue = 1;
                     break;
                 case 4:
-                    NganHangDB.DataSource = new NganHangD().DuLieu(false);
+                    NganHangDB.DataSource = new D_NGANHANG().DuLieu(false);
                     iNganHang.Properties.ReadOnly = false;
                     break;
                 default:
@@ -118,7 +128,7 @@ namespace CRM
         {
             if (NCCDB.Count > 0)
             {
-                NCCO _NCCO = iNhaCungCap.GetSelectedDataRow() as NCCO;
+                O_NHACUNGCAP _NCCO = iNhaCungCap.GetSelectedDataRow() as O_NHACUNGCAP;
                 if (_NCCO != null)
                 {
                     if ((_NCCO.HangBay ?? string.Empty).Length > 1)
@@ -132,7 +142,7 @@ namespace CRM
                                 iHang.EditValue = _ListHangBayO.Where(w => NCCA.Contains(w.ID.ToString())).ToList()[0].TenTat;
                                 if (iHang.EditValue.ToString() == _GiaoDichO.Hang)
                                 {
-                                    HangBayO hb = _ListHangBayO.Where(w => w.TenTat.Equals(iHang.EditValue)).First();
+                                    O_HANGBAY hb = _ListHangBayO.Where(w => w.TenTat.Equals(iHang.EditValue)).First();
                                     List<IntString> lstis = new List<IntString>();
                                     if (hb != null)
                                     {
@@ -164,7 +174,7 @@ namespace CRM
 
         private void iHang_EditValueChanged(object sender, EventArgs e)
         {
-            HangBayO hb = _ListHangBayO.Where(w => w.TenTat.Equals(iHang.EditValue)).First();
+            O_HANGBAY hb = _ListHangBayO.Where(w => w.TenTat.Equals(iHang.EditValue)).First();
             List<IntString> lstis = new List<IntString>();
             if (hb != null)
             {
@@ -207,27 +217,21 @@ namespace CRM
                 iGioBayVe.EditValue = iGioBayVe_Den.EditValue = DateTime.Now;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            frmKhachLeThem frm = new frmKhachLeThem();
-            frm.ShowDialog(ParentForm);
-        }
-
         private void GVGD_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
             GridView view = sender as GridView;
             long GiaThu = 0;
-            if ("GiaNet PhiCK PhiCoDinh HoaHong GiaHeThong".Contains(e.Column.FieldName))
+            if (new string[] { "GiaNet", "PhiCK", "PhiCoDinh", "HoaHong", "GiaHeThong" }.Contains(e.Column.FieldName))
             {
                 foreach (GridColumn col in view.Columns)
                 {
-                    if ("GiaHeThong PhiCK PhiCoDinh HoaHong".Contains(col.FieldName))
+                    if (new string[] { "PhiCK", "PhiCoDinh", "HoaHong", "GiaHeThong" }.Contains(col.FieldName))
                         GiaThu += long.Parse(view.GetRowCellValue(e.RowHandle, col).ToString());
                 }
                 view.SetRowCellValue(e.RowHandle, view.Columns["GiaThu"], GiaThu);
                 view.SetRowCellValue(e.RowHandle, view.Columns["LoiNhuan"], GiaThu - (long)view.GetRowCellValue(e.RowHandle, view.Columns["GiaNet"]));
                 if ((int)iLoaiKhachHang.EditValue == 3 && Text.EndsWith("thêm"))
-                    view.SetRowCellValue(e.RowHandle, view.Columns["PhiCK"], (iIDKhachHang.GetSelectedDataRow() as DaiLyO).Phi);
+                    view.SetRowCellValue(e.RowHandle, view.Columns["PhiCK"], (iIDKhachHang.GetSelectedDataRow() as O_DAILY).Phi);
             }
         }
 
@@ -282,26 +286,24 @@ namespace CRM
             #region Bước kiểm tra nhập
             Dictionary<string, object> dic = new Dictionary<string, object>();
 
-            KhoaNgayO kn = new KhoaNgayD().KiemTraNgayKhoa(_GiaoDichO.NgayGD);
+            O_KHOANGAY kn = new D_KHOANGAY().KiemTraNgayKhoa(_GiaoDichO.NgayGD);
 
-            if (!(iLoaiKhachHang.EditValue.ToString() == "3" && _GiaoDichO.Khoa))
-                if (_GiaoDichO.HTTT != 7)
+            if (_GiaoDichO.TinhCongNo)
+            {
+                if (!DuLieuTaoSan.Q.TheoDoiHoanAdmin)
+                    if ((kn.HoatDong) && !(kn.Code ?? string.Empty).Contains(iMaCho.Text.Replace(" ", string.Empty)))
+                    {
+                        XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
+                        return;
+                    }
+
+                if (DateTime.Now.Date.Subtract(iNgayGD.DateTime.Date).Days > 30 || DateTime.Now.Date.Subtract(_GiaoDichO.NgayGD.Date).Days > 30)
                 {
-                    if (!DuLieuTaoSan.Q.VeAdmin)
-                        if ((kn.HoatDong) && !(kn.Code ?? string.Empty).Contains(iMaCho.Text.Replace(" ", string.Empty)))
-                        {
-                            XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
-                            return;
-                        }
-                    if (_GiaoDichO.Khoa)
-                        if (DateTime.Now.Date.Subtract(iNgayGD.DateTime.Date).Days > 30 || DateTime.Now.Date.Subtract(_GiaoDichO.NgayGD.Date).Days > 30)
-                        {
-                            XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
-                            return;
-                        }
+                    XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
+                    return;
                 }
-                else
-                    iNgayGD.DateTime = _GiaoDichO.NgayGD;
+            }
+
 
             List<KiemTra> kiemTras = new List<KiemTra>();
             kiemTras.Add(new KiemTra() { _Control = iNganHang, _Tu = 1, _Den = 50, _ChoQuaThang = iNganHang.Properties.ReadOnly });
@@ -371,12 +373,15 @@ namespace CRM
                     }
                 }
             }
+
+            //xuLy(lstDicS[0]);
+
             a = (_GiaoDichO.ID > 0) ? _GiaoDichD.SuaNhieu1Ban(lstDicS, lstCTV) : _GiaoDichD.ThemNhieu1Ban(lstDicS);
             if (XuLyGiaoDien.ThongBao(Text, a == lstDicS.Count))
             {
                 GhiChuCmt(_GiaoDichO.ID);
                 if (iLoaiKhachHang.EditValue.ToString() != "3")
-                    new DaiLyD().ChayLaiPhi((_GiaoDichO.NgayGD > iNgayGD.DateTime) ? iNgayGD.DateTime : _GiaoDichO.NgayGD);
+                    new D_DAILY().ChayLaiPhi((_GiaoDichO.NgayGD > iNgayGD.DateTime) ? iNgayGD.DateTime : _GiaoDichO.NgayGD);
                 (Owner.ActiveMdiChild as frmVe).DuLieu();
                 Close();
             }
@@ -396,7 +401,7 @@ namespace CRM
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 if (NoiDung.Length > 10)
-                    new LichSuD().ThemMoi(dic);
+                    new D_LS_GIAODICH().ThemMoi(dic);
             }
         }
         #endregion
@@ -406,208 +411,8 @@ namespace CRM
             new frmLichSu(iMaCho.Text).ShowDialog();
         }
 
-        #region Tạm thời
-        NCCO hb = new NCCO();
-        NCCGDD hbb = new NCCGDD();
-        private void iMaCho_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private HtmlElement GetElementByClass(string tag, string classname)
-        {
-            HtmlElementCollection eles = wVJ.Document.GetElementsByTagName(tag);
-            foreach (HtmlElement ele in eles)
-            {
-                if (ele.GetAttribute("className") == classname)
-                {
-                    return ele;
-                }
-            }
-            return null;
-        }
-
-        List<GiaoDichO> _Mail = new List<GiaoDichO>();
-        private int nSearch = 0;
-        List<GiaoDichO> BanTam = new List<GiaoDichO>();
-        TuyenBayD tbB = new TuyenBayD();
-        SanBayD sbB = new SanBayD();
-
-        private void wVJ_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
-        {
-            if (wVJ.ReadyState == WebBrowserReadyState.Complete && !wVJ.IsBusy)
-            {
-                HtmlElement head = wVJ.Document.GetElementsByTagName("head")[0];
-                HtmlElement scriptEl = wVJ.Document.CreateElement("script");
-                IHTMLScriptElement element = (IHTMLScriptElement)scriptEl.DomElement;
-
-                if (wVJ.Url.AbsolutePath.Contains("/EWRevisedItinerary.aspx")) // Thông tin chi tiết
-                {
-                    HtmlElementCollection tables = wVJ.Document.GetElementsByTagName("table");
-                    HtmlElement tblThongTinDatCho = tables[1];
-                    HtmlElementCollection tblThongTinDatCho_trs = tblThongTinDatCho.GetElementsByTagName("tr");
-
-                    BanTam[0].NgayGD = DateTime.ParseExact(tables[tables.Count - 6].GetElementsByTagName("td")[0].InnerText, "dd/MM/yyyy", null);
-                    for (int i = 0; i < BanTam.Count; i++)
-                    {
-                        string lienlac = tblThongTinDatCho_trs[0].GetElementsByTagName("td")[1].InnerText;
-                        int idx = lienlac.IndexOf(' ');
-                        if (idx > 0)
-                            BanTam[i].DienThoaiKhachHang = lienlac.Substring(0, idx);
-                        BanTam[i].EmailKhachHang = tblThongTinDatCho_trs[1].GetElementsByTagName("td")[1].InnerText;
-                        if (BanTam[i].LoaiKhachHang < 1)
-                        {
-                            List<DaiLyO> Dl = _ListDaiLyO.Where(w => (w.EmailGiaoDich ?? string.Empty).ToUpper().Contains((BanTam[i].EmailKhachHang ?? string.Empty).ToUpper())
-                            && (w.EmailGiaoDich ?? string.Empty).Length > 0 && (BanTam[i].EmailKhachHang ?? string.Empty).Length > 0).ToList();
-                            if (Dl.Count > 0)
-                            {
-                                BanTam[i].IDKhachHang = Dl[0].ID;
-                                BanTam[i].LoaiKhachHang = Dl[0].LoaiKhachHang;
-                                BanTam[i].HTTT = 1;
-                            }
-                        }
-
-                        if (BanTam[i].LoaiKhachHang == 0 && !(BanTam[i].EmailKhachHang ?? string.Empty).Contains("@THANHHOANG.VN"))
-                        {
-                            if (_Mail.Where(w => w.EmailKhachHang.ToLower().Contains(BanTam[i].EmailKhachHang.ToLower())).Count() > 0)
-                            {
-                                BanTam[i].LoaiKhachHang = 1;
-                                BanTam[i].IDKhachHang = _Mail.Where(w => w.EmailKhachHang.ToLower().Contains(BanTam[i].EmailKhachHang.ToLower())).ToList()[0].IDKhachHang;
-                                BanTam[i].HTTT = 1;
-                            }
-                        }
-
-                    }
-                    chkDen.Checked = BanTam[0].SoLuongVe == 2;
-                    XuLyDuLieu.ConvertClassToTable(this, BanTam[0]);
-                    DSGiaoDich.DataSource = BanTam;
-
-                    if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                        XuLyGiaoDien.wait.CloseWaitForm();
-                }
-                else if (wVJ.Url.AbsolutePath.Contains("/EditRes.aspx"))
-                {
-                    HtmlElement CD = wVJ.Document.GetElementById("leg1");
-                    HtmlElement CV = wVJ.Document.GetElementById("leg2");
-
-                    HtmlElement Step1 = GetElementByClass("table", "hdrTable900");
-                    int SLKhach = Step1.GetElementsByTagName("TR").Count - 1;
-                    for (int i = 0; i < SLKhach; i++)
-                    {
-                        GiaoDichO GDTam = new GiaoDichO();
-                        GDTam.SoLuongVe = 1;
-                        GDTam.MaCho = iMaCho.Text.Replace(" ", string.Empty).ToUpper();
-                        GDTam.NgayGD = DateTime.Now;
-                        GDTam.NhaCungCap = hb.ID;
-                        GDTam.NVGiaoDich = DuLieuTaoSan.NV.ID;
-                        GDTam.LoaiKhachHang = 0;
-                        GDTam.Hang = "VJ";
-                        GDTam.TenKhach = Step1.GetElementsByTagName("TD")[1 + (i * 7)].InnerText.Replace(",", string.Empty);
-                        GDTam.GiaNet = GDTam.GiaHeThong = GDTam.GiaThu = int.Parse(Step1.GetElementsByTagName("TD")[5 + (i * 7)].InnerText.Split(' ')[0].Replace(",", string.Empty));
-                        if (CD != null)
-                        {
-                            if (CD.Document.GetElementById("grdPaxFareDetails") != null)
-                            {
-                                HtmlElementCollection CDCellData1 = CD.Document.GetElementById("grdPaxFareDetails").GetElementsByTagName("TD");
-                                GDTam.Fare = long.Parse(new String(CDCellData1[2].InnerText.Where(Char.IsDigit).ToArray()));
-                                GDTam.LoaiVeDi = CDCellData1[1].InnerText.Split('-')[1].Replace(" ", string.Empty);
-                            }
-                            else
-                            {
-                                GDTam.LoaiVeDi = "ECO";
-                                GDTam.Fare = 0;
-                            }
-
-                            if (CD.Document.GetElementById("grdFlightInfo") != null)
-                            {
-                                HtmlElementCollection CDCellData2 = CD.Document.GetElementById("grdFlightInfo").GetElementsByTagName("TD");
-                                GDTam.SoHieuDi = CDCellData2[1].InnerText;
-                                GDTam.TuyenBayDi = tbB.TuyenBay(sbB.SanBay(CDCellData2[2].InnerText.Split(' ')[1]).ID, sbB.SanBay(CDCellData2[3].InnerText.Split(' ')[1]).ID).ID;
-                                GDTam.GioBayDi = DateTime.ParseExact(CDCellData2[0].InnerText.Substring(0, CDCellData2[0].InnerText.IndexOf(' ')) + " " + CDCellData2[2].InnerText.Split(' ')[0], "dd/MM/yyyy H:mm", null);
-                                GDTam.GioBayDi_Den = DateTime.ParseExact(CDCellData2[0].InnerText.Substring(0, CDCellData2[0].InnerText.IndexOf(' ')) + " " + CDCellData2[3].InnerText.Split(' ')[0], "dd/MM/yyyy H:mm", null);
-                            }
-                        }
-
-                        if (CV != null)
-                        {
-                            if (CV.GetElementsByTagName("tbody")[0].Document.GetElementById("grdPaxFareDetails") != null)
-                            {
-                                HtmlElementCollection CVCellData1 = CV.GetElementsByTagName("tbody")[0].Document.GetElementById("grdPaxFareDetails").GetElementsByTagName("TD");
-                                GDTam.Fare += long.Parse(new String(CVCellData1[2].InnerText.Where(Char.IsDigit).ToArray()));
-                                GDTam.LoaiVeVe = CVCellData1[1].InnerText.Split('-')[1].Replace(" ", string.Empty);
-                            }
-
-                            if (CV.GetElementsByTagName("tbody")[0].Document.GetElementById("grdFlightInfo") != null)
-                            {
-                                HtmlElementCollection CVCellData2 = CV.GetElementsByTagName("tbody")[0].Document.GetElementById("grdFlightInfo").GetElementsByTagName("TD");
-                                GDTam.SoHieuVe = CVCellData2[1].InnerText;
-                                GDTam.TuyenBayVe = tbB.TuyenBay(sbB.SanBay(CVCellData2[2].InnerText.Split(' ')[1]).ID, sbB.SanBay(CVCellData2[3].InnerText.Split(' ')[1]).ID).ID;
-                                GDTam.GioBayVe = DateTime.ParseExact(CVCellData2[0].InnerText.Substring(0, CVCellData2[0].InnerText.IndexOf(' ')) + " " + CVCellData2[2].InnerText.Split(' ')[0], "dd/MM/yyyy H:mm", null);
-                                GDTam.GioBayVe_Den = DateTime.ParseExact(CVCellData2[0].InnerText.Substring(0, CVCellData2[0].InnerText.IndexOf(' ')) + " " + CVCellData2[3].InnerText.Split(' ')[0], "dd/MM/yyyy H:mm", null);
-                            }
-                        }
-
-                        BanTam.Add(GDTam);
-                    }
-                    element.text = "function doPost() { document.forms['Edit'].button.value='newitinerary';SubmitForm(); }";
-                    head.AppendChild(scriptEl);
-                    wVJ.Document.InvokeScript("doPost");
-                }
-                else if (wVJ.Url.AbsolutePath.Contains("/SearchRes.aspx"))
-                {
-                    if (nSearch == 0)
-                    {
-                        nSearch++;
-                        wVJ.Document.GetElementById("txtSearchResNum").SetAttribute("value", iMaCho.Text);
-                        wVJ.Document.GetElementById("Search").InvokeMember("submit");
-                    }
-                    else
-                    {
-                        nSearch = 0;
-                        HtmlElement error = GetElementByClass("p", "ErrorCaption");
-                        if (error != null)
-                        {
-                            XtraMessageBox.Show("Mã chỗ không tồn tại");
-                            return;
-                        }
-                        else
-                        {
-                            element.text = "function doPost() { document.forms['Search'].button.value='continue';pop('?lang=vi'); setTimeout('document.forms[\"Search\"].submit()', 100); }";
-                            head.AppendChild(scriptEl);
-                            wVJ.Document.InvokeScript("doPost");
-                        }
-                    }
-                }
-                else if (wVJ.Url.AbsolutePath.Contains("/AgentOptions.aspx"))//Đăng nhập thành công
-                {
-                    wVJ.Navigate("https://agents.vietjetair.com/SearchRes.aspx?lang=vi&st=sl&sesid=");
-                }
-                else if (wVJ.Url.AbsolutePath.Contains("/sitelogin.aspx"))//Bước đăng nhập
-                {
-                    head = wVJ.Document.GetElementById("wrapper");
-                    if (head != null)
-                        if (head.InnerText.ToLower().Contains("mật khẩu chưa đúng") || head.InnerText.ToLower().Contains("wrong password input"))
-                            Close();
-
-                    wVJ.Document.GetElementById("txtAgentID").SetAttribute("value", hb.TaiKhoan);
-                    wVJ.Document.GetElementById("txtAgentPswd").SetAttribute("value", hb.MatKhau);
-                    wVJ.Document.GetElementById("SiteLogin").InvokeMember("submit");
-                }
-                else if (wVJ.Url.AbsolutePath.Contains("/Home"))
-                {
-                    element.text = "function doPost() { location.href = 'https://agents.vietjetair.com/sitelogin.aspx?lang=vi'; }";
-                    head.AppendChild(scriptEl);
-                    wVJ.Document.InvokeScript("doPost");
-                }
-            }
-        }
-
-
-        #endregion
-
         private void btnCode_Click(object sender, EventArgs e)
         {
-            //1128, 573
             Width = (Width == 1128) ? 799 : 1128;
             Location = new System.Drawing.Point((Width == 1128) ? Location.X - 165 : Location.X + 165, Location.Y);
         }
@@ -684,11 +489,11 @@ namespace CRM
         {
             if (e.KeyCode == Keys.Enter && mText.Text != string.Empty)
             {
-                GiaoDichO giaoDichO = new GiaoDichO();
-                List<GiaoDichO> giaoDichOs = new List<GiaoDichO>();
+                O_GIAODICH giaoDichO = new O_GIAODICH();
+                List<O_GIAODICH> giaoDichOs = new List<O_GIAODICH>();
                 mText.Text = mText.Text.Replace("  ", " ");
                 lines = mText.Lines;
-                SanBayD sbB = new SanBayD();
+                D_SANBAY sbB = new D_SANBAY();
                 for (int i = 0; i < lines.Length; i++)
                 {
                     string[] Az;
@@ -712,7 +517,7 @@ namespace CRM
                                     giaoDichO.SoLuongVe = 1;
                                     giaoDichO.GioBayDi = DateTime.ParseExact(Az[3] + DateTime.Now.Year + Az[6].Replace("#", string.Empty), "ddMMMyyyyHHmm", CultureInfo.InvariantCulture);
                                     giaoDichO.GioBayDi_Den = DateTime.ParseExact(Az[3] + DateTime.Now.Year + Az[7].Replace("#", string.Empty), "ddMMMyyyyHHmm", CultureInfo.InvariantCulture);
-                                    giaoDichO.TuyenBayDi = new TuyenBayD().TuyenBay(sbB.SanBay(Az[4].Substring(0, 3)).ID, sbB.SanBay(Az[4].Substring(3, 3)).ID).ID;
+                                    giaoDichO.TuyenBayDi = new D_TUYENBAY().TuyenBay(sbB.SanBay(Az[4].Substring(0, 3)).ID, sbB.SanBay(Az[4].Substring(3, 3)).ID).ID;
                                     if (giaoDichO.TuyenBayDi == 0)
                                     { XtraMessageBox.Show("Tuyến bay không tồn tại", "Thông báo"); return; }
                                 }
@@ -727,7 +532,7 @@ namespace CRM
                                     giaoDichO.SoLuongVe = 2;
                                     giaoDichO.GioBayVe = DateTime.ParseExact(Az[3] + DateTime.Now.Year + Az[6].Replace("#", string.Empty), "ddMMMyyyyHHmm", CultureInfo.InvariantCulture);
                                     giaoDichO.GioBayVe_Den = DateTime.ParseExact(Az[3] + DateTime.Now.Year + Az[7].Replace("#", string.Empty), "ddMMMyyyyHHmm", CultureInfo.InvariantCulture);
-                                    giaoDichO.TuyenBayVe = new TuyenBayD().TuyenBay(sbB.SanBay(Az[4].Substring(0, 3)).ID, sbB.SanBay(Az[4].Substring(3, 3)).ID).ID;
+                                    giaoDichO.TuyenBayVe = new D_TUYENBAY().TuyenBay(sbB.SanBay(Az[4].Substring(0, 3)).ID, sbB.SanBay(Az[4].Substring(3, 3)).ID).ID;
                                     if (giaoDichO.TuyenBayVe == 0)
                                     { XtraMessageBox.Show("Tuyến bay không tồn tại", "Thông báo"); return; }
                                 }
@@ -735,7 +540,7 @@ namespace CRM
                                 {
                                     Az = lines[i].Split('-');
                                     if (Az.Length == 3)
-                                        giaoDichOs.Add(new GiaoDichO()
+                                        giaoDichOs.Add(new O_GIAODICH()
                                         {
                                             TenKhach = Az[0].TrimStart(),
                                             SoVeVN = Az[1].Replace("/", string.Empty),
@@ -744,7 +549,7 @@ namespace CRM
                                             GiaThu = long.Parse(Az[2].Split('/')[1]),
                                         });
                                     else
-                                        giaoDichOs.Add(new GiaoDichO()
+                                        giaoDichOs.Add(new O_GIAODICH()
                                         {
                                             TenKhach = Az[0].TrimStart(),
                                             SoVeVN = (Az[1] + "-" + Az[2]).Replace("/", string.Empty),
@@ -771,5 +576,6 @@ namespace CRM
             else if (e.Control && e.KeyCode == Keys.S)
                 btnLuu.PerformClick();
         }
+
     }
 }

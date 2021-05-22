@@ -12,7 +12,7 @@ namespace CRM
             InitializeComponent();
         }
 
-        List<TheoDoiO> _lstTheoDoi = new List<TheoDoiO>();
+        List<O_THEODOIHOAN> _lstTheoDoi = new List<O_THEODOIHOAN>();
         public void TaiLaiDuLieu()
         {
             if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
@@ -20,7 +20,7 @@ namespace CRM
                 if (!XuLyGiaoDien.wait.IsSplashFormVisible)
                     XuLyGiaoDien.wait.ShowWaitForm();
 
-                _lstTheoDoi = new TheoDoiD().DuLieu((DateTime)bdtpTu.EditValue, (DateTime)bdtpDen.EditValue, 2, barCheckItem1.Checked);
+                _lstTheoDoi = new D_THEODOIHOAN().DuLieu((DateTime)bdtpTu.EditValue, (DateTime)bdtpDen.EditValue, 2, barCheckItem1.Checked);
 
                 theoDoiOBindingSource.DataSource = _lstTheoDoi;
 

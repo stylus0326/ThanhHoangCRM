@@ -219,7 +219,7 @@
             // 
             // NCCDB
             // 
-            this.NCCDB.DataSource = typeof(DataTransferObject.NCCO);
+            this.NCCDB.DataSource = typeof(DataTransferObject.O_NHACUNGCAP);
             // 
             // chkMC
             // 

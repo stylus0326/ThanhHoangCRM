@@ -45,10 +45,13 @@
             this.bdtpDenNgay = new DevExpress.XtraEditors.Repository.RepositoryItemDateEdit();
             this.chk3 = new DevExpress.XtraBars.BarCheckItem();
             this.barSoVe = new DevExpress.XtraBars.BarEditItem();
-            this.aSoVe = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.aSoVe = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
             this.chk4 = new DevExpress.XtraBars.BarCheckItem();
-            this.barMacho = new DevExpress.XtraBars.BarEditItem();
-            this.aMaCho = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.barMaCho = new DevExpress.XtraBars.BarEditItem();
+            this.aMaCho = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
+            this.chk5 = new DevExpress.XtraBars.BarCheckItem();
+            this.barMHD = new DevExpress.XtraBars.BarEditItem();
+            this.aMHD = new DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit();
             this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
             this.barStaticItem1 = new DevExpress.XtraBars.BarStaticItem();
             this.barEditItem1 = new DevExpress.XtraBars.BarEditItem();
@@ -65,10 +68,6 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.repositoryItemLookUpEdit2 = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
-            this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
-            this.repositoryItemSpinEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit();
-            this.repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
             this.hoaDonOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DSLoaiKhach = new System.Windows.Forms.BindingSource(this.components);
             this.repositoryItemComboBox2 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
@@ -136,13 +135,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.bdtpDenNgay.CalendarTimeProperties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.aSoVe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.aMaCho)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aMHD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rDaGui)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rDaThanhToan)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rDaBaoGia)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hoaDonOBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DSLoaiKhach)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox2)).BeginInit();
@@ -197,25 +193,24 @@
             this.barStaticItem3,
             this.barStaticItem4,
             this.barButtonItem1,
-            this.barSoVe,
-            this.barMacho,
             this.chk4,
-            this.chk3});
+            this.chk3,
+            this.barMaCho,
+            this.barSoVe,
+            this.chk5,
+            this.barMHD});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 54;
+            this.barManager1.MaxItemId = 58;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.repositoryItemLookUpEdit2,
-            this.repositoryItemTextEdit1,
-            this.repositoryItemSpinEdit1,
-            this.repositoryItemComboBox1,
             this.ecmbThoiGian,
             this.bdtpTuNgay,
             this.bdtpDenNgay,
             this.rDaGui,
             this.rDaThanhToan,
             this.rDaBaoGia,
+            this.aMaCho,
             this.aSoVe,
-            this.aMaCho});
+            this.aMHD});
             // 
             // bar2
             // 
@@ -232,9 +227,11 @@
             new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.PaintStyle | DevExpress.XtraBars.BarLinkUserDefines.Width))), this.bdtpTu, "", false, true, true, 86, null, DevExpress.XtraBars.BarItemPaintStyle.Caption),
             new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.PaintStyle | DevExpress.XtraBars.BarLinkUserDefines.Width))), this.bdtpDen, "", false, true, true, 92, null, DevExpress.XtraBars.BarItemPaintStyle.Caption),
             new DevExpress.XtraBars.LinkPersistInfo(this.chk3),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.barSoVe, "", false, true, true, 78),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.barSoVe, "", false, true, true, 84),
             new DevExpress.XtraBars.LinkPersistInfo(this.chk4),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barMacho),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.barMaCho, "", false, true, true, 84),
+            new DevExpress.XtraBars.LinkPersistInfo(this.chk5),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.Width, this.barMHD, "", false, true, true, 81),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barSubItem1, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.barButtonItem1, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.bar2.OptionsBar.AllowQuickCustomization = false;
@@ -362,17 +359,20 @@
             // 
             // barSoVe
             // 
-            this.barSoVe.Caption = "barEditItem4";
+            this.barSoVe.Caption = "Số vé";
             this.barSoVe.Edit = this.aSoVe;
             this.barSoVe.Enabled = false;
-            this.barSoVe.Id = 49;
+            this.barSoVe.Id = 55;
             this.barSoVe.Name = "barSoVe";
             // 
             // aSoVe
             // 
             this.aSoVe.AutoHeight = false;
+            this.aSoVe.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.aSoVe.Name = "aSoVe";
-            this.aSoVe.KeyDown += new System.Windows.Forms.KeyEventHandler(this.aMaCho_KeyDown);
+            this.aSoVe.ShowIcon = false;
+            this.aSoVe.Leave += new System.EventHandler(this.aMaCho_Leave);
             // 
             // chk4
             // 
@@ -387,19 +387,51 @@
             this.chk4.Name = "chk4";
             this.chk4.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barCheckItem3_CheckedChanged);
             // 
-            // barMacho
+            // barMaCho
             // 
-            this.barMacho.Caption = "barEditItem5";
-            this.barMacho.Edit = this.aMaCho;
-            this.barMacho.Enabled = false;
-            this.barMacho.Id = 50;
-            this.barMacho.Name = "barMacho";
+            this.barMaCho.Caption = "Mã chỗ";
+            this.barMaCho.Edit = this.aMaCho;
+            this.barMaCho.Enabled = false;
+            this.barMaCho.Id = 54;
+            this.barMaCho.Name = "barMaCho";
             // 
             // aMaCho
             // 
             this.aMaCho.AutoHeight = false;
+            this.aMaCho.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.aMaCho.Name = "aMaCho";
-            this.aMaCho.KeyDown += new System.Windows.Forms.KeyEventHandler(this.aMaCho_KeyDown);
+            this.aMaCho.ShowIcon = false;
+            this.aMaCho.Leave += new System.EventHandler(this.aMaCho_Leave);
+            // 
+            // chk5
+            // 
+            this.chk5.Caption = "Mã HĐ:";
+            this.chk5.GroupIndex = 1;
+            this.chk5.Id = 56;
+            this.chk5.ItemAppearance.Normal.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.chk5.ItemAppearance.Normal.ForeColor = System.Drawing.Color.Crimson;
+            this.chk5.ItemAppearance.Normal.Options.UseFont = true;
+            this.chk5.ItemAppearance.Normal.Options.UseForeColor = true;
+            this.chk5.Name = "chk5";
+            this.chk5.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.barCheckItem3_CheckedChanged);
+            // 
+            // barMHD
+            // 
+            this.barMHD.Caption = "barEditItem4";
+            this.barMHD.Edit = this.aMHD;
+            this.barMHD.Enabled = false;
+            this.barMHD.Id = 57;
+            this.barMHD.Name = "barMHD";
+            // 
+            // aMHD
+            // 
+            this.aMHD.AutoHeight = false;
+            this.aMHD.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.aMHD.Name = "aMHD";
+            this.aMHD.ShowIcon = false;
+            this.aMHD.Leave += new System.EventHandler(this.aMaCho_Leave);
             // 
             // barSubItem1
             // 
@@ -497,15 +529,15 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1096, 24);
+            this.barDockControlTop.Size = new System.Drawing.Size(1315, 24);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 527);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 599);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(1096, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1315, 0);
             // 
             // barDockControlLeft
             // 
@@ -513,35 +545,19 @@
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 24);
             this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 503);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 575);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1096, 24);
+            this.barDockControlRight.Location = new System.Drawing.Point(1315, 24);
             this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 503);
-            // 
-            // repositoryItemLookUpEdit2
-            // 
-            this.repositoryItemLookUpEdit2.Name = "repositoryItemLookUpEdit2";
-            // 
-            // repositoryItemTextEdit1
-            // 
-            this.repositoryItemTextEdit1.Name = "repositoryItemTextEdit1";
-            // 
-            // repositoryItemSpinEdit1
-            // 
-            this.repositoryItemSpinEdit1.Name = "repositoryItemSpinEdit1";
-            // 
-            // repositoryItemComboBox1
-            // 
-            this.repositoryItemComboBox1.Name = "repositoryItemComboBox1";
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 575);
             // 
             // hoaDonOBindingSource
             // 
-            this.hoaDonOBindingSource.DataSource = typeof(DataTransferObject.HoaDonO);
+            this.hoaDonOBindingSource.DataSource = typeof(DataTransferObject.O_HOADON);
             // 
             // DSLoaiKhach
             // 
@@ -593,7 +609,7 @@
             this.rTuyenBay,
             this.rKhachHang,
             this.rNCC});
-            this.GCHD.Size = new System.Drawing.Size(1096, 503);
+            this.GCHD.Size = new System.Drawing.Size(1315, 575);
             this.GCHD.TabIndex = 31;
             this.GCHD.TabStop = false;
             this.GCHD.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -691,7 +707,7 @@
             // 
             // tuyenBayOBindingSource
             // 
-            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.TuyenBayO);
+            this.tuyenBayOBindingSource.DataSource = typeof(DataTransferObject.O_TUYENBAY);
             // 
             // colHanhTrinhVe
             // 
@@ -774,7 +790,7 @@
             // 
             // khachHangOBindingSource
             // 
-            this.khachHangOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.khachHangOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // colMaCho
             // 
@@ -826,7 +842,7 @@
             // 
             // nCCOBindingSource
             // 
-            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.NCCO);
+            this.nCCOBindingSource.DataSource = typeof(DataTransferObject.O_NHACUNGCAP);
             // 
             // colCL2
             // 
@@ -1169,15 +1185,15 @@
             this.barDockControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControl1.Location = new System.Drawing.Point(0, 0);
             this.barDockControl1.Manager = this.barManager2;
-            this.barDockControl1.Size = new System.Drawing.Size(1096, 0);
+            this.barDockControl1.Size = new System.Drawing.Size(1315, 0);
             // 
             // barDockControl2
             // 
             this.barDockControl2.CausesValidation = false;
             this.barDockControl2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControl2.Location = new System.Drawing.Point(0, 527);
+            this.barDockControl2.Location = new System.Drawing.Point(0, 599);
             this.barDockControl2.Manager = this.barManager2;
-            this.barDockControl2.Size = new System.Drawing.Size(1096, 0);
+            this.barDockControl2.Size = new System.Drawing.Size(1315, 0);
             // 
             // barDockControl3
             // 
@@ -1185,15 +1201,15 @@
             this.barDockControl3.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControl3.Location = new System.Drawing.Point(0, 0);
             this.barDockControl3.Manager = this.barManager2;
-            this.barDockControl3.Size = new System.Drawing.Size(0, 527);
+            this.barDockControl3.Size = new System.Drawing.Size(0, 599);
             // 
             // barDockControl4
             // 
             this.barDockControl4.CausesValidation = false;
             this.barDockControl4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControl4.Location = new System.Drawing.Point(1096, 0);
+            this.barDockControl4.Location = new System.Drawing.Point(1315, 0);
             this.barDockControl4.Manager = this.barManager2;
-            this.barDockControl4.Size = new System.Drawing.Size(0, 527);
+            this.barDockControl4.Size = new System.Drawing.Size(0, 599);
             // 
             // btnThemRow
             // 
@@ -1222,7 +1238,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1096, 527);
+            this.ClientSize = new System.Drawing.Size(1315, 599);
             this.Controls.Add(this.GCHD);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
@@ -1244,13 +1260,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.bdtpDenNgay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.aSoVe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.aMaCho)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.aMHD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rDaGui)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rDaThanhToan)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rDaBaoGia)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemTextEdit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSpinEdit1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hoaDonOBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DSLoaiKhach)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemComboBox2)).EndInit();
@@ -1286,10 +1299,6 @@
         private DevExpress.XtraBars.BarDockControl barDockControlBottom;
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
-        private DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit repositoryItemLookUpEdit2;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
-        private DevExpress.XtraEditors.Repository.RepositoryItemSpinEdit repositoryItemSpinEdit1;
-        private DevExpress.XtraEditors.Repository.RepositoryItemComboBox repositoryItemComboBox1;
         private System.Windows.Forms.BindingSource khachHangOBindingSource;
         private System.Windows.Forms.BindingSource DSLoaiKhach;
         private DevExpress.XtraBars.BarCheckItem chk1;
@@ -1364,11 +1373,14 @@
         private System.Windows.Forms.BindingSource nCCOBindingSource;
         private DevExpress.XtraGrid.Columns.GridColumn colLoaiKhachHang;
         private DevExpress.XtraGrid.Columns.GridColumn colGiaNet;
-        private DevExpress.XtraBars.BarEditItem barSoVe;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit aSoVe;
-        private DevExpress.XtraBars.BarEditItem barMacho;
-        private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit aMaCho;
         private DevExpress.XtraBars.BarCheckItem chk4;
         private DevExpress.XtraBars.BarCheckItem chk3;
+        private DevExpress.XtraBars.BarEditItem barMaCho;
+        private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit aMaCho;
+        private DevExpress.XtraBars.BarEditItem barSoVe;
+        private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit aSoVe;
+        private DevExpress.XtraBars.BarCheckItem chk5;
+        private DevExpress.XtraBars.BarEditItem barMHD;
+        private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit aMHD;
     }
 }

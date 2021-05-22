@@ -22,7 +22,7 @@ namespace CRM
         #region Dữ liệu 
         void loadDL()
         {
-            soDuNganHangOBindingSource.DataSource = new SoDu_NganHangD().LayDanhSach(id, dateEdit1.DateTime, dateEdit2.DateTime);
+            soDuNganHangOBindingSource.DataSource = new D_SODU_NGANHANG().LayDanhSach(id, dateEdit1.DateTime, dateEdit2.DateTime);
         }
         #endregion
 

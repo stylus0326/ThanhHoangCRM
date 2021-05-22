@@ -35,6 +35,7 @@
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.btnLoadDT = new DevExpress.XtraBars.BarButtonItem();
             this.btn4 = new DevExpress.XtraBars.BarButtonItem();
+            this.btnEx = new DevExpress.XtraBars.BarButtonItem();
             this.btn2 = new DevExpress.XtraBars.BarButtonItem();
             this.chk1 = new DevExpress.XtraBars.BarCheckItem();
             this.bcmbThoiGian = new DevExpress.XtraBars.BarEditItem();
@@ -125,9 +126,10 @@
             this.btn4,
             this.btn2,
             this.chk1,
-            this.chk2});
+            this.chk2,
+            this.btnEx});
             this.barManager1.MainMenu = this.bar2;
-            this.barManager1.MaxItemId = 35;
+            this.barManager1.MaxItemId = 36;
             this.barManager1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.repositoryItemLookUpEdit2,
             this.repositoryItemTextEdit1,
@@ -146,6 +148,7 @@
             this.bar2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnLoadDT, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn4, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnEx, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btn2, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(this.chk1, true),
             new DevExpress.XtraBars.LinkPersistInfo(((DevExpress.XtraBars.BarLinkUserDefines)((DevExpress.XtraBars.BarLinkUserDefines.PaintStyle | DevExpress.XtraBars.BarLinkUserDefines.Width))), this.bcmbThoiGian, "", false, true, true, 95, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
@@ -155,7 +158,6 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnXDC, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.bar2.OptionsBar.AllowQuickCustomization = false;
             this.bar2.OptionsBar.DrawDragBorder = false;
-            this.bar2.OptionsBar.MultiLine = true;
             this.bar2.OptionsBar.UseWholeRow = true;
             this.bar2.Text = "Main menu";
             // 
@@ -176,6 +178,14 @@
             this.btn4.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N));
             this.btn4.Name = "btn4";
             this.btn4.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem5_ItemClick);
+            // 
+            // btnEx
+            // 
+            this.btnEx.Caption = "Tải tệp lên";
+            this.btnEx.Id = 35;
+            this.btnEx.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnEx.ImageOptions.SvgImage")));
+            this.btnEx.Name = "btnEx";
+            this.btnEx.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnEx_ItemClick);
             // 
             // btn2
             // 
@@ -288,7 +298,7 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(861, 24);
+            this.barDockControlTop.Size = new System.Drawing.Size(1030, 24);
             // 
             // barDockControlBottom
             // 
@@ -296,7 +306,7 @@
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.barDockControlBottom.Location = new System.Drawing.Point(0, 573);
             this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(861, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1030, 0);
             // 
             // barDockControlLeft
             // 
@@ -310,7 +320,7 @@
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(861, 24);
+            this.barDockControlRight.Location = new System.Drawing.Point(1030, 24);
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 549);
             // 
@@ -342,14 +352,14 @@
             this.rLoaiGD,
             this.rNhanVien,
             this.rLoaiKhach});
-            this.GCDC.Size = new System.Drawing.Size(861, 549);
+            this.GCDC.Size = new System.Drawing.Size(1030, 549);
             this.GCDC.TabIndex = 8;
             this.GCDC.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.GVDC});
             // 
             // giaoDichOBindingSource
             // 
-            this.giaoDichOBindingSource.DataSource = typeof(DataTransferObject.GiaoDichO);
+            this.giaoDichOBindingSource.DataSource = typeof(DataTransferObject.O_GIAODICH);
             // 
             // GVDC
             // 
@@ -401,11 +411,11 @@
             this.rLoaiGD.DataSource = this.loaiGiaoDichOBindingSource;
             this.rLoaiGD.DisplayMember = "Name";
             this.rLoaiGD.Name = "rLoaiGD";
-            this.rLoaiGD.ValueMember = "ID";
+            this.rLoaiGD.ValueMember = "IDGiaoDich";
             // 
             // loaiGiaoDichOBindingSource
             // 
-            this.loaiGiaoDichOBindingSource.DataSource = typeof(CRM.IntString);
+            this.loaiGiaoDichOBindingSource.DataSource = typeof(DataTransferObject.O_LOAIGIAODICH);
             // 
             // colNgayGD
             // 
@@ -445,7 +455,7 @@
             // 
             // daiLyOBindingSource
             // 
-            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.DaiLyO);
+            this.daiLyOBindingSource.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // colMaCho
             // 
@@ -541,7 +551,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(861, 573);
+            this.ClientSize = new System.Drawing.Size(1030, 573);
             this.Controls.Add(this.GCDC);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
@@ -621,5 +631,6 @@
         private System.Windows.Forms.BindingSource DSLoaiKhach;
         private DevExpress.XtraBars.BarCheckItem chk1;
         private DevExpress.XtraBars.BarCheckItem chk2;
+        private DevExpress.XtraBars.BarButtonItem btnEx;
     }
 }

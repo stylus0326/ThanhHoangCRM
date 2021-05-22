@@ -21,10 +21,10 @@ namespace CRM
 {
     public partial class frmAutoNganHang : DevExpress.XtraEditors.XtraForm
     {
-        List<NganHangO> _LNganHangO = new List<NganHangO>();
-        NganHangO _NganHangO = new NganHangO();
+        List<O_NGANHANG> _LNganHangO = new List<O_NGANHANG>();
+        O_NGANHANG _NganHangO = new O_NGANHANG();
         DateTime iTu = new DateTime();
-        List<DaiLyO> dl = new List<DaiLyO>();
+        List<O_DAILY> dl = new List<O_DAILY>();
         public frmAutoNganHang()
         {
             InitializeComponent();
@@ -34,11 +34,11 @@ namespace CRM
         private void frmAutoNganHang_Load(object sender, EventArgs e)
         {
             eNgay.EditValue = DateTime.Now;
-            _LNganHangO = new NganHangD().DuLieu(false).Where(w => w.Ex.Equals(true) && w.Nhom < 2).ToList();
+            _LNganHangO = new D_NGANHANG().DuLieu(false).Where(w => w.Ex.Equals(true) && w.Nhom < 2).ToList();
             if (_LNganHangO.Count < 21)
                 rNganHang.DropDownRows = _LNganHangO.Count;
             nganHangOBindingSource.DataSource = _LNganHangO;
-            dl = new DaiLyD().DuLieu(1);
+            dl = new D_DAILY().DuLieu(1);
             DataTen.DataSource = DuLieuTaoSan.NganHangLoaiKhachHang(1);
             DataHinhThuc.DataSource = LoaiGiaoDich_NganHang_TatCa();
             DataLoaiKhach.DataSource = LoaiKhachHang_NganHang();
@@ -49,20 +49,7 @@ namespace CRM
             List<IntString> lst = new List<IntString>();
             lst.Add(new IntString() { Loai = 1, ID = 2, Name = "Nộp quỹ" }); ;//
             lst.Add(new IntString() { Loai = 1, ID = 3, Name = "Rút quỹ" });//
-            lst.Add(new IntString() { Loai = 1, ID = 14, Name = "Nộp quỹ chết" });//
-            lst.Add(new IntString() { Loai = 1, ID = 15, Name = "Rút quỹ chết" });//
             lst.Add(new IntString() { Loai = 6, ID = 12, Name = "Excel" });
-            lst.Add(new IntString() { Loai = 6, ID = 6, Name = "Nộp tiền" });
-            lst.Add(new IntString() { Loai = 6, ID = 7, Name = "Rút tiền" });
-            lst.Add(new IntString() { Loai = 6, ID = 8, Name = "Treo" });
-            lst.Add(new IntString() { Loai = 6, ID = 9, Name = "Lãi" });
-            lst.Add(new IntString() { Loai = 6, ID = 10, Name = "Phí" });
-            lst.Add(new IntString() { Loai = 6, ID = 20, Name = "Chi phí" });
-            lst.Add(new IntString() { Loai = 9, ID = 26, Name = "Lương" });//
-            lst.Add(new IntString() { Loai = 9, ID = 27, Name = "BHXH" });//
-            lst.Add(new IntString() { Loai = 9, ID = 28, Name = "Điện" });//
-            lst.Add(new IntString() { Loai = 9, ID = 29, Name = "Nước" });//
-            lst.Add(new IntString() { Loai = 9, ID = 31, Name = "Cước điện thoại" });//
             return lst;
         }
 
@@ -71,19 +58,18 @@ namespace CRM
             List<IntString> lst = new List<IntString>();
             lst.Add(new IntString() { ID = 1, Name = "Đại lý" });
             lst.Add(new IntString() { ID = 6, Name = "Khác" });
-            lst.Add(new IntString() { ID = 9, Name = "Công ty" });
             return lst;
         }
 
         private void btnLoad_ItemClick(object sender, ItemClickEventArgs e)
         {
-            _LNganHangO = new NganHangD().DuLieu(false).Where(w => w.Ex.Equals(true) && w.Nhom < 2).ToList();
+            _LNganHangO = new D_NGANHANG().DuLieu(false).Where(w => w.Ex.Equals(true) && w.Nhom < 2).ToList();
             nganHangOBindingSource.DataSource = _LNganHangO;
         }
 
         private void rNganHang_EditValueChanged(object sender, EventArgs e)
         {
-            _NganHangO = (sender as LookUpEdit).GetSelectedDataRow() as NganHangO;
+            _NganHangO = (sender as LookUpEdit).GetSelectedDataRow() as O_NGANHANG;
             lblSD1.Caption = _NganHangO.SoDuCuoi.ToString("Số dư phần mềm: #,###");
         }
 
@@ -131,7 +117,7 @@ namespace CRM
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
             var options = new ChromeOptions();
             options.AddArguments("--start-maximized --window-size=1440,900");
-            chromeDriverService.HideCommandPromptWindow = true;
+            //chromeDriverService.HideCommandPromptWindow = true;
             if (chromeDriver != null)
             {
                 try { chromeDriver.Navigate().GoToUrl("https://www.google.com.vn/"); }
@@ -324,6 +310,25 @@ namespace CRM
                                 chromeDriver.FindElement(By.XPath("//*[@id='main-content']/mbb-welcome/div/div/div[2]/div[1]/mbb-login/form/div[1]/div[1]/mbb-word-captcha/div/div[2]/div[1]/input")).SendKeys(string.Empty);
                                 wait.Until(driver => driver.FindElement(By.XPath("//*[@id='main-content']/mbb-welcome/div/div/div[2]/div[1]/mbb-login/form/div[1]/div[1]/mbb-word-captcha/div/div[2]/div[1]/input")).GetAttribute("value").Length > 5);
                                 chromeDriver.FindElement(By.Id("login-btn")).Click();
+                                break;
+                            }
+                        case 2027:
+                            {
+                                chromeDriver.FindElement(By.Id("j_username")).SendKeys(_NganHangO.TenDangNhap);
+                                chromeDriver.FindElement(By.Id("password")).SendKeys(_NganHangO.MatKhau);
+                                chromeDriver.FindElement(By.XPath("/html/body/div[2]/div[1]/div[1]/form/div[2]/button")).Click();
+                                break;
+                            }
+                        case 2028:
+                            {
+                                Thread.Sleep(500);
+                                chromeDriver.FindElement(By.Id("j_username")).SendKeys(_NganHangO.TenDangNhap);
+                                Thread.Sleep(500);
+                                chromeDriver.FindElement(By.Id("loginSubmitButton")).Click();
+                                Thread.Sleep(500);
+                                chromeDriver.FindElement(By.Id("password")).SendKeys(_NganHangO.MatKhau);
+                                Thread.Sleep(500);
+                                chromeDriver.FindElement(By.Id("loginSubmitButton")).Click();
                                 break;
                             }
                     }
@@ -591,6 +596,7 @@ namespace CRM
                             chromeDriver.SwitchTo().Frame(0);
                             wait.Until(driver => SoLanXuatHien(driver.PageSource, "Số dư hiện tại ") == 1);
                             SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("table", "dojoxGridRowTable", 1).FindElements(By.TagName("td"))[2].Text.Replace(".00", string.Empty));
+                            LuuSoDu();
                             Thread.Sleep(500);
                             chromeDriver.SwitchTo().DefaultContent();
                             ChromeFindElementByClassName("a", "dijitLabelBase submenu", 1).Click();
@@ -606,8 +612,9 @@ namespace CRM
                         }
                     case 2023:
                         {
-                            SoDu = XuLyDuLieu.ConvertStringToLong(chromeDriver.FindElement(By.Id("ctl00_Content_BalanceText")).Text);
-                            chromeDriver.FindElement(By.ClassName("nav-link")).Click();
+                            chromeDriver.FindElement(By.XPath("//*[@id='vcbHeader']/div[1]/section/div/div/div[2]/div[1]/section/div/nav/ul/li[1]/a")).Click();
+                            SoDu = XuLyDuLieu.ConvertStringToLong(chromeDriver.FindElement(By.XPath("//*[@id='dstkdd-tbody']/tr/td[3]")).Text);
+                            LuuSoDu();
                             Thread.Sleep(500);
                             chromeDriver.FindElement(By.XPath("//*[@id='dstkdd-tbody']/tr/td[1]/a")).Click();
                             Thread.Sleep(500);
@@ -639,22 +646,28 @@ namespace CRM
                         }
                     case 2026:
                         {
+                            SoDu = XuLyDuLieu.ConvertStringToLong(chromeDriver.FindElement(By.XPath("/html/body/app-root/div/ng-component/div[1]/div/div/div[1]/div/div/div/mbb-dashboard/div/div[3]/div[1]/mbb-finance-information/div/div[2]/mbb-account-deposit/div[1]/div/div/span[2]")).Text);
+                            LuuSoDu(); 
                             chromeDriver.Navigate().GoToUrl("https://ebank.mbbank.com.vn/cp/account-info/transaction-inquiry");
                             Thread.Sleep(500);
-                            Actions build = new Actions(chromeDriver);
-                            build.MoveToElement(chromeDriver.FindElement(By.Id("mat-input-0"))).Click().Build().Perform();
+                            new Actions(chromeDriver).MoveToElement(chromeDriver.FindElement(By.Id("mat-input-0"))).Click().Build().Perform();
                             Thread.Sleep(500);
-                            build = new Actions(chromeDriver);
-                            build.MoveToElement(chromeDriver.FindElement(By.ClassName("mat-option-text"))).Click().Build().Perform();
+                            new Actions(chromeDriver).MoveToElement(chromeDriver.FindElement(By.ClassName("mat-option-text"))).Click().Build().Perform();
                             Thread.Sleep(500);
-                            build = new Actions(chromeDriver);
-                            build.MoveToElement(chromeDriver.FindElement(By.Id("from-date-picker"))).Click().Build().Perform();
+                            #region Chọn ngày từ
+                            new Actions(chromeDriver).MoveToElement(chromeDriver.FindElement(By.Id("mat-input-1"))).Click().Build().Perform();
                             Thread.Sleep(500);
 
+
                         St:
-                            if (chromeDriver.FindElement(By.XPath("//*[@id='mat-datepicker-0']/mat-calendar-header/div/div/button[1]/span")).Text.EndsWith(iTu.ToString("M yyyy")))
+                            if (chromeDriver.FindElement(By.XPath("/html/body/div[2]/div/div/div/div[1]/mat-card/div[1]/div/mat-calendar/mat-calendar-header/div/div/button[1]/span")).Text.EndsWith(iTu.ToString("M yyyy")))
                             {
-                                IList<IWebElement> w = chromeDriver.FindElement(By.XPath("//*[@id='mat-datepicker-0']/div/mat-month-view/table/tbody")).FindElements(By.TagName("td"));
+                                Thread.Sleep(500);
+                                chromeDriver.FindElement(By.XPath("/html/body/div[2]/div/div/div/div[1]/mat-card/div[2]/div[1]/div[2]/div[1]/div")).Click();
+                                Thread.Sleep(500);
+                                chromeDriver.FindElement(By.XPath("/html/body/div[2]/div/div/div/div[1]/mat-card/div[2]/div[2]/div[2]/div[1]/div")).Click();
+                                Thread.Sleep(500);
+                                IList<IWebElement> w = chromeDriver.FindElement(By.XPath("/html/body/div[2]/div/div/div/div[1]/mat-card/div[1]/div/mat-calendar/div/mat-month-view/table")).FindElements(By.TagName("td"));
                                 foreach (IWebElement s in w)
                                 {
                                     if (s.Text == iTu.Day.ToString(string.Empty))
@@ -663,19 +676,104 @@ namespace CRM
                                         break;
                                     }
                                 }
+                                chromeDriver.FindElement(By.XPath("/html/body/div[2]/div/div/div/div[2]/div/button")).Click();
                             }
                             else
                             {
-                                chromeDriver.FindElement(By.XPath("//*[@id='mat-datepicker-0']/mat-calendar-header/div/div/button[3]")).Click();
+                                chromeDriver.FindElement(By.XPath("/html/body/div[2]/div/div/div/div[1]/mat-card/div[1]/div/mat-calendar/mat-calendar-header/div/div/button[3]/div[2]")).Click();
                                 goto St;
                             }
+                            #endregion
+
+                            #region Chọn ngày Đến
+                            new Actions(chromeDriver).MoveToElement(chromeDriver.FindElement(By.Id("mat-input-2"))).Click().Build().Perform();
+                            Thread.Sleep(500);
+
+                            try { chromeDriver.FindElement(By.XPath("/html/body/div[2]/div/div/div/div[1]/mat-card/div[1]/div/mat-calendar/mat-calendar-header/div/div/button[1]/span")).Text.EndsWith(iTu.ToString("M yyyy")); }
+                            catch { new Actions(chromeDriver).MoveToElement(chromeDriver.FindElement(By.Id("mat-input-2"))).Click().Build().Perform(); }
+                        St1:
+                            if (chromeDriver.FindElement(By.XPath("/html/body/div[2]/div[2]/div/div/div[1]/mat-card/div[1]/div/mat-calendar/mat-calendar-header/div/div/button[1]/span")).Text.EndsWith(iTu.ToString("M yyyy")))
+                            {
+                                Thread.Sleep(500);
+                                chromeDriver.FindElement(By.XPath("/html/body/div[2]/div[2]/div/div/div[1]/mat-card/div[2]/div[1]/div[2]/div[24]/div")).Click();
+                                Thread.Sleep(500);
+                                chromeDriver.FindElement(By.XPath("/html/body/div[2]/div[2]/div/div/div[1]/mat-card/div[2]/div[2]/div[2]/div[60]/div")).Click();
+                                Thread.Sleep(500);
+                                IList<IWebElement> w = chromeDriver.FindElement(By.XPath("/html/body/div[2]/div[2]/div/div/div[1]/mat-card/div[1]/div/mat-calendar/div/mat-month-view/table")).FindElements(By.TagName("td"));
+                                foreach (IWebElement s in w)
+                                {
+                                    if (s.Text == iTu.Day.ToString(string.Empty))
+                                    {
+                                        s.Click();
+                                        break;
+                                    }
+                                }
+                                chromeDriver.FindElement(By.XPath("/html/body/div[2]/div[2]/div/div/div[2]/div/button")).Click();
+                            }
+                            else
+                            {
+                                chromeDriver.FindElement(By.XPath("/html/body/div[2]/div[2]/div/div/div[1]/mat-card/div[1]/div/mat-calendar/mat-calendar-header/div/div/button[3]/div[2]")).Click();
+                                goto St1;
+                            }
+                            #endregion
 
                             Thread.Sleep(500);
-                            chromeDriver.FindElement(By.Id("btn-query")).Click();
+                            js.ExecuteScript("document.getElementById('btn-query').click()");
                             Thread.Sleep(500);
                             SoDu = XuLyDuLieu.ConvertStringToLong(chromeDriver.FindElement(By.XPath("//*[@id='has-data-screen']/div[5]/div/div[2]/label")).Text);
+                            LuuSoDu();
                             break;
                         }
+                    case 2027:
+                        {
+                            chromeDriver.Navigate().GoToUrl("https://ebanking.vietinbank.vn/efast/account/detail.do");
+                            var education = chromeDriver.FindElement(By.Id("accountNo"));
+                            var selectElement = new SelectElement(education);
+                            selectElement.SelectByIndex(1);
+
+                            chromeDriver.FindElement(By.Id("from")).Click();
+
+                            IList<IWebElement> Lg = chromeDriver.FindElement(By.ClassName("pika-table")).FindElements(By.TagName("td"));
+                            foreach (IWebElement webElement1 in Lg)
+                            {
+                                if (XuLyDuLieu.IsNumeric(webElement1.Text))
+                                    if (int.Parse(webElement1.Text) == iTu.Date.Day)
+                                    {
+                                        webElement1.Click();
+                                        break;
+                                    }
+                            }
+                            chromeDriver.FindElement(By.Id("to")).Click();
+                            Lg = chromeDriver.FindElements(By.ClassName("pika-table"))[1].FindElements(By.TagName("td"));
+                            foreach (IWebElement webElement1 in Lg)
+                            {
+                                if (XuLyDuLieu.IsNumeric(webElement1.Text))
+                                    if (int.Parse(webElement1.Text) == iTu.Date.Day)
+                                    {
+                                        webElement1.Click();
+                                        break;
+                                    }
+                            }
+                            chromeDriver.FindElement(By.Id("btnAccept")).Click();
+                            break;
+                        }
+                    case 2028:
+                        {
+                            chromeDriver.FindElement(By.XPath("/html/body/div/section/span/div/div/div[2]/div/ng-transclude/div[2]/div[1]/div[1]/div/div[5]/div[1]/div[2]/div/div[1]/div/div[2]/a")).Click();
+                            Thread.Sleep(500);
+                            chromeDriver.FindElement(By.XPath("/html/body/div/section/span/div/div/div[2]/div/ng-transclude/div[2]/div[1]/div[1]/eb-ocb-full-screen-widget/div/div/div/div/div/div/div/div/div/div/div[2]/span[2]/span/span[1]/div/div/div[2]/div[1]/div[2]/span[2]/a[1]")).Click();
+                            Thread.Sleep(500);
+                            chromeDriver.FindElement(By.XPath("/html/body/div/section/span/div/div/div[2]/div/ng-transclude/div[2]/div[1]/div[1]/eb-ocb-full-screen-widget/div/div/div/div/div/div/div/div/div/div/form/section/div[1]/div/div[2]/div[2]/a")).Click();
+                            Thread.Sleep(500);
+                            chromeDriver.FindElement(By.XPath("/html/body/div/section/span/div/div/div[2]/div/ng-transclude/div[2]/div[1]/div[1]/eb-ocb-full-screen-widget/div/div/div/div/div/div/div/div/div/div/form/section/div[2]/div/div/div/div[1]/ul/li[2]/div[1]/div")).Click();
+                            //chromeDriver.FindElement(By.XPath("")).Click();
+
+                            chromeDriver.FindElement(By.XPath("/html/body/div/section/span/div/div/div[2]/div/ng-transclude/div[2]/div[1]/div[1]/eb-ocb-full-screen-widget/div/div/div/div/div/div/div/div/div/div/form/section/div[2]/div/div/div/div[1]/ul/li[2]/div[2]/div[2]/div[2]/div/rb-datepicker/div/section/input")).SendKeys(iTu.Date.ToString("dd.MM.yyyy"));
+                            chromeDriver.FindElement(By.XPath("/html/body/div/section/span/div/div/div[2]/div/ng-transclude/div[2]/div[1]/div[1]/eb-ocb-full-screen-widget/div/div/div/div/div/div/div/div/div/div/form/section/div[2]/div/div/div/div[1]/ul/li[2]/div[2]/div[2]/div[1]/div/rb-datepicker/div/section/input")).SendKeys(iTu.Date.ToString("dd.MM.yyyy"));
+                            chromeDriver.FindElement(By.Id("search_button_mobile")).Click();
+                        }
+                        break;
+
                 }
             }
             catch { }
@@ -702,6 +800,7 @@ namespace CRM
                         {
                             wait.Until(driver => driver.Url.Contains("account-transaction-history"));
                             SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("span", "account-info-amount").Text);
+                            LuuSoDu();
                             if (ChromeFindElementByClassName("span", "pagination-info-current-page", 1).Text.Contains("-"))
                             {
                                 string EndPage = ChromeFindElementByClassName("span", "pagination-info-total-page", 1).Text;
@@ -784,7 +883,7 @@ namespace CRM
                                 _ravi[_NganHangO.GhiChu.Split('|')[1]] = mytable[i + 1].FindElements(By.TagName("tr"))[2].FindElements(By.TagName("td"))[1].GetAttribute("innerHTML");
                                 _ravi[_NganHangO.GhiChu.Split('|')[0]] = tds[6].Text;
                                 if (i == 1)
-                                    SoDu = XuLyDuLieu.ConvertStringToLong(tds[4].Text);
+                                { SoDu = XuLyDuLieu.ConvertStringToLong(tds[4].Text); LuuSoDu(); }
                                 dt.Rows.Add(_ravi);
                             }
                             break;
@@ -794,6 +893,7 @@ namespace CRM
                             mytable = ChromeFindElementByClassName("table", "table-style").FindElements(By.TagName("td"));
 
                             SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("span", "red_tieude", 3).Text);
+                            LuuSoDu();
                             dt.Columns.Add(_NganHangO.Rut);
                             for (int i = 0; i < mytable.Count; i += 6)
                             {
@@ -814,7 +914,7 @@ namespace CRM
                             mytable = ChromeFindElementByClassName("table", "table-style-double1").FindElements(By.TagName("td"));
 
                             SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("td", "success red_tieude", 1).Text);
-
+                            LuuSoDu();
                             dt.Columns.Add(_NganHangO.NgayHT);
                             dt.Columns.Add(_NganHangO.Rut);
                             for (int i = 0; i < mytable.Count; i += 10)
@@ -836,7 +936,7 @@ namespace CRM
                         {
                             dt.Columns.Add(_NganHangO.Rut);
                             SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("table", "enqheader").FindElements(By.TagName("td"))[4].Text);
-
+                            LuuSoDu();
                             if (chromeDriver.PageSource.Contains("paging-toolbar"))
                             {
                                 string EndPage = string.Empty;
@@ -889,6 +989,7 @@ namespace CRM
                             dt.Columns.Add(_NganHangO.Rut);
                             wait.Until(d => d.PageSource.Contains("ebankinternet-table-transaction-row-last"));
                             SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("tr", "ebankinternet-table-transaction-row-last").Text);
+                            LuuSoDu();
                             //pagerPanel
                             if (SoLanXuatHien(chromeDriver.PageSource, "pagerPanel") == 3)
                             {
@@ -973,7 +1074,7 @@ namespace CRM
                                         _ravi[_NganHangO.Nap] = a[i + 1];
                                         _ravi[_NganHangO.GhiChu] = a[i + 3];
                                         if (SoDu == 0)
-                                            SoDu = XuLyDuLieu.ConvertStringToLong(a[i + 2]);
+                                        { SoDu = XuLyDuLieu.ConvertStringToLong(a[i + 2]); LuuSoDu(); }
                                         dt.Rows.Add(_ravi);
                                     }
 
@@ -994,7 +1095,7 @@ namespace CRM
                                     _ravi[_NganHangO.Nap] = G6[5].Text;
                                     _ravi[_NganHangO.GhiChu] = G6[9].Text;
                                     if (SoDu == 0)
-                                        SoDu = XuLyDuLieu.ConvertStringToLong(G6[8].Text);
+                                    { SoDu = XuLyDuLieu.ConvertStringToLong(G6[8].Text); LuuSoDu(); }
                                     dt.Rows.Add(_ravi);
                                 }
                             }
@@ -1007,6 +1108,7 @@ namespace CRM
                             dt.Columns.Add(_NganHangO.NgayHT);
 
                             SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("span", "stage3_previewconfirm_details_column", 1).Text);
+                            LuuSoDu();
                             IWebElement web = null;
                             try { web = chromeDriver.FindElement(By.Id("PageConfigurationMaster_RACCTSW__1:CustomViewStatementFG.TransactionDetailsListing_REQUESTED_PAGE_NUMBER")); } catch { }
                             if (web != null)
@@ -1064,7 +1166,8 @@ namespace CRM
                             if (ChromeFindElementByClassName("div", "h5").Text.Contains("*"))
                                 ChromeFindElementByClassName("label", "ubtn ubg-white-2 ripple tk-eye legitRipple").Click();
                             Thread.Sleep(1000);
-                            SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("div", "h5").Text);
+                            SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("div", "h5").Text); 
+                            LuuSoDu();
                             mytable = ChromeFindElementByClassName("div", "tab-pane fade show active ph30 pv10").FindElements(By.ClassName("list-info-item"));
 
                             dt.Columns.Add(_NganHangO.PhepTinh);
@@ -1093,7 +1196,9 @@ namespace CRM
                             }
 
                             Thread.Sleep(1000);
-                            SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("table", "data-table", 1).FindElements(By.TagName("td"))[5].Text);
+                            string sodu = ChromeFindElementByClassName("table", "data-table", 1).FindElements(By.TagName("td"))[13].Text;
+                            SoDu = XuLyDuLieu.ConvertStringToLong(sodu) * (sodu.Contains("-") ? -1 : 1);
+                            LuuSoDu();
                             if (SoLanXuatHien(chromeDriver.PageSource, "tableTemp") == 1)
                                 return;
 
@@ -1163,7 +1268,7 @@ namespace CRM
                                 _ravi[_NganHangO.Rut] = G6[4].Text;
                                 _ravi[_NganHangO.Nap] = G6[5].Text;
                                 if (SoDu == 0)
-                                    SoDu = XuLyDuLieu.ConvertStringToLong(G6[6].Text);
+                                { SoDu = XuLyDuLieu.ConvertStringToLong(G6[6].Text); LuuSoDu(); }
                                 dt.Rows.Add(_ravi);
                             }
                             break;
@@ -1212,6 +1317,7 @@ namespace CRM
                     case 2024:
                         {
                             SoDu = XuLyDuLieu.ConvertStringToLong(chromeDriver.FindElement(By.Id("lbSoDuCuoiKy")).Text);
+                            LuuSoDu();
                             IWebElement webElement = chromeDriver.FindElement(By.ClassName("k-selectable"));
                             if (webElement == null) return;
 
@@ -1263,17 +1369,45 @@ namespace CRM
                             }
                             break;
                         }
+                    case 2027:
+                        {
+                            SoDu = XuLyDuLieu.ConvertStringToLong(chromeDriver.FindElement(By.XPath("//*[@id='main']/div[2]/div[3]/div/div[1]/div[2]/div/p")).Text);
+                            LuuSoDu();
+                            IWebElement webElement = chromeDriver.FindElement(By.Id("tblTrx"));
+                            if (webElement == null) return;
+
+                            mytable = webElement.FindElements(By.TagName("tr"));
+                            dt.Columns.Add(_NganHangO.Rut);
+                            for (int i = 0; i < mytable.Count; i++)
+                            {
+                                G6 = mytable[i].FindElements(By.ClassName("content"));
+                                if (G6.Count < 3)
+                                    continue;
+                                DataRow _ravi = dt.NewRow();
+                                _ravi[_NganHangO.NgayGD] = G6[1].Text;
+                                _ravi[_NganHangO.GhiChu] = G6[2].Text;
+                                _ravi[_NganHangO.Nap] = G6[3].Text;
+                                dt.Rows.Add(_ravi);
+                            }
+                            break;
+                        }
+                    case 2028:
+                        {
+                            if (chromeDriver.PageSource.Contains("Không giao dịch nào phù hợp với tiêu chuẩn tìm kiếm"))
+                                return;
+                        }
+                        break;
                 }
                 BuocXulyCuoi(dt);
             }
             catch (Exception ex) { XtraMessageBox.Show(ex.Message); }
         }
 
-        List<CTNganHangO> lst = new List<CTNganHangO>();
+        List<O_CTNGANHANG> lst = new List<O_CTNGANHANG>();
         void BuocXulyCuoi(DataTable Dtt)
         {
             Regex regex = new Regex(@"^[-+]?[0-9]*\.?[0-9]+$");
-            List<CTNganHangO> _LCTNganHangO = new CTNganHangD().LayDanhSachTheoNganHang(_NganHangO.ID, iTu);
+            List<O_CTNGANHANG> _LCTNganHangO = new D_CTNGANHANG().LayDanhSachTheoNganHang(_NganHangO.ID, iTu);
             foreach (DataRow row in Dtt.Rows)
             {
                 if (row[_NganHangO.NgayGD].ToString().Trim().Length > 2)
@@ -1282,7 +1416,7 @@ namespace CRM
                         continue;
                     DateTime Day = DateTime.Now;
                     DateTime DayHT = DateTime.Now;
-                    CTNganHangO CT = new CTNganHangO();
+                    O_CTNGANHANG CT = new O_CTNGANHANG();
                     CT.NganHangID = _NganHangO.ID;
                     Day = XuLyDuLieu.IsDate(row[_NganHangO.NgayGD].ToString().Substring(0, 10));
                     DayHT = XuLyDuLieu.IsDate(row[_NganHangO.NgayHT].ToString().Substring(0, 10));
@@ -1344,10 +1478,10 @@ namespace CRM
                     CT.TrangThaiID = (CT.SoTien > 0) ? false : true;
                     CT.MaDL = 0;
                     CT.MaCode = Macode;
-                    List<CTNganHangO> LstCF = _LCTNganHangO.Where(W => W.NgayGD.ToString("ddMMyyyy").Equals(CT.NgayGD.ToString("ddMMyyyy")) && W.SoTien.Equals(CT.SoTien) && W.GhiChu.Replace(" ", string.Empty).Contains((CT.GhiChu ?? string.Empty).Replace(" ", string.Empty))).ToList();
+                    List<O_CTNGANHANG> LstCF = _LCTNganHangO.Where(W => W.NgayGD.ToString("ddMMyyyy").Equals(CT.NgayGD.ToString("ddMMyyyy")) && W.SoTien.Equals(CT.SoTien) && W.GhiChu.Replace(" ", string.Empty).Contains((CT.GhiChu ?? string.Empty).Replace(" ", string.Empty))).ToList();
                     if (LstCF.Count == 0)
                     {
-                        List<DaiLyO> _dl = dl.Where(w => CT.GhiChu.ToUpper().Replace("-", " ").Replace("  ", " ").Replace("NAP", "NOP").Replace("TIEN", "QUY").Contains(string.Format("{0} {1} NOP QUY", w.MaDL, XuLyDuLieu.NotVietKey(w.Ten)).ToUpper().Replace("  ", " "))).ToList();
+                        List<O_DAILY> _dl = dl.Where(w => CT.GhiChu.ToUpper().Replace("-", " ").Replace("  ", " ").Replace("NAP", "NOP").Replace("TIEN", "QUY").Contains(string.Format("{0} {1} NOP QUY", w.MaDL, XuLyDuLieu.NotVietKey(w.Ten)).ToUpper().Replace("  ", " "))).ToList();
                         if (_dl.Count > 0)
                         {
                             CT.TrangThaiID = true;
@@ -1362,14 +1496,11 @@ namespace CRM
                 }
             }
 
-            lblSD2.Caption = SoDu.ToString("Số dư ngân hàng: #,###");
-            lblSD3.Caption = (_NganHangO.SoDuCuoi + lst.Sum(w => w.SoTien)).ToString("Số dư tự tính: #,###");
+            lblSD2.Caption = SoDu.ToString("Số dư ngân hàng: #,##0");
+            lblSD3.Caption = (_NganHangO.SoDuCuoi + lst.Sum(w => w.SoTien)).ToString("Số dư tự tính: #,##0");
             cTNganHangOBindingSource.DataSource = lst;
 
-            Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic.Add("SoDu", SoDu);
-            new NganHangD().CapNhat(dic, _NganHangO.ID);
-
+           
             if (SoDu != _NganHangO.SoDuCuoi + lst.Sum(w => w.SoTien))
             {
                 XtraMessageBox.Show("Số dư ngân hàng không bằng số dư tự tính", "Thông báo");
@@ -1382,12 +1513,19 @@ namespace CRM
                 XtraMessageBox.Show("Lấy dữ liệu thành công", "Thông báo");
         }
 
+        void LuuSoDu()
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("SoDu", SoDu);
+            new D_NGANHANG().CapNhat(dic, _NganHangO.ID);
+        }
+
         private void btnExcel_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (_NganHangO != null)
             {
                 string sysUIFormat = System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
-                lst = new List<CTNganHangO>();
+                lst = new List<O_CTNGANHANG>();
                 XtraOpenFileDialog ofd = new XtraOpenFileDialog();
                 ofd.Title = "Mở File";
                 ofd.Filter = " Excel File (*.xls, *.xlsx) | *.xls; *.xlsx";
@@ -1417,7 +1555,7 @@ namespace CRM
             {
                 if (lst.Where(w => w.LoaiKhachHang.Equals(1) && w.MaDL < 1).Count() > 0)
                     return;
-                long ThemNhieu = new CTNganHangD().ThemMoiTuExcel(lst, "usp_InsertCTNGANHANG");
+                long ThemNhieu = new D_CTNGANHANG().ThemMoiTuExcel(lst, "usp_InsertCTNGANHANG");
                 XuLyGiaoDien.ThongBao("Giao dịch ngân hàng thêm", ThemNhieu > 0);
                 lst.Clear();
                 cTNganHangOBindingSource.DataSource = null;
@@ -1431,7 +1569,7 @@ namespace CRM
             if (XtraMessageBox.Show("Bạn có chắc xóa", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
                 return;
 
-            CTNganHangO ct = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as CTNganHangO);
+            O_CTNGANHANG ct = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as O_CTNGANHANG);
             lst.Remove(ct);
 
             lblSD2.Caption = SoDu.ToString("Số dư ngân hàng: #,###");
@@ -1473,7 +1611,7 @@ namespace CRM
 
                     edit = (LookUpEdit)view.ActiveEditor;
 
-                    CTNganHangO ct = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as CTNganHangO);
+                    O_CTNGANHANG ct = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as O_CTNGANHANG);
 
                     clone = new DataView(ToDataTable(LoaiGiaoDich_NganHang_TatCa()));
                     clone.RowFilter = "[Loai] = '" + ct.LoaiKhachHang.ToString() + "'";
@@ -1487,7 +1625,7 @@ namespace CRM
                     edit = (SearchLookUpEdit)view.ActiveEditor;
 
                     clone = new DataView(ToDataTable(DuLieuTaoSan.NganHangLoaiKhachHang(1)));
-                    CTNganHangO ct = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as CTNganHangO);
+                    O_CTNGANHANG ct = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as O_CTNGANHANG);
                     clone.RowFilter = "[Loai] = '" + ct.LoaiKhachHang.ToString() + "'";
                     edit.Properties.DataSource = clone;
                 }
