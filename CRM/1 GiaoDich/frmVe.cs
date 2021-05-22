@@ -23,6 +23,11 @@ namespace CRM
         #region Dữ liệu 
         private void frmVe_Load(object sender, EventArgs e)
         {
+            if (!DuLieuTaoSan.Q.VeAdmin)
+            {
+                GVGD.Columns.Remove(colEmail);
+                GVGD.Columns.Remove(colDienThoaiKhachHang);
+            }
 
             rLoaiKhach.DataSource = DuLieuTaoSan.LoaiKhachHang_Ve();
             rTrangThai.DataSource = DuLieuTaoSan.LoaiGiaoDich_Ve(true);
