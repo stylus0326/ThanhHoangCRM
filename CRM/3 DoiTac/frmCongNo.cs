@@ -168,6 +168,26 @@ namespace CRM
                             break;
                     }
                 }
+                else if (dl.CapNhatLuyKe)
+                {
+                    if (e.Column.FieldName == "TaiKhoanCo" && dl.TaiKhoanCo > 0)
+                    {
+                        e.Appearance.BackColor = Color.Gold;
+                        e.Appearance.BackColor2 = Color.SeaShell;
+                    }
+                    else if (e.Column.FieldName == "GiaThu" && dl.GiaThu > 0)
+                    {
+
+                        e.Appearance.BackColor = Color.Gold;
+                        e.Appearance.BackColor2 = Color.SeaShell;
+                    }
+                    else if (e.Column.FieldName == "GiaHoan" && dl.GiaHoan > 0)
+                    {
+
+                        e.Appearance.BackColor = Color.Gold;
+                        e.Appearance.BackColor2 = Color.SeaShell;
+                    }
+                }
             }
         }
         #endregion
@@ -200,10 +220,14 @@ namespace CRM
             }
         }
 
+
+        List<int> lstInt = new List<int>();
         private void btnGuiMail_Click(object sender, EventArgs e)
         {
             if (XtraMessageBox.Show("Bạn muốn gửi mail ?", "Câu hỏi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                D_GIAODICH gdb = new D_GIAODICH();
+
                 List<string> vs = new List<string>();
                 if ((txtFileDinhKem.EditValue ?? string.Empty) != string.Empty)
                     vs = txtFileDinhKem.EditValue.ToString().Split(',').ToList();
@@ -213,109 +237,109 @@ namespace CRM
                     XuLyGiaoDien.Alert("Chưa chọn đại lý cần gửi", Form_Alert.enmType.Info);
                 else
                 {
-                    O_CAUHINHSMTP cauHinhSMTPO = cauHinhSMTPD.DuLieu();
-                    O_MAUEMAIL ma = new D_MAUEMAIL().DuLieu()[0];
-
-                    SmtpClient client = new SmtpClient();
-                    client.Port = cauHinhSMTPO.Port;
-                    client.Host = cauHinhSMTPO.Host;
-                    client.EnableSsl = cauHinhSMTPO.SSL;
-                    client.Timeout = 10000;
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    client.UseDefaultCredentials = false;
-                    client.Credentials = new System.Net.NetworkCredential(cauHinhSMTPO.Email, cauHinhSMTPO.Password);
-
-                    grvCTCongNo.Columns["Hang"].Width = 50;
-                    grvCTCongNo.Columns["SoVeVN"].Width = 90;
-                    grvCTCongNo.Columns["LuyKe"].Width = 90;
-                    grvCTCongNo.Columns["GiaThu"].Width = 90;
-                    grvCTCongNo.Columns["GiaHeThong"].Width = 90;
-                    grvCTCongNo.Columns["TaiKhoanCo"].Width = 90;
-                    grvCTCongNo.Columns["TenKhach"].Width = 250;
-                    grvCTCongNo.OptionsPrint.AutoWidth = false;
-                    grvCTCongNo.OptionsView.ColumnAutoWidth = false;
-
-                    XlsxExportOptionsEx opt = new XlsxExportOptionsEx();
-                    opt.CustomizeCell += op_CustomizeCell;
-                    opt.SheetName = "Bản Công Nợ";
-
-
-                    D_GIAODICH gdb = new D_GIAODICH();
-                    bool sendOK = false;
-                    if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                        XuLyGiaoDien.wait.ShowWaitForm();
-
-                    for (int i = 0; i < n; i++)
+                    try
                     {
-                        O_DAILY dl = lstDaiLy.GetItem(lstDaiLy.CheckedIndices[0]) as O_DAILY;
-                        if (!dl.GuiMail)
+                        O_CAUHINHSMTP cauHinhSMTPO = cauHinhSMTPD.DuLieu();
+                        O_MAUEMAIL ma = new D_MAUEMAIL().DuLieu()[0];
+
+                        SmtpClient client = new SmtpClient();
+                        client.Port = cauHinhSMTPO.Port;
+                        client.Host = cauHinhSMTPO.Host;
+                        client.EnableSsl = cauHinhSMTPO.SSL;
+                        client.Timeout = 10000;
+                        client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = new System.Net.NetworkCredential(cauHinhSMTPO.Email, cauHinhSMTPO.Password);
+
+                        grvCTCongNo.Columns["Hang"].Width = 50;
+                        grvCTCongNo.Columns["SoVeVN"].Width = 90;
+                        grvCTCongNo.Columns["LuyKe"].Width = 90;
+                        grvCTCongNo.Columns["GiaThu"].Width = 90;
+                        grvCTCongNo.Columns["GiaHeThong"].Width = 90;
+                        grvCTCongNo.Columns["TaiKhoanCo"].Width = 90;
+                        grvCTCongNo.Columns["TenKhach"].Width = 250;
+                        grvCTCongNo.OptionsPrint.AutoWidth = false;
+                        grvCTCongNo.OptionsView.ColumnAutoWidth = false;
+
+                        XlsxExportOptionsEx opt = new XlsxExportOptionsEx();
+                        opt.CustomizeCell += op_CustomizeCell;
+                        opt.SheetName = "Bản Công Nợ";
+
+
+                        bool sendOK = false;
+                        if (!XuLyGiaoDien.wait.IsSplashFormVisible)
+                            XuLyGiaoDien.wait.ShowWaitForm();
+                        for (int i = 0; i < n; i++)
                         {
-                            int index1 = lstDaiLy.FindItem(0, true, delegate (ListBoxFindItemArgs ei) { ei.IsFound = object.Equals(dl.ID, ei.ItemValue); });
-                            lstDaiLy.SetItemChecked(index1, false);
-                            continue;
-                        }
-
-                        string daily = string.Format("{0}", dl.ID);
-                        List<O_GIAODICH> lstCongNo = gdb.LayDanhSachCN((DateTime)dtpTuNgay.EditValue, (DateTime)dtpDenNgay.EditValue, daily, true);
-                        txtMauEmail.HtmlText = ma.NoiDung.Replace("{0}", dl.MaDL).Replace("{1}", XuLyDuLieu.NotVietKey(dl.Ten));
-
-                        if ((dl.EmailKeToan ?? string.Empty) == string.Empty)
-                            goto RE1;
-
-                        string[] EmailKeToanString = Regex.Replace(dl.EmailKeToan, @"\t|\n|\r", "|").Replace("||", "|").Split('|');
-                        for (int ii = 0; ii < EmailKeToanString.Count(); ii++)
-                        {
-                            if (EmailKeToanString[ii].Length > 5)
+                            O_DAILY dl = lstDaiLy.GetItem(lstDaiLy.CheckedIndices[0]) as O_DAILY;
+                            if (!dl.GuiMail)
                             {
-                                MailMessage mm = new MailMessage();
-                                mm.From = new MailAddress("ketoan02@thanhhoang.vn", "Thành Hoàng");
-                                mm.BodyEncoding = UTF8Encoding.UTF8;
-                                mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-                                mm.IsBodyHtml = true;
-                                RichEditMailMessageExporter exporter = new RichEditMailMessageExporter(txtMauEmail, mm);
-                                exporter.Export();
-                                mm.To.Add(new MailAddress(EmailKeToanString[ii]));
-                                //mm.To.Add(new MailAddress("tungtranims@gmail.com"));
-                                if (lstCongNo.Count > 1)
+                                int index1 = lstDaiLy.FindItem(0, true, delegate (ListBoxFindItemArgs ei) { ei.IsFound = object.Equals(dl.ID, ei.ItemValue); });
+                                lstDaiLy.SetItemChecked(index1, false);
+                                continue;
+                            }
+                            lstInt.Add(dl.ID);
+                            string daily = string.Format("{0}", dl.ID);
+                            List<O_GIAODICH> lstCongNo = gdb.LayDanhSachCN((DateTime)dtpTuNgay.EditValue, (DateTime)dtpDenNgay.EditValue, daily, true);
+                            txtMauEmail.HtmlText = ma.NoiDung.Replace("{0}", dl.MaDL).Replace("{1}", XuLyDuLieu.NotVietKey(dl.Ten));
+
+                            if ((dl.EmailKeToan ?? string.Empty) == string.Empty)
+                                goto RE1;
+
+                            string[] EmailKeToanString = Regex.Replace(dl.EmailKeToan, @"\t|\n|\r", "|").Replace("||", "|").Split('|');
+                            for (int ii = 0; ii < EmailKeToanString.Count(); ii++)
+                            {
+                                if (EmailKeToanString[ii].Length > 5)
                                 {
-                                    XuLyGiaoDien.wait.SetWaitFormDescription("Gửi cho: " + dl.Ten + " (" + (i + 1) + "/" + n + ").");
-                                    CTGiaoDichDindingSource.DataSource = lstCongNo;
-                                    mm.Subject = "Công Nợ - " + dl.Ten + " - Từ ngày " + ((DateTime)dtpTuNgay.EditValue).ToString("dd_MM_yyyy") + " - đến ngày " + ((DateTime)dtpDenNgay.EditValue).ToString("dd_MM_yyyy");
-
-                                    #region Xuất excel
-                                    gridCTCongNo.ForceInitialize();
-                                    string strFile = @"C:\CongNo\" + dl.Ten + " - " + ((DateTime)dtpTuNgay.EditValue).ToString("dd_MM_yyyy") + " - " + ((DateTime)dtpDenNgay.EditValue).ToString("dd_MM_yyyy") + ".xlsx";
-                                    Directory.CreateDirectory(@"C:\CongNo");
-                                    gridCTCongNo.ExportToXlsx(strFile, opt);
-                                    #endregion
-
-                                    mm.Attachments.Add(new Attachment(strFile));
-                                    foreach (string g in vs)
+                                    MailMessage mm = new MailMessage();
+                                    mm.From = new MailAddress("ketoan02@thanhhoang.vn", "Thành Hoàng");
+                                    mm.BodyEncoding = UTF8Encoding.UTF8;
+                                    mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+                                    mm.IsBodyHtml = true;
+                                    RichEditMailMessageExporter exporter = new RichEditMailMessageExporter(txtMauEmail, mm);
+                                    exporter.Export();
+                                    mm.To.Add(new MailAddress(EmailKeToanString[ii]));
+                                    //mm.To.Add(new MailAddress("tungtranims@gmail.com"));
+                                    if (lstCongNo.Count > 1)
                                     {
-                                        if (g.Count() > 0)
-                                            mm.Attachments.Add(new Attachment(g));
-                                    }
-                                    try
-                                    {
+                                        XuLyGiaoDien.wait.SetWaitFormDescription("Gửi cho: " + dl.Ten + " (" + (i + 1) + "/" + n + ").");
+                                        CTGiaoDichDindingSource.DataSource = lstCongNo;
+                                        mm.Subject = "Công Nợ - " + dl.Ten + " - Từ ngày " + ((DateTime)dtpTuNgay.EditValue).ToString("dd_MM_yyyy") + " - đến ngày " + ((DateTime)dtpDenNgay.EditValue).ToString("dd_MM_yyyy");
+
+                                        #region Xuất excel
+                                        gridCTCongNo.ForceInitialize();
+                                        string strFile = @"C:\CongNo\" + dl.Ten + " - " + ((DateTime)dtpTuNgay.EditValue).ToString("dd_MM_yyyy") + " - " + ((DateTime)dtpDenNgay.EditValue).ToString("dd_MM_yyyy") + ".xlsx";
+                                        Directory.CreateDirectory(@"C:\CongNo");
+                                        gridCTCongNo.ExportToXlsx(strFile, opt);
+                                        #endregion
+
+                                        mm.Attachments.Add(new Attachment(strFile));
+                                        foreach (string g in vs)
+                                        {
+                                            if (g.Count() > 0)
+                                                mm.Attachments.Add(new Attachment(g));
+                                        }
                                         client.Send(mm);
+
+                                        sendOK = true;
+                                        mm.Attachments.Dispose();
+                                        if (File.Exists(strFile))
+                                            File.Delete(strFile);
                                     }
-                                    catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Thông báo"); }
-                                    sendOK = true;
-                                    mm.Attachments.Dispose();
-                                    if (File.Exists(strFile))
-                                        File.Delete(strFile);
                                 }
                             }
+                        RE1:
+                            int index = lstDaiLy.FindItem(0, true, delegate (ListBoxFindItemArgs ei) { ei.IsFound = object.Equals(dl.ID, ei.ItemValue); });
+                            lstDaiLy.SetItemChecked(index, false);
                         }
-                    RE1:
-                        int index = lstDaiLy.FindItem(0, true, delegate (ListBoxFindItemArgs ei) { ei.IsFound = object.Equals(dl.ID, ei.ItemValue); });
-                        lstDaiLy.SetItemChecked(index, false);
-                    }
 
-                    if (sendOK)
-                        XuLyGiaoDien.Alert("Gửi mail thành công", Form_Alert.enmType.Success);
-                    else
-                        XuLyGiaoDien.Alert("Gửi mail không thành công", Form_Alert.enmType.Warning);
+                        if (sendOK)
+                            XuLyGiaoDien.Alert("Gửi mail thành công", Form_Alert.enmType.Success);
+                        else
+                            XuLyGiaoDien.Alert("Gửi mail không thành công", Form_Alert.enmType.Warning);
+                    }
+                    catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Thông báo"); }
+                    gdb.ChayCapNhatLuyKe(lstInt);
                     if (XuLyGiaoDien.wait.IsSplashFormVisible)
                         XuLyGiaoDien.wait.CloseWaitForm();
                 }

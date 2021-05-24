@@ -91,6 +91,7 @@ namespace DataAccessLayer
             return (int)DataProvider.LayGiaTri(CauTruyVan) > 0;
         }
 
+
         public bool DaTonTai(string TenCot, object DuLieu, object ID, string DieuKienThem = "")
         {
             string CauTruyVan = string.Format("SELECT COUNT(*) FROM {0} WHERE {1} = N'{2}' AND ID <> {3} {4}", TableName, TenCot, DuLieu, ID, DieuKienThem);
@@ -139,15 +140,6 @@ namespace DataAccessLayer
             }
             CauTruyVan = string.Format("SELECT TOP 1 {0} FROM {1} ", TenCot.Substring(0, TenCot.Length - 1), TableName) + CauDieuKien;
             DataTable data = DataProvider.LayBanDuLieu(CauTruyVan);
-            if (data.Rows.Count > 0)
-                return DataProvider.DataTableToListOfObject<T>(data)[0];
-            else
-                return new T();
-        }
-
-        public T LayMotDongTuTao<T>(string CauDieuKien = "") where T : new()
-        {
-            DataTable data = DataProvider.LayBanDuLieu(CauDieuKien);
             if (data.Rows.Count > 0)
                 return DataProvider.DataTableToListOfObject<T>(data)[0];
             else
@@ -209,23 +201,6 @@ namespace DataAccessLayer
         public long ThemMoiTuExcel<T>(List<T> lstDuLieu, string TbName) where T : new()
         {
             return DataProvider.TaoDataTuEx(lstDuLieu, TbName);
-        }
-
-        public long ThemNhieuNhieuBan(List<Dictionary<string, object>> lstDuLieu, List<string> LstTenBan)
-        {
-            List<string> LstCauDieuKien = new List<string>();
-            List<string> lstThem = new List<string>();
-            foreach (string a in LstTenBan)
-            {
-                LstCauDieuKien.Add("A");
-                lstThem.Add("T");
-            }
-            return DataProvider.TaoSuaNhieu(lstDuLieu, LstTenBan, LstCauDieuKien, lstThem);
-        }
-
-        public long CapNhatNhieu(List<Dictionary<string, object>> lstDuLieu, List<string> LstTenBan, List<string> LstCauDieuKien)
-        {
-            return DataProvider.SuaNhieu(lstDuLieu, LstTenBan, LstCauDieuKien);
         }
 
         public long CapNhat_ThemNhieu(List<Dictionary<string, object>> lstDuLieu, List<string> LstTenBan, List<string> LstCauDieuKien, List<string> lstThem)

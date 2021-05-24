@@ -121,7 +121,6 @@ namespace DataAccessLayer
             }
         }
 
-
         public static DataTable LayBanDuLieu(string Query)
         {
             try
@@ -183,9 +182,16 @@ namespace DataAccessLayer
             finally { Command.Connection.Close(); }
             return Num;
         }
+
         public static long SuaData(Dictionary<string, object> DuLieu, string TenBan, string CauDieuKien)
         {
             string ClmName = string.Empty;
+
+            if (TenBan == "GIAODICH")
+                ClmName += "CapNhatLuyKe = 1, ";
+            else if (TenBan == "CTNGANHANG")
+                ClmName += "CapNhatLuyKeNH = 1, ";
+
             foreach (KeyValuePair<string, object> val in DuLieu)
             {
                 if (val.Value == null)
@@ -195,6 +201,7 @@ namespace DataAccessLayer
                 else
                     ClmName += val.Key + " = @" + val.Key + ",";
             }
+
             string QueRy = "UPDATE " + TenBan + " SET " + ClmName.Substring(0, ClmName.Count() - 1) + " " + CauDieuKien;
 
             SqlConnection Connection = new SqlConnection(ConnectionString);
@@ -224,6 +231,7 @@ namespace DataAccessLayer
             finally { Command.Connection.Close(); }
             return Num;
         }
+
         public static long XoaData(string TenBan, string CauDieuKien)
         {
             CauDieuKien = "DELETE FROM " + TenBan + " " + CauDieuKien;
@@ -242,63 +250,6 @@ namespace DataAccessLayer
             return Num;
         }
 
-        public static long SuaNhieu(List<Dictionary<string, object>> lstDuLieu, List<string> LstTenBan, List<string> LstCauDieuKien)
-        {
-            if (lstDuLieu.Count != LstTenBan.Count || LstTenBan.Count != LstCauDieuKien.Count)
-                return 0;
-            string QueRy = string.Empty;
-            for (int i = 0; i < lstDuLieu.Count; i++)
-            {
-                string ClmName = string.Empty;
-                foreach (KeyValuePair<string, object> val in lstDuLieu[i])
-                {
-                    if (val.Value == null)
-                        ClmName += val.Key + " = @" + val.Key + i.ToString("000#") + ",";
-                    else if (val.Value.ToString().ToLower().Contains("getdate()"))
-                        ClmName += val.Key + " = " + val.Value + ",";
-                    else
-                        ClmName += val.Key + " = @" + val.Key + i.ToString("000#") + ",";
-                }
-                QueRy += "UPDATE " + LstTenBan[i] + " SET " + ClmName.Substring(0, ClmName.Count() - 1) + " " + LstCauDieuKien[i] + "; ";
-            }
-
-            SqlConnection Connection = new SqlConnection(ConnectionString);
-            Connection.Open();
-            SqlTransaction Transaction = Connection.BeginTransaction();
-            SqlCommand Command = new SqlCommand(QueRy, Connection, Transaction);
-
-            for (int i = 0; i < lstDuLieu.Count; i++)
-            {
-                foreach (KeyValuePair<string, object> val in lstDuLieu[i])
-                {
-                    if (val.Value != null)
-                    {
-                        if (val.Value.ToString() != string.Empty && !val.Value.ToString().Contains("01/01/0001"))
-                            Command.Parameters.Add(new SqlParameter("@" + val.Key.ToString() + i.ToString("000#"), val.Value));
-                        else
-                            Command.Parameters.Add(new SqlParameter("@" + val.Key.ToString() + i.ToString("000#"), DBNull.Value));
-                    }
-                    else
-                        Command.Parameters.Add(new SqlParameter("@" + val.Key.ToString() + i.ToString("000#"), DBNull.Value));
-                }
-            }
-
-            long Num = 0;
-            try
-            {
-                Num = Command.ExecuteNonQuery();
-                if (Num != lstDuLieu.Count)
-                {
-                    Transaction.Rollback();
-                    Num = 0;
-                }
-                else
-                    Transaction.Commit();
-            }
-            catch { Transaction.Rollback(); }
-            finally { Command.Connection.Close(); }
-            return Num;
-        }
         public static long XoaNhieu(List<string> LstTenBan, List<string> LstCauDieuKien)
         {
             if (LstTenBan.Count != LstCauDieuKien.Count)
@@ -329,6 +280,7 @@ namespace DataAccessLayer
             finally { Command.Connection.Close(); }
             return Num;
         }
+
         public static long TaoSuaNhieu(List<Dictionary<string, object>> lstDuLieu, List<string> LstTenBan, List<string> LstCauDieuKien, List<string> lstThem)
         {
             if (lstDuLieu.Count != LstTenBan.Count || LstTenBan.Count != LstCauDieuKien.Count || LstCauDieuKien.Count != lstThem.Count)
@@ -342,6 +294,10 @@ namespace DataAccessLayer
                 switch (lstThem[i])
                 {
                     case "S":
+                        if (LstTenBan[i] == "GIAODICH")
+                            ClmName += "CapNhatLuyKe = 1, ";
+                        else if (LstTenBan[i] == "CTNGANHANG")
+                            ClmName += "CapNhatLuyKeNH = 1, ";
                         foreach (KeyValuePair<string, object> val in lstDuLieu[i])
                         {
                             if (val.Value == null)
@@ -492,6 +448,7 @@ namespace DataAccessLayer
             finally { Command.Connection.Close(); }
             return Num;
         }
+
         public static long SuaNhieu1Ban(List<Dictionary<string, object>> lstDuLieu, List<string> LstCauDieuKien, string TenBan)
         {
             if (lstDuLieu.Count != LstCauDieuKien.Count)
@@ -500,6 +457,12 @@ namespace DataAccessLayer
             for (int i = 0; i < lstDuLieu.Count; i++)
             {
                 string ClmName = string.Empty;
+
+                if (TenBan == "GIAODICH")
+                    ClmName += "CapNhatLuyKe = 1, ";
+                else if (TenBan == "CTNGANHANG")
+                    ClmName += "CapNhatLuyKeNH = 1, ";
+
                 foreach (KeyValuePair<string, object> val in lstDuLieu[i])
                 {
                     if (val.Value == null)
@@ -694,7 +657,6 @@ namespace DataAccessLayer
             }
             return obj;
         }
-
 
         public static T DataRowToObjectCN<T>(DataRow row, List<int> lstDaiLyID, List<long> lstDaiLyLuyKe, List<long> lstDaiLyLuyKeTong) where T : new()
         {

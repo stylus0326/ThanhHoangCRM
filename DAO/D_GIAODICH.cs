@@ -99,6 +99,12 @@ namespace DataAccessLayer
             return LayDuLieu<O_GIAODICH>(true, $"WHERE {(An ? "" : "An = 0 and")} {CauTV} order by NgayGD desc", ",coalesce(GiaHeThong,0) + coalesce(PhiCK,0) + coalesce(PhiCoDinh,0) + coalesce(HoaHong,0) - coalesce(GiaNet,0) - coalesce(GiaHoan,0) + coalesce(HangHoan,0) 'LoiNhuan'");
         }
 
+        public int ChayCapNhatLuyKe(List<int> DL)
+        {
+            return ChayCauTruyVan(string.Format(@" update GIAODICH set CapNhatLuyKe = 0 where CapNhatLuyKe = 1 and IDKhachHang in ({0})
+                                            update CTNGANHANG set CapNhatLuyKeNH = 0 where CapNhatLuyKeNH = 1 and MaDL = ({0}) and LoaiKhachHang in (2,3)",string.Join(",",DL.ConvertAll<string>(x => x.ToString()).ToArray())));
+        }
+
         public List<O_GIAODICH> DuLieuVe(bool NCC, int KH)
         {
             string a = string.Format(@"select GD.ID, GD.GiaNet, GD.GiaThu, GD.MaCho, GD.NgayGD, GD.IDKhachHang 
@@ -159,11 +165,11 @@ where dl.ID in ({0})", daily_id.Replace("IDKhachHang", "ID"), tungay.AddDays(-1)
             string a = string.Format(@" SELECT * 
                                         FROM 
 	                                        (SELECT [ID],[IDKhachHang],Agent, (case when LoaiGiaoDich <> 12 then COALESCE([GiaHoan],0) else 0 end) GiaHoan, [NgayGD], [TenKhach], [MaCho], [Hang], [SoVeVN], [LoaiVeDi], [LoaiVeVe], [TuyenBayDi], [TuyenBayVe], 
-			                                        [PhiCK], [GiaHeThong], [GiaThu], (case when LoaiGiaoDich = 12 then GiaHoan else 0 end) [TaiKhoanCo],0 [LuyKe],[LoaiGiaoDich],[GioBayDi],[GioBayVe],0 [LuyKeTong],SoLuongVe,[PhiCoDinh]
+			                                        [PhiCK], [GiaHeThong], [GiaThu], (case when LoaiGiaoDich = 12 then GiaHoan else 0 end) [TaiKhoanCo],0 [LuyKe],[LoaiGiaoDich],[GioBayDi],[GioBayVe],0 [LuyKeTong],SoLuongVe,[PhiCoDinh],CapNhatLuyKe
 	                                         FROM GIAODICH GD 
 	                                         WHERE IDKhachHang IN ({0}) AND (convert(date, NgayGD) BETWEEN '{1}' and '{2}')  and LoaiGiaoDich not in (2,3) AND TinhCongNo = 1 and LoaiGiaoDich <> 60
 	                                         union all
-	                                         SELECT CT.ID,MaDL,'',0,NgayHT,TEN +': '+GhiChu,'','','','','','','',0,0,0,SoTien,0,LoaiGiaoDich,'','',0,0,0
+	                                         SELECT CT.ID,MaDL,'',0,NgayHT,TEN +': '+GhiChu,'','','','','','','',0,0,0,SoTien,0,LoaiGiaoDich,'','',0,0,0,CapNhatLuyKeNH
 	                                         FROM CTNGANHANG CT
 											 left join (select ID,Ten FROM NGANHANG) NH ON CT.NganHangID = NH.ID
 	                                         WHERE MaDL IN ({0}) AND LoaiGiaoDich in (2,3,46,47,32,43) AND (convert(date, NgayHT) BETWEEN '{1}' and '{2}')) GD

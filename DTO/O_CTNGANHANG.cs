@@ -19,6 +19,7 @@ namespace DataTransferObject
         public int LoaiGiaoDich { set; get; }
         public int LoaiKhachHang { set; get; } = -1;
         public int NVGiaoDich { set; get; }//
+        public bool CapNhatLuyKeNH { set; get; } = true;
         public bool End { set; get; }
         public string LienKet { set; get; }
         public string Ten { set; get; }

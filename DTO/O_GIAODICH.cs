@@ -18,6 +18,7 @@ namespace DataTransferObject
         public string SoVeVN { set; get; }//
         public int SoLuongVe { set; get; }//
 
+        public bool CapNhatLuyKe { set; get; }
         public string LoaiVeDi { set; get; }//
         public string SoHieuDi { set; get; }//
         public string HanhLyDi { set; get; }//
