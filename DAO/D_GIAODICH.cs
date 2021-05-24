@@ -166,8 +166,8 @@ where dl.ID in ({0})", daily_id.Replace("IDKhachHang", "ID"), tungay.AddDays(-1)
 	                                         SELECT CT.ID,MaDL,'',0,NgayHT,TEN +': '+GhiChu,'','','','','','','',0,0,0,SoTien,0,LoaiGiaoDich,'','',0,0,0
 	                                         FROM CTNGANHANG CT
 											 left join (select ID,Ten FROM NGANHANG) NH ON CT.NganHangID = NH.ID
-	                                         WHERE MaDL IN ({0}) AND LoaiGiaoDich in (2,3) AND (convert(date, NgayHT) BETWEEN '{1}' and '{2}')) GD
-                                        ORDER BY IDKhachHang, convert(date, NgayGD), (case when LoaiGiaoDich=2 or LoaiGiaoDich = 3 then 0 else 1 end) ,ID", daily, tungay.ToString("yyyyMMdd"), denngay.ToString("yyyyMMdd"));
+	                                         WHERE MaDL IN ({0}) AND LoaiGiaoDich in (2,3,46,47,32,43) AND (convert(date, NgayHT) BETWEEN '{1}' and '{2}')) GD
+                                        ORDER BY IDKhachHang, convert(date, NgayGD), (case when LoaiGiaoDich in (2, 3,46,47,32,43) then 0 else 1 end) ,ID", daily, tungay.ToString("yyyyMMdd"), denngay.ToString("yyyyMMdd"));
 
             DataTable q = LayDataTable(a);
             if (q.Rows.Count > 0)

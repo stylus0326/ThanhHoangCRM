@@ -153,7 +153,7 @@ UPDATE SODU_DAILY SET SoDuCuoi = Sd.SoDu from
 				on G2.NgayGD = G1.Ngay and G1.DaiLyID = G2.IDKhachHang
 
 	LEFT JOIN (SELECT MaDL, CONVERT(date,NgayHT) NgayHT, COALESCE(sum(SoTien),0) SoTien 
-				FROM CTNGANHANG WHERE CONVERT(date,NgayHT) > @Tungay2 - 1  and LoaiGiaoDich in (2,3)
+				FROM CTNGANHANG WHERE CONVERT(date,NgayHT) > @Tungay2 - 1  and LoaiGiaoDich in (2, 3,46,47,32,43)
 				GROUP BY MaDL,CONVERT(date,NgayHT)) G3 
 				on G3.NgayHT = G1.Ngay and G1.DaiLyID = G3.MaDL ) Z
 				WHERE SD<>SoDu
