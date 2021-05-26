@@ -340,8 +340,8 @@ namespace CRM
                                             {
                                                 if (tds[u].InnerText != null)
                                                 {
-                                                    if (tds[u].InnerText.Contains(".00"))
-                                                        lststr1.Add(tds[u].InnerText.Replace(".00", string.Empty).Replace(",", string.Empty).Replace(")", string.Empty).Replace("(", "-"));
+                                                    if (tds[u].InnerText.Contains("."))
+                                                        lststr1.Add(tds[u].InnerText.Split('.')[0].Replace(",", string.Empty).Replace(")", string.Empty).Replace("(", "-"));
                                                     else
                                                         lststr1.Add(tds[u].InnerText);
                                                 }
