@@ -58,9 +58,10 @@ WHERE LoaiKhachHang = 0";
 
         public List<O_DAILY> DuLieu(int Loai)
         {
-            string ctv = @"SELECT DL.*,(case when CONVERT(date,NgayKiQuy)>CONVERT(date,GETDATE()-30) then N'Mới' else COALESCE(Nhom,'-') end ) Nhom,GiaoDichGanNhat,QuyChet ,SoDu,COALESCE(SIC,0) SIC
+            string ctv = @"SELECT DL.*,(case when CONVERT(date,NgayKiQuy)>CONVERT(date,GETDATE()-30) then N'Mới' else COALESCE(Nhom,'-') end ) Nhom,GiaoDichGanNhat,QuyChet ,SoDu,cast(COALESCE(SICC,'0') as nvarchar(3))+'/'+cast(COALESCE(SIC,'0') as nvarchar(3)) SIC
 FROM DAILY dl
 LEFT JOIN (SELECT DaiLy,COUNT(SignIn) SIC FROM SIGNIN group by DaiLy) SI ON SI.DaiLy = DL.ID
+LEFT JOIN (SELECT DaiLy,COUNT(SignIn) SICC FROM SIGNIN where Khoa = 0 group by DaiLy) SIK ON SIK.DaiLy = DL.ID
 {0}
 LEFT JOIN(SELECT Ten 'Nhom', Tu,Den FROM NHOMDAILY WHERE LoaiKhachHang = {1} and id <> 17) g1 on g1.Tu -1 <COALESCE(Gia,0) and g1.Den + 1> COALESCE(Gia,0)
 LEFT JOIN(SELECT MAX(NgayGD) 'GiaoDichGanNhat',IDKhachHang FROM GIAODICH where LoaiGiaoDich  in (4,13,14) GROUP BY IDKhachHang) NGN ON DL.ID = NGN.IDKhachHang
@@ -120,7 +121,7 @@ LEFT JOIN	(SELECT DaiLyID,SoDuCuoi FROM SODU_DAILY WHERE SoDuCuoi < -400000 AND 
 LEFT JOIN	(SELECT DaiLyID,SoDuCuoi FROM SODU_DAILY WHERE SoDuCuoi < -400000 AND DATEDIFF(day, Ngay , @Ngay) = 3) SD3 ON SD3.DaiLyID = SD2.DaiLyID
 LEFT JOIN	(SELECT IDKhachHang, MAX(LuyKe) LuyKe FROM GIAODICH WHERE DATEDIFF(day, NgayGD , @Ngay) IN (1,2,3) GROUP BY IDKhachHang) SD4 ON SD4.IDKhachHang = SD3.DaiLyID
 LEFT JOIN	(SELECT ID,PhatQuyAm FROM CHINHSACH) CS ON CS.ID = SD0.ChinhSach 
-WHERE COALESCE(SD2.SoDuCuoi,0) < 0 AND COALESCE(SD3.SoDuCuoi,0) < 0 AND COALESCE(LuyKe,0) < 0 AND (0 - SD1.SoDuCuoi * CS.PhatQuyAm > 999)
+WHERE COALESCE(SD2.SoDuCuoi,0) < 0 AND COALESCE(SD3.SoDuCuoi,0) < 0 AND COALESCE(LuyKe,0) < 1 AND (0 - SD1.SoDuCuoi * CS.PhatQuyAm > 999)
 ORDER BY ID", Ngay.ToString("yyyyMMdd")));
         }
         #endregion
@@ -139,21 +140,22 @@ ORDER BY ID", Ngay.ToString("yyyyMMdd")));
 
         public long ChaySoDu()
         {
-            return ChayCauTruyVan(@"declare @TuNgay2 datetime = CONVERT(date, getdate()-15)
+            return ChayCauTruyVan(@"declare @TuNgay2 datetime = CONVERT(date, getdate()-60)
 UPDATE SODU_DAILY SET SoDuCuoi = Sd.SoDu from 
 	(
 	SELECT * FROM (
-	SELECT IDSD 'ID', G1.Ngay 'NgayGD',G1.DaiLyID 'DaiLyIDSD', COALESCE(G1.SoDuCuoi,0) 'SD', COALESCE(G.SoDuCuoi,0) + sum(COALESCE(G2.TongTien, 0) +  COALESCE(G3.SoTien, 0)) OVER (PARTITION BY G1.DaiLyID ORDER BY G1.DaiLyID, G1.Ngay) 'SoDu' FROM 
+	SELECT IDSD 'ID', G1.Ngay 'NgayGD',G1.DaiLyID 'DaiLyIDSD', COALESCE(G1.SoDuCuoi,0) 'SD', COALESCE(G.SoDuCuoi,0) + sum(COALESCE(G2.TongTien, 0) +  COALESCE(G3.SoTien, 0)) OVER (PARTITION BY G1.DaiLyID ORDER BY G1.DaiLyID, G1.Ngay) 'SoDu' 
+	FROM 
 	(SELECT DISTINCT CONVERT(DATE,Ngay) Ngay,IDSD,DaiLyID, SoDuCuoi FROM SODU_DAILY WHERE CONVERT(date, Ngay) > @Tungay2 - 1) G1
 	LEFT JOIN (SELECT Ngay,DaiLyID,SoDuCuoi FROM SODU_DAILY WHERE CONVERT(date, Ngay) = @Tungay2 - 1) G ON G.DaiLyID = G1.DaiLyID
 
 	LEFT JOIN (SELECT IDKhachHang, CONVERT(date,NgayGD) NgayGD, COALESCE(sum(GiaHoan),0) - COALESCE(sum(GiaThu),0) AS TongTien
-				FROM GIAODICH WHERE TinhCongNo = 1 AND LoaiGiaoDich NOT IN (2,3) AND CONVERT(date, NgayGD) > @Tungay2 - 1
+				FROM GIAODICH WHERE TinhCongNo = 1 AND LoaiGiaoDich NOT IN (2,3,60) AND CONVERT(date, NgayGD) > @Tungay2 - 1
 				GROUP BY IDKhachHang, CONVERT(date,NgayGD)) G2  
 				on G2.NgayGD = G1.Ngay and G1.DaiLyID = G2.IDKhachHang
 
 	LEFT JOIN (SELECT MaDL, CONVERT(date,NgayHT) NgayHT, COALESCE(sum(SoTien),0) SoTien 
-				FROM CTNGANHANG WHERE CONVERT(date,NgayHT) > @Tungay2 - 1  and LoaiGiaoDich in (2,3,46,47,32,43)
+				FROM CTNGANHANG WHERE CONVERT(date,NgayHT) > @Tungay2 - 1  and LoaiGiaoDich in (2, 3,46,47,32,43)
 				GROUP BY MaDL,CONVERT(date,NgayHT)) G3 
 				on G3.NgayHT = G1.Ngay and G1.DaiLyID = G3.MaDL ) Z
 				WHERE SD<>SoDu

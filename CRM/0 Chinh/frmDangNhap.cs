@@ -87,15 +87,14 @@ namespace CRM
             }
             #endregion
 
-            lblver.Text += DuLieuTaoSan.Instance.PhienBan.Split('-')[0];
+            lblver.Text += ClsDuLieu.PhienBan.Split('-')[0];
         }
 
         #region Dữ liệu 
         void isLogin()
         {
             D_NHOMQUYEN nqb = new D_NHOMQUYEN();
-            D_DAILY nvb = new D_DAILY();
-            List<O_DAILY> nvo = nvb.NhanVien(txtUserName.Text, TMD5.TMd5Hash(txtPassword.Text));
+            List<O_DAILY> nvo = new D_DAILY().NhanVien(txtUserName.Text, TMD5.TMd5Hash(txtPassword.Text));
             if (nvo.Count == 1)
             {
                 if (!nvo[0].Nghi)
@@ -116,20 +115,30 @@ namespace CRM
                     }
                     key.Close();
 
-                    DuLieuTaoSan.NV = nvo[0];
-                    DuLieuTaoSan.Q = (nvo[0].TenDangNhapCty.ToLower().Equals("itadmin")) ? nqb.QuyenAdmin() : nqb.LayQuyenNhanVien(nvo[0].ChinhSach);
-                    frmChinh f = new frmChinh();
-                    XuLyGiaoDien.SplashScreen(f);
-                    TopMost = false;
-                    Hide();
-                    f.Show(this);
+                    ClsDuLieu.NhanVien = nvo[0];
+
+                    ClsDuLieu.QuanLy = new D_QUANLYPHANMEM().DuLieu();
+                    if (ClsDuLieu.QuanLy[0].Ten != ClsDuLieu.PhienBan.Split('-')[0] && !nvo[0].TenDangNhapCty.ToLower().Equals("itadmin"))
+                    {
+                        NotificationManager.Show(this, "Sai phiên bản, phiên bản hiện tại là " + ClsDuLieu.QuanLy[0].Ten, false, 3000);
+                        return;
+                    }
+                    else
+                    {
+                        ClsDuLieu.Quyen = (nvo[0].TenDangNhapCty.ToLower().Equals("itadmin")) ? nqb.QuyenAdmin() : nqb.QuyenNhanVien(nvo[0].ChinhSach);
+                        frmChinh f = new frmChinh();
+                        ClsChucNang.SplashScreen(f);
+                        TopMost = false;
+                        Hide();
+                        f.Show(this);
+                    }
                 }
 
                 else
-                    XtraMessageBox.Show("Tài khoản đã bị khóa vui lòng liên hệ ban quản lý...", "T-CMR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    NotificationManager.Show(this, "Tài khoản đã bị khóa", false, 2000);
             }
             else
-                XtraMessageBox.Show("Sai tên đăng nhập hoặc mật khẩu...", "T-CMR", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                NotificationManager.Show(this, "Sai tên đăng nhập hoặc mật khẩu", false, 2000);
         }
 
         public void CheckBanQuyen()
@@ -154,7 +163,7 @@ namespace CRM
                 }
                 else
                 {
-                    XuLyGiaoDien.OpenForm(this);
+                    ClsChucNang.OpenForm(this);
                     if (key != null)
                     {
                         if (key.GetValue("cmra") != null && key.GetValue("cmrp") != null)

@@ -13,7 +13,7 @@ namespace CRM
 
         private void frmTuyenBay_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             DuLieuSanBay();
             DuLieuTuyenBay();
         }

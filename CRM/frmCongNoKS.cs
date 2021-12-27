@@ -22,7 +22,7 @@ namespace CRM
 
         private void frmCongNoKS_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         private void btnTim_Click(object sender, EventArgs e)
@@ -32,11 +32,11 @@ namespace CRM
 
         void DuLieu()
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             lstCongNo = new D_KHACHSAN().LayDanhSachCN(dtp1.DateTime, dtp2.DateTime, daiLyO.ID.ToString());
             khachSanOBindingSource.DataSource = lstCongNo;
-            XuLyGiaoDien.wait.CloseWaitForm();
+            ClsChucNang.wait.CloseWaitForm();
         }
     }
 }

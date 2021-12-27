@@ -21,7 +21,7 @@ namespace CRM
 
         private void frmNHKSCT_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             khachSanOBindingSource.DataSource = new D_KHACHSAN().DuLieuKSBL(_nCC);
             nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu(true);
             daiLyOBindingSource.DataSource = new D_DAILY().All();

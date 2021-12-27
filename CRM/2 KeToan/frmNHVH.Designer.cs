@@ -43,8 +43,8 @@
             this.rKhachLe = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.daiLyOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.colTenKhach = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.rNCC = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.colNhaCungCap = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.rNCC = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.nCCOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
@@ -59,6 +59,7 @@
             // 
             // btnLuu
             // 
+            this.btnLuu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLuu.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnLuu.Appearance.Options.UseFont = true;
             this.btnLuu.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnLuu.ImageOptions.SvgImage")));
@@ -82,8 +83,9 @@
             // 
             // GCDSC
             // 
+            this.GCDSC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.GCDSC.DataSource = this.giaoDichOBindingSource;
-            this.GCDSC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GCDSC.Location = new System.Drawing.Point(2, 23);
             this.GCDSC.MainView = this.GVDSC;
             this.GCDSC.Name = "GCDSC";
@@ -200,6 +202,13 @@
             this.colTenKhach.Visible = true;
             this.colTenKhach.VisibleIndex = 7;
             // 
+            // colNhaCungCap
+            // 
+            this.colNhaCungCap.FieldName = "NhaCungCap";
+            this.colNhaCungCap.Name = "colNhaCungCap";
+            this.colNhaCungCap.Visible = true;
+            this.colNhaCungCap.VisibleIndex = 6;
+            // 
             // rNCC
             // 
             this.rNCC.AutoHeight = false;
@@ -210,13 +219,6 @@
             this.rNCC.Name = "rNCC";
             this.rNCC.ValueMember = "ID";
             // 
-            // colNhaCungCap
-            // 
-            this.colNhaCungCap.FieldName = "NhaCungCap";
-            this.colNhaCungCap.Name = "colNhaCungCap";
-            this.colNhaCungCap.Visible = true;
-            this.colNhaCungCap.VisibleIndex = 6;
-            // 
             // nCCOBindingSource
             // 
             this.nCCOBindingSource.DataSource = typeof(DataTransferObject.O_NHACUNGCAP);
@@ -225,7 +227,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(661, 466);
+            this.ClientSize = new System.Drawing.Size(807, 466);
             this.Controls.Add(this.btnLuu);
             this.Controls.Add(this.groupControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;

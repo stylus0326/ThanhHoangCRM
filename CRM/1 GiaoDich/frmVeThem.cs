@@ -65,22 +65,22 @@ namespace CRM
             NCCDB.DataSource = _ListNCC;
             tuyenBayOBindingSource.DataSource = _ListTuyenBayO;
             rHD.DataSource = DuLieuTaoSan.HinhThucHoaDon();
-            iAn.Visible = DuLieuTaoSan.Q.VeAdmin;
+            iAn.Visible = ClsDuLieu.Quyen.VeAdmin;
 
             #region NVGiaoDich
-            iNVGiaoDich.Properties.ReadOnly = _GiaoDichO.NVGiaoDich != DuLieuTaoSan.NV.ID;
+            iNVGiaoDich.Properties.ReadOnly = _GiaoDichO.NVGiaoDich != ClsDuLieu.NhanVien.ID;
 
-            if (_GiaoDichO.NVGiaoDich == DuLieuTaoSan.NV.ID || _GiaoDichO.NVGiaoDich < 1 || DuLieuTaoSan.NV.MienPhat)
-                _GiaoDichO.NVGiaoDich = DuLieuTaoSan.NV.ID;
-            else if (_GiaoDichO.NVHoTro < 1 || DuLieuTaoSan.NV.MienPhat)
-                _GiaoDichO.NVHoTro = DuLieuTaoSan.NV.ID;
+            if (_GiaoDichO.NVGiaoDich == ClsDuLieu.NhanVien.ID || _GiaoDichO.NVGiaoDich < 1 || ClsDuLieu.NhanVien.MienPhat)
+                _GiaoDichO.NVGiaoDich = ClsDuLieu.NhanVien.ID;
+            else if (_GiaoDichO.NVHoTro < 1 || ClsDuLieu.NhanVien.MienPhat)
+                _GiaoDichO.NVHoTro = ClsDuLieu.NhanVien.ID;
             #endregion
 
             iGhiChu.Text = _GiaoDichO.GhiChu;
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, _GiaoDichO);
             _LSTDIC = XuLyDuLieu.BanTamGrid(GVGD);
-            XuLyGiaoDien.OpenForm(this);
-            btnLuu.Visible = DuLieuTaoSan.Q.VeThemSua;
+            ClsChucNang.OpenForm(this);
+            btnLuu.Visible = ClsDuLieu.Quyen.VeThemSua;
         }
 
         public void DuLieuKhachLe(long a)
@@ -290,7 +290,7 @@ namespace CRM
 
             if (_GiaoDichO.TinhCongNo)
             {
-                if (!DuLieuTaoSan.Q.TheoDoiHoanAdmin)
+                if (!ClsDuLieu.Quyen.TheoDoiHoanAdmin)
                     if ((kn.HoatDong) && !(kn.Code ?? string.Empty).Contains(iMaCho.Text.Replace(" ", string.Empty)))
                     {
                         XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
@@ -382,7 +382,7 @@ namespace CRM
                 GhiChuCmt(_GiaoDichO.ID);
                 if (iLoaiKhachHang.EditValue.ToString() != "3")
                     new D_DAILY().ChayLaiPhi((_GiaoDichO.NgayGD > iNgayGD.DateTime) ? iNgayGD.DateTime : _GiaoDichO.NgayGD);
-                (Owner.ActiveMdiChild as frmVe).DuLieu();
+                (Owner.ActiveMdiChild as frmVe).DuLieu(true);
                 Close();
             }
         }
@@ -392,16 +392,27 @@ namespace CRM
         {
             if (long.Parse(f.ToString()) > 0)
             {
-                string NoiDung = string.Format("{0}: {1}", f, XuLyDuLieu.GhiChuCMT(this) + XuLyDuLieu.GhiChuGrid(GVGD, _LSTDIC));
+                string NoiDung = string.Format("Sửa {0}: {1}", f, XuLyDuLieu.GhiChuCMT(this) + XuLyDuLieu.GhiChuGrid(GVGD, _LSTDIC));
                 Dictionary<string, object> dic = new Dictionary<string, object>();
-                dic.Add("FormName", Text);
+                dic.Add("FormName", "Vé");
                 dic.Add("MaCho", iMaCho.Text);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 if (NoiDung.Length > 10)
                     new D_LS_GIAODICH().ThemMoi(dic);
+            }
+            else if (long.Parse(f.ToString()) == 0)
+            {
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("FormName", "Vé");
+                dic.Add("MaCho", iMaCho.Text);
+                dic.Add("NoiDung", "Thêm tay");
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
+                dic.Add("LoaiKhachHang", 0);
+                dic.Add("Ma", 0);
+                new D_LS_GIAODICH().ThemMoi(dic);
             }
         }
         #endregion
@@ -563,7 +574,7 @@ namespace CRM
                     }
                 }
                 chkDen.Checked = giaoDichO.SoLuongVe == 2;
-                giaoDichO.NVGiaoDich = DuLieuTaoSan.NV.ID;
+                giaoDichO.NVGiaoDich = ClsDuLieu.NhanVien.ID;
                 XuLyDuLieu.ConvertClassToTable(this, giaoDichO);
                 DSGiaoDich.DataSource = giaoDichOs;
             }

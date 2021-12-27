@@ -117,7 +117,6 @@
             this.Controls.Add(this.wVJ);
             this.Controls.Add(this.groupControl1);
             this.Name = "frmQuyAGS";
-            this.Opacity = 0D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Up Quỹ AGS";
             this.Load += new System.EventHandler(this.frmQuyAGS_Load);

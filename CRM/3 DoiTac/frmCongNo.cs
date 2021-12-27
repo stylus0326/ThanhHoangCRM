@@ -65,9 +65,9 @@ namespace CRM
             loaiGiaoDichOBindingSource.DataSource = new D_LOAIGIAODICH().DuLieu_CongNo_TheoLoai(chk.Checked ? 1 : 2);
             tuyenBayOBindingSource.DataSource = new D_TUYENBAY().DuLieu();
             //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            btnExcel.Enabled = DuLieuTaoSan.Q.Lv2Excel;
-            btnGuiMail.Enabled = DuLieuTaoSan.Q.Lv2GuiMail;
-            btnFILE.Enabled = DuLieuTaoSan.Q.Lv2ThemTep;
+            btnExcel.Enabled = ClsDuLieu.Quyen.Lv2Excel;
+            btnGuiMail.Enabled = ClsDuLieu.Quyen.Lv2GuiMail;
+            btnFILE.Enabled = ClsDuLieu.Quyen.Lv2ThemTep;
         }
 
         #region Dữ liệu 
@@ -199,8 +199,8 @@ namespace CRM
                 XuLyGiaoDien.Alert("Vui lòng nhập đầy đủ thông tin", Form_Alert.enmType.Info);
             else
             {
-                if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.ShowWaitForm();
+                if (!ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.ShowWaitForm();
                 //simpleButton1.Text = "Cần chạy lại: " + daiLyD.DemNgayPhiSai().ToString();
                 D_GIAODICH gdb = new D_GIAODICH();
                 string daily = string.Format("{0}", lstDaiLy.CheckedItems[0]);
@@ -215,8 +215,8 @@ namespace CRM
                     btnGuiMail.Enabled = true;
                     btnExcel.Enabled = true;
                 }
-                if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.CloseWaitForm();
+                if (ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.CloseWaitForm();
             }
         }
 
@@ -267,8 +267,8 @@ namespace CRM
 
 
                         bool sendOK = false;
-                        if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                            XuLyGiaoDien.wait.ShowWaitForm();
+                        if (!ClsChucNang.wait.IsSplashFormVisible)
+                            ClsChucNang.wait.ShowWaitForm();
                         for (int i = 0; i < n; i++)
                         {
                             O_DAILY dl = lstDaiLy.GetItem(lstDaiLy.CheckedIndices[0]) as O_DAILY;
@@ -287,45 +287,48 @@ namespace CRM
                                 goto RE1;
 
                             string[] EmailKeToanString = Regex.Replace(dl.EmailKeToan, @"\t|\n|\r", "|").Replace("||", "|").Split('|');
-                            for (int ii = 0; ii < EmailKeToanString.Count(); ii++)
+
+                            if (EmailKeToanString.Length > 0)
                             {
-                                if (EmailKeToanString[ii].Length > 5)
+                                MailMessage mm = new MailMessage();
+                                for (int ii = 0; ii < EmailKeToanString.Count(); ii++)
                                 {
-                                    MailMessage mm = new MailMessage();
-                                    mm.From = new MailAddress("ketoan02@thanhhoang.vn", "Thành Hoàng");
-                                    mm.BodyEncoding = UTF8Encoding.UTF8;
-                                    mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-                                    mm.IsBodyHtml = true;
-                                    RichEditMailMessageExporter exporter = new RichEditMailMessageExporter(txtMauEmail, mm);
-                                    exporter.Export();
-                                    mm.To.Add(new MailAddress(EmailKeToanString[ii]));
-                                    //mm.To.Add(new MailAddress("tungtranims@gmail.com"));
-                                    if (lstCongNo.Count > 1)
+                                    if (EmailKeToanString[ii].Length > 5)
+                                        mm.To.Add(new MailAddress(EmailKeToanString[ii]));
+                                }
+
+                                mm.From = new MailAddress("ketoan02@thanhhoang.vn", "Thành Hoàng");
+                                mm.BodyEncoding = UTF8Encoding.UTF8;
+                                mm.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
+                                mm.IsBodyHtml = true;
+                                RichEditMailMessageExporter exporter = new RichEditMailMessageExporter(txtMauEmail, mm);
+                                exporter.Export();
+
+                                if (lstCongNo.Count > 1)
+                                {
+                                    ClsChucNang.wait.SetWaitFormDescription("Gửi cho: " + dl.Ten + " (" + (i + 1) + "/" + n + ").");
+                                    CTGiaoDichDindingSource.DataSource = lstCongNo;
+                                    mm.Subject = "Công Nợ - " + dl.Ten + " - Từ ngày " + ((DateTime)dtpTuNgay.EditValue).ToString("dd_MM_yyyy") + " - đến ngày " + ((DateTime)dtpDenNgay.EditValue).ToString("dd_MM_yyyy");
+
+                                    #region Xuất excel
+                                    gridCTCongNo.ForceInitialize();
+                                    string strFile = @"C:\CongNo\" + dl.Ten + " - " + ((DateTime)dtpTuNgay.EditValue).ToString("dd_MM_yyyy") + " - " + ((DateTime)dtpDenNgay.EditValue).ToString("dd_MM_yyyy") + ".xlsx";
+                                    Directory.CreateDirectory(@"C:\CongNo");
+                                    gridCTCongNo.ExportToXlsx(strFile, opt);
+                                    #endregion
+
+                                    mm.Attachments.Add(new Attachment(strFile));
+                                    foreach (string g in vs)
                                     {
-                                        XuLyGiaoDien.wait.SetWaitFormDescription("Gửi cho: " + dl.Ten + " (" + (i + 1) + "/" + n + ").");
-                                        CTGiaoDichDindingSource.DataSource = lstCongNo;
-                                        mm.Subject = "Công Nợ - " + dl.Ten + " - Từ ngày " + ((DateTime)dtpTuNgay.EditValue).ToString("dd_MM_yyyy") + " - đến ngày " + ((DateTime)dtpDenNgay.EditValue).ToString("dd_MM_yyyy");
-
-                                        #region Xuất excel
-                                        gridCTCongNo.ForceInitialize();
-                                        string strFile = @"C:\CongNo\" + dl.Ten + " - " + ((DateTime)dtpTuNgay.EditValue).ToString("dd_MM_yyyy") + " - " + ((DateTime)dtpDenNgay.EditValue).ToString("dd_MM_yyyy") + ".xlsx";
-                                        Directory.CreateDirectory(@"C:\CongNo");
-                                        gridCTCongNo.ExportToXlsx(strFile, opt);
-                                        #endregion
-
-                                        mm.Attachments.Add(new Attachment(strFile));
-                                        foreach (string g in vs)
-                                        {
-                                            if (g.Count() > 0)
-                                                mm.Attachments.Add(new Attachment(g));
-                                        }
-                                        client.Send(mm);
-
-                                        sendOK = true;
-                                        mm.Attachments.Dispose();
-                                        if (File.Exists(strFile))
-                                            File.Delete(strFile);
+                                        if (g.Count() > 0)
+                                            mm.Attachments.Add(new Attachment(g));
                                     }
+                                    client.Send(mm);
+
+                                    sendOK = true;
+                                    mm.Attachments.Dispose();
+                                    if (File.Exists(strFile))
+                                        File.Delete(strFile);
                                 }
                             }
                         RE1:
@@ -340,8 +343,8 @@ namespace CRM
                     }
                     catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Thông báo"); }
                     gdb.ChayCapNhatLuyKe(lstInt);
-                    if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                        XuLyGiaoDien.wait.CloseWaitForm();
+                    if (ClsChucNang.wait.IsSplashFormVisible)
+                        ClsChucNang.wait.CloseWaitForm();
                 }
             }
         }

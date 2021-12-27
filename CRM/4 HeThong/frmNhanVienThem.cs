@@ -19,7 +19,7 @@ namespace CRM
             InitializeComponent();
             btnlock.Visible = false;
             txtMatKhauCty.Enabled = true;
-            _KhachHangO = DuLieuTaoSan.NV;
+            _KhachHangO = ClsDuLieu.NhanVien;
         }
 
         public frmNhanVienThem(bool Xem)
@@ -29,7 +29,7 @@ namespace CRM
             txtMatKhauCty.Enabled = true;
             txtMatKhauCty.Properties.PasswordChar = '\0';
             Text += " thêm";
-            btnLuu.Visible = DuLieuTaoSan.Q.NhanVienThemSua;
+            btnLuu.Visible = ClsDuLieu.Quyen.NhanVienThemSua;
             iAC1.Enabled = false;
         }
 
@@ -37,7 +37,7 @@ namespace CRM
         {
             InitializeComponent();
             Text += " sửa";
-            btnLuu.Visible = DuLieuTaoSan.Q.NhanVienThemSua;
+            btnLuu.Visible = ClsDuLieu.Quyen.NhanVienThemSua;
             _KhachHangO = DaiLyO;
         }
 
@@ -46,7 +46,7 @@ namespace CRM
             dt.Columns.Add("col1");
             dt.Columns.Add("col2");
             dt.Columns.Add("col3");
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             _HoHang = _KhachHangO.ThongTinLienLac;
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, _KhachHangO);
             quyenOBindingSource.DataSource = new D_NHOMQUYEN().DuLieu();
@@ -119,7 +119,7 @@ namespace CRM
         private void simpleButton3_Click(object sender, EventArgs e)
         {
             List<KiemTra> kiemTras = new List<KiemTra>();
-            kiemTras.Add(new KiemTra() { _Control = iTenDangNhapCty, _Tu = 5, _Den = 30, _ChoQua = !_DaiLyD.DaTonTai("TenDangNhapCty", iTenDangNhapCty.Text, _KhachHangO.ID), _ThongBao2 = "Đã tồn tại" });
+            kiemTras.Add(new KiemTra() { _Control = iTenDangNhapCty, _Tu = 5, _Den = 30, _ChoQua = !_DaiLyD.KiemTraTonTai(_KhachHangO.ID,"TenDangNhapCty", iTenDangNhapCty.Text), _ThongBao2 = "Đã tồn tại" });
             kiemTras.Add(new KiemTra() { _Control = txtMatKhauCty, _Tu = 5, _Den = 30, _ChoQuaThang = !txtMatKhauCty.Enabled });
 
             XuLyGiaoDien.KiemTra(kiemTras, dxValidationProvider1);

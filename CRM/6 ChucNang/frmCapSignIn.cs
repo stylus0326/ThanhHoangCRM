@@ -76,11 +76,13 @@ namespace CRM
             }
         }
 
+        List<O_SIGNIN> si = new List<O_SIGNIN>();
         private void iDaiLy_EditValueChanged(object sender, EventArgs e)
         {
             O_DAILY dl = iIDKhachHang.GetSelectedDataRow() as O_DAILY;
             lSignIn.EditValue = null;
-            signInOBindingSource.DataSource = lstSI.Where(w => w.DaiLy.Equals(dl.ID)).ToList();
+            si = lstSI.Where(w => w.DaiLy.Equals(dl.ID)).ToList();
+            signInOBindingSource.DataSource = si;
             iMatKhau.Text = RandomPassword();
         }
 
@@ -194,11 +196,6 @@ namespace CRM
             }
         }
 
-        private void icmb_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (icmb.SelectedIndex > 0 && lSignIn.EditValue == null)
-                icmb.SelectedIndex = 0;
-        }
 
         private HtmlElement GetElementByClass(string tag, string classname)
         {
@@ -267,7 +264,9 @@ namespace CRM
             }
         }
 
+
         bool ThemDaiLy = false;
+        bool KhoaCode = false;
         void Wb()
         {
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
@@ -289,7 +288,7 @@ namespace CRM
                 #region VJ
                 if (!driver.Url.Contains("vietjetair"))
                 {
-                    driver.Navigate().GoToUrl("https://www.vietjetair.com/Sites/Web/vi-VN/Home");
+                    driver.Navigate().GoToUrl("https://www.vietjetair.com/vi");
                     wait.Until(d => d.PageSource.Contains("https://agents.vietjetair.com/sitelogin.aspx?lang=vi"));
                     js.ExecuteScript("location.href = 'https://agents.vietjetair.com/sitelogin.aspx?lang=vi';");
                     wait.Until(d => d.PageSource.Contains("javascript:SubmitForm();"));
@@ -304,65 +303,119 @@ namespace CRM
                     wait.Until(d => d.PageSource.Contains("base-loading-class") == false);
                 }
 
-                O_DAILY dl = _lstDL.Where(w => w.ID.Equals(_lstSIChinh[i].DaiLy)).ToList()[0];
-
                 switch (_lstSIChinh[i].CanLam)
                 {
                     case 0:
-                        driver.FindElement(By.LinkText("New user")).Click();
-                        wait.Until(d => d.PageSource.Contains("btn btn-secondary ng-binding"));
-                        Thread.Sleep(1000);
-                        wait.Until(d => d.PageSource.Contains("form-control ng-pristine ng-untouched ng-valid-we-validate ng-valid-maxlength ng-valid ng-valid-required"));
-
-                        Thread.Sleep(2000);
-                        object a = ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-valid-maxlength ng-valid ng-valid-required", 0).GetAttribute("value");
-                        Invoke(new MethodInvoker(delegate ()
                         {
-                            _lstSIChinh[i].SignIn = a.ToString();
-                            GCSI.DataSource = null;
-                            GCSI.DataSource = _lstSIChinh;
-                            GVSI.ExpandAllGroups();
+                            O_DAILY dl = _lstDL.Where(w => w.ID.Equals(_lstSIChinh[i].DaiLy)).ToList()[0];
+                            driver.FindElement(By.LinkText("New user")).Click();
+                            wait.Until(d => d.PageSource.Contains("btn btn-secondary ng-binding"));
+                            Thread.Sleep(1000);
+                            wait.Until(d => d.PageSource.Contains("form-control ng-pristine ng-untouched ng-valid-we-validate ng-valid-maxlength ng-valid ng-valid-required"));
 
-                        }));
-
-                        Actions build = new Actions(driver);
-                        Thread.Sleep(1000);
-                        build.Click(ChromeFindElementByClassName("div", "ui-select-container ui-select-multiple ui-select-bootstrap dropdown form-control ng-valid ng-valid-ui-select-required", 0)).Build().Perform();
-
-                        Thread.Sleep(1000);
-                        wait.Until(d => d.FindElements(By.LinkText("TA")).Count > 0);
-                        driver.FindElement(By.LinkText("TA HOLD")).Click();
-
-                        if (_lstSIChinh[i].Chinh)
-                        {
-                            wait.Until(d => d.PageSource.Contains("base-loading-class") == false);
-                            js.ExecuteScript("document.getElementsByClassName('ui-select-search input-xs ng-pristine ng-valid ng-touched')[0].click()");
-                            try
+                            Thread.Sleep(2000);
+                            object a = ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-valid-maxlength ng-valid ng-valid-required", 0).GetAttribute("value");
+                            Invoke(new MethodInvoker(delegate ()
                             {
-                                driver.FindElement(By.LinkText("TA")).Click();
+                                _lstSIChinh[i].SignIn = a.ToString();
+                                GCSI.DataSource = null;
+                                GCSI.DataSource = _lstSIChinh;
+                                GVSI.ExpandAllGroups();
+
+                            }));
+
+                            Actions build = new Actions(driver);
+                            Thread.Sleep(1000);
+                            build.Click(ChromeFindElementByClassName("div", "ui-select-container ui-select-multiple ui-select-bootstrap dropdown form-control ng-valid ng-valid-ui-select-required", 0)).Build().Perform();
+
+                            Thread.Sleep(1000);
+                            wait.Until(d => d.FindElements(By.LinkText("TA")).Count > 0);
+                            driver.FindElement(By.LinkText("TA HOLD")).Click();
+
+                            if (_lstSIChinh[i].Chinh)
+                            {
+                                wait.Until(d => d.PageSource.Contains("base-loading-class") == false);
+                                js.ExecuteScript("document.getElementsByClassName('ui-select-search input-xs ng-pristine ng-valid ng-touched')[0].click()");
+                                try
+                                {
+                                    driver.FindElement(By.LinkText("TA")).Click();
+                                }
+                                catch { }
                             }
-                            catch { }
+
+                            ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-invalid ng-invalid-required", 0).SendKeys(_lstSIChinh[i].MatKhau);
+                            ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required", 0).SendKeys(_lstSIChinh[i].MatKhau);
+
+                            ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required ng-valid-maxlength ng-valid-email", 0).SendKeys((dl.EmailGiaoDich ?? "vemaybay@thanhhoang.vn").Replace("\r\n", "|").Split('|')[0]);
+                            ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required ng-valid-maxlength", 0).SendKeys(dl.DiDong ?? "0919415995");
+                            ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength", 0).SendKeys(_lstSIChinh[i].SignIn + "-" + XuLyDuLieu.NotVietKey(dl.Ten).Replace(" ", string.Empty));
+
+                            new SelectElement(ChromeFindElementByClassName("select", "form-control ng-pristine ng-untouched ng-invalid ng-invalid-required")).SelectByIndex(47);
+
+                            ChromeFindElementByClassName("button", "btn btn-secondary ng-binding", 0).Submit();
+
+                            Thread.Sleep(1000);
+                            wait.Until(d => d.PageSource.Contains("base-loading-class") == false);
+                            wait.Until(d => d.FindElements(By.LinkText("New user")).Count > 0);
+                            _lstSIChinh[i].End = true;
+
+                            break;
                         }
+                    case 1:
+                        {
+                            KhoaCode = true;
+                            driver.FindElement(By.XPath("/html/body/main/div[2]/div/div[1]/input")).SendKeys(_lstSIChinh[i].SignIn);
 
-                        ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-invalid ng-invalid-required", 0).SendKeys(_lstSIChinh[i].MatKhau);
-                        ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required", 0).SendKeys(_lstSIChinh[i].MatKhau);
+                            if (driver.FindElement(By.TagName("tbody")).FindElements(By.TagName("tr")).Count() == 1)
+                            {
+                                driver.FindElement(By.TagName("tbody")).FindElements(By.TagName("a"))[1].Click();
 
-                        ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required ng-valid-maxlength ng-valid-email", 0).SendKeys((dl.EmailGiaoDich ?? "vemaybay@thanhhoang.vn").Replace("\r\n", "|").Split('|')[0]);
-                        ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-valid-we-validate ng-invalid ng-invalid-required ng-valid-maxlength", 0).SendKeys(dl.DiDong ?? "0919415995");
-                        ChromeFindElementByClassName("input", "form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength", 0).SendKeys(_lstSIChinh[i].SignIn + "-" + XuLyDuLieu.NotVietKey(dl.Ten).Replace(" ", string.Empty));
+                                wait.Until(d => d.PageSource.Contains("btn btn-secondary ng-binding"));
+                                Thread.Sleep(1000);
+                                Invoke(new MethodInvoker(delegate ()
+                                {
+                                    _lstSIChinh[i].End = true;
+                                    GCSI.DataSource = null;
+                                    GCSI.DataSource = _lstSIChinh;
+                                    GVSI.ExpandAllGroups();
 
-                        new SelectElement(ChromeFindElementByClassName("select", "form-control ng-pristine ng-untouched ng-invalid ng-invalid-required")).SelectByIndex(47);
+                                }));
 
-                        ChromeFindElementByClassName("button", "btn btn-secondary ng-binding", 0).Submit();
+                                driver.FindElement(By.XPath(@"/html/body/main/div[2]/form/div[13]/input")).Clear();
+                                driver.FindElement(By.XPath(@"/html/body/main/div[2]/form/div[14]/input")).Clear();
+                                Thread.Sleep(100);
+                                driver.FindElement(By.XPath(@"/html/body/main/div[2]/form/div[13]/input")).SendKeys("vemaybay@thanhhoang.vn");
+                                driver.FindElement(By.XPath(@"/html/body/main/div[2]/form/div[14]/input")).SendKeys("0919415995");
+                                driver.FindElement(By.XPath(@"/html/body/main/div[2]/form/div[15]/textarea")).SendKeys(" - " + ClsDuLieu.NhanVien.TenDangNhapCty + " Khoa code ngay " + DateTime.Now.ToString("dd/MM/yyyy"));
 
-                        Thread.Sleep(1000);
-                        wait.Until(d => d.PageSource.Contains("base-loading-class") == false);
-                        wait.Until(d => d.FindElements(By.LinkText("New user")).Count > 0);
-                        _lstSIChinh[i].End = true;
+                                Thread.Sleep(1000);
+                                driver.FindElement(By.XPath(@"/html/body/main/div[2]/form/div[16]/button")).Submit();
 
-                        break;
+                                Thread.Sleep(1000);
+                                wait.Until(d => d.PageSource.Contains("base-loading-class") == false);
+                                driver.FindElement(By.XPath(@"/html/body/main/home-back/div/a[3]")).Click();
+                                wait.Until(d => d.FindElements(By.LinkText("New user")).Count > 0);
+                            }
+                            else
+                                driver.FindElement(By.XPath("/html/body/main/div[2]/div/div[1]/input")).Clear();  
+                            break;
+                        }
                 }
                 #endregion
+
+            }
+            if (KhoaCode)
+            {
+                driver.Navigate().GoToUrl("https://agents.vietjetair.com/AgentPwdEmail.aspx?lang=vi");
+                for (int i = 0; i < _lstSIChinh.Count; i++)
+                {
+                    if (_lstSIChinh[i].End || _lstSIChinh[i].HangBay != 2 || _lstSIChinh[i].CanLam != 1)
+                        continue;
+
+                    driver.FindElement(By.XPath(@"/*[@id='txtAgentLogon']")).Clear();
+                    driver.FindElement(By.XPath(@"/*[@id='txtAgentLogon']")).SendKeys(cCO.MatKhau);
+                    driver.FindElements(By.XPath(@"/*[@id='AgentPwdEmail']/table/tbody/tr[4]/td[1]/a"))[0].Click();
+                }
             }
             driver.Close();
             driver.Quit();
@@ -381,6 +434,7 @@ namespace CRM
         int SoLanDangNhap = 0;
         int iVN = 0;
         O_DAILY dldl = new O_DAILY();
+        string URLs = "";
         private void wVJ_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
             if (wVJ.ReadyState == WebBrowserReadyState.Complete && !wVJ.IsBusy)
@@ -422,151 +476,209 @@ namespace CRM
                             goto RetunA;
                     }
                 }  // Đăng nhập
-                else if (wVJ.Url.ToString().Contains("/Default.aspx") || wVJ.Url.AbsolutePath.Contains("/Booking.aspx")) //Vào trang thêm đại lý
-                    wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=SubAgent");
-                else if (wVJ.Url.ToString().EndsWith("Agent.aspx?Do=SubAgent&Act=Add"))// Thêm đại lý
+                else
                 {
-                    dldl = _lstDL.Where(w => w.MaAGS.Equals(lstDLAGS[0])).First();
-                    wVJ.Document.GetElementById("ctl08_txtAgentCode").SetAttribute("value", lstDLAGS[0]);
-                    wVJ.Document.GetElementById("ctl08_txtAgentName").SetAttribute("value", dldl.Ten);
-                    if (lstDLAGS.Count > 0)
-                    {
-                        if (_lstSIChinh.Where(w => w.DaiLy.Equals(dldl.ID) && w.HangBay.Equals(3) && w.Chinh).Count() > 0)
-                            lstQAGS.Remove(lstDLAGS[0]);
-                        lstDLAGS.Remove(lstDLAGS[0]);
-                    }
-                    wVJ.Document.GetElementById("ctl08_btOK").InvokeMember("click");
-                }// Thêm đại lý
-                else if (wVJ.Url.ToString().EndsWith("Agent.aspx?Do=SubAgent"))//Kiểm tra tồn tại đại lý
-                {
-                    if (lstDLAGS.Count == 0)
-                    {
-                        if (lstQAGS.Count == 0)
-                            wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=Ticketing");
-                        else
-                            wVJ.Navigate("http://ags.thanhhoang.vn/Accounting.aspx?Do=Deposit");
-                    }
-                    else
-                    {
-                        if (!ThemDaiLy)
+                    if (iVN < _lstSIChinh.Count())
+                        switch (_lstSIChinh[iVN].CanLam)
                         {
-                            HtmlElementCollection hc = wVJ.Document.GetElementsByTagName("div");
-                            for (int i = 0; i < hc.Count; i++)
-                            {
-                                if (hc[i].GetAttribute("classname") == "item first")
-                                    if (lstDLAGS.Equals(hc[i].InnerText))
-                                        lstDLAGS.Remove(hc[i].InnerText);
-                            }
+                            case 0:
+                                {
+                                    if (wVJ.Url.ToString().Contains("/Default.aspx") || wVJ.Url.AbsolutePath.Contains("/Booking.aspx")) //Vào trang thêm đại lý
+                                        wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=SubAgent");
+                                    else if (wVJ.Url.ToString().EndsWith("Agent.aspx?Do=SubAgent&Act=Add"))// Thêm đại lý
+                                    {
+                                        dldl = _lstDL.Where(w => w.MaAGS.Equals(lstDLAGS[0])).First();
+                                        wVJ.Document.GetElementById("ctl08_txtAgentCode").SetAttribute("value", lstDLAGS[0]);
+                                        wVJ.Document.GetElementById("ctl08_txtAgentName").SetAttribute("value", dldl.Ten);
+                                        if (lstDLAGS.Count > 0)
+                                        {
+                                            if (_lstSIChinh.Where(w => w.DaiLy.Equals(dldl.ID) && w.HangBay.Equals(3) && w.Chinh).Count() > 0)
+                                                lstQAGS.Remove(lstDLAGS[0]);
+                                            lstDLAGS.Remove(lstDLAGS[0]);
+                                        }
+                                        wVJ.Document.GetElementById("ctl08_btOK").InvokeMember("click");
+                                    }// Thêm đại lý
+                                    else if (wVJ.Url.ToString().EndsWith("Agent.aspx?Do=SubAgent"))//Kiểm tra tồn tại đại lý
+                                    {
+                                        if (lstDLAGS.Count == 0)
+                                        {
+                                            if (lstQAGS.Count == 0)
+                                                wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=Ticketing");
+                                            else
+                                                wVJ.Navigate("http://ags.thanhhoang.vn/Accounting.aspx?Do=Deposit");
+                                        }
+                                        else
+                                        {
+                                            if (!ThemDaiLy)
+                                            {
+                                                HtmlElementCollection hc = wVJ.Document.GetElementsByTagName("div");
+                                                for (int i = 0; i < hc.Count; i++)
+                                                {
+                                                    if (hc[i].GetAttribute("classname") == "item first")
+                                                        if (lstDLAGS.Equals(hc[i].InnerText.Replace(" ", "")))
+                                                            lstDLAGS.Remove(hc[i].InnerText);
+                                                }
+                                            }
+
+                                            ThemDaiLy = lstDLAGS.Count > 0;
+                                            if (lstDLAGS.Count > 0)
+                                                wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=SubAgent&Act=Add");
+                                            else
+                                                wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=Ticketing");
+                                        }
+                                    }//Kiểm tra tồn tại đại lý
+                                    else if (wVJ.Url.ToString().EndsWith("Accounting.aspx?Do=Deposit&Act=Add"))// Thêm quỹ
+                                    {
+                                        HtmlElementCollection hc = wVJ.Document.GetElementsByTagName("option");
+                                        for (int i = 4; i < hc.Count; i++)
+                                        {
+                                            lstdic.Add(hc[i].InnerText);
+                                        }
+
+                                        int o = lstdic.FindIndex(x => x.StartsWith("0"));
+                                        if (o < 0)
+                                        {
+                                            XtraMessageBox.Show("Đại lý chưa được thêm trên ags", "Thông báo");
+                                            Dispose();
+                                            Close();
+                                        }
+                                        else
+                                        {
+                                            element.text = @"function doPost() { document.getElementById('ctl08_ddlSubAgent').options.item(" + o + ").selected = true; }";
+                                            head.AppendChild(scriptEl);
+                                            wVJ.Document.InvokeScript("doPost");
+
+                                            wVJ.Document.GetElementById("ctl08_txtAmount").SetAttribute("value", "20000000");
+                                            wVJ.Document.GetElementById("ctl08_txtDocNo").SetAttribute("value", "1");
+                                            wVJ.Document.GetElementById("ctl08_txtDocDate").SetAttribute("value", DateTime.Now.ToString("dd/MM/yyyy"));
+                                            wVJ.Document.Window.ScrollTo(0, 170);
+                                            Dictionary<string, object> dic = new Dictionary<string, object>();
+                                            dic.Add("SoCT", 2);
+                                            new D_DAILY().CapNhat(dic, _lstDL.Where(w => w.MaAGS.Equals(lstDLAGS[0])).First().ID);
+                                        }
+                                    }// Thêm quỹ
+                                    else if (wVJ.Url.ToString().Contains("Accounting.aspx?Do=Deposit"))
+                                    {
+                                        if (lstQAGS.Count > 0)
+                                            wVJ.Document.GetElementById("ctl08_btnAddNew").InvokeMember("click");
+                                    }// Thêm quỹ
+                                    else if (wVJ.Url.ToString().EndsWith("Agent.aspx?Do=Ticketing&Act=Add"))
+                                    {
+                                        dldl = _lstDL.Where(w => w.ID.Equals(_lstSIChinh[iVN].DaiLy)).First();
+                                        lstMaAGSW = lstMaAGSW.OrderByDescending(w => w).ToList();
+                                        HtmlElementCollection hc = wVJ.Document.GetElementsByTagName("option");
+                                        for (int i = 4; i < hc.Count; i++)
+                                        {
+                                            lstdic.Add(hc[i].InnerText);
+                                        }
+
+                                        int o = lstdic.FindIndex(x => x.StartsWith(dldl.MaAGS));
+                                        string _a = "AG" + dldl.MaAGS + "1";
+
+                                        if (lstMaAGSW.Where(w => w.Contains(dldl.MaAGS)).Count() > 0)
+                                        {
+                                            string a = lstMaAGSW.Where(w => w.Contains(dldl.MaAGS)).First();
+                                            _a = a.Substring(0, a.Length - 1) + (int.Parse(a.Substring(a.Length - 1, 1)) + 1);
+                                        }
+
+                                        wVJ.Document.GetElementById("ctl08_txtTenDangNhap").SetAttribute("value", _a);
+                                        wVJ.Document.GetElementById("ctl08_txtMatKhau").SetAttribute("value", _lstSIChinh[iVN].MatKhau);
+                                        wVJ.Document.GetElementById("ctl08_chkChangePassNextLogin").InvokeMember("click");
+                                        wVJ.Document.GetElementById("ctl08_txtHoTen").SetAttribute("value", dldl.Ten);
+
+                                        element.text = @"function doPost() { document.getElementById('ctl08_ddlSubAgent').options.item(" + o + ").selected = true; }";
+                                        head.AppendChild(scriptEl);
+                                        wVJ.Document.InvokeScript("doPost");
+
+                                        if (_lstSIChinh[iVN].Chinh)
+                                        {
+                                            element.text = @"function doPost() { document.getElementById('ctl08_ddlPermission').options.item(1).selected = true; }";
+                                            head.AppendChild(scriptEl);
+                                            wVJ.Document.InvokeScript("doPost");
+                                        }
+                                        Invoke(new MethodInvoker(delegate ()
+                                        {
+                                            _lstSIChinh[iVN].End = true;
+                                            _lstSIChinh[iVN].SignIn = _a.ToString();
+                                            GCSI.DataSource = null;
+                                            GCSI.DataSource = _lstSIChinh;
+                                            GVSI.ExpandAllGroups();
+
+                                        }));
+                                        iVN++;
+
+                                    }
+                                    else if (wVJ.Url.ToString().EndsWith("Agent.aspx?Do=Ticketing"))
+                                    {
+                                        lstMaAGSW.Clear();
+
+                                        HtmlElementCollection hc = GetElementByClass("table", "table table-bordered").GetElementsByTagName("tr");
+                                        for (int i = 1; i < hc.Count; i++)
+                                        {
+                                            lstMaAGSW.Add(hc[i].GetElementsByTagName("td")[1].InnerText);
+                                        }
+
+                                        for (; iVN < _lstSIChinh.Count; iVN++)
+                                        {
+                                            if (_lstSIChinh[iVN].End || _lstSIChinh[iVN].HangBay != 3)
+                                                continue;
+                                            else
+                                            {
+                                                wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=Ticketing&Act=Add");
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+                            case 1:
+                                {
+                                    if (wVJ.Url.ToString().Contains("/Default.aspx") || wVJ.Url.AbsolutePath.Contains("/Booking.aspx"))
+                                        wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=Ticketing");
+                                    else if (wVJ.Url.ToString().EndsWith("Agent.aspx?Do=Ticketing"))
+                                    {
+                                        lstMaAGSW.Clear();
+
+                                        dldl = _lstDL.Where(w => w.ID.Equals(_lstSIChinh[iVN].DaiLy)).First();
+                                        HtmlElementCollection hc = GetElementByClass("table", "table table-bordered").GetElementsByTagName("tr");
+
+
+                                        for (; iVN < _lstSIChinh.Count; iVN++)
+                                        {
+                                            if (_lstSIChinh[iVN].End || _lstSIChinh[iVN].HangBay != 3)
+                                                continue;
+                                            else
+                                            {
+                                                for (int i = 1; i < hc.Count; i++)
+                                                {
+                                                    if (hc[i].GetElementsByTagName("td")[1].InnerText == _lstSIChinh[iVN].SignIn)
+                                                    {
+                                                        URLs = hc[i].GetElementsByTagName("td")[7].GetElementsByTagName("a")[0].GetAttribute("href");
+                                                        wVJ.Navigate(URLs);
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else if (wVJ.Url.ToString().Equals(URLs))
+                                    {
+                                        wVJ.Document.GetElementById("ctl08_chkActive").InvokeMember("click");
+                                        Invoke(new MethodInvoker(delegate ()
+                                        {
+                                            _lstSIChinh[iVN].End = true;
+                                            GCSI.DataSource = null;
+                                            GCSI.DataSource = _lstSIChinh;
+                                            GVSI.ExpandAllGroups();
+
+                                        }));
+                                        iVN++;
+                                    }
+                                }
+                                break;
                         }
 
-                        ThemDaiLy = lstDLAGS.Count > 0;
-                        if (lstDLAGS.Count > 0)
-                            wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=SubAgent&Act=Add");
-                        else
-                            wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=Ticketing");
-                    }
-                }//Kiểm tra tồn tại đại lý
-                else if (wVJ.Url.ToString().EndsWith("Accounting.aspx?Do=Deposit&Act=Add"))// Thêm quỹ
-                {
-                    HtmlElementCollection hc = wVJ.Document.GetElementsByTagName("option");
-                    for (int i = 4; i < hc.Count; i++)
-                    {
-                        lstdic.Add(hc[i].InnerText);
-                    }
-
-                    int o = lstdic.FindIndex(x => x.StartsWith("0"));
-                    if (o < 0)
-                    {
-                        XtraMessageBox.Show("Đại lý chưa được thêm trên ags", "Thông báo");
-                        Dispose();
-                        Close();
-                    }
-                    else
-                    {
-                        element.text = @"function doPost() { document.getElementById('ctl08_ddlSubAgent').options.item(" + o + ").selected = true; }";
-                        head.AppendChild(scriptEl);
-                        wVJ.Document.InvokeScript("doPost");
-
-                        wVJ.Document.GetElementById("ctl08_txtAmount").SetAttribute("value", "20000000");
-                        wVJ.Document.GetElementById("ctl08_txtDocNo").SetAttribute("value", "1");
-                        wVJ.Document.GetElementById("ctl08_txtDocDate").SetAttribute("value", DateTime.Now.ToString("dd/MM/yyyy"));
-                        wVJ.Document.Window.ScrollTo(0, 170);
-                        Dictionary<string, object> dic = new Dictionary<string, object>();
-                        dic.Add("SoCT", 2);
-                        new D_DAILY().CapNhat(dic, _lstDL.Where(w => w.MaAGS.Equals(lstDLAGS[0])).First().ID);
-                    }
-                }// Thêm quỹ
-                else if (wVJ.Url.ToString().Contains("Accounting.aspx?Do=Deposit"))
-                {
-                    if (lstQAGS.Count > 0)
-                        wVJ.Document.GetElementById("ctl08_btnAddNew").InvokeMember("click");
-                }// Thêm quỹ
-                else if (wVJ.Url.ToString().EndsWith("Agent.aspx?Do=Ticketing&Act=Add"))
-                {
-                    dldl = _lstDL.Where(w => w.ID.Equals(_lstSIChinh[iVN].DaiLy)).First();
-                    lstMaAGSW = lstMaAGSW.OrderByDescending(w => w).ToList();
-                    HtmlElementCollection hc = wVJ.Document.GetElementsByTagName("option");
-                    for (int i = 4; i < hc.Count; i++)
-                    {
-                        lstdic.Add(hc[i].InnerText);
-                    }
-
-                    int o = lstdic.FindIndex(x => x.StartsWith(dldl.MaAGS));
-                    string _a = "AG" + dldl.MaAGS + "1";
-
-                    if (lstMaAGSW.Where(w => w.Contains(dldl.MaAGS)).Count() > 0)
-                    {
-                        string a = lstMaAGSW.Where(w => w.Contains(dldl.MaAGS)).First();
-                        _a = a.Substring(0, a.Length - 1) + (int.Parse(a.Substring(a.Length - 1, 1)) + 1);
-                    }
-
-                    wVJ.Document.GetElementById("ctl08_txtTenDangNhap").SetAttribute("value", _a);
-                    wVJ.Document.GetElementById("ctl08_txtMatKhau").SetAttribute("value", _lstSIChinh[iVN].MatKhau);
-                    wVJ.Document.GetElementById("ctl08_chkChangePassNextLogin").InvokeMember("click");
-                    wVJ.Document.GetElementById("ctl08_txtHoTen").SetAttribute("value", dldl.Ten);
-
-                    element.text = @"function doPost() { document.getElementById('ctl08_ddlSubAgent').options.item(" + o + ").selected = true; }";
-                    head.AppendChild(scriptEl);
-                    wVJ.Document.InvokeScript("doPost");
-
-                    if (_lstSIChinh[iVN].Chinh)
-                    {
-                        element.text = @"function doPost() { document.getElementById('ctl08_ddlPermission').options.item(1).selected = true; }";
-                        head.AppendChild(scriptEl);
-                        wVJ.Document.InvokeScript("doPost");
-                    }
-                    Invoke(new MethodInvoker(delegate ()
-                    {
-                        _lstSIChinh[iVN].End = true;
-                        _lstSIChinh[iVN].SignIn = _a.ToString();
-                        GCSI.DataSource = null;
-                        GCSI.DataSource = _lstSIChinh;
-                        GVSI.ExpandAllGroups();
-
-                    }));
-                    iVN++;
-
-                }
-                else if (wVJ.Url.ToString().EndsWith("Agent.aspx?Do=Ticketing"))
-                {
-                    lstMaAGSW.Clear();
-
-                    HtmlElementCollection hc = GetElementByClass("table", "table table-bordered").GetElementsByTagName("tr");
-                    for (int i = 1; i < hc.Count; i++)
-                    {
-                        lstMaAGSW.Add(hc[i].GetElementsByTagName("td")[1].InnerText);
-                    }
-
-                    for (; iVN < _lstSIChinh.Count; iVN++)
-                    {
-                        if (_lstSIChinh[iVN].End || _lstSIChinh[iVN].HangBay != 3)
-                            continue;
-                        else
-                        {
-                            wVJ.Navigate("http://ags.thanhhoang.vn/Agent.aspx?Do=Ticketing&Act=Add");
-                            break;
-                        }
-                    }
                 }
             }
         }
@@ -848,15 +960,19 @@ namespace CRM
                     _lstSIChinh.Clear();
                     foreach (DataRow row in dt.Rows)
                     {
-                        O_SIGNIN signInO = new O_SIGNIN();
-                        signInO.DaiLy = _lstDL.Where(w => w.TenTam.ToUpper().Equals(row[0].ToString().ToUpper())).First().ID;
-                        signInO.HangBay = _lstHB.Where(w => w.TenTat.Equals(row[1].ToString())).First().ID;
-                        signInO.SignIn = ((row[2] ?? null) ?? string.Empty).ToString();
-                        signInO.MatKhau = row[3].ToString();
-                        signInO.Chinh = row[4].ToString() != "False";
-                        signInO.CanLam = int.Parse(row[5].ToString());
-                        signInO.End = row[6].ToString() != "False";
-                        _lstSIChinh.Add(signInO);
+                        if (row[0].ToString().Length > 3)
+                        {
+                            O_SIGNIN signInO = new O_SIGNIN();
+                            signInO.DaiLy = _lstDL.Where(w => w.TenTam.ToUpper().Equals(row[0].ToString().ToUpper())).First().ID;
+                            signInO.HangBay = _lstHB.Where(w => w.TenTat.Equals(row[1].ToString())).First().ID;
+                            signInO.SignIn = ((row[2] ?? null) ?? string.Empty).ToString();
+                            signInO.MatKhau = row[3].ToString();
+                            signInO.Chinh = row[4].ToString() != "False";
+                            signInO.CanLam = int.Parse(row[5].ToString());
+                            signInO.End = row[6].ToString() != "False";
+                            signInO.ID = int.Parse(row[7].ToString());
+                            _lstSIChinh.Add(signInO);
+                        }
                     }
                     GCSI.DataSource = null;
                     GCSI.DataSource = _lstSIChinh;
@@ -869,27 +985,67 @@ namespace CRM
 
         private void btnAddServer_Click(object sender, EventArgs e)
         {
-            List<Dictionary<string, object>> lstdic = new List<Dictionary<string, object>>();
             for (int i = 0; i < _lstSIChinh.Count; i++)
             {
-                if (lstSI.Where(w => w.SignIn.Equals(_lstSIChinh[i].SignIn)).Count() == 0)
+                switch (_lstSIChinh[i].CanLam)
                 {
-                    Dictionary<string, object> keyValues = new Dictionary<string, object>();
-                    keyValues.Add("DaiLy", _lstSIChinh[i].DaiLy);
-                    keyValues.Add("SignIn", _lstSIChinh[i].SignIn);
-                    keyValues.Add("HangBay", _lstSIChinh[i].HangBay);
-                    keyValues.Add("Chinh", _lstSIChinh[i].Chinh);
-                    keyValues.Add("Khoa", _lstSIChinh[i].Khoa);
-                    keyValues.Add("MatKhau", _lstSIChinh[i].MatKhau);
-                    lstdic.Add(keyValues);
+                    case 0:
+                        if (lstSI.Where(w => w.SignIn.Equals(_lstSIChinh[i].SignIn)).Count() == 0)
+                        {
+                            Dictionary<string, object> keyValues = new Dictionary<string, object>();
+                            keyValues.Add("DaiLy", _lstSIChinh[i].DaiLy);
+                            keyValues.Add("SignIn", _lstSIChinh[i].SignIn);
+                            keyValues.Add("HangBay", _lstSIChinh[i].HangBay);
+                            keyValues.Add("Chinh", _lstSIChinh[i].Chinh);
+                            keyValues.Add("Khoa", _lstSIChinh[i].Khoa);
+                            keyValues.Add("MatKhau", _lstSIChinh[i].MatKhau);
+                            if (new D_SIGNIN().ThemMoi(keyValues) > 0)
+                                XuLyGiaoDien.Alert("Thêm SI " + _lstSIChinh[i].SignIn + " thành công", Form_Alert.enmType.Success);
+                        }
+                        else
+                            XuLyGiaoDien.Alert("Đã tồn tại " + _lstSIChinh[i].SignIn, Form_Alert.enmType.Warning);
+
+
+                        break;
+                    case 1:
+                        Dictionary<string, object> keyValues1 = new Dictionary<string, object>();
+                        keyValues1.Add("DaiLy", _lstSIChinh[i].DaiLy);
+                        keyValues1.Add("SignIn", _lstSIChinh[i].SignIn);
+                        keyValues1.Add("HangBay", _lstSIChinh[i].HangBay);
+                        keyValues1.Add("Chinh", _lstSIChinh[i].Chinh);
+                        keyValues1.Add("Khoa", _lstSIChinh[i].End);
+                        keyValues1.Add("MatKhau", _lstSIChinh[i].MatKhau);
+                        keyValues1.Add("NgayKhoa", DateTime.Now);
+                        if (new D_SIGNIN().CapNhat(keyValues1, _lstSIChinh[i].ID) > 0)
+                            XuLyGiaoDien.Alert("Khóa SI " + _lstSIChinh[i].SignIn + " thành công", Form_Alert.enmType.Success);
+                        break;
                 }
-                else
-                    XuLyGiaoDien.Alert("Đã tồn tại " + _lstSIChinh[i].SignIn, Form_Alert.enmType.Warning);
             }
-            if (lstdic.Count > 0)
+        }
+
+        private void btnThemNhieu_Click(object sender, EventArgs e)
+        {
+            foreach (O_SIGNIN o_S in si)
             {
-                if (new D_SIGNIN().ThemNhieu1Ban(lstdic) > 0)
-                    XuLyGiaoDien.Alert("Thêm sign in thành công", Form_Alert.enmType.Success);
+                if (_lstSIChinh.Where(w => w.SignIn.Equals(o_S.SignIn)).Count() == 0)
+                {
+                    GCSI.DataSource = null;
+
+                    O_SIGNIN si = new O_SIGNIN();
+                    si.ID = o_S.ID;
+                    si.CanLam = icmb.SelectedIndex;
+                    si.DaiLy = o_S.DaiLy;
+                    si.HangBay = o_S.HangBay;
+                    si.SignIn = o_S.SignIn;
+                    si.MatKhau = o_S.MatKhau;
+                    si.Chinh = o_S.Chinh;
+                    _lstSIChinh.Add(si);
+                    GCSI.DataSource = _lstSIChinh;
+                    GVSI.ExpandAllGroups();
+                    XulyDulieuKhiThem();
+                    iMatKhau.Text = RandomPassword();
+                    iSignIn.Text = "";
+                }
             }
         }
     }

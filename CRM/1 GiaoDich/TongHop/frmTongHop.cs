@@ -14,9 +14,11 @@ namespace CRM
     public partial class frmTongHop : XtraForm
     {
         List<O_DAILY> lstDaiLy = new List<O_DAILY>();
+        RefreshHelper helper;
         public frmTongHop()
         {
             InitializeComponent();
+            helper = new RefreshHelper(GVDC, "id");
         }
 
         private void frmTongHop_Load(object sender, EventArgs e)
@@ -25,16 +27,18 @@ namespace CRM
             DSLoaiKhach.DataSource = DuLieuTaoSan.LoaiKhachHang_GiaoDich();
             lstDaiLy = new D_DAILY().All();
             daiLyOBindingSource.DataSource = lstDaiLy;
-            btn2.Visibility = DuLieuTaoSan.Q.Lv2KhacAdmin ? BarItemVisibility.Always : BarItemVisibility.Never;
-            btn4.Visibility = DuLieuTaoSan.Q.KhacThemSua ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btn2.Visibility = ClsDuLieu.Quyen.Lv2KhacAdmin ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btn4.Visibility = ClsDuLieu.Quyen.KhacThemSua ? BarItemVisibility.Always : BarItemVisibility.Never;
             NapDatCho();
         }
 
         #region Dữ liệu 
-        public void NapDatCho()
+        public void NapDatCho(bool reSave = false)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
+            if (reSave)
+                helper.SaveViewInfo();
             string query = "LoaiGiaoDich in (0,1,5,6,7,10,11,12)";
             if (query.Length > 0)
             {
@@ -43,18 +47,20 @@ namespace CRM
                     if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
                     {
                         query = string.Format("({2}) AND (convert(date, NgayGD) BETWEEN '{0}' AND '{1}')", ((DateTime)bdtpTu.EditValue).ToString("yyyyMMdd"), ((DateTime)bdtpDen.EditValue).ToString("yyyyMMdd"), query);
-                        lstGDDC = new D_GIAODICH().DuLieu(query, DuLieuTaoSan.Q.VeAdmin);
+                        lstGDDC = new D_GIAODICH().DuLieu(query, ClsDuLieu.Quyen.VeAdmin);
                     }
                 }
                 else if (chk1.Checked)
                 {
                     query = string.Format("({0}) {1}", query, DuLieuTaoSan.ThoiGianRutGon("NgayGD")[idThoiGian]);
-                    lstGDDC = new D_GIAODICH().DuLieu(query, DuLieuTaoSan.Q.VeAdmin);
+                    lstGDDC = new D_GIAODICH().DuLieu(query, ClsDuLieu.Quyen.VeAdmin);
                 }
                 giaoDichOBindingSource.DataSource = lstGDDC;
             }
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (reSave)
+                helper.LoadViewInfo();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
         #endregion
 
@@ -70,7 +76,7 @@ namespace CRM
 
         private void btnLoadDT_ItemClick(object sender, ItemClickEventArgs e)
         {
-            NapDatCho();
+            NapDatCho(true);
         }
 
         private void barButtonItem7_ItemClick(object sender, ItemClickEventArgs e)
@@ -90,11 +96,11 @@ namespace CRM
             {
                 case 1:
                 case 0:
-                    if (!DuLieuTaoSan.Q.KhacXoa)
+                    if (!ClsDuLieu.Quyen.KhacXoa)
                         return;
                     break;
                 default:
-                    if (!DuLieuTaoSan.Q.KhacAdminXoa)
+                    if (!ClsDuLieu.Quyen.KhacAdminXoa)
                         return;
                     break;
 
@@ -107,7 +113,7 @@ namespace CRM
                 dic.Add("FormName", Text);
                 dic.Add("MaCho", GD.MaCho);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", GD.LoaiKhachHang);
                 dic.Add("Ma", GD.IDKhachHang);
                 new D_LS_GIAODICH().ThemMoi(dic);
@@ -189,7 +195,7 @@ namespace CRM
                                 Dictionary<string, object> dic = new Dictionary<string, object>();
                                 dic.Add("NgayGD", "getdate()");
                                 dic.Add("NgayCuonChieu", "getdate()");
-                                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                                 dic.Add("CoDinh", 1);
                                 dic.Add("LoaiKhachHang", "1");
                                 dic.Add("IDKhachHang", lstDaiLy.Where(w => w.Ten.ToUpper().Equals(row["TenDaiLy"].ToString().Replace(" Total", "").ToUpper())).First().ID);
@@ -199,7 +205,7 @@ namespace CRM
                                     dic.Add("GiaHeThong", int.Parse(row["Gia"].ToString().Replace("-", "")));
                                     dic.Add("GiaThu", int.Parse(row["Gia"].ToString().Replace("-", "")));
                                     dic.Add("LoaiGiaoDich", 6);
-                                    dic.Add("GiaHoan",0);
+                                    dic.Add("GiaHoan", 0);
                                 }
                                 else
                                 {

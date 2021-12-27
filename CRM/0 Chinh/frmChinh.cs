@@ -1,10 +1,12 @@
 ﻿using DataAccessLayer;
 using DataTransferObject;
+using DevExpress.LookAndFeel;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using Microsoft.Win32;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,20 +17,34 @@ namespace CRM
         public frmChinh()
         {
             InitializeComponent();
-            Text += DuLieuTaoSan.Instance.PhienBan + ")";
+            Text += ClsDuLieu.PhienBan + ")";
         }
 
         private void frmChinh_Load(object sender, EventArgs e)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
-            XuLyGiaoDien.OpenForm(this);
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
+            ClsChucNang.OpenForm(this);
             PhanQuyenHienThi();
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM");
-            chlDG.Checked = !(key.GetValue("TKNC").ToString().ToLower() == "true");
+            if (key != null)
+            {
+                if (key.GetValue("TKNC") != null)
+                    tsiKL.Checked = (key.GetValue("TKNC").ToString().ToLower() == "true");
+                if (key.GetValue("Skin") != null)
+                    chkMD.Checked = !(key.GetValue("Skin").ToString() == "Money Twins");
+                if (key.GetValue("Color") != null)
+                {
+                    tsiMNB.Checked = ClsGiaoDien.KichThoatMau;
+                    if (tsiMNB.Checked)
+                        biColor.EditValue = ClsGiaoDien.MauChon;
+                }
+                else
+                    biColor.EditValue = ClsGiaoDien.MauChon;
+            }
 
-            Bdpi.Caption = "KPI: " + DuLieuTaoSan.NV.Diem;
-            if (DuLieuTaoSan.Q.Lv2Ve)
+            Bdpi.Caption = "KPI: " + ClsDuLieu.NhanVien.Diem;
+            if (ClsDuLieu.Quyen.Lv2Ve)
             {
                 frmVe f = new frmVe();
                 f.MdiParent = this;
@@ -41,7 +57,7 @@ namespace CRM
         #region Dữ liệu 
         void PhanQuyenHienThi()
         {
-            O_NHOMQUYEN Q = DuLieuTaoSan.Q;
+            O_NHOMQUYEN Q = ClsDuLieu.Quyen;
             R1.Visible = Q.Lv1TheoDoi;
             R2.Visible = Q.Lv1ThongKe;
             R3.Visible = Q.Lv1ChucNang;
@@ -93,55 +109,6 @@ namespace CRM
             e.Form.TopMost = true;
         }
 
-        private void chkGD1_CheckedChanged(object sender, ItemClickEventArgs e)
-        {
-            BarCheckItem checkEdit = sender as BarCheckItem;
-            switch (checkEdit.Name)
-            {
-                case "chkGD1":
-                    DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Office 2019 Black");
-                    break;
-                case "chkGD2":
-                    DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("DevExpress Dark Style");
-                    break;
-                case "chkGD3":
-                    DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Office 2016 Black");
-                    break;
-                case "chkGD4":
-                    DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Visual Studio 2013 Dark");
-                    break;
-                default:
-                    DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Money Twins");
-                    break;
-            }
-        }
-
-        private void chlDG_CheckedChanged(object sender, ItemClickEventArgs e)
-        {
-            BarCheckItem checkEdit = sender as BarCheckItem;
-            switch (checkEdit.Name)
-            {
-                case "chlDG":
-                    WindowsFormsSettings.ColumnAutoFilterMode = ColumnAutoFilterMode.Text;
-                    WindowsFormsSettings.AllowAutoFilterConditionChange = DevExpress.Utils.DefaultBoolean.False;
-                    WindowsFormsSettings.DefaultSettingsCompatibilityMode = SettingsCompatibilityMode.v18_1;
-                    break;
-                default:
-                    WindowsFormsSettings.ColumnAutoFilterMode = ColumnAutoFilterMode.Value;
-                    WindowsFormsSettings.AllowAutoFilterConditionChange = DevExpress.Utils.DefaultBoolean.Default;
-                    WindowsFormsSettings.DefaultSettingsCompatibilityMode = SettingsCompatibilityMode.Latest;
-                    break;
-            }
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM", true);
-            key.SetValue("TKNC", chkNC.Checked);
-            key.Close();
-        }
-
-        private void BitemCWF_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
-        }
 
         private void btnThoatNhanh_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -177,20 +144,20 @@ namespace CRM
                         return;
                     }
 
-                XuLyGiaoDien.wait.ShowWaitForm();
+                ClsChucNang.wait.ShowWaitForm();
                 var f = Activator.CreateInstance(Type.GetType(string.Format("CRM.frm{0}", Chinh), true)) as XtraForm;
                 f.MdiParent = this;
                 f.Text = e.Item.Caption;
                 f.Show();
-                GridViewHelper.SetFromGrid(f);
+                ClsGiaoDien.setGrid(f);
                 XuLyGiaoDien.FlushMemory();
             }
             catch
             {
                 XtraMessageBox.Show("Chức năng chưa được tích hợp hoặc đang bảo trì");
             }
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
 
         private void LinkClickOpenF(object sender, ItemClickEventArgs e)
@@ -208,5 +175,67 @@ namespace CRM
         }
 
         #endregion
+
+        private void tsiKL_CheckedChanged(object sender, ItemClickEventArgs e)
+        {
+            if (tsiKL.Checked == false)
+            {
+                WindowsFormsSettings.ColumnAutoFilterMode = ColumnAutoFilterMode.Text;
+                WindowsFormsSettings.AllowAutoFilterConditionChange = DevExpress.Utils.DefaultBoolean.False;
+                WindowsFormsSettings.DefaultSettingsCompatibilityMode = SettingsCompatibilityMode.v18_1;
+            }
+            else
+            {
+                WindowsFormsSettings.ColumnAutoFilterMode = ColumnAutoFilterMode.Value;
+                WindowsFormsSettings.AllowAutoFilterConditionChange = DevExpress.Utils.DefaultBoolean.Default;
+                WindowsFormsSettings.DefaultSettingsCompatibilityMode = SettingsCompatibilityMode.Latest;
+            }
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM", true);
+            key.SetValue("TKNC", tsiKL.Checked);
+            key.Close();
+        }
+
+        private void chkMD_CheckedChanged(object sender, ItemClickEventArgs e)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM", true);
+            if (chkMD.Checked == false)
+                key.SetValue("Skin", "Money Twins");
+            else
+                key.SetValue("Skin", UserLookAndFeel.Default.ActiveSkinName);
+            key.Close();
+        }
+
+        private void sGD_GalleryPopupClose(object sender, InplaceGalleryEventArgs e)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM", true);
+            if (chkMD.Checked == false)
+                key.SetValue("Skin", "Money Twins");
+            else
+                key.SetValue("Skin", UserLookAndFeel.Default.ActiveSkinName);
+            key.Close();
+        }
+
+        private void tsiMNB_CheckedChanged(object sender, ItemClickEventArgs e)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM", true);
+            ClsGiaoDien.KichThoatMau = biColor.Enabled = tsiMNB.Checked;
+            if (tsiMNB.Checked == false)
+                key.SetValue("Color", "");
+            else
+            {
+                biColor.EditValue = ClsGiaoDien.MauChon;
+                key.SetValue("Color", biColor.EditValue);
+            }
+            key.Close();
+        }
+
+        private void rpColor_EditValueChanged(object sender, EventArgs e)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\THCRM", true);
+            key.SetValue("Color", String.Format("{0:X}", (sender as ColorEdit).Color.ToArgb()));
+            key.Close();
+            ClsGiaoDien.MauChon = Color.FromArgb((sender as ColorEdit).Color.ToArgb());
+        }
+
     }
 }

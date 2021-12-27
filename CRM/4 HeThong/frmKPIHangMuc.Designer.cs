@@ -227,6 +227,8 @@
             // 
             // colNoiDung
             // 
+            this.colNoiDung.AppearanceCell.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.colNoiDung.AppearanceCell.Options.UseFont = true;
             this.colNoiDung.Caption = "Chi tiết";
             this.colNoiDung.ColumnEdit = this.repositoryItemMemoExEdit1;
             this.colNoiDung.FieldName = "NoiDung";
@@ -237,8 +239,10 @@
             // 
             // repositoryItemMemoExEdit1
             // 
-            this.repositoryItemMemoExEdit1.Appearance.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.repositoryItemMemoExEdit1.Appearance.Options.UseFont = true;
+            this.repositoryItemMemoExEdit1.AppearanceDropDown.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.repositoryItemMemoExEdit1.AppearanceDropDown.Options.UseFont = true;
+            this.repositoryItemMemoExEdit1.AppearanceFocused.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.repositoryItemMemoExEdit1.AppearanceFocused.Options.UseFont = true;
             this.repositoryItemMemoExEdit1.AutoHeight = false;
             this.repositoryItemMemoExEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});

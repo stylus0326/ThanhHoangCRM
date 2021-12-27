@@ -17,7 +17,7 @@ namespace CRM
         private void frmNhanVien_Load(object sender, EventArgs e)
         {
             DuLieu();
-            btnAdd.Visibility = DuLieuTaoSan.Q.NhanVienThemSua ? DevExpress.XtraBars.BarItemVisibility.Always : DevExpress.XtraBars.BarItemVisibility.Never;
+            btnAdd.Visibility = ClsDuLieu.Quyen.NhanVienThemSua ? DevExpress.XtraBars.BarItemVisibility.Always : DevExpress.XtraBars.BarItemVisibility.Never;
         }
 
         private void btnLoad_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -32,7 +32,7 @@ namespace CRM
 
         private void GVNV_DoubleClick(object sender, EventArgs e)
         {
-            if (GVNV.GetSelectedRows().Count() > 0 && DuLieuTaoSan.Q.NhanVienThemSua)
+            if (GVNV.GetSelectedRows().Count() > 0 && ClsDuLieu.Quyen.NhanVienThemSua)
             {
                 _KhachHangO = GVNV.GetRow(GVNV.GetSelectedRows()[0]) as O_DAILY;
                 if (_KhachHangO != null)
@@ -42,13 +42,13 @@ namespace CRM
 
         public void DuLieu()
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
-            khachHangOBindingSource.DataSource = new D_DAILY().NhanVien(DuLieuTaoSan.NV.TenDangNhapCty.ToLower());
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
+            khachHangOBindingSource.DataSource = new D_DAILY().NhanVien(ClsDuLieu.NhanVien.TenDangNhapCty.ToLower());
             quyenNhanVienOBindingSource.DataSource = new D_NHOMQUYEN().DuLieu();
             gioiTinhBindingSource.DataSource = DuLieuTaoSan.GioiTinh();
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
 
         private void rBut_Click(object sender, EventArgs e)
@@ -60,7 +60,8 @@ namespace CRM
         private void rSi_Click(object sender, EventArgs e)
         {
             O_DAILY dl = GVNV.GetRow(GVNV.GetSelectedRows()[0]) as O_DAILY;
-            if (dl.SIC > 0)
+            string[] sic = dl.SIC.Split('/');
+            if (int.Parse(sic[1]) > 0)
                 new frmSignIn(dl).ShowDialog();
         }
     }

@@ -110,7 +110,7 @@ namespace DataAccessLayer
             string a = string.Format(@"select GD.ID, GD.GiaNet, GD.GiaThu, GD.MaCho, GD.NgayGD, GD.IDKhachHang 
 from GIAODICH GD
 LEFT JOIN (SELECT IDGDLienKet, SUM(SoTien) SoTien FROM BAOCAOCTNH WHERE Thu = '{0}' and LoaiGiaoDich = 0 group by IDGDLienKet) BC ON BC.IDGDLienKet = GD.ID
-WHERE {2} = {3} and COALESCE(GD.{1},0) <> COALESCE(BC.SoTien,0) and GD.TinhCongNo = 1 and GD.LoaiGiaoDich <> 9", NCC, NCC ? "GiaNet" : "GiaThu", NCC ? "GD.NhaCungCap" : "KS.IDKhachHang", KH);
+WHERE {2} = {3} and COALESCE(GD.{1},0) <> COALESCE(BC.SoTien,0) and GD.TinhCongNo = 1 and GD.LoaiGiaoDich <> 9", NCC, NCC ? "GiaNet" : "GiaThu", NCC ? "GD.NhaCungCap" : "GD.IDKhachHang", KH);
             return LayDuLieu<O_GIAODICH>(false, a);
         }
 
@@ -119,7 +119,7 @@ WHERE {2} = {3} and COALESCE(GD.{1},0) <> COALESCE(BC.SoTien,0) and GD.TinhCongN
             string a = string.Format(@"select GD.ID, GD.HangHoan, GD.GiaHoan, GD.MaCho, GD.NgayGD, GD.IDKhachHang 
 from GIAODICH GD
 LEFT JOIN (SELECT IDGDLienKet, SUM(SoTien) SoTien FROM BAOCAOCTNH WHERE Thu = '{0}' and LoaiGiaoDich = 3 group by IDGDLienKet) BC ON BC.IDGDLienKet = GD.ID
-WHERE {2} = {3} and COALESCE(GD.{1},0) <> COALESCE(BC.SoTien,0) and GD.TinhCongNo = 0 and GD.LoaiGiaoDich <> 9", NCC, NCC ? "HangHoan" : "GiaHoan", NCC ? "GD.NhaCungCap" : "KS.IDKhachHang", KH);
+WHERE COALESCE(GD.{1},0) <> COALESCE(BC.SoTien,0) and GD.TinhCongNo = 1 and GD.LoaiGiaoDich = 9", NCC, NCC ? "HangHoan" : "GiaHoan", NCC ? "GD.NhaCungCap" : "GD.IDKhachHang", KH);
             return LayDuLieu<O_GIAODICH>(false, a);
         }
 

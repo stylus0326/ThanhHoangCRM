@@ -31,14 +31,14 @@ namespace CRM
         private void frmSanBayThem_Load(object sender, EventArgs e)
         {
             XuLyDuLieu.ConvertClassToTable(this, _SanBayO);
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         private void btnLuu2_Click(object sender, EventArgs e)
         {
             List<KiemTra> kiemTras = new List<KiemTra>() {
-            new KiemTra() { _Control = iTenDayDu,_Tu=3,_Den = 100,_ChoQuaThang = !_SanBayD.DaTonTai("TenDayDu",iKyHieu.Text,_SanBayO.ID), _ThongBao2 = "Sân bay đã tồn tại" },
-            new KiemTra() { _Control = iKyHieu,_Tu=3,_Den = 5,_ChoQuaThang = !_SanBayD.DaTonTai("KyHieu",iKyHieu.Text,_SanBayO.ID), _ThongBao2 = "Sân bay đã tồn tại" }};
+            new KiemTra() { _Control = iTenDayDu,_Tu=3,_Den = 100,_ChoQuaThang = !_SanBayD.KiemTraTonTai(_SanBayO.ID,"TenDayDu",iKyHieu.Text), _ThongBao2 = "Sân bay đã tồn tại" },
+            new KiemTra() { _Control = iKyHieu,_Tu=3,_Den = 5,_ChoQuaThang = !_SanBayD.KiemTraTonTai(_SanBayO.ID,"KyHieu",iKyHieu.Text), _ThongBao2 = "Sân bay đã tồn tại" }};
 
             XuLyGiaoDien.KiemTra(kiemTras, dxValidationProvider1);
             if (!dxValidationProvider1.Validate())

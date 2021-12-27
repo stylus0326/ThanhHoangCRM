@@ -31,7 +31,7 @@ namespace CRM
 
         private void SoSanhVN_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             Ky(false);
         }
 
@@ -149,14 +149,14 @@ namespace CRM
         {
             if (lstGDSHang.Count > 0)
             {
-                if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.ShowWaitForm();
-                XuLyGiaoDien.wait.SetWaitFormDescription("Xử lý vé");
+                if (!ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.ShowWaitForm();
+                ClsChucNang.wait.SetWaitFormDescription("Xử lý vé");
                 lstGDSCty = giaoDich.VeVN(lstGDSHang.OrderBy(w => w.SoVeVN).Select(w => w.SoVeVN.Replace(" ", string.Empty)).ToList(), dateEdit1.DateTime, dateEdit2.DateTime).OrderBy(w => w.SoVeVN).ToList();
                 GRS.DataSource = lstGDSCty;
                 GVS.BestFitColumns();
-                if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.CloseWaitForm();
+                if (ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.CloseWaitForm();
             }//Lấy GD
         }
 
@@ -165,28 +165,28 @@ namespace CRM
 
             if (lstGDRHang.Count > 0)
             {
-                if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.ShowWaitForm();
-                XuLyGiaoDien.wait.SetWaitFormDescription("Xử lý vé hoàn");
+                if (!ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.ShowWaitForm();
+                ClsChucNang.wait.SetWaitFormDescription("Xử lý vé hoàn");
                 lstGDRCty = giaoDich.HoanVN(lstGDRHang.OrderBy(w => w.SoVeVN).Select(w => w.SoVeVN.Replace(" ", string.Empty)).ToList(), dateEdit1.DateTime, dateEdit2.DateTime).OrderBy(w => w.SoVeVN).ToList();
                 GRR.DataSource = lstGDRCty;
                 GVR.BestFitColumns();
-                if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.CloseWaitForm();
+                if (ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.CloseWaitForm();
             }//Lấy GD
         }
         private void groupControl9_CustomButtonClick(object sender, DevExpress.XtraBars.Docking2010.BaseButtonEventArgs e)
         {
             if (lstGDVHang.Count > 0)
             {
-                if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.ShowWaitForm();
-                XuLyGiaoDien.wait.SetWaitFormDescription("Xử lý vé void");
+                if (!ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.ShowWaitForm();
+                ClsChucNang.wait.SetWaitFormDescription("Xử lý vé void");
                 lstGDVCty = giaoDich.VoidVN(lstGDVHang.OrderBy(w => w.SoVeVN).Select(w => w.SoVeVN.Replace(" ", string.Empty)).ToList());
                 gridControl6.DataSource = lstGDVCty;
                 gridView12.BestFitColumns();
-                if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.CloseWaitForm();
+                if (ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.CloseWaitForm();
             }//Lấy GD
         }
         #endregion
@@ -328,13 +328,13 @@ namespace CRM
             lstTb.Add("GIAODICH");
             lstTb.Add("LS_GIAODICH");
 
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             List<O_GIAODICH> sss = lstGDS3.Where(w => w.GhiChu.Contains("Khác kì") || w.GhiChu.Contains("Khác ngày")).ToList();
             for (int i = 0; i < sss.Count(); i++)
             {
                 O_GIAODICH gd = sss[i];
-                XuLyGiaoDien.wait.SetWaitFormDescription(string.Format("Đang chỉnh ngày GD {0}/{1}", i, sss.Count()));
+                ClsChucNang.wait.SetWaitFormDescription(string.Format("Đang chỉnh ngày GD {0}/{1}", i, sss.Count()));
                 Thread.Sleep(10);
 
                 Dictionary<string, object> dicS = new Dictionary<string, object>();
@@ -346,7 +346,7 @@ namespace CRM
                 dic.Add("FormName", "Tự động");
                 dic.Add("MaCho", gd.SoVeVN);
                 dic.Add("NoiDung", "[Vé thường]: Chỉnh ngày bằng so sánh VN");
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 lstCTV.Add(string.Empty);
@@ -359,8 +359,8 @@ namespace CRM
                     lstCTV.Clear();
                 }
             }
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
         private void groupControl3_CustomButtonClick(object sender, DevExpress.XtraBars.Docking2010.BaseButtonEventArgs e)
         {
@@ -375,12 +375,12 @@ namespace CRM
             lstTb.Add("GIAODICH");
             lstTb.Add("GIAODICH");
             lstTb.Add("LS_GIAODICH");
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             List<O_GIAODICH> sss = lstGDR4.Where(w => w.GhiChu.Contains("Khác kì") || w.GhiChu.Contains("Khác ngày")).ToList();
             for (int i = 0; i < sss.Count(); i += 2)
             {
-                XuLyGiaoDien.wait.SetWaitFormDescription(string.Format("Đang chỉnh ngày GD {0}/{1}", i, sss.Count()));
+                ClsChucNang.wait.SetWaitFormDescription(string.Format("Đang chỉnh ngày GD {0}/{1}", i, sss.Count()));
                 Thread.Sleep(10);
                 O_GIAODICH gd = sss[i];
                 O_GIAODICH gd2 = sss[i + 1];
@@ -398,7 +398,7 @@ namespace CRM
                 dic.Add("FormName", "Tự động");
                 dic.Add("MaCho", gd.SoVeVN);
                 dic.Add("NoiDung", "[Vé hoàn]: Chỉnh ngày bằng so sánh VN");
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 lstCTV.Add(string.Empty);
@@ -413,8 +413,8 @@ namespace CRM
             }
 
             XuLyGiaoDien.ExportExcel(gridControl4, gridView8, "ExHoan-" + DateTime.Now.ToString("dd-MM-yyy"));
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
         #endregion
 

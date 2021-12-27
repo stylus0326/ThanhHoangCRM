@@ -28,8 +28,8 @@ namespace CRM
         private void frmKPIHangMucThem_Load(object sender, EventArgs e)
         {
             XuLyDuLieu.ConvertClassToTable(this, kpi);
-            XuLyGiaoDien.OpenForm(this);
-            btnLuu2.Visible = DuLieuTaoSan.Q.ChinhSachThemSua;
+            ClsChucNang.OpenForm(this);
+            btnLuu2.Visible = ClsDuLieu.Quyen.ChinhSachThemSua;
         }
 
         private void btnLuu2_Click(object sender, EventArgs e)

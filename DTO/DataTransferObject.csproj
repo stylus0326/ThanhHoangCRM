@@ -43,6 +43,7 @@
     <Compile Include="O_HANGBAY.cs" />
     <Compile Include="O_MAUEMAIL.cs" />
     <Compile Include="O_KPIHANGMUC.cs" />
+    <Compile Include="O_NGANHANGSUDUNG.cs" />
     <Compile Include="O_NHACUNGCAP_GIAODICHPHATSINH.cs" />
     <Compile Include="O_CTCHINHSACH.cs" />
     <Compile Include="O_CTBanTongHop.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="O_NHOMDAILY.cs" />
     <Compile Include="O_NHOMQUYEN.cs" />
     <Compile Include="O_CTNGANHANG.cs" />
+    <Compile Include="O_QUANLYPHANMEM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="O_SIGNINTRONG.cs" />
     <Compile Include="O_SODU_DAILY.cs" />

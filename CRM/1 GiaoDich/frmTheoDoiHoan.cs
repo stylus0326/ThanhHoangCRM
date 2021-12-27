@@ -13,16 +13,18 @@ namespace CRM
 {
     public partial class frmTheoDoiHoan : XtraForm
     {
+        RefreshHelper helper;
         public frmTheoDoiHoan()
         {
             InitializeComponent();
+            helper = new RefreshHelper(GVH, "id");
         }
 
         private void frmTheoDoiHoan_Load(object sender, EventArgs e)
         {
             _GiaoDichO.TheoDoi = true;
-            btnAdd.Visibility = DuLieuTaoSan.Q.TheoDoiHoanThemSua ? DevExpress.XtraBars.BarItemVisibility.Always : DevExpress.XtraBars.BarItemVisibility.Never;
-            btnDel.Visibility = DuLieuTaoSan.Q.TheoDoiHoanXoa ? DevExpress.XtraBars.BarItemVisibility.Always : DevExpress.XtraBars.BarItemVisibility.Never;
+            btnAdd.Visibility = ClsDuLieu.Quyen.TheoDoiHoanThemSua ? DevExpress.XtraBars.BarItemVisibility.Always : DevExpress.XtraBars.BarItemVisibility.Never;
+            btnDel.Visibility = ClsDuLieu.Quyen.TheoDoiHoanXoa ? DevExpress.XtraBars.BarItemVisibility.Always : DevExpress.XtraBars.BarItemVisibility.Never;
             loaiKhachOBindingSource.DataSource = DuLieuTaoSan.LoaiKhachHang_Ve();
             daiLyOBindingSource.DataSource = new D_DAILY().All();
             DuLieu();
@@ -31,10 +33,12 @@ namespace CRM
         #region CongCuTimKiem
 
         string[] _SV_MC = new string[] { };
-        public void DuLieu()
+        public void DuLieu(bool reSave = false)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
+            if (reSave)
+                helper.SaveViewInfo();
             string _Query = string.Empty;
             if (chk1.Checked)
                 _Query = DuLieuTaoSan.ThoiGianRutGon("NgayGD")[_IDThoiGian];
@@ -50,11 +54,13 @@ namespace CRM
 
             if (_Query != string.Empty)
             {
-                _ListGiaoDichO = new D_GIAODICH().DuLieu(string.Format("TheoDoi = 1 AND ({0}{1})", _Query.Substring(3), chkAll.Checked ? " or TinhCongNo = 0" : string.Empty), DuLieuTaoSan.Q.VeAdmin);
+                _ListGiaoDichO = new D_GIAODICH().DuLieu(string.Format("TheoDoi = 1 AND ({0}{1})", _Query.Substring(3), chkAll.Checked ? " or TinhCongNo = 0" : string.Empty), ClsDuLieu.Quyen.VeAdmin);
                 giaoDichOBindingSource.DataSource = _ListGiaoDichO;
             }
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (reSave)
+                helper.LoadViewInfo();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
 
         private void ecmbThoiGian_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -70,7 +76,7 @@ namespace CRM
 
         private void aMaCho_Leave(object sender, EventArgs e)
         {
-            string[] BB = _SV_MC; 
+            string[] BB = _SV_MC;
             _SV_MC = (sender as MemoExEdit).Text.Replace(" ", "").Replace("\r\n", "|").Split('|').ToArray();
             _SV_MC = _SV_MC.Where(x => !string.IsNullOrEmpty(x)).ToArray();
             if (String.Join("' ,'", BB) != String.Join("' ,'", _SV_MC))
@@ -113,7 +119,7 @@ namespace CRM
         #region Sự kiện nút
         private void btnLoad_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            DuLieu();
+            DuLieu(true);
         }
 
         private void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -137,7 +143,7 @@ namespace CRM
             O_KHOANGAY kn = new D_KHOANGAY().KiemTraNgayKhoa(_GiaoDichO.NgayGD);
             if (_GiaoDichO.TinhCongNo)
             {
-                if (!DuLieuTaoSan.Q.TheoDoiHoanAdmin)
+                if (!ClsDuLieu.Quyen.TheoDoiHoanAdmin)
                     if ((kn.HoatDong) && !(kn.Code ?? string.Empty).Contains(_GiaoDichO.MaCho.Replace(" ", string.Empty)))
                     {
                         XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
@@ -179,7 +185,7 @@ namespace CRM
                     dic.Add("FormName", Text);
                     dic.Add("MaCho", _GiaoDichO.MaCho);
                     dic.Add("NoiDung", NoiDung);
-                    dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                    dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                     dic.Add("LoaiKhachHang", _GiaoDichO.LoaiKhachHang);
                     dic.Add("Ma", _GiaoDichO.IDKhachHang);
                     if (NoiDung.Length > 10)

@@ -13,19 +13,109 @@ namespace CRM
 {
     public partial class frmNganHang : DevExpress.XtraEditors.XtraForm
     {
+        RefreshHelper helper;
         public frmNganHang()
         {
             InitializeComponent();
+            KeyPreview = true;
+            ToRight.Click += ToRight_Click;
+            ToLeft.Click += ToLeft_Click;
+            sControl.SizeChanged += SControl_SizeChanged;
+            sControl.SplitterMoved += SControl_SplitterMoved;
+            sControl.LocationChanged += SControl_LocationChanged;
+            KeyDown += Frm_KeyDown;
+            helper = new RefreshHelper(GVCTNH, "id");
         }
+
+        #region panel
+        private void SControl_LocationChanged(object sender, EventArgs e)
+        {
+            int a = (sControl.Height - 80) / 2;
+            ToRight.Location = new Point(sControl.Location.X, a + 56);
+            ToLeft.Location = new Point(sControl.Location.X, a - 1);
+        }
+
+        private void Frm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Left && e.Alt)
+            {
+                ToLeft.PerformClick();
+            }
+            else if (e.KeyCode == Keys.Right && e.Alt)
+            {
+                ToRight.PerformClick();
+            }
+            else if (grpL.Visible && grpR.Visible)
+            {
+                if (e.KeyCode == Keys.Left && e.Control)
+                    grpL.Width -= 5;
+                else if (e.KeyCode == Keys.Right && e.Control)
+                    grpL.Width += 5;
+            }
+        }
+        private void ToLeft_Click(object sender, EventArgs e)
+        {
+            if (!grpR.Visible)
+            {
+                ToRight.Visible = grpR.Visible = true;
+                sControl.Dock = grpL.Dock = DockStyle.Left;
+                grpL.Width = toLeftW;
+            }
+            else
+                ToLeft.Visible = grpL.Visible = false;
+            ToRight.Location = new Point(sControl.Location.X, ToRight.Location.Y);
+            ToLeft.Location = new Point(sControl.Location.X, ToLeft.Location.Y);
+        }
+
+        int toLeftW = 0;
+        private void ToRight_Click(object sender, EventArgs e)
+        {
+            if (!grpL.Visible)
+            {
+                ToLeft.Visible = grpL.Visible = true;
+            }
+            else
+            {
+                toLeftW = grpL.Width;
+                ToRight.Visible = grpR.Visible = false;
+                grpL.Width = Width - sControl.Width;
+                grpL.Anchor = (AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom);
+                grpL.Height = Height;
+                sControl.Dock = DockStyle.Right;
+            }
+
+            ToRight.Location = new Point(sControl.Location.X, ToRight.Location.Y);
+            ToLeft.Location = new Point(sControl.Location.X, ToLeft.Location.Y);
+        }
+
+        private void SControl_SizeChanged(object sender, EventArgs e)
+        {
+            int a = (sControl.Height - 80) / 2;
+            ToRight.Location = new Point(sControl.Location.X, a + 56);
+            ToLeft.Location = new Point(sControl.Location.X, a - 1);
+        }
+
+        private void SControl_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            ToRight.Location = new Point(sControl.Location.X, ToRight.Location.Y);
+            ToLeft.Location = new Point(sControl.Location.X, ToLeft.Location.Y);
+        }
+
+
+        #endregion
 
         private void frmNganHang_Load(object sender, EventArgs e)
         {
+            int a = (sControl.Height - 80) / 2;
+            ToRight.Location = new Point(sControl.Location.X, a + 56);
+            ToLeft.Location = new Point(sControl.Location.X, a - 1);
+
             bdtpDen1.MinValue = DateTime.Now.AddDays(-90);
             bdtpDen1.MaxValue = DateTime.Now.AddDays(-1);
             bdtpDen12.EditValue = DateTime.Now.AddDays(-1);
-            btnSua.Visibility = btnThemMoi.Visibility = btnAdd.Visibility = DuLieuTaoSan.Q.NganHangThemSua ? BarItemVisibility.Always : BarItemVisibility.Never;
-            btnDel.Visibility = DuLieuTaoSan.Q.NganHangXoa ? BarItemVisibility.Always : BarItemVisibility.Never;
-            btnXuat.Visibility = DuLieuTaoSan.Q.NganHangExcel ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnThemMoi.Visibility = btnAdd.Visibility = ClsDuLieu.Quyen.NganHangThemSua ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnDel.Visibility = ClsDuLieu.Quyen.NganHangXoa ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnXuat.Visibility = ClsDuLieu.Quyen.NganHangExcel ? BarItemVisibility.Always : BarItemVisibility.Never;
             LayDLNganHang();
             TaiLaiDuLieu();
             LayDLKhac();
@@ -33,10 +123,13 @@ namespace CRM
         }
 
         #region Dữ liệu 
-        public void TaiLaiDuLieu()
+        public void TaiLaiDuLieu(bool reSave = false)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
+            if (reSave)
+                helper.SaveViewInfo();
+
             if (chk2.Checked)
             {
                 if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
@@ -49,9 +142,9 @@ namespace CRM
 
             if (!chk3.Checked)
             {
-                if (!chkKLT.Checked)
+                if (chkKLT.Checked)
                     CTV += string.Format(" OR LoaiGiaoDich = 8");
-                if (chkNganHang.Checked)
+                if (!chkNganHang.Checked)
                     CTV += " AND NganHangID = " + kh.ID;
             }
 
@@ -62,8 +155,10 @@ namespace CRM
 
             cTNganHangOBindingSource.DataSource = _listCTNganHangO;
 
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (reSave)
+                helper.LoadViewInfo();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
 
 
@@ -73,7 +168,7 @@ namespace CRM
                 nganHangOBindingSource.DataSource = nhD.DuLieu();
             else
                 nganHangOBindingSource.DataSource = nhD.DuLieu(false);
-
+            rBank.DataSource = nhD.All();
             GVNH.BestFitColumns();
             GVNH.ExpandAllGroups();
         }
@@ -125,7 +220,7 @@ namespace CRM
         #region Sự kiện nút
         private void ibtnNap_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            TaiLaiDuLieu();
+            TaiLaiDuLieu(true);
         }
 
         private void ibtnThemMoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -225,7 +320,7 @@ namespace CRM
                 dic.Add("FormName", Text);
                 dic.Add("MaCho", cTNgan.MaLienKet);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", cTNgan.LoaiKhachHang);
                 dic.Add("Ma", cTNgan.MaDL);
                 if (NoiDung.Length > 10)
@@ -244,36 +339,20 @@ namespace CRM
             XuLyGiaoDien.ExportExcel(GCCTNH, GVCTNH, "ExNH-" + DateTime.Now.ToString("dd-MM-yyy"));
         }
 
-        private void btnHienAn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            apan1.Visible = !apan1.Visible;
-        }
-
         private void btnLoad_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             nhD.ChayLaiSD();
             LayDLNganHang();
 
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
 
         private void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             new frmNganHangThem().ShowDialog(ParentForm);
-        }
-
-        private void btnSua_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            new frmNganHangThem(kh).ShowDialog(ParentForm);
-        }
-
-        private void chkNganHang_CheckedChanged(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            kh = (GVNH.GetRow(GVNH.GetSelectedRows()[0]) as O_NGANHANG);
-            TaiLaiDuLieu();
         }
         #endregion
 
@@ -297,7 +376,7 @@ namespace CRM
 
         void ChinhSua()
         {
-            if (DuLieuTaoSan.Q.NganHangThemSua)
+            if (ClsDuLieu.Quyen.NganHangThemSua)
             {
                 cTNgan = (GVCTNH.GetRow(GVCTNH.GetSelectedRows()[0]) as O_CTNGANHANG);
                 int Ma = cTNgan.ID;
@@ -320,15 +399,18 @@ namespace CRM
 
         private void grvNganHang_DoubleClick(object sender, EventArgs e)
         {
-            kh = (GVNH.GetRow(GVNH.GetSelectedRows()[0]) as O_NGANHANG);
-            frmSoDuNganHang frm = new frmSoDuNganHang(kh.ID);
-            frm.ShowDialog();
+            if (ClsDuLieu.Quyen.NganHangThemSua)
+            {
+                kh = (GVNH.GetRow(GVNH.GetSelectedRows()[0]) as O_NGANHANG);
+                if (kh != null)
+                    new frmNganHangThem(kh).ShowDialog(ParentForm);
+            }
         }
 
         private void grvNganHang_Click(object sender, EventArgs e)
         {
             kh = (GVNH.GetRow(GVNH.GetSelectedRows()[0]) as O_NGANHANG);
-            if (chkNganHang.Checked)
+            if (!chkNganHang.Checked)
                 TaiLaiDuLieu();
         }
         #endregion
@@ -337,13 +419,13 @@ namespace CRM
         {
             if (kh == null)
                 return;
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             nhD.ChayLaiSD();
             LayDLNganHang();
 
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
 
         private void GVNH_RowCellStyle(object sender, RowCellStyleEventArgs e)
@@ -364,6 +446,25 @@ namespace CRM
 
         private void iCTKN_CheckedChanged(object sender, ItemClickEventArgs e)
         {
+
+        }
+
+        private void btnSoDu_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            kh = (O_NGANHANG)GVNH.GetFocusedRow();
+            frmSoDuNganHang frm = new frmSoDuNganHang(kh.ID);
+            frm.ShowDialog();
+        }
+
+        private void barToggleSwitchItem1_CheckedChanged(object sender, ItemClickEventArgs e)
+        {
+            kh = (O_NGANHANG)GVNH.GetFocusedRow();
+            if (kh != null)
+                TaiLaiDuLieu();
+        }
+
+        private void barToggleSwitchItem1_CheckedChanged_1(object sender, ItemClickEventArgs e)
+        {
             if (iCTKN.Checked)
             {
                 colLoaiKhachHang.GroupIndex = 0;
@@ -373,6 +474,11 @@ namespace CRM
                 colLoaiKhachHang.GroupIndex = colLoaiGiaoDich.GroupIndex = -1;
             LayDLNganHang();
             TaiLaiDuLieu();
+        }
+
+        private void btnNganHang_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            new frmNganHangChinh().ShowDialog();
         }
     }
 }

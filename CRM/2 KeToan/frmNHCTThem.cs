@@ -18,6 +18,8 @@ namespace CRM
             CTM.NganHangID = isTienMat ? 1 : 0;
             iNganHangID.Enabled = !isTienMat;
             groupControl1.Enabled = false;
+            _NganHang = new D_NGANHANG().DuLieu(isTienMat);
+            nganHangNguonBindingSource.DataSource = _NganHang;
         }
 
         public frmNHCTThem(O_CTNGANHANG ct, int MaLienKet)
@@ -36,6 +38,8 @@ namespace CRM
                 _GiaoDichOLD.Add(gza);
             }
             baoCaoCTNHOBindingSource.DataSource = _GiaoDich;
+            _NganHang = new D_NGANHANG().All();
+            nganHangNguonBindingSource.DataSource = _NganHang;
         }
 
 
@@ -43,16 +47,15 @@ namespace CRM
         {
             loaiGiaoDichOBindingSource.DataSource = new D_LOAIGIAODICH().DuLieu_NganHang_TheoLoai(0, true);
             DataLoaiKhach.DataSource = DuLieuTaoSan.LoaiKhachHang_NganHang();
-            _NganHang = new D_NGANHANG().All();
-            nganHangNguonBindingSource.DataSource = _NganHang;
+           
             nhanVienOBindingSource.DataSource = new D_DAILY().NhanVien();
             IntStringBindingSource.DataSource = DuLieuTaoSan.TrangThai_NganHang();
 
             if (CTM.NVGiaoDich < 1)
-                CTM.NVGiaoDich = DuLieuTaoSan.NV.ID;
+                CTM.NVGiaoDich = ClsDuLieu.NhanVien.ID;
 
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, CTM);
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             if (!CTM.TrangThaiID)
                 iTrangThaiID.EditValue = true;
 
@@ -243,7 +246,7 @@ namespace CRM
                 else
                 {
                     (Owner.ActiveMdiChild as frmNganHang).LayDLNganHang();
-                    (Owner.ActiveMdiChild as frmNganHang).TaiLaiDuLieu();
+                    (Owner.ActiveMdiChild as frmNganHang).TaiLaiDuLieu(true);
                 }
                 GhiChuCmt(CTM.ID);
                 Close();
@@ -261,7 +264,7 @@ namespace CRM
                 dic.Add("FormName", Text);
                 dic.Add("MaCho", string.Empty);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", iLoaiKhachHang.EditValue);
                 dic.Add("Ma", iMaDL.EditValue);
                 if (NoiDung.Length > 10)

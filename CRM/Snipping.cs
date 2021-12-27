@@ -126,13 +126,13 @@ namespace CRM
 
         private void btn_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
-            XuLyGiaoDien.wait.SetWaitFormCaption("Thông báo");
-            XuLyGiaoDien.wait.SetWaitFormDescription("Đã sao chép hình ảnh");
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
+            ClsChucNang.wait.SetWaitFormCaption("Thông báo");
+            ClsChucNang.wait.SetWaitFormDescription("Đã sao chép hình ảnh");
             Clipboard.SetImage(pic_origin.GetCroppedImage());
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
             Close();
         }
 

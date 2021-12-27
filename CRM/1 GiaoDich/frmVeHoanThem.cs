@@ -30,6 +30,7 @@ namespace CRM
         {
             InitializeComponent();
             _GiaoDichO = lst[0];
+            btnCode.Visible = btnSV.Visible = false;
             DSGiaoDich.DataSource = lst;
             Text += " sửa";
             if (lst[0].Hang == "VN")
@@ -59,29 +60,29 @@ namespace CRM
             NCCDB.DataSource = new D_NHACUNGCAP().DuLieu();
             NhanVienDB.DataSource = new D_DAILY().NhanVien();
             tuyenBayOBindingSource.DataSource = _ListTuyenBayO;
-            iTinhCongNo.Visible = DuLieuTaoSan.Q.TheoDoiHoanAdmin;
+            iTinhCongNo.Visible = ClsDuLieu.Quyen.TheoDoiHoanAdmin;
             if (Owner.ActiveMdiChild is frmVe)
             {
                 iTinhCongNo.Visible = true;
                 iTinhCongNo.Checked = true;
             }
-            iAn.Visible = DuLieuTaoSan.Q.VeAdmin;
+            iAn.Visible = ClsDuLieu.Quyen.VeAdmin;
 
             #region NVGiaoDich
-            iNVGiaoDich.Properties.ReadOnly = _GiaoDichO.NVGiaoDich != DuLieuTaoSan.NV.ID;
+            iNVGiaoDich.Properties.ReadOnly = _GiaoDichO.NVGiaoDich != ClsDuLieu.NhanVien.ID;
             if (_GiaoDichO.NVGiaoDich < 1)
-                _GiaoDichO.NVGiaoDich = DuLieuTaoSan.NV.ID;
-            else if (DuLieuTaoSan.NV.MienPhat)
-                _GiaoDichO.NVGiaoDich = DuLieuTaoSan.NV.ID;
+                _GiaoDichO.NVGiaoDich = ClsDuLieu.NhanVien.ID;
+            else if (ClsDuLieu.NhanVien.MienPhat)
+                _GiaoDichO.NVGiaoDich = ClsDuLieu.NhanVien.ID;
             #endregion
 
             iGhiChu.Text = _GiaoDichO.GhiChu;
             _LSTDIC = XuLyDuLieu.BanTamGrid(GVH);
             XuLyDuLieu.ConvertClassToTable(this, _GiaoDichO);
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             if (!_GiaoDichO.TinhCongNo)
                 iNgayGD.DateTime = DateTime.Now;
-            btnLuu.Visible = DuLieuTaoSan.Q.TheoDoiHoanThemSua;
+            btnLuu.Visible = ClsDuLieu.Quyen.TheoDoiHoanThemSua;
         }
 
         public void DuLieuKhachLe()
@@ -227,7 +228,7 @@ namespace CRM
 
             if (_GiaoDichO.TinhCongNo)
             {
-                if (!DuLieuTaoSan.Q.TheoDoiHoanAdmin)
+                if (!ClsDuLieu.Quyen.TheoDoiHoanAdmin)
                     if ((kn.HoatDong) && !(kn.Code ?? string.Empty).Contains(iMaCho.Text.Replace(" ", string.Empty)))
                     {
                         XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
@@ -315,7 +316,7 @@ namespace CRM
                     }
                 }
             }
-            a = (_GiaoDichO.ID > 0) ? _GiaoDichD.SuaNhieu1Ban(lstDicS, lstCTV) : _GiaoDichD.ThemNhieu1Ban(lstDicS);
+            a = (!btnCode.Visible) ? _GiaoDichD.SuaNhieu1Ban(lstDicS, lstCTV) : _GiaoDichD.ThemNhieu1Ban(lstDicS);
             if (XuLyGiaoDien.ThongBao(Text, a == lstDicS.Count))
             {
                 GhiChuCmt(_GiaoDichO.ID);
@@ -324,7 +325,7 @@ namespace CRM
                 if (Owner.ActiveMdiChild is frmVe)
                     (Owner.ActiveMdiChild as frmVe).DuLieu();
                 else
-                    (Owner.ActiveMdiChild as frmTheoDoiHoan).DuLieu();
+                    (Owner.ActiveMdiChild as frmTheoDoiHoan).DuLieu(true);
                 Close();
             }
         }
@@ -335,14 +336,25 @@ namespace CRM
             {
                 string NoiDung = string.Format("{0}: {1}", f, XuLyDuLieu.GhiChuCMT(this) + XuLyDuLieu.GhiChuGrid(GVH, _LSTDIC));
                 Dictionary<string, object> dic = new Dictionary<string, object>();
-                dic.Add("FormName", Text);
+                dic.Add("FormName", "Vé hoàn");
                 dic.Add("MaCho", iMaCho.Text);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 if (NoiDung.Length > 10)
                     new D_LS_GIAODICH().ThemMoi(dic);
+            }
+            else if (long.Parse(f.ToString()) == 0)
+            {
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("FormName", "Vé hoàn");
+                dic.Add("MaCho", iMaCho.Text);
+                dic.Add("NoiDung", "Thêm tay");
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
+                dic.Add("LoaiKhachHang", 0);
+                dic.Add("Ma", 0);
+                new D_LS_GIAODICH().ThemMoi(dic);
             }
         }
 
@@ -432,6 +444,7 @@ namespace CRM
         List<O_GIAODICH> _ListGiaoDichO = new List<O_GIAODICH>();
         void Xuli(List<O_GIAODICH> lstgd)
         {
+            bool isVN = false;
             foreach (O_GIAODICH gd in lstgd)
             {
                 if (_ListGiaoDichO.Where(w => (w.SoVeVN ?? string.Empty).Equals(gd.SoVeVN) && w.GiaHoan.Equals(gd.GiaThu)).Count() > 0)
@@ -443,6 +456,8 @@ namespace CRM
                 g1.TenKhach += "/Hoàn vé";
                 g1.LoaiGiaoDich = 9;
                 g1.NVHoTro = g1.NVHoTro;
+                if (g1.NhaCungCap == 1 && !isVN)
+                    isVN = true;
                 _ListGiaoDichO.Add(g1);
             }
 
@@ -452,9 +467,12 @@ namespace CRM
                 DSGiaoDich.DataSource = _ListGiaoDichO;
 
                 lstgd[0].NVHoTro = _ListGiaoDichO[0].NVGiaoDich;
-                lstgd[0].NVGiaoDich = DuLieuTaoSan.NV.ID;
+                lstgd[0].NVGiaoDich = ClsDuLieu.NhanVien.ID;
 
                 lstgd[0].NgayGD = DateTime.Now;
+                if (isVN)
+                    lstgd[0].NhaCungCap = 2;
+
                 XuLyDuLieu.ConvertClassToTable(this, lstgd[0]);
 
                 iTinhCongNo.Checked = false;

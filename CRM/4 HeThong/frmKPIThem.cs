@@ -34,8 +34,8 @@ namespace CRM
         {
             kPIHangMucOBindingSource.DataSource = new D_KPIHANGMUC().DuLieu1();
             XuLyDuLieu.ConvertClassToTable(this, kpi);
-            XuLyGiaoDien.OpenForm(this);
-            btnLuu2.Visible = DuLieuTaoSan.Q.TuyenBayThemSua;
+            ClsChucNang.OpenForm(this);
+            btnLuu2.Visible = ClsDuLieu.Quyen.TuyenBayThemSua;
         }
 
         private void btnLuu2_Click(object sender, EventArgs e)

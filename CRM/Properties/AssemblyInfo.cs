@@ -28,4 +28,4 @@ using System.Runtime.InteropServices;
 //[assembly: AssemblyFileVersion("1.0.0.0")]
 
 
-[assembly: AssemblyVersion("4.0.*")]
+[assembly: AssemblyVersion("21.9.*")]

@@ -11,7 +11,7 @@ namespace DataAccessLayer
             return LayDuLieu<O_NHOMQUYEN>();
         }
 
-        public O_NHOMQUYEN LayQuyenNhanVien(int id)
+        public O_NHOMQUYEN QuyenNhanVien(int id)
         {
             return LayMotDongDonGian<O_NHOMQUYEN>("WHERE ID = " + id);
         }

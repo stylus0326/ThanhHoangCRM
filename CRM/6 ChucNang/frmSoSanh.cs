@@ -136,8 +136,8 @@ namespace CRM
         {
             DataVJ = new DataTable();
             gdL = new List<O_GIAODICH>();
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             if (_NCCO.ID == 1)
             {
                 _Name = "VietJet";
@@ -261,8 +261,8 @@ namespace CRM
                             GCVTNCC.DataSource = lst1.Where(w => w.GiaNet > 0);
                             GCVHNCC.DataSource = lst1.Where(w => w.HangHoan > 0);
 
-                            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                                XuLyGiaoDien.wait.CloseWaitForm();
+                            if (ClsChucNang.wait.IsSplashFormVisible)
+                                ClsChucNang.wait.CloseWaitForm();
                             XtraMessageBox.Show("Lấy dữ liệu thành công", "Thông báo");
                             wQH.Visible = false;
                             //element.text = @"function doPost() {invoiceDetailExport('xls','/reservation','vi');}";
@@ -366,8 +366,8 @@ namespace CRM
                                 GCVTNCC.DataSource = gdL.Where(w => w.GiaNet > 0);
                                 GCVHNCC.DataSource = gdL.Where(w => w.HangHoan > 0);
 
-                                if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                                    XuLyGiaoDien.wait.CloseWaitForm();
+                                if (ClsChucNang.wait.IsSplashFormVisible)
+                                    ClsChucNang.wait.CloseWaitForm();
                                 XtraMessageBox.Show("Lấy dữ liệu thành công", "Thông báo");
                                 wVJ.Visible = false;
                             }

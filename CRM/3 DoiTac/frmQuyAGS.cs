@@ -26,13 +26,12 @@ namespace CRM
         int SoLanDangNhap = 0;
         private void wVJ_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            Text = wVJ.Url.ToString();
             if (wVJ.ReadyState == WebBrowserReadyState.Complete && !wVJ.IsBusy)
             {
                 HtmlElement head = wVJ.Document.GetElementsByTagName("head")[0];
                 HtmlElement scriptEl = wVJ.Document.CreateElement("script");
                 IHTMLScriptElement element = (IHTMLScriptElement)scriptEl.DomElement;
-                if (wVJ.Url.AbsolutePath.Contains("/Login.aspx")) // Trang login
+                if (wVJ.Url.ToString().Contains("/Login.aspx")) // Đăng nhập
                 {
                     wVJ.Document.GetElementById("txtUsernameVNiSC").SetAttribute("value", "admin");
                     wVJ.Document.GetElementById("txtMatKhau").SetAttribute("value", "11223399");
@@ -65,11 +64,7 @@ namespace CRM
                         else
                             goto RetunA;
                     }
-                }
-                else if (wVJ.Url.AbsolutePath.Contains("/Default.aspx") || wVJ.Url.AbsolutePath.Contains("/Booking.aspx"))
-                {
-                    wVJ.Navigate("http://ags.thanhhoang.vn/Accounting.aspx?Do=Deposit");
-                }
+                }  // Đăng nhập
                 else if (wVJ.Url.ToString().EndsWith("Accounting.aspx?Do=Deposit&Act=Add"))
                 {
 
@@ -123,15 +118,12 @@ namespace CRM
         private void btnCapQuy_Click(object sender, EventArgs e)
         {
             if ((long)spinEdit1.Value > 1000000)
-                wVJ.Navigate("http://ags.thanhhoang.vn/Login.aspx");
+                wVJ.Navigate("http://ags.thanhhoang.vn/Accounting.aspx?Do=Deposit");
         }
 
         private void frmQuyAGS_Load(object sender, EventArgs e)
         {
-            RegistryKey RegKey = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Internet Explorer\Main", true);
-            RegKey.SetValue("Display Inline Images", "yes");
-
-            XuLyGiaoDien.OpenForm(this);
+            wVJ.Navigate("http://ags.thanhhoang.vn/Login.aspx");
         }
     }
 }

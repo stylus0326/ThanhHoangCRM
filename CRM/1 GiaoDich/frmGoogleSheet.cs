@@ -76,11 +76,11 @@ namespace CRM
 
         void GetService()
         {
-            UserCredential _Sheet;
-            _Sheet = Sheet();
-
             UserCredential _Drive;
             _Drive = Drive();
+
+            UserCredential _Sheet;
+            _Sheet = Sheet();
 
             DService = new DriveService(new BaseClientService.Initializer()
             {
@@ -620,8 +620,8 @@ namespace CRM
 
         private void frmGoogleSheet_Load(object sender, System.EventArgs e)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             lstALL = new D_DAILY().All();
             lstCTV = lstALL.Where(w => w.LoaiKhachHang.Equals(2)).OrderBy(w => w.Ten).ToList();
             lstDaiLy = lstALL.Where(w => w.LoaiKhachHang.Equals(1)).OrderBy(w => w.Ten).ToList();
@@ -633,8 +633,8 @@ namespace CRM
             XulyVeThuong();
             XuLyVeHoanBk();
             XuLyVeHoanKt();
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
             Close();
         }
         APISheet aPI(string GhiChuThem, string MaCho, string DaiLy, string CTV, string GhiChu, string GhiChuOLD, long PhiHoanDaiLy = 0, long GiaHoanDaiLy = 0, long PhiHoan = 0, long GiaHoan = 0)

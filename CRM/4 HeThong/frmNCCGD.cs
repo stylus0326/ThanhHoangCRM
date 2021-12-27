@@ -51,7 +51,7 @@ namespace CRM
         {
             nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu();
             intStringBindingSource.DataSource = DuLieuTaoSan.LoaiPhi(false);
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             XuLyDuLieu.ConvertClassToTable(this, _nCCGDO);
         }
     }

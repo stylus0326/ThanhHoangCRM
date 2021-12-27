@@ -171,14 +171,33 @@ namespace CRM
                                 if (chromeDriver.Url.Contains("pageId=1"))
                                     ChromeFindElementByClassName("a", "button-blue", (_NganHangO.ID == 4) ? 0 : 1).Click();
                                 wait.Until(driver => driver.FindElement(By.Id("password-password")));
-                                chromeDriver.FindElement(By.Id("user-user")).SendKeys(_NganHangO.TenDangNhap);
-                                js.ExecuteScript("document.getElementById('password-password').value = '" + _NganHangO.MatKhau + "'; document.getElementById('password-clear').value = '" + _NganHangO.MatKhau + "'");
+                                Clipboard.SetText(_NganHangO.MatKhau);
+
+
+                                //string btn = @"``|96;1|49;2|50;3|51;4|52;5|53;6|54;7|55;8|56;9|57;0|48;-|45;=|61;q|113;w|119;e|101;r|114;t|116;y|121;u|117;i|105;o|111;p|112;[|91;]|93;\|92;a|97;s|115;d|100;f|102;g|103;h|104;j|106;k|107;l|108;z|122;x|120;c|99;v|118;b|98;n|110;m|109;,|44;.|46;/|47;~|126;!|33;@|64;#|35;$|36;%|37;^|94;&|38;*|42;(|40;)|41;_|95;+|43;Q|81;W|87;E|69;R|82;T|84;Y|89;U|85;I|73;O|79;P|80;{|123;}|125;A|65;S|83;D|68;F|70;G|71;H|72;J|74;K|75;L|76;:|58;Z|90;X|88;C|67;V|86;B|66;N|78;M|77;<|60;>|62;?|63;";
+
+                                //List<string> lstbtn = btn.Split(';').ToList();
+
+                                //for (int i = 0; i < _NganHangO.MatKhau.Length; i++)
+                                //{
+                                //    if (Char.IsUpper(_NganHangO.MatKhau[i]))
+                                //        chromeDriver.FindElement(By.Name("shift")).Click();
+                                //    string a = lstbtn.Where(w => w.StartsWith(_NganHangO.MatKhau[i].ToString())).First().Split('|')[1];
+                                //    Thread.Sleep(200);
+                                //    chromeDriver.FindElement(By.Name(a)).Click();
+                                //    Thread.Sleep(200);
+                                //    if (Char.IsUpper(_NganHangO.MatKhau[i]))
+                                //        chromeDriver.FindElement(By.XPath("/html/body/div[2]/div[2]/button[42]")).Click();
+                                //}
+
                                 try { chromeDriver.FindElement(By.Id("code-clear")).SendKeys(string.Empty); } catch { }
+
+
                                 js.ExecuteScript(@"$(function() { $('#code-code').keyup(function() { this.value = this.value.toLocaleUpperCase();});});");
-                                wait.Until(driver => driver.FindElement(By.Id("code-code")).GetAttribute("value").Length > 4);
-                                chromeDriver.FindElement(By.ClassName("button-blue")).Click();
-                                if (chromeDriver.PageSource.Contains("Sai mã xác thực"))
-                                    return;
+                                //wait.Until(driver => driver.FindElement(By.Id("code-code")).GetAttribute("value").Length > 4);
+                                //chromeDriver.FindElement(By.ClassName("button-blue")).Click();
+                                //if (chromeDriver.PageSource.Contains("Sai mã xác thực"))
+                                //return;
                                 break;
                             }
                         case 6:
@@ -575,9 +594,57 @@ namespace CRM
                             Thread.Sleep(1000);
                             chromeDriver.FindElement(By.ClassName("clsHasKids")).Click();
                             Thread.Sleep(1000);
-                            chromeDriver.FindElement(By.ClassName("MenuLink")).Click();
+                            IList<IWebElement> MenuLink = chromeDriver.FindElements(By.ClassName("MenuLink"));
+                            MenuLink[1].Click();
+                            Thread.Sleep(1000);
+                            chromeDriver.FindElement(By.XPath("/html/body/div/table/tbody/tr[2]/td/table/tbody/tr/td[2]/div[3]/div[2]/form[1]/div[4]/table[2]/tbody/tr/td[2]/a")).Click();
+                            wait.Until(driver => driver.PageSource.Contains("<td>19032933336018</td>"));
+                            {
+
+                                IList<IWebElement> MenuLink1 = chromeDriver.FindElements(By.TagName("tr"));
+                                foreach(IWebElement ele in MenuLink1)
+                                {
+                                    if(ele.Text.Replace(" ","").StartsWith("119032933336018"))
+                                    {//XuLyDuLieu.ConvertStringToLong
+                                        string soDu = ele.FindElements(By.TagName("td"))[3].Text.Replace(",", "");
+                                        Dictionary<string, object> dic = new Dictionary<string, object>();
+                                        dic.Add("SoDu", soDu);
+                                        new D_NGANHANG().CapNhat(dic, 2022);
+                                        break;
+                                    }    
+                                }  
+                            }//Lấy 18
+
+                            {
+                                Thread.Sleep(1000);
+                                MenuLink[0].Click();
+                                wait.Until(driver => driver.PageSource.Contains("textbtn"));
+                                chromeDriver.FindElement(By.Id("fieldName:FIELD.1")).SendKeys("19332933336011");
+                                Thread.Sleep(1000);
+                                js.ExecuteScript("document.getElementById('fieldName:DATE.FIELD.1').value = '01/12/2021'");
+                                Thread.Sleep(1000);
+                                js.ExecuteScript("document.getElementById('fieldName:DATE.FIELD.2').value = '" + DateTime.Now.ToString("dd/MM/yyyy") + "'");
+                                Thread.Sleep(2000);
+                                chromeDriver.FindElement(By.ClassName("textbtn")).Click();
+
+                                IList<IWebElement> MenuLink1 = chromeDriver.FindElements(By.TagName("tr"));
+                                foreach (IWebElement ele in MenuLink1)
+                                {
+                                    if (ele.Text.StartsWith("Σ="))
+                                    {//XuLyDuLieu.ConvertStringToLong
+                                        string soDu = ele.Text.Substring(2).Replace(",", "");
+                                        Dictionary<string, object> dic = new Dictionary<string, object>();
+                                        dic.Add("SoDu", soDu);
+                                        new D_NGANHANG().CapNhat(dic, 2030);
+                                        break;
+                                    }
+                                }
+                            }//Lấy 11
+
+                            Thread.Sleep(1000);
+                            MenuLink[0].Click();
                             wait.Until(driver => driver.PageSource.Contains("textbtn"));
-                            chromeDriver.FindElement(By.Id("fieldName:FIELD.1")).SendKeys((_NganHangO.ID == 2022) ? "19132933336012" : "19132933336012");
+                            chromeDriver.FindElement(By.Id("fieldName:FIELD.1")).SendKeys("19132933336012");
                             Thread.Sleep(1000);
                             js.ExecuteScript("document.getElementById('fieldName:DATE.FIELD.1').value = '" + iTu.ToString("dd/MM/yyyy") + "'");
                             Thread.Sleep(1000);
@@ -613,7 +680,7 @@ namespace CRM
                     case 2023:
                         {
                             chromeDriver.FindElement(By.XPath("//*[@id='vcbHeader']/div[1]/section/div/div/div[2]/div[1]/section/div/nav/ul/li[1]/a")).Click();
-                            SoDu = XuLyDuLieu.ConvertStringToLong(chromeDriver.FindElement(By.XPath("//*[@id='dstkdd-tbody']/tr/td[3]")).Text);
+                            SoDu = XuLyDuLieu.ConvertStringToLong(chromeDriver.FindElement(By.XPath("/html/body/div/main/div/form/div[3]/div/div/div[1]/div[2]/div[1]/table/tbody/tr/td[4]")).Text);
                             LuuSoDu();
                             Thread.Sleep(500);
                             chromeDriver.FindElement(By.XPath("//*[@id='dstkdd-tbody']/tr/td[1]/a")).Click();
@@ -647,7 +714,7 @@ namespace CRM
                     case 2026:
                         {
                             SoDu = XuLyDuLieu.ConvertStringToLong(chromeDriver.FindElement(By.XPath("/html/body/app-root/div/ng-component/div[1]/div/div/div[1]/div/div/div/mbb-dashboard/div/div[3]/div[1]/mbb-finance-information/div/div[2]/mbb-account-deposit/div[1]/div/div/span[2]")).Text);
-                            LuuSoDu(); 
+                            LuuSoDu();
                             chromeDriver.Navigate().GoToUrl("https://ebank.mbbank.com.vn/cp/account-info/transaction-inquiry");
                             Thread.Sleep(500);
                             new Actions(chromeDriver).MoveToElement(chromeDriver.FindElement(By.Id("mat-input-0"))).Click().Build().Perform();
@@ -1166,7 +1233,7 @@ namespace CRM
                             if (ChromeFindElementByClassName("div", "h5").Text.Contains("*"))
                                 ChromeFindElementByClassName("label", "ubtn ubg-white-2 ripple tk-eye legitRipple").Click();
                             Thread.Sleep(1000);
-                            SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("div", "h5").Text); 
+                            SoDu = XuLyDuLieu.ConvertStringToLong(ChromeFindElementByClassName("div", "h5").Text);
                             LuuSoDu();
                             mytable = ChromeFindElementByClassName("div", "tab-pane fade show active ph30 pv10").FindElements(By.ClassName("list-info-item"));
 
@@ -1198,6 +1265,14 @@ namespace CRM
                             Thread.Sleep(1000);
                             string sodu = ChromeFindElementByClassName("table", "data-table", 1).FindElements(By.TagName("td"))[13].Text;
                             SoDu = XuLyDuLieu.ConvertStringToLong(sodu) * (sodu.Contains("-") ? -1 : 1);
+                            if (_NganHangO.ID == 13)
+                            {
+                                Dictionary<string, object> dic = new Dictionary<string, object>();
+                                dic.Add("SoDu", 2000000000 - SoDu);
+                                new D_NGANHANG().CapNhat(dic, 2029);
+
+                                SoDu = SoDu >= 0 ? SoDu : 0;
+                            }
                             LuuSoDu();
                             if (SoLanXuatHien(chromeDriver.PageSource, "tableTemp") == 1)
                                 return;
@@ -1471,7 +1546,7 @@ namespace CRM
                     CT.NgayGD = Day;
                     CT.NgayHT = DayHT;
                     CT.NgayTT = DayHT;
-                    CT.NVGiaoDich = DuLieuTaoSan.NV.ID;
+                    CT.NVGiaoDich = ClsDuLieu.NhanVien.ID;
 
                     CT.LoaiKhachHang = 6;
                     CT.LoaiGiaoDich = (CT.SoTien > 0) ? 12 : 7;
@@ -1500,7 +1575,7 @@ namespace CRM
             lblSD3.Caption = (_NganHangO.SoDuCuoi + lst.Sum(w => w.SoTien)).ToString("Số dư tự tính: #,##0");
             cTNganHangOBindingSource.DataSource = lst;
 
-           
+
             if (SoDu != _NganHangO.SoDuCuoi + lst.Sum(w => w.SoTien))
             {
                 XtraMessageBox.Show("Số dư ngân hàng không bằng số dư tự tính", "Thông báo");

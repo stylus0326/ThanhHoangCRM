@@ -31,8 +31,8 @@ namespace CRM
         {
             intStringBindingSource.DataSource = DuLieuTaoSan.LoaiKhachHang_Ve();
             XuLyDuLieu.ConvertClassToTable(this, _ChinhSachO);
-            XuLyGiaoDien.OpenForm(this);
-            btnLuu.Visible = DuLieuTaoSan.Q.ChinhSachThemSua;
+            ClsChucNang.OpenForm(this);
+            btnLuu.Visible = ClsDuLieu.Quyen.ChinhSachThemSua;
         }
 
         #region Sự kiện nút
@@ -63,7 +63,7 @@ namespace CRM
         private void btnLuu_Click(object sender, EventArgs e)
         {
             List<KiemTra> kiemTras = new List<KiemTra>();
-            kiemTras.Add(new KiemTra() { _Control = iTen, _Tu = 5, _Den = 30, _ChoQua = !_ChinhSachD.DaTonTai("Ten", iTen.Text, _ChinhSachO.ID), _ThongBao2 = "Đã tồn tại" });
+            kiemTras.Add(new KiemTra() { _Control = iTen, _Tu = 5, _Den = 30, _ChoQua = !_ChinhSachD.KiemTraTonTai(_ChinhSachO.ID,"Ten", iTen.Text), _ThongBao2 = "Đã tồn tại" });
 
             XuLyGiaoDien.KiemTra(kiemTras, dxValidationProvider1);
             if (!dxValidationProvider1.Validate())

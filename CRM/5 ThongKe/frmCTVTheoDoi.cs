@@ -17,15 +17,15 @@ namespace CRM
         {
             if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
             {
-                if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.ShowWaitForm();
+                if (!ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.ShowWaitForm();
 
                 _lstTheoDoi = new D_THEODOIHOAN().DuLieu((DateTime)bdtpTu.EditValue, (DateTime)bdtpDen.EditValue, 2, barCheckItem1.Checked);
 
                 theoDoiOBindingSource.DataSource = _lstTheoDoi;
 
-                if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.CloseWaitForm();
+                if (ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.CloseWaitForm();
             }
         }
 

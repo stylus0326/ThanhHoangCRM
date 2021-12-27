@@ -126,8 +126,8 @@ namespace CRM
                 XuLyGiaoDien.Alert("Chưa chọn đại lý tìm!", Form_Alert.enmType.Info);
             else
             {
-                if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.ShowWaitForm();
+                if (!ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.ShowWaitForm();
                 string daily = string.Format("{0}", lstDaiLyz.CheckedItems[0]);
                 for (int i = 1; i < n; i++)
                 {
@@ -135,8 +135,8 @@ namespace CRM
                 }
                 lst = new D_HOADON().DuLieu(string.Format("CONVERT(date, NgayThucHien) BETWEEN '{0}' AND '{1}' AND MaHD <> '0' AND ((GiaYeuCau - GiaHeThong) * PhanTram / 100) > 0 AND IDKhachHang in ({2}) ORDER BY IDKhachHang,MaHD,MaCho,GiaHeThong Desc", bdtpTu.DateTime.ToString("yyyyMMdd"), bdtpDen.DateTime.ToString("yyyyMMdd"), daily));
                 hoaDonOBindingSource.DataSource = lst;
-                if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                    XuLyGiaoDien.wait.CloseWaitForm();
+                if (ClsChucNang.wait.IsSplashFormVisible)
+                    ClsChucNang.wait.CloseWaitForm();
             }
         }
 
@@ -150,8 +150,8 @@ namespace CRM
                 else
                 {
                     GCG.Visible = true;
-                    if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                        XuLyGiaoDien.wait.ShowWaitForm();
+                    if (!ClsChucNang.wait.IsSplashFormVisible)
+                        ClsChucNang.wait.ShowWaitForm();
                     List<long> a = new List<long>();
                     string daily = string.Format("{0}", lstDaiLyz.CheckedItems[0]);
                     a.Add(long.Parse(lstDaiLyz.CheckedItems[0].ToString()));
@@ -166,7 +166,7 @@ namespace CRM
                     foreach (int b in a)
                     {
                         O_DAILY dl = lstDaiLy.Where(w => w.ID.Equals(b)).ToList()[0];
-                        XuLyGiaoDien.wait.SetWaitFormDescription("Excel cho: " + dl.Ten);
+                        ClsChucNang.wait.SetWaitFormDescription("Excel cho: " + dl.Ten);
                         List<O_HOADON> lstTam1 = lst.Where(w => w.IDKhachHang.Equals(b)).OrderBy(w => w.MaHD.Replace(" ", string.Empty)).ToList();
                         List<O_HOADON> lstTam = new List<O_HOADON>();
                         string newrow = string.Empty;
@@ -198,8 +198,8 @@ namespace CRM
                         GVG.ExportToXlsx(strFile, opt);
                     }
                     GCG.Visible = false;
-                    if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                        XuLyGiaoDien.wait.CloseWaitForm();
+                    if (ClsChucNang.wait.IsSplashFormVisible)
+                        ClsChucNang.wait.CloseWaitForm();
                 }
             }
         }
@@ -256,8 +256,8 @@ namespace CRM
                     client.Credentials = new System.Net.NetworkCredential(cauHinhSMTPO.Email, cauHinhSMTPO.Password);
 
 
-                    GCG.Visible = true; if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                        XuLyGiaoDien.wait.ShowWaitForm();
+                    GCG.Visible = true; if (!ClsChucNang.wait.IsSplashFormVisible)
+                        ClsChucNang.wait.ShowWaitForm();
                     List<long> a = new List<long>();
                     string daily = string.Format("{0}", lstDaiLyz.CheckedItems[0]);
                     a.Add(long.Parse(lstDaiLyz.CheckedItems[0].ToString()));
@@ -315,7 +315,7 @@ namespace CRM
                                 mm.To.Add(new MailAddress(EmailKeToanString[ii]));
                                 //mm.To.Add(new MailAddress("tungtranims@gmail.com"));
 
-                                XuLyGiaoDien.wait.SetWaitFormDescription("Excel cho: " + dl.Ten);
+                                ClsChucNang.wait.SetWaitFormDescription("Excel cho: " + dl.Ten);
                                 guiOBindingSource.DataSource = lstTam;
                                 string strFile = @"C:\HoaDon\CT HoaDon " + dl.Ten + ".xlsx";
                                 System.IO.Directory.CreateDirectory(@"C:\HoaDon");
@@ -333,8 +333,8 @@ namespace CRM
                         }
                     }
                     GCG.Visible = false;
-                    if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                        XuLyGiaoDien.wait.CloseWaitForm();
+                    if (ClsChucNang.wait.IsSplashFormVisible)
+                        ClsChucNang.wait.CloseWaitForm();
                     if (sendOK)
                         XuLyGiaoDien.Alert("Gửi mail thành công", Form_Alert.enmType.Success);
                     else
@@ -352,8 +352,8 @@ namespace CRM
                     XuLyGiaoDien.Alert("Chưa chọn đại lý tìm", Form_Alert.enmType.Info);
                 else
                 {
-                    if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                        XuLyGiaoDien.wait.ShowWaitForm();
+                    if (!ClsChucNang.wait.IsSplashFormVisible)
+                        ClsChucNang.wait.ShowWaitForm();
                     List<long> a = new List<long>();
                     string daily = string.Format("{0}", lstDaiLyz.CheckedItems[0]);
                     a.Add(long.Parse(lstDaiLyz.CheckedItems[0].ToString()));
@@ -375,13 +375,13 @@ namespace CRM
                     foreach (int b in a)
                     {
                         O_DAILY dl = lstDaiLy.Where(w => w.ID.Equals(b)).ToList()[0];
-                        XuLyGiaoDien.wait.SetWaitFormDescription("Thu phí: " + dl.Ten);
+                        ClsChucNang.wait.SetWaitFormDescription("Thu phí: " + dl.Ten);
 
                         gdo = new O_GIAODICH();
                         gdo.LoaiKhachHang = dl.LoaiKhachHang;
                         gdo.IDKhachHang = dl.ID;
                         gdo.MaCho = "HD";
-                        gdo.NVGiaoDich = DuLieuTaoSan.NV.ID;
+                        gdo.NVGiaoDich = ClsDuLieu.NhanVien.ID;
                         gdo.GiaThu = gdo.GiaHeThong = long.Parse(lst.Where(w => w.IDKhachHang.Equals(b)).Sum(w => w.CL2).ToString());
                         gdo.TenKhach = "Phí hóa đơn tháng " + bdtpTu.DateTime.Month;
                         gdo.CoDinh = true;
@@ -390,8 +390,8 @@ namespace CRM
                         if (gdo.GiaHeThong > 0)
                             giaoDichD.ThemMoi(XuLyDuLieu.ConvertClassToDic(gdo));
                     }
-                    if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                        XuLyGiaoDien.wait.CloseWaitForm();
+                    if (ClsChucNang.wait.IsSplashFormVisible)
+                        ClsChucNang.wait.CloseWaitForm();
                     XuLyGiaoDien.Alert("Thêm giao dịch thành công!", Form_Alert.enmType.Success);
                 }
             }

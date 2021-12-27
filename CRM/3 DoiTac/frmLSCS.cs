@@ -19,8 +19,8 @@ namespace CRM
             iTN.Properties.MinValue = iTN.DateTime = DateTime.Now.AddDays(-30);
             iDN.DateTime = DateTime.Now;
             soDuDaiLyOBindingSource.DataSource = _SODU_DAILYD.DuLieu(IDDaiLy, new DateTime(2019, 01, 01), DateTime.Now);
-            XuLyGiaoDien.OpenForm(this);
-            btn.Visible = DuLieuTaoSan.Q.ChinhSachThemSua;
+            ClsChucNang.OpenForm(this);
+            btn.Visible = ClsDuLieu.Quyen.ChinhSachThemSua;
         }
 
         #region Biến

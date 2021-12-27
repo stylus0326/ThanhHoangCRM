@@ -19,8 +19,8 @@ namespace CRM
 
         private void frmCauHinhEmail_Load(object sender, EventArgs e)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             mauEmailOBindingSource.DataSource = mauEmailD.DuLieu();
             O_CAUHINHSMTP cauHinhSMTPO = cauHinhSMTPD.DuLieu();
             if (cauHinhSMTPO.Port > 0)
@@ -31,8 +31,8 @@ namespace CRM
                 txtEmail.Text = cauHinhSMTPO.Email;
                 txtMatKhau.Text = cauHinhSMTPO.Password;
             }
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
 
         #region Sự kiện nút

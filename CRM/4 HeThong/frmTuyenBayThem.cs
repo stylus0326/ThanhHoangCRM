@@ -32,8 +32,8 @@ namespace CRM
             _list = new D_SANBAY().DuLieu();
             sanBayOBindingSource.DataSource = _list;
             XuLyDuLieu.ConvertClassToTable(this, _TuyenBayO);
-            XuLyGiaoDien.OpenForm(this);
-            btnLuu2.Visible = DuLieuTaoSan.Q.TuyenBayThemSua;
+            ClsChucNang.OpenForm(this);
+            btnLuu2.Visible = ClsDuLieu.Quyen.TuyenBayThemSua;
         }
 
         private void iKyHieuDi_EditValueChanged(object sender, EventArgs e)
@@ -45,7 +45,7 @@ namespace CRM
         {
             List<KiemTra> kiemTras = new List<KiemTra>() {
             new KiemTra() { _Control = iKyHieuDi,_Tu=3,_Den = 100, },
-            new KiemTra() { _Control = iKyHieuDen,_Tu=3,_Den = 5,_ChoQua = !_TuyenBayD.DaTonTai("Ten",iKyHieuDi.Text + "-" + iKyHieuDen.Text,_TuyenBayO.ID), _ThongBao2 = "Tuyến bay đã tồn tại" }};
+            new KiemTra() { _Control = iKyHieuDen,_Tu=3,_Den = 5,_ChoQua = !_TuyenBayD.KiemTraTonTai(_TuyenBayO.ID,"Ten",iKyHieuDi.Text + "-" + iKyHieuDen.Text), _ThongBao2 = "Tuyến bay đã tồn tại" }};
 
             XuLyGiaoDien.KiemTra(kiemTras, dxValidationProvider1);
             if (!dxValidationProvider1.Validate())

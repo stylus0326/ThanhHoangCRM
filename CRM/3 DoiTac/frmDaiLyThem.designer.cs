@@ -234,7 +234,7 @@
             this.iNgayKiQuy.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             this.iNgayKiQuy.Size = new System.Drawing.Size(98, 20);
             this.iNgayKiQuy.TabIndex = 0;
-            this.iNgayKiQuy.Tag = "";
+            this.iNgayKiQuy.Tag = "Ngày bắt đầu";
             // 
             // btnLS
             // 
@@ -351,7 +351,7 @@
             this.iNgayCap.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             this.iNgayCap.Size = new System.Drawing.Size(98, 20);
             this.iNgayCap.TabIndex = 3;
-            this.iNgayCap.Tag = "NgayCap";
+            this.iNgayCap.Tag = "Ngày cấp";
             // 
             // iNoiCap
             // 
@@ -359,7 +359,7 @@
             this.iNoiCap.Name = "iNoiCap";
             this.iNoiCap.Size = new System.Drawing.Size(256, 20);
             this.iNoiCap.TabIndex = 4;
-            this.iNoiCap.Tag = "NoiCap";
+            this.iNoiCap.Tag = "Nơi cấp";
             // 
             // iCMND
             // 
@@ -441,7 +441,7 @@
             this.iDiaChiHD.Name = "iDiaChiHD";
             this.iDiaChiHD.Size = new System.Drawing.Size(256, 52);
             this.iDiaChiHD.TabIndex = 7;
-            this.iDiaChiHD.Tag = "DiaChiHD";
+            this.iDiaChiHD.Tag = "ĐC HĐ";
             // 
             // iNguoiDaiDienHD
             // 
@@ -679,7 +679,7 @@
             // 
             // iNVGiaoDich
             // 
-            this.iNVGiaoDich.EditValue = "";
+            this.iNVGiaoDich.EditValue = "NV tạo";
             this.iNVGiaoDich.Location = new System.Drawing.Point(273, 360);
             this.iNVGiaoDich.Name = "iNVGiaoDich";
             this.iNVGiaoDich.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -691,7 +691,7 @@
             this.iNVGiaoDich.Properties.ValueMember = "ID";
             this.iNVGiaoDich.Size = new System.Drawing.Size(83, 20);
             this.iNVGiaoDich.TabIndex = 78;
-            this.iNVGiaoDich.Tag = "";
+            this.iNVGiaoDich.Tag = "NV tạo";
             // 
             // NhanVienDB
             // 
@@ -749,6 +749,7 @@
             "Nghỉ"});
             this.iTrangThaiHoatDong.Size = new System.Drawing.Size(131, 20);
             this.iTrangThaiHoatDong.TabIndex = 80;
+            this.iTrangThaiHoatDong.Tag = "Trạng thái";
             // 
             // labelControl1
             // 

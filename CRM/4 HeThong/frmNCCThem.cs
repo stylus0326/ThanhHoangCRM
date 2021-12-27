@@ -45,7 +45,7 @@ namespace CRM
             }
             DSNH.DataSource = new D_NGANHANG().All();
             XuLyDuLieu.ConvertClassToTable(this, _NCCO);
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         public void KhuVuc()
@@ -66,7 +66,7 @@ namespace CRM
 
             List<KiemTra> kiemTras = new List<KiemTra>();
             kiemTras.Add(new KiemTra() { _Control = iTenDayDu, _Tu = 2, _Den = 50 });
-            kiemTras.Add(new KiemTra() { _Control = iTen, _Tu = 2, _Den = 50, _ChoQua = !_NCCD.DaTonTai("Ten", iTen.Text, _NCCO.ID), _ThongBao2 = "Đã tồn tại" });
+            kiemTras.Add(new KiemTra() { _Control = iTen, _Tu = 2, _Den = 50, _ChoQua = !_NCCD.KiemTraTonTai(_NCCO.ID,"Ten", iTen.Text), _ThongBao2 = "Đã tồn tại" });
 
             XuLyGiaoDien.KiemTra(kiemTras, dxValidationProvider1);
             if (!dxValidationProvider1.Validate())

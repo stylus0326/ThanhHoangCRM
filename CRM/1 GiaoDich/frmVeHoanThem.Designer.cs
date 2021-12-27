@@ -41,9 +41,13 @@
             DevExpress.XtraLayout.RowDefinition rowDefinition3 = new DevExpress.XtraLayout.RowDefinition();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmVeHoanThem));
             this.iActive1 = new DevExpress.XtraEditors.GroupControl();
+            this.iIDKhachHang = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.DaiLyDB = new System.Windows.Forms.BindingSource(this.components);
+            this.gridView5 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colName2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.iLoaiKhachHang = new DevExpress.XtraEditors.LookUpEdit();
             this.LoaiKhachDB = new System.Windows.Forms.BindingSource(this.components);
-            this.DaiLyDB = new System.Windows.Forms.BindingSource(this.components);
             this.labelControl12 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.iDienThoaiKhachHang = new DevExpress.XtraEditors.TextEdit();
@@ -160,15 +164,13 @@
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.memoEdit1 = new DevExpress.XtraEditors.MemoEdit();
             this.iAn = new DevExpress.XtraEditors.CheckEdit();
-            this.iIDKhachHang = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.gridView5 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colName2 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.iActive1)).BeginInit();
             this.iActive1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.iIDKhachHang.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DaiLyDB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iLoaiKhachHang.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoaiKhachDB)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DaiLyDB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iDienThoaiKhachHang.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iEmailKhachHang.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iActive2)).BeginInit();
@@ -254,8 +256,6 @@
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.iAn.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iIDKhachHang.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView5)).BeginInit();
             this.SuspendLayout();
             // 
             // iActive1
@@ -273,6 +273,52 @@
             this.iActive1.Size = new System.Drawing.Size(398, 100);
             this.iActive1.TabIndex = 0;
             this.iActive1.Text = "Thông tin khách";
+            // 
+            // iIDKhachHang
+            // 
+            this.iIDKhachHang.EditValue = "";
+            this.iIDKhachHang.Location = new System.Drawing.Point(224, 23);
+            this.iIDKhachHang.Name = "iIDKhachHang";
+            this.iIDKhachHang.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.iIDKhachHang.Properties.DataSource = this.DaiLyDB;
+            this.iIDKhachHang.Properties.DisplayMember = "Ten";
+            this.iIDKhachHang.Properties.PopupView = this.gridView5;
+            this.iIDKhachHang.Properties.ValueMember = "ID";
+            this.iIDKhachHang.Size = new System.Drawing.Size(169, 20);
+            this.iIDKhachHang.TabIndex = 18;
+            this.iIDKhachHang.Tag = "Khách";
+            // 
+            // DaiLyDB
+            // 
+            this.DaiLyDB.DataSource = typeof(DataTransferObject.O_DAILY);
+            // 
+            // gridView5
+            // 
+            this.gridView5.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colName2,
+            this.colName});
+            this.gridView5.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView5.Name = "gridView5";
+            this.gridView5.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView5.OptionsView.ShowAutoFilterRow = true;
+            this.gridView5.OptionsView.ShowGroupPanel = false;
+            // 
+            // colName2
+            // 
+            this.colName2.Caption = "Mã";
+            this.colName2.FieldName = "MaDL";
+            this.colName2.Name = "colName2";
+            this.colName2.Visible = true;
+            this.colName2.VisibleIndex = 0;
+            // 
+            // colName
+            // 
+            this.colName.Caption = "Tên";
+            this.colName.FieldName = "Ten";
+            this.colName.Name = "colName";
+            this.colName.Visible = true;
+            this.colName.VisibleIndex = 1;
             // 
             // iLoaiKhachHang
             // 
@@ -295,10 +341,6 @@
             // LoaiKhachDB
             // 
             this.LoaiKhachDB.DataSource = typeof(CRM.IntString);
-            // 
-            // DaiLyDB
-            // 
-            this.DaiLyDB.DataSource = typeof(DataTransferObject.O_DAILY);
             // 
             // labelControl12
             // 
@@ -1523,6 +1565,7 @@
             this.iTinhCongNo.Properties.Caption = "Nhận hoàn";
             this.iTinhCongNo.Size = new System.Drawing.Size(75, 20);
             this.iTinhCongNo.TabIndex = 0;
+            this.iTinhCongNo.Tag = "Nhận hoàn";
             // 
             // btnCode
             // 
@@ -1589,48 +1632,6 @@
             this.iAn.Size = new System.Drawing.Size(55, 20);
             this.iAn.TabIndex = 1;
             // 
-            // iIDKhachHang
-            // 
-            this.iIDKhachHang.EditValue = "";
-            this.iIDKhachHang.Location = new System.Drawing.Point(224, 23);
-            this.iIDKhachHang.Name = "iIDKhachHang";
-            this.iIDKhachHang.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.iIDKhachHang.Properties.DataSource = this.DaiLyDB;
-            this.iIDKhachHang.Properties.DisplayMember = "Ten";
-            this.iIDKhachHang.Properties.PopupView = this.gridView5;
-            this.iIDKhachHang.Properties.ValueMember = "ID";
-            this.iIDKhachHang.Size = new System.Drawing.Size(169, 20);
-            this.iIDKhachHang.TabIndex = 18;
-            this.iIDKhachHang.Tag = "Khách";
-            // 
-            // gridView5
-            // 
-            this.gridView5.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colName2,
-            this.colName});
-            this.gridView5.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.gridView5.Name = "gridView5";
-            this.gridView5.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.gridView5.OptionsView.ShowAutoFilterRow = true;
-            this.gridView5.OptionsView.ShowGroupPanel = false;
-            // 
-            // colName2
-            // 
-            this.colName2.Caption = "Mã";
-            this.colName2.FieldName = "MaDL";
-            this.colName2.Name = "colName2";
-            this.colName2.Visible = true;
-            this.colName2.VisibleIndex = 0;
-            // 
-            // colName
-            // 
-            this.colName.Caption = "Tên";
-            this.colName.FieldName = "Ten";
-            this.colName.Name = "colName";
-            this.colName.Visible = true;
-            this.colName.VisibleIndex = 1;
-            // 
             // frmVeHoanThem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1663,9 +1664,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.iActive1)).EndInit();
             this.iActive1.ResumeLayout(false);
             this.iActive1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.iIDKhachHang.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DaiLyDB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iLoaiKhachHang.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoaiKhachDB)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DaiLyDB)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iDienThoaiKhachHang.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iEmailKhachHang.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iActive2)).EndInit();
@@ -1754,8 +1757,6 @@
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.memoEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.iAn.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.iIDKhachHang.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

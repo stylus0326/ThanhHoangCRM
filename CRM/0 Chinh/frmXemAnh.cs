@@ -13,7 +13,7 @@ namespace CRM
 
         private void frmXemAnh_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         private void frmXemAnh_Click(object sender, EventArgs e)

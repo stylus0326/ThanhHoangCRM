@@ -14,7 +14,7 @@ namespace CRM
 
         private void frmHangChiTiet_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
     }
 }

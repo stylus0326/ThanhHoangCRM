@@ -25,7 +25,7 @@ namespace CRM
         private void frmThemNganHang_Load(object sender, EventArgs e)
         {
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, nho);
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         #region Biến
@@ -85,7 +85,7 @@ namespace CRM
                 dic.Add("FormName", Text);
                 dic.Add("MaCho", string.Empty);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 if (NoiDung.Length > 10)

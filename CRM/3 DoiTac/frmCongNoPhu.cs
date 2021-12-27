@@ -32,7 +32,7 @@ namespace CRM
 
         private void frmCongNoPhu_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             tuyenBayOBindingSource.DataSource = new D_TUYENBAY().DuLieu();
             loaiGiaoDichOBindingSource.DataSource = new D_LOAIGIAODICH().DuLieu_CongNo_TheoLoai(daiLyO.LoaiKhachHang);
         }
@@ -44,11 +44,11 @@ namespace CRM
 
         void DuLieu()
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             lstCongNo = new D_GIAODICH().LayDanhSachCN(dtp1.DateTime, dtp2.DateTime, daiLyO.ID.ToString());
             giaoDichOBindingSource.DataSource = lstCongNo;
-            XuLyGiaoDien.wait.CloseWaitForm();
+            ClsChucNang.wait.CloseWaitForm();
         }
     }
 }

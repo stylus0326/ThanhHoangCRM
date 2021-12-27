@@ -48,7 +48,7 @@ namespace CRM
         {
             D_SANBAY sbb = new D_SANBAY();
             O_HANGBAY hb = new D_HANGBAY().LayHangBay(data.Hang);
-            Design1 rpt = new Design1(hb.MauChu, hb.MauNen, hb.MauChinh, hb.HanhLy);
+            Design2 rpt = new Design2(hb.MauChu, hb.MauNen, hb.MauChinh, hb.HanhLy);
             if (hb.LogoHang != null)
             {
                 MemoryStream ms = new MemoryStream(hb.LogoHang);
@@ -151,7 +151,8 @@ namespace CRM
                             HKC.HanhLy += " - 0 KG";
                         else
                             HKC.HanhLy += " - " + (lstGD[i].HanhLyVe).Replace("KG", string.Empty) + " KG";
-                    lstHK.Add(HKC);
+                    for(int z = 0; z<20;z++)
+                    { lstHK.Add(HKC); }    
                 }
             }
             return lstHK;

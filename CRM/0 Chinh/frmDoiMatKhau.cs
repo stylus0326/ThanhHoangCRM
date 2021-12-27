@@ -15,13 +15,13 @@ namespace CRM
 
         private void frmDoiMatKhau_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         private void btnDongY_Click(object sender, EventArgs e)
         {
             List<KiemTra> kiemTras = new List<KiemTra>() {
-            new KiemTra() { _Control = txtMatKhauCu, _ChoQuaThang = TMD5.TMd5Hash(txtMatKhauCu.Text) == DuLieuTaoSan.NV.MatKhauCty, _ThongBao2 = "Mật khẩu sai" } ,
+            new KiemTra() { _Control = txtMatKhauCu, _ChoQuaThang = TMD5.TMd5Hash(txtMatKhauCu.Text) == ClsDuLieu.NhanVien.MatKhauCty, _ThongBao2 = "Mật khẩu sai" } ,
             new KiemTra() { _Control = txtMatKhauMoi },
             new KiemTra() { _Control = iMatKhauCty, _ChoQuaThang = iMatKhauCty.Text == txtMatKhauMoi.Text, _ThongBao2 = "Mật khẩu mới không khớp" }};
 
@@ -35,7 +35,7 @@ namespace CRM
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("MatKhauCty", TMD5.TMd5Hash(iMatKhauCty.Text));
 
-            if (XuLyGiaoDien.ThongBao(Text, new D_DAILY().CapNhat(dic, DuLieuTaoSan.NV.ID) > 0))
+            if (XuLyGiaoDien.ThongBao(Text, new D_DAILY().CapNhat(dic, ClsDuLieu.NhanVien.ID) > 0))
                 Close();
         }
     }

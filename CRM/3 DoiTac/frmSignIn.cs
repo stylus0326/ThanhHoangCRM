@@ -32,10 +32,10 @@ namespace CRM
         {
             daiLyOBindingSource.DataSource = new D_DAILY().All();
             hangBayOBindingSource.DataSource = new D_HANGBAY().DuLieu();
-            btnThem.Visibility = DuLieuTaoSan.Q.SignInXoa ? DevExpress.XtraBars.BarItemVisibility.Always : DevExpress.XtraBars.BarItemVisibility.Never;
-            colMatKhau.Visible = DuLieuTaoSan.Q.DaiLyAdmin;
+            btnThem.Visibility = ClsDuLieu.Quyen.SignInXoa ? DevExpress.XtraBars.BarItemVisibility.Always : DevExpress.XtraBars.BarItemVisibility.Never;
+            colMatKhau.Visible = ClsDuLieu.Quyen.DaiLyAdmin;
             TaiLaiSignIn();
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             //TaoSignInVU();
         }
 
@@ -69,7 +69,7 @@ namespace CRM
         #region Sự khiện bản 
         private void GVSI_DoubleClick(object sender, EventArgs e)
         {
-            if (DuLieuTaoSan.Q.SignInThemSua)
+            if (ClsDuLieu.Quyen.SignInThemSua)
             {
                 _index = GVSI.GetFocusedDataSourceRowIndex();
                 _SignInO = GVSI.GetRow(GVSI.GetSelectedRows()[0]) as O_SIGNIN;
@@ -80,7 +80,7 @@ namespace CRM
 
         private void gridView1_DoubleClick(object sender, EventArgs e)
         {
-            if (DuLieuTaoSan.Q.SignInThemSua)
+            if (ClsDuLieu.Quyen.SignInThemSua)
             {
                 _index = gridView1.GetFocusedDataSourceRowIndex();
                 O_SIGNINTRONG _SignInO = gridView1.GetRow(gridView1.GetSelectedRows()[0]) as O_SIGNINTRONG;

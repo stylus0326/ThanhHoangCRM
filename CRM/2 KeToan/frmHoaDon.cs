@@ -13,10 +13,11 @@ namespace CRM
 {
     public partial class frmHoaDon : XtraForm
     {
+        RefreshHelper helper;
         public frmHoaDon()
         {
             InitializeComponent();
-
+            helper = new RefreshHelper(GVHD, "id");
         }
 
         private void frmHoaDon_Load(object sender, EventArgs e)
@@ -30,11 +31,13 @@ namespace CRM
 
         #region Dữ liệu 
         string[] _SV_MC = new string[] { };
-        public void DuLieu()
+        public void DuLieu(bool reSave = false)
         {
             string _Query = string.Empty;
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
+            if (reSave)
+                helper.SaveViewInfo();
 
             if (chk1.Checked)
                 _Query = DuLieuTaoSan.ThoiGianRutGon("NgayThucHien")[idThoiGian].Substring(3);
@@ -56,9 +59,10 @@ namespace CRM
                 hoaDonOBindingSource.DataSource = hoaDonOs;
                 GVHD.BestFitColumns();
             }
-
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (reSave)
+                helper.LoadViewInfo();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
 
         private void aMaCho_Leave(object sender, EventArgs e)
@@ -101,7 +105,7 @@ namespace CRM
         #region Sự kiện nút
         private void btnLoadDT_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DuLieu();
+            DuLieu(true);
         }
 
         #endregion

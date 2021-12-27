@@ -26,8 +26,8 @@ namespace CRM
             tuyenBayOBindingSource.DataSource = TuyenBayOs;
             _ListHangBayO = new D_HANGBAY().DuLieu();
             DuLieu();
-            XuLyGiaoDien.OpenForm(this);
-            btnLuu.Enabled = DuLieuTaoSan.Q.ChinhSachThemSua;
+            ClsChucNang.OpenForm(this);
+            btnLuu.Enabled = ClsDuLieu.Quyen.ChinhSachThemSua;
         }
 
         #region Dữ liệu 
@@ -98,6 +98,11 @@ namespace CRM
             iNgayBayA.Enabled = iNgayBayB.Enabled = iThoiGianBay.Checked;
             if (!iNgayBayA.Enabled)
                 iNgayBayA.EditValue = iNgayBayB.EditValue = null;
+            else if (iNgayBayB.DateTime.Year == 1)
+            {
+                iNgayBayA.EditValue = iNgayA.EditValue;
+                iNgayBayB.EditValue = iNgayB.EditValue;
+            }
         }
 
         private void iTatCaTuyenBay_CheckedChanged(object sender, EventArgs e)

@@ -29,7 +29,7 @@ namespace CRM
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, Gd);
             loaiKhachOBindingSource.DataSource = DuLieuTaoSan.LoaiKhachHang_GiaoDich().Where(w => w.ID.Equals(1) || w.ID.Equals(2));
             loaiGiaoDichOBindingSource1.DataSource = DuLieuTaoSan.LoaiGiaoDich_Ve(false);
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             iTenKhach.Text = "Thời gian: " + DateTime.Now.ToString("HH:mm");
             if ((new List<int>() { 7, 11, 12 }).Contains(Gd.LoaiGiaoDich))
             {
@@ -53,11 +53,11 @@ namespace CRM
             {
                 case "1":
                 case "0":
-                    if (!DuLieuTaoSan.Q.KhacThemSua)
+                    if (!ClsDuLieu.Quyen.KhacThemSua)
                         return;
                     break;
                 default:
-                    if (!DuLieuTaoSan.Q.Lv2KhacAdmin)
+                    if (!ClsDuLieu.Quyen.Lv2KhacAdmin)
                         return;
                     break;
 
@@ -81,7 +81,7 @@ namespace CRM
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic = XuLyDuLieu.FormToDictionary(this, dic);
             dic.Add("NgayCuonChieu", "getdate()");
-            dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+            dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
             dic.Add("CoDinh", 1);
 
             if ((new List<int>() { 7, 11, 12 }).Contains((int)iLoaiGiaoDich.EditValue))
@@ -97,7 +97,7 @@ namespace CRM
 
             if (XuLyGiaoDien.ThongBao(Text, Gd.ID != 0 ? (nhb.CapNhat(dic, Gd.ID) > 0) : (nhb.ThemMoi(dic) > 0)))
             {
-                (Owner.ActiveMdiChild as frmTongHop).NapDatCho();
+                (Owner.ActiveMdiChild as frmTongHop).NapDatCho(true);
                 GhiChuCmt(Gd.ID);
                 Close();
             }
@@ -120,7 +120,7 @@ namespace CRM
                 dic.Add("FormName", Text);
                 dic.Add("MaCho", string.Empty);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 if (NoiDung.Length > 10)

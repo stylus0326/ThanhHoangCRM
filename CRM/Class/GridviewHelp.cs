@@ -20,8 +20,9 @@ namespace CRM
 
         public static string TEMP_PATH = Path.GetTempPath() + Assembly.GetExecutingAssembly().GetName().Name + "\\";
 
-        public static void SetFromGrid(Form frm, GridControl GC = null, GridView GV = null)
+        public static void SetFromGrid(Form _frm, GridControl GC = null, GridView GV = null)
         {
+            Form frm = _frm;
             if (GC == null)
                 foreach (Control GVc in frm.Controls)
                 {
@@ -45,16 +46,16 @@ namespace CRM
                 var path = TEMP_PATH + "\\" + frm.Name + "\\" + GC.Name + "\\default_layout.xml";
                 GC.MainView.SaveLayoutToXml(path, OptionsLayoutBase.FullLayout);
                 GV.CustomDrawRowIndicator += GridView_CustomDrawRowIndicator;
-                GV.GroupSummary.AddRange(new GridSummaryItem[] {new GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "(Số dòng: {0:#,##0;-#,##0})", null, "")});
+                GV.GroupSummary.AddRange(new GridSummaryItem[] { new GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "(Số dòng: {0:#,##0;-#,##0})", null, "") });
                 GV.CustomDrawCell += GridView_CustomDrawCell;
                 GV.MouseWheel += GV_MouseWheel; ;
                 CustomDrawEmptyForeground(GC, GV);
                 GV.PopupMenuShowing += (s, e) => { AddFontAndColortoPopupMenuShowing(s, e, GC, frm.Name); };
-                frm.Shown += (s, e) => { SaveAndRestoreLayout(GC, frm.Name); };
+                SaveAndRestoreLayout(GC, frm.Name);
             }
         }
 
-        private static void GV_MouseWheel(object sender, MouseEventArgs e)
+        public static void GV_MouseWheel(object sender, MouseEventArgs e)
         {
             if ((sender as GridView).IsEditing)
             {
@@ -72,6 +73,71 @@ namespace CRM
                 gridControl.ForceInitialize();
                 gridControl.MainView.RestoreLayoutFromXml(path, OptionsLayoutBase.FullLayout);
             }
+        }
+
+        public static void CustomDrawEmptyForeground(GridControl gridControl, GridView gridView)
+        {
+            string searchName = string.Empty;
+            Font noMatchesFoundTextFont = new Font("Tahoma", 10);
+            Font trySearchingAgainTextFont = new Font("Tahoma", 15, FontStyle.Underline);
+            Font trySearchingAgainTextFontBold = new Font(trySearchingAgainTextFont, FontStyle.Underline | FontStyle.Bold);
+            SolidBrush linkBrush = new SolidBrush(DevExpress.Skins.EditorsSkins.GetSkin(DevExpress.LookAndFeel.UserLookAndFeel.Default.ActiveLookAndFeel).Colors["HyperLinkTextColor"]);
+            string noMatchesFoundText = "Không tìm thấy dữ liệu, bạn ơi...";
+            string trySearchingAgainText = "Nhấp vào để hủy mọi điều kiện lọc";
+            Rectangle noMatchesFoundBounds = Rectangle.Empty;
+            Rectangle trySearchingAgainBounds = Rectangle.Empty;
+            bool trySearchingAgainBoundsContainCursor = false;
+            int offset = 10;
+            gridView.CustomDrawEmptyForeground += (s, e) =>
+            {
+                e.DefaultDraw();
+                e.Appearance.Options.UseFont = true;
+                e.Appearance.Font = noMatchesFoundTextFont;
+
+                Size size = e.Appearance.CalcTextSize(e.Cache, noMatchesFoundText, e.Bounds.Width).ToSize();
+                int x = (e.Bounds.Width - size.Width) / 2;
+                int y = e.Bounds.Y + offset;
+                noMatchesFoundBounds = new Rectangle(new Point(x, y), size);
+                e.Appearance.DrawString(e.Cache, noMatchesFoundText, noMatchesFoundBounds);
+
+                if (gridView.IsFilterRow(gridView.FocusedRowHandle))
+                {
+                    e.Appearance.Font = trySearchingAgainBoundsContainCursor ? trySearchingAgainTextFontBold : trySearchingAgainTextFont;
+                    size = e.Appearance.CalcTextSize(e.Cache, trySearchingAgainText, e.Bounds.Width).ToSize();
+                    x = noMatchesFoundBounds.X - (size.Width - noMatchesFoundBounds.Width) / 2;
+                    y = noMatchesFoundBounds.Bottom + offset;
+                    size.Width += offset;
+
+                    trySearchingAgainBounds = new Rectangle(new Point(x, y), size);
+                    e.Appearance.DrawString(e.Cache, trySearchingAgainText, trySearchingAgainBounds, linkBrush);
+                }
+
+                GridViewInfo vi = (GridViewInfo)gridView.GetViewInfo();
+                var image = global::CRM.Properties.Resource.Untitled_1;
+
+                int a = (gridControl.Width < image.Width) ? 2 : 1;
+
+                var imageStartX = (vi.ViewRects.EmptyRows.X + (vi.ViewRects.EmptyRows.Width / 2)) - (image.Width / a / 2);
+
+                var imageStartY = (vi.ViewRects.EmptyRows.Y + (vi.ViewRects.EmptyRows.Height / 2)) - (image.Height / a / 2) + 40;
+
+                var rect = new Rectangle(imageStartX, imageStartY, image.Width / a, image.Height / a);
+                e.Graphics.DrawImage(image, rect);
+            };
+
+            gridView.MouseMove += (s, e) =>
+            {
+                trySearchingAgainBoundsContainCursor = trySearchingAgainBounds.Contains(e.Location);
+                gridControl.Cursor = trySearchingAgainBoundsContainCursor ? (gridView.RowCount < 1) ? Cursors.Hand : Cursors.Default : Cursors.Default;
+                gridView.InvalidateRect(trySearchingAgainBounds);
+            };
+
+            gridView.MouseDown += (s, e) =>
+            {
+                if (gridView.RowCount < 1)
+                    if (trySearchingAgainBoundsContainCursor)
+                        gridView.ActiveFilter.Clear();
+            };
         }
 
         public static void GridView_CustomDrawCell(object sender, DevExpress.XtraGrid.Views.Base.RowCellCustomDrawEventArgs e)
@@ -146,70 +212,6 @@ namespace CRM
         {
             _View.IndicatorWidth = _View.IndicatorWidth < _Width ? _Width : _View.IndicatorWidth;
             return true;
-        }
-
-        public static void CustomDrawEmptyForeground(GridControl gridControl, GridView gridView)
-        {
-            string searchName = string.Empty;
-            Font noMatchesFoundTextFont = new Font("Tahoma", 10);
-            Font trySearchingAgainTextFont = new Font("Tahoma", 15, FontStyle.Underline);
-            Font trySearchingAgainTextFontBold = new Font(trySearchingAgainTextFont, FontStyle.Underline | FontStyle.Bold);
-            SolidBrush linkBrush = new SolidBrush(DevExpress.Skins.EditorsSkins.GetSkin(DevExpress.LookAndFeel.UserLookAndFeel.Default.ActiveLookAndFeel).Colors["HyperLinkTextColor"]);
-            string noMatchesFoundText = "Không tìm thấy dữ liệu, bạn ơi...";
-            string trySearchingAgainText = "Nhấp vào để hủy mọi điều kiện lọc";
-            Rectangle noMatchesFoundBounds = Rectangle.Empty;
-            Rectangle trySearchingAgainBounds = Rectangle.Empty;
-            bool trySearchingAgainBoundsContainCursor = false;
-            int offset = 10;
-
-
-            gridView.CustomDrawEmptyForeground += (s, e) =>
-            {
-                e.DefaultDraw();
-                e.Appearance.Options.UseFont = true;
-                e.Appearance.Font = noMatchesFoundTextFont;
-
-                Size size = e.Appearance.CalcTextSize(e.Cache, noMatchesFoundText, e.Bounds.Width).ToSize();
-                int x = (e.Bounds.Width - size.Width) / 2;
-                int y = e.Bounds.Y + offset;
-                noMatchesFoundBounds = new Rectangle(new Point(x, y), size);
-                e.Appearance.DrawString(e.Cache, noMatchesFoundText, noMatchesFoundBounds);
-
-                e.Appearance.Font = trySearchingAgainBoundsContainCursor ? trySearchingAgainTextFontBold : trySearchingAgainTextFont;
-                size = e.Appearance.CalcTextSize(e.Cache, trySearchingAgainText, e.Bounds.Width).ToSize();
-                x = noMatchesFoundBounds.X - (size.Width - noMatchesFoundBounds.Width) / 2;
-                y = noMatchesFoundBounds.Bottom + offset;
-                size.Width += offset;
-                trySearchingAgainBounds = new Rectangle(new Point(x, y), size);
-                e.Appearance.DrawString(e.Cache, trySearchingAgainText, trySearchingAgainBounds, linkBrush);
-
-                GridViewInfo vi = (GridViewInfo)gridView.GetViewInfo();
-                var image = global::CRM.Properties.Resource.Untitled_1;
-
-                int a = (gridControl.Width < image.Width) ? 2 : 1;
-
-                var imageStartX = (vi.ViewRects.EmptyRows.X + (vi.ViewRects.EmptyRows.Width / 2)) - (image.Width / a / 2);
-
-                var imageStartY = (vi.ViewRects.EmptyRows.Y + (vi.ViewRects.EmptyRows.Height / 2)) - (image.Height / a / 2) + 40;
-
-                var rect = new Rectangle(imageStartX, imageStartY, image.Width / a, image.Height / a);
-                e.Graphics.DrawImage(image, rect);
-            };
-
-
-            gridView.MouseMove += (s, e) =>
-            {
-                trySearchingAgainBoundsContainCursor = trySearchingAgainBounds.Contains(e.Location);
-                gridControl.Cursor = trySearchingAgainBoundsContainCursor ? (gridView.RowCount < 1) ? Cursors.Hand : Cursors.Default : Cursors.Default;
-                gridView.InvalidateRect(trySearchingAgainBounds);
-            };
-
-            gridView.MouseDown += (s, e) =>
-            {
-                if (gridView.RowCount < 1)
-                    if (trySearchingAgainBoundsContainCursor)
-                        gridView.ActiveFilter.Clear();
-            };
         }
 
         public static Image createImage(Color color)
@@ -442,6 +444,7 @@ namespace CRM
 
 
         }
+
         class MenuInfo
         {
             public MenuInfo(GridColumn column, FixedStyle style)

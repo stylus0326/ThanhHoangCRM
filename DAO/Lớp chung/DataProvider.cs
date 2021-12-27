@@ -11,7 +11,7 @@ namespace DataAccessLayer
     class DataProvider
     {
         public static string ConnectionString = Ultis.ChuoiKetNoi;
-        public static long TaoDataTuEx<T>(List<T> lstDuLieu, string TypeName) where T : new()
+        public static long CreateData_Procedure<T>(List<T> lstDuLieu, string TypeName) where T : new()
         {
             T obj = new T();
             DataTable dt = new DataTable();
@@ -74,7 +74,7 @@ namespace DataAccessLayer
             return Num;
         }
 
-        public static long RunUpStoredProcedure(string Query, Dictionary<string, string> pA = null)
+        public static long RunUpStored_Procedure(string Query, Dictionary<string, string> pA = null)
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
@@ -93,7 +93,7 @@ namespace DataAccessLayer
             }
         }
 
-        public static DataTable RunSeStoredProcedure(string Query, Dictionary<string, string> pA = null)
+        public static DataTable RunSeStored_Procedure(string Query, Dictionary<string, string> pA = null)
         {
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -121,7 +121,29 @@ namespace DataAccessLayer
             }
         }
 
-        public static DataTable LayBanDuLieu(string Query)
+        public static object Get_Value(string query, object GiaTri = null)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                object data = 0;
+                connection.Open();
+                try
+                {
+                    SqlCommand Command = new SqlCommand(query, connection);
+                    if (GiaTri != null)
+                        Command.Parameters.Add(new SqlParameter("@Value", GiaTri));
+                    data = Command.ExecuteScalar();
+                }
+                catch
+                {
+                    throw new Exception("Lỗi truy vấn cơ sở dữ liệu...");
+                }
+                connection.Close();
+                return data;
+            }
+        }
+
+        public static DataTable Get_DataTable(string Query)
         {
             try
             {
@@ -136,7 +158,7 @@ namespace DataAccessLayer
             }
         }
 
-        public static long TaoData(Dictionary<string, object> DuLieu, string TenBan, bool LayID)
+        public static long Create_Data(Dictionary<string, object> DuLieu, string TenBan, bool LayID)
         {
             string ClmName = string.Empty;
             string ClmValue = string.Empty;
@@ -183,7 +205,7 @@ namespace DataAccessLayer
             return Num;
         }
 
-        public static long SuaData(Dictionary<string, object> DuLieu, string TenBan, string CauDieuKien)
+        public static long Update_Data(Dictionary<string, object> DuLieu, string TenBan, string CauDieuKien)
         {
             string ClmName = string.Empty;
 
@@ -232,7 +254,7 @@ namespace DataAccessLayer
             return Num;
         }
 
-        public static long XoaData(string TenBan, string CauDieuKien)
+        public static long Delete_Data(string TenBan, string CauDieuKien)
         {
             CauDieuKien = "DELETE FROM " + TenBan + " " + CauDieuKien;
             SqlConnection Connection = new SqlConnection(ConnectionString);
@@ -250,7 +272,7 @@ namespace DataAccessLayer
             return Num;
         }
 
-        public static long XoaNhieu(List<string> LstTenBan, List<string> LstCauDieuKien)
+        public static long Delete_MultiTable(List<string> LstTenBan, List<string> LstCauDieuKien)
         {
             if (LstTenBan.Count != LstCauDieuKien.Count)
                 return 0;
@@ -281,7 +303,7 @@ namespace DataAccessLayer
             return Num;
         }
 
-        public static long TaoSuaNhieu(List<Dictionary<string, object>> lstDuLieu, List<string> LstTenBan, List<string> LstCauDieuKien, List<string> lstThem)
+        public static long Modify_MultiTable(List<Dictionary<string, object>> lstDuLieu, List<string> LstTenBan, List<string> LstCauDieuKien, List<string> lstThem)
         {
             if (lstDuLieu.Count != LstTenBan.Count || LstTenBan.Count != LstCauDieuKien.Count || LstCauDieuKien.Count != lstThem.Count)
                 return 0;
@@ -388,7 +410,7 @@ namespace DataAccessLayer
             return Num;
         }
 
-        public static long ThemNhieu1Ban(List<Dictionary<string, object>> lstDuLieu, string TenBan)
+        public static long Create_Data_OneTable(List<Dictionary<string, object>> lstDuLieu, string TenBan)
         {
             string QueRy = string.Empty;
             for (int i = 0; i < lstDuLieu.Count; i++)
@@ -449,7 +471,7 @@ namespace DataAccessLayer
             return Num;
         }
 
-        public static long SuaNhieu1Ban(List<Dictionary<string, object>> lstDuLieu, List<string> LstCauDieuKien, string TenBan)
+        public static long Update_Data_OneTable(List<Dictionary<string, object>> lstDuLieu, List<string> LstCauDieuKien, string TenBan)
         {
             if (lstDuLieu.Count != LstCauDieuKien.Count)
                 return 0;
@@ -513,7 +535,7 @@ namespace DataAccessLayer
             return Num;
         }
 
-        public static long XoaNhieu1Ban(List<object> ID, string TenBan)
+        public static long Delete_Data_OneTable(List<object> ID, string TenBan)
         {
             string CauDieuKien = string.Empty;
             for (int i = 0; i < ID.Count; i++)
@@ -541,27 +563,7 @@ namespace DataAccessLayer
             return Num;
         }
 
-        public static object LayGiaTri(string query)
-        {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            {
-                object data = 0;
-                connection.Open();
-                try
-                {
-                    SqlCommand command = new SqlCommand(query, connection);
-                    data = command.ExecuteScalar();
-                }
-                catch
-                {
-                    throw new Exception("Lỗi truy vấn cơ sở dữ liệu...");
-                }
-                connection.Close();
-                return data;
-            }
-        }
-
-        public static List<T> DataTableToListOfObject<T>(DataTable tbl) where T : new()
+        public static List<T> DataTable_To_ListOfObject<T>(DataTable tbl) where T : new()
         {
             var columnNames = tbl.Columns.Cast<DataColumn>()
             .Select(c => c.ColumnName)
@@ -582,7 +584,7 @@ namespace DataAccessLayer
             }).ToList();
         }
 
-        public static List<T> DataTableToListOfObject<T>(DataTable tbl, List<int> lstDaiLyID, List<long> lstDaiLyLuyKe, List<long> lstDaiLyLuyKeTong) where T : new()
+        public static List<T> DataTable_To_ListOfObject_CN<T>(DataTable tbl, List<int> lstDaiLyID, List<long> lstDaiLyLuyKe, List<long> lstDaiLyLuyKeTong) where T : new()
         {
             int IDKH1 = int.Parse(tbl.Rows[0]["IDKhachHang"].ToString());
             int IDKH2 = IDKH1;
@@ -608,22 +610,22 @@ namespace DataAccessLayer
                     }
                 }
 
-                list.Add(DataRowToObjectCN<T>(row, lstDaiLyID, lstDaiLyLuyKe, lstDaiLyLuyKeTong));
-            }
-            return list;
-        }
-        
-        public static List<T> DataTableToListOfObjectKS<T>(DataTable tbl, List<int> lstDaiLyID, List<long> lstDaiLyLuyKe) where T : new()
-        {
-            List<T> list = new List<T>();
-            foreach (DataRow row in tbl.Rows)
-            {
-                list.Add(DataRowToObjectKS<T>(row, lstDaiLyID, lstDaiLyLuyKe));
+                list.Add(DataRow_To_Object_CN<T>(row, lstDaiLyID, lstDaiLyLuyKe, lstDaiLyLuyKeTong));
             }
             return list;
         }
 
-        public static T DataRowToObjectKS<T>(DataRow row, List<int> lstDaiLyID, List<long> lstDaiLyLuyKe) where T : new()
+        public static List<T> DataTable_To_ListOfObject_KS<T>(DataTable tbl, List<int> lstDaiLyID, List<long> lstDaiLyLuyKe) where T : new()
+        {
+            List<T> list = new List<T>();
+            foreach (DataRow row in tbl.Rows)
+            {
+                list.Add(DataRow_To_Object_KS<T>(row, lstDaiLyID, lstDaiLyLuyKe));
+            }
+            return list;
+        }
+
+        public static T DataRow_To_Object_KS<T>(DataRow row, List<int> lstDaiLyID, List<long> lstDaiLyLuyKe) where T : new()
         {
             T obj = new T();
             int index = 0;
@@ -658,7 +660,7 @@ namespace DataAccessLayer
             return obj;
         }
 
-        public static T DataRowToObjectCN<T>(DataRow row, List<int> lstDaiLyID, List<long> lstDaiLyLuyKe, List<long> lstDaiLyLuyKeTong) where T : new()
+        public static T DataRow_To_Object_CN<T>(DataRow row, List<int> lstDaiLyID, List<long> lstDaiLyLuyKe, List<long> lstDaiLyLuyKeTong) where T : new()
         {
             T obj = new T();
             int index = 0;
@@ -699,7 +701,7 @@ namespace DataAccessLayer
             return obj;
         }
 
-        public DataTable ConvertListOjbectToDataTable<T>(List<T> objectClass, string table_name = "Table")
+        public DataTable Convert_ListOjbect_To_DataTable<T>(List<T> objectClass, string table_name = "Table")
         {
             DataTable dt = new DataTable();
             try

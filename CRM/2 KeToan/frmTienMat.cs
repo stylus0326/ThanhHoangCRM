@@ -22,8 +22,8 @@ namespace CRM
             bdtpDen1.MinValue = DateTime.Now.AddDays(-30);
             bdtpDen1.MaxValue = DateTime.Now.AddDays(-1);
             bdtpDen12.EditValue = DateTime.Now.AddDays(-1);
-            ibtnThemMoi.Visibility = DuLieuTaoSan.Q.TienMatThemSua ? BarItemVisibility.Always : BarItemVisibility.Never;
-            btnDel.Visibility = DuLieuTaoSan.Q.TienMatXoa ? BarItemVisibility.Always : BarItemVisibility.Never;
+            ibtnThemMoi.Visibility = ClsDuLieu.Quyen.TienMatThemSua ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnDel.Visibility = ClsDuLieu.Quyen.TienMatXoa ? BarItemVisibility.Always : BarItemVisibility.Never;
             LayDLNganHang();
             TaiLaiDuLieu();
             LayDLKhac();
@@ -34,8 +34,8 @@ namespace CRM
         #region Dữ liệu 
         public void TaiLaiDuLieu()
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             if (chk2.Checked)
             {
                 if (bdtpTu.EditValue != null && bdtpDen.EditValue != null)
@@ -47,8 +47,8 @@ namespace CRM
             nhD.ChayLaiSD();
             cTNganHangOBindingSource.DataSource = new D_CTNGANHANG().DuLieu(CTV, true);
             btnM.Caption = "Số dư: " + nhD.DuLieu(true)[0].SoDuCuoi.ToString("#,### VNĐ");
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
 
         public void LayDLNganHang()
@@ -164,7 +164,7 @@ namespace CRM
                 dic.Add("FormName", Text);
                 dic.Add("MaCho", cTNgan.MaLienKet);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", cTNgan.LoaiKhachHang);
                 dic.Add("Ma", cTNgan.MaDL);
                 if (NoiDung.Length > 10)
@@ -200,7 +200,7 @@ namespace CRM
         }
         private void grvGiaoDich_DoubleClick(object sender, EventArgs e)
         {
-            if (DuLieuTaoSan.Q.TienMatThemSua)
+            if (ClsDuLieu.Quyen.TienMatThemSua)
             {
                 cTNgan = (GVCTTM.GetRow(GVCTTM.GetSelectedRows()[0]) as O_CTNGANHANG);
                 int Ma = cTNgan.ID;

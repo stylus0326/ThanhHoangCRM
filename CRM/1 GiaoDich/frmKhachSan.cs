@@ -15,17 +15,19 @@ namespace CRM
 {
     public partial class frmKhachSan : DevExpress.XtraEditors.XtraForm
     {
+        RefreshHelper helper;
         public frmKhachSan()
         {
             InitializeComponent();
+            helper = new RefreshHelper(GVGD, "id");
         }
 
         #region Dữ liệu 
         private void frmKhachSan_Load(object sender, EventArgs e)
         {
-            btnExportExcel.Visibility = DuLieuTaoSan.Q.VeExcel ? BarItemVisibility.Always : BarItemVisibility.Never;
-            btnThem.Visibility = DuLieuTaoSan.Q.VeThemSua ? BarItemVisibility.Always : BarItemVisibility.Never;
-            btnXoa.Visibility = DuLieuTaoSan.Q.VeXoa ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnExportExcel.Visibility = ClsDuLieu.Quyen.VeExcel ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnThem.Visibility = ClsDuLieu.Quyen.VeThemSua ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnXoa.Visibility = ClsDuLieu.Quyen.VeXoa ? BarItemVisibility.Always : BarItemVisibility.Never;
 
             nganHangOBindingSource.DataSource = new D_NGANHANG().All();
             nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu(false, true);
@@ -36,18 +38,19 @@ namespace CRM
         {
             nganHangOBindingSource.DataSource = new D_NGANHANG().All();
             nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu(false, true);
-            DuLieu();
+            DuLieu(true);
         }
 
         #endregion
 
         #region CongCuTimKiem
         string[] _SV_MC = new string[] { };
-        public void DuLieu()
+        public void DuLieu(bool reSave = false)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
-
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
+            if (reSave)
+                helper.SaveViewInfo();
             _index = GVGD.GetFocusedDataSourceRowIndex() - 10;
             _Query = "";
 
@@ -71,9 +74,10 @@ namespace CRM
             Size textSize = TextRenderer.MeasureText(__ListKhachSanO.Count.ToString(), new Font("Tahoma", 9, FontStyle.Regular));
             GVGD.IndicatorWidth = textSize.Width + 5;
             GVGD.FocusedRowHandle = _index;
-
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (reSave)
+                helper.LoadViewInfo();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
         #endregion
 
@@ -177,7 +181,7 @@ namespace CRM
                 dic.Add("FormName", Text);
                 dic.Add("MaCho", _KhachSanO.MaCho);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", 1);
                 dic.Add("Ma", _KhachSanO.IDKhachHang);
                 new D_LS_GIAODICH().ThemMoi(dic);
@@ -231,7 +235,7 @@ namespace CRM
         private void GVGD_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
         {
             ColumnView view = sender as ColumnView;
-            if("NgayBaoLuu SoTienBaoLuu".Contains(e.Column.FieldName))
+            if ("NgayBaoLuu SoTienBaoLuu".Contains(e.Column.FieldName))
             {
                 if (e.ListSourceRowIndex != DevExpress.XtraGrid.GridControl.InvalidRowHandle)
                 {

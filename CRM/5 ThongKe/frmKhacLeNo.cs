@@ -17,7 +17,7 @@ namespace CRM
 
         private void frmKhachLeNo_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             nganHangOBindingSource.DataSource = new D_NGANHANG().All();
             DSNhanVien.DataSource = new D_DAILY().All();
             LayDLCTNganHang();
@@ -33,7 +33,7 @@ namespace CRM
                 CTV += string.Format("AND (convert(date, NgayCuonChieu) BETWEEN '{0}' AND '{1}')", ((DateTime)bdtpTu.EditValue).ToString("yyyyMMdd"), ((DateTime)bdtpDen.EditValue).ToString("yyyyMMdd"));
             if (chkDD.Checked)
                 CTV += "OR (SMS = 1 and Khoa = 0)";
-            lstGD = new D_GIAODICH().DuLieu(CTV, DuLieuTaoSan.Q.VeAdmin);
+            lstGD = new D_GIAODICH().DuLieu(CTV, ClsDuLieu.Quyen.VeAdmin);
             giaoDichOBindingSource.DataSource = lstGD;
             GVKLN.BestFitColumns();
         }

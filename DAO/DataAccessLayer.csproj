@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="D_BAOCAOCTNH.cs" />
+    <Compile Include="D_NGANHANGSUDUNG.cs" />
+    <Compile Include="D_QUANLYPHANMEM.cs" />
     <Compile Include="Lớp chung\BieuDoD.cs" />
     <Compile Include="D_CHINHSACH.cs" />
     <Compile Include="Lớp chung\CTBanTongHopD.cs" />

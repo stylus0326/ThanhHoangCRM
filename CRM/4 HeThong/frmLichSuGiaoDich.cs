@@ -22,11 +22,11 @@ namespace CRM
 
         void DuLieu()
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             lichSuGDOBindingSource.DataSource = new D_LS_GIAODICH().LayDanhSach(ChonThoiGian[idThoiGian], btnHeThong.Checked);
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
 
         private void frmLichSu_Load(object sender, EventArgs e)

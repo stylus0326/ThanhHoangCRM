@@ -14,7 +14,7 @@ namespace CRM
         private void frmNganHangChiTiet_Load(object sender, EventArgs e)
         {
             loaiGiaoDichOBindingSource.DataSource = new D_LOAIGIAODICH().DuLieu();
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
     }
 }

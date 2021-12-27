@@ -15,15 +15,17 @@ namespace CRM
 {
     public partial class frmVe : DevExpress.XtraEditors.XtraForm
     {
+        RefreshHelper helper;
         public frmVe()
         {
             InitializeComponent();
+            helper = new RefreshHelper(GVGD, "id");
         }
 
         #region Dữ liệu 
         private void frmVe_Load(object sender, EventArgs e)
         {
-            if (!DuLieuTaoSan.Q.VeAdmin)
+            if (!ClsDuLieu.Quyen.VeAdmin)
             {
                 GVGD.Columns.Remove(colEmail);
                 GVGD.Columns.Remove(colDienThoaiKhachHang);
@@ -33,10 +35,10 @@ namespace CRM
             rTrangThai.DataSource = DuLieuTaoSan.LoaiGiaoDich_Ve(true);
             rHinHThuc.DataSource = DuLieuTaoSan.HinhThuc_Ve_TatCa();
             rHoaDon.DataSource = DuLieuTaoSan.HinhThucHoaDon();
-            btnExportExcel.Visibility = DuLieuTaoSan.Q.VeExcel ? BarItemVisibility.Always : BarItemVisibility.Never;
-            btnThem.Visibility = DuLieuTaoSan.Q.VeThemSua ? BarItemVisibility.Always : BarItemVisibility.Never;
-            btnXoa.Visibility = DuLieuTaoSan.Q.VeXoa ? BarItemVisibility.Always : BarItemVisibility.Never;
-            btnHoan.Visibility = DuLieuTaoSan.Q.TheoDoiHoanAdmin ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnExportExcel.Visibility = ClsDuLieu.Quyen.VeExcel ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnThem.Visibility = ClsDuLieu.Quyen.VeThemSua ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnXoa.Visibility = ClsDuLieu.Quyen.VeXoa ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnHoan.Visibility = ClsDuLieu.Quyen.TheoDoiHoanAdmin ? BarItemVisibility.Always : BarItemVisibility.Never;
 
             tuyenBayOBindingSource.DataSource = new D_TUYENBAY().DuLieu();
             nganHangOBindingSource.DataSource = new D_NGANHANG().All();
@@ -53,7 +55,7 @@ namespace CRM
             hangBayOBindingSource.DataSource = new D_HANGBAY().DuLieu();
             nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu_GiaoDich();
             _ListKhoaNgayO = new D_KHOANGAY().DuLieu();
-            DuLieu();
+            DuLieu(true);
         }
 
         #endregion
@@ -128,12 +130,14 @@ namespace CRM
 
         #region CongCuTimKiem
         string[] _SV_MC = new string[] { };
-        public void DuLieu()
+        public void DuLieu(bool reSave = false)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
+            if (reSave)
+                helper.SaveViewInfo();
 
-            _index = GVGD.GetFocusedDataSourceRowIndex() - 10;
+            _index = GVGD.GetFocusedDataSourceRowIndex();
 
             _Query = "LoaiGiaoDich in (4,8,9,13,14) AND TinhCongNo = 1";
 
@@ -152,7 +156,7 @@ namespace CRM
             if (_Query != "LoaiGiaoDich in (4,8,9,13,14) AND TinhCongNo = 1")
             {
                 khachHangOBindingSource.DataSource = DaiLyD.All();
-                _ListGiaoDichO = new D_GIAODICH().DuLieu(_Query, DuLieuTaoSan.Q.VeAdmin);
+                _ListGiaoDichO = new D_GIAODICH().DuLieu(_Query, ClsDuLieu.Quyen.VeAdmin);
                 giaoDichOBindingSource.DataSource = _ListGiaoDichO;
             }
 
@@ -160,8 +164,11 @@ namespace CRM
             GVGD.IndicatorWidth = textSize.Width + 5;
             GVGD.FocusedRowHandle = _index;
 
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (reSave)
+                helper.LoadViewInfo();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
+
         }
 
         private void ecmbThoiGian_SelectedIndexChanged(object sender, EventArgs e)
@@ -217,7 +224,7 @@ namespace CRM
 
             O_KHOANGAY kn = new D_KHOANGAY().KiemTraNgayKhoa(_GiaoDichO.NgayGD);
             if (_GiaoDichO.TinhCongNo)
-                if (!DuLieuTaoSan.Q.VeAdmin)
+                if (!ClsDuLieu.Quyen.VeAdmin)
                     if ((kn.HoatDong) && !(kn.Code ?? string.Empty).Contains(_GiaoDichO.MaCho.Replace(" ", string.Empty)))
                     {
                         XuLyGiaoDien.Alert("Ngày đã bị khóa", Form_Alert.enmType.Warning);
@@ -274,10 +281,10 @@ namespace CRM
                 else
                     NoiDung = string.Format("Xóa {0} GD với tổng giá hoàn là {1} \r\n", lst.Count(), lst.Sum(w => w.GiaHoan).ToString("#,###"));
                 Dictionary<string, object> dic = new Dictionary<string, object>();
-                dic.Add("FormName", Text);
+                dic.Add("FormName", "Vé");
                 dic.Add("MaCho", _GiaoDichO.MaCho);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", _GiaoDichO.LoaiKhachHang);
                 dic.Add("Ma", _GiaoDichO.IDKhachHang);
                 new D_LS_GIAODICH().ThemMoi(dic);

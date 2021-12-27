@@ -20,7 +20,7 @@ namespace CRM
             InitializeComponent();
             Text += " thêm";
             _DaiLyO.LoaiKhachHang = LoaiKhach;
-            _DaiLyO.NVGiaoDich = DuLieuTaoSan.NV.ID;
+            _DaiLyO.NVGiaoDich = ClsDuLieu.NhanVien.ID;
         }
 
         public frmDaiLyThem(O_DAILY Dl)
@@ -34,13 +34,13 @@ namespace CRM
         private void frmDaiLyThem_Load(object sender, EventArgs e)
         {
             hangBayOBindingSource.DataSource = new D_HANGBAY().DuLieu();
-            XuLyGiaoDien.OpenForm(this);
-            DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, _DaiLyO);
             iTinhTrang.Properties.DataSource = new D_TRANGTHAI().DuLieu(_DaiLyO.LoaiKhachHang);
             iChinhSach.Properties.DataSource = new D_CHINHSACH().DuLieuDL(_DaiLyO.LoaiKhachHang);
-            btnLuu.Visible = DuLieuTaoSan.Q.DaiLyThemSua;
-            lbl15.Visible = iDuHoSo.Visible = iNVGiaoDich.Visible = DuLieuTaoSan.NV.TenDangNhapCty.ToUpper().Equals("ITADMIN");
+            btnLuu.Visible = ClsDuLieu.Quyen.DaiLyThemSua;
+            lbl15.Visible = iDuHoSo.Visible = iNVGiaoDich.Visible = ClsDuLieu.NhanVien.TenDangNhapCty.ToUpper().Equals("ITADMIN");
             NhanVienDB.DataSource = new D_DAILY().NhanVien();
+            DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, _DaiLyO);
+            ClsChucNang.OpenForm(this);
         }
 
         void DaiLy()
@@ -84,7 +84,6 @@ namespace CRM
             appendRequest.Execute();
         }
 
-
         #region Biến
         D_DAILY _DaiLyD = new D_DAILY();
         O_DAILY _DaiLyO = new O_DAILY();
@@ -97,7 +96,7 @@ namespace CRM
         {
             List<KiemTra> kiemTras = new List<KiemTra>();
             kiemTras.Add(new KiemTra() { _Control = iTen, _Tu = 2 });
-            kiemTras.Add(new KiemTra() { _Control = iMaDL, _ChoQua = !_DaiLyD.DaTonTai("MaDL", iMaDL.Text, _DaiLyO.ID), _ThongBao2 = "Đã tồn tại", _Tu = 3, _Den = 10 });
+            kiemTras.Add(new KiemTra() { _Control = iMaDL, _ChoQua = !_DaiLyD.KiemTraTonTai(_DaiLyO.ID,"MaDL", iMaDL.Text), _ThongBao2 = "Đã tồn tại", _Tu = 3, _Den = 10 });
             kiemTras.Add(new KiemTra() { _Control = iMaAGS, _Tu = 3, _Den = 10 });
             kiemTras.Add(new KiemTra() { _Control = iDiDong, _SDT = true });
             kiemTras.Add(new KiemTra() { _Control = iChinhSach });
@@ -140,8 +139,26 @@ namespace CRM
                     new D_SODU_DAILY().ThemNhieu1Ban(lstDicS);
                     DaiLy();
                 }
-                (Owner.ActiveMdiChild as frmDaiLy).DuLieu();
+                GhiChuCmt(_DaiLyO.ID);
+                (Owner.ActiveMdiChild as frmDaiLy).DuLieu(true);
                 Close();
+            }
+        }
+
+        void GhiChuCmt(object f)
+        {
+            if (long.Parse(f.ToString()) > 0)
+            {
+                string NoiDung = string.Format("{0}: {1}", f, XuLyDuLieu.GhiChuCMT(this));
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("FormName", Text);
+                dic.Add("MaCho", iMaDL.Text);
+                dic.Add("NoiDung", NoiDung);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
+                dic.Add("LoaiKhachHang", _DaiLyO.LoaiKhachHang);
+                dic.Add("Ma", 0);
+                if (NoiDung.Length > 10)
+                    new D_LS_GIAODICH().ThemMoi(dic);
             }
         }
 

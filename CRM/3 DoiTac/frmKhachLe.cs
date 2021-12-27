@@ -19,18 +19,18 @@ namespace CRM
         {
             nhanVienOBindingSource.DataSource = _DaiLyD.NhanVien();
             DuLieu();
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         #region Dữ liệu 
         public void DuLieu()
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             daiLyOBindingSource.DataSource = new D_DAILY().KhachLe();
 
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
         #endregion
 

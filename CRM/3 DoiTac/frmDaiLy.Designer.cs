@@ -73,6 +73,7 @@
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.GCDL = new DevExpress.XtraGrid.GridControl();
             this.GVDL = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridView();
+            this.gridBand1 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
             this.colQuyAGS = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.btnUpQuy = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colSIC = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
@@ -86,6 +87,7 @@
             this.colNhomDaiLy = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.btnThonKe = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colNgayGDGN = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.colHanMuc = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.colSoDuCuoi = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.btnChiTiet = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colSoDuCanhBao1 = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
@@ -99,6 +101,7 @@
             this.txtEmailKeToan = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.colEmailGiaoDich = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.txtEmailGiaoDich = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
+            this.gridBand2 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
             this.colNguoiDaiDienHD = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.colChinhSach = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.lueChinhSach = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
@@ -115,10 +118,8 @@
             this.lueNhanVien = new DevExpress.XtraEditors.Repository.RepositoryItemLookUpEdit();
             this.DSNhanVien = new System.Windows.Forms.BindingSource(this.components);
             this.colDuHoSo = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
+            this.colPhatQuyAm = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
             this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
-            this.colHanMuc = new DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn();
-            this.gridBand1 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
-            this.gridBand2 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemLookUpEdit5)).BeginInit();
@@ -397,6 +398,10 @@
             // 
             // GVDL
             // 
+            this.GVDL.Appearance.Preview.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.GVDL.Appearance.Preview.ForeColor = System.Drawing.Color.Red;
+            this.GVDL.Appearance.Preview.Options.UseFont = true;
+            this.GVDL.Appearance.Preview.Options.UseForeColor = true;
             this.GVDL.Bands.AddRange(new DevExpress.XtraGrid.Views.BandedGrid.GridBand[] {
             this.gridBand1,
             this.gridBand2});
@@ -426,6 +431,7 @@
             this.colSIC,
             this.colZalo,
             this.colQuyAGS,
+            this.colPhatQuyAm,
             this.colHanMuc});
             this.GVDL.GridControl = this.GCDL;
             this.GVDL.IndicatorWidth = 50;
@@ -436,13 +442,41 @@
             this.GVDL.OptionsView.ShowAutoFilterRow = true;
             this.GVDL.OptionsView.ShowFooter = true;
             this.GVDL.OptionsView.ShowGroupPanel = false;
+            this.GVDL.OptionsView.ShowPreview = true;
+            this.GVDL.PreviewFieldName = "LuuY";
+            this.GVDL.PreviewIndent = 50;
             this.GVDL.RowHeight = 25;
             this.GVDL.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colEmailKeToan, DevExpress.Data.ColumnSortOrder.Ascending)});
             this.GVDL.RowCellStyle += new DevExpress.XtraGrid.Views.Grid.RowCellStyleEventHandler(this.grvDaiLy_RowCellStyle);
+            this.GVDL.MeasurePreviewHeight += new DevExpress.XtraGrid.Views.Grid.RowHeightEventHandler(this.GVDL_MeasurePreviewHeight);
             this.GVDL.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.grvDaiLy_CustomColumnDisplayText);
             this.GVDL.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GVDL_KeyPress);
             this.GVDL.DoubleClick += new System.EventHandler(this.grvDaiLy_DoubleClick);
+            // 
+            // gridBand1
+            // 
+            this.gridBand1.Caption = "Thông Tin Giao Dịch";
+            this.gridBand1.Columns.Add(this.colQuyAGS);
+            this.gridBand1.Columns.Add(this.colSIC);
+            this.gridBand1.Columns.Add(this.colID);
+            this.gridBand1.Columns.Add(this.colMaDL);
+            this.gridBand1.Columns.Add(this.colMaAGS);
+            this.gridBand1.Columns.Add(this.colTen);
+            this.gridBand1.Columns.Add(this.colLuuY);
+            this.gridBand1.Columns.Add(this.colNhomDaiLy);
+            this.gridBand1.Columns.Add(this.colNgayGDGN);
+            this.gridBand1.Columns.Add(this.colHanMuc);
+            this.gridBand1.Columns.Add(this.colSoDuCuoi);
+            this.gridBand1.Columns.Add(this.colSoDuCanhBao1);
+            this.gridBand1.Columns.Add(this.colZalo);
+            this.gridBand1.Columns.Add(this.colDienThoai);
+            this.gridBand1.Columns.Add(this.colDiDong);
+            this.gridBand1.Columns.Add(this.colEmailKeToan);
+            this.gridBand1.Columns.Add(this.colEmailGiaoDich);
+            this.gridBand1.Name = "gridBand1";
+            this.gridBand1.VisibleIndex = 0;
+            this.gridBand1.Width = 1310;
             // 
             // colQuyAGS
             // 
@@ -469,6 +503,7 @@
             this.colSIC.FieldName = "SIC";
             this.colSIC.MinWidth = 21;
             this.colSIC.Name = "colSIC";
+            this.colSIC.ToolTip = "Sign in đang hoạt động";
             this.colSIC.Visible = true;
             this.colSIC.Width = 63;
             // 
@@ -523,7 +558,6 @@
             this.colLuuY.FieldName = "LuuY";
             this.colLuuY.Name = "colLuuY";
             this.colLuuY.OptionsColumn.FixedWidth = true;
-            this.colLuuY.Visible = true;
             this.colLuuY.Width = 362;
             // 
             // rM
@@ -542,6 +576,7 @@
             this.colNhomDaiLy.FieldName = "Nhom";
             this.colNhomDaiLy.FilterMode = DevExpress.XtraGrid.ColumnFilterMode.DisplayText;
             this.colNhomDaiLy.Name = "colNhomDaiLy";
+            this.colNhomDaiLy.ToolTip = "thống kê hoạt động 12 tháng gần nhất";
             this.colNhomDaiLy.Visible = true;
             this.colNhomDaiLy.Width = 111;
             // 
@@ -563,6 +598,16 @@
             this.colNgayGDGN.FieldName = "GiaoDichGanNhat";
             this.colNgayGDGN.Name = "colNgayGDGN";
             this.colNgayGDGN.Visible = true;
+            // 
+            // colHanMuc
+            // 
+            this.colHanMuc.Caption = "Hạn mức";
+            this.colHanMuc.DisplayFormat.FormatString = "{0:#,##0;(#,##0)}";
+            this.colHanMuc.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colHanMuc.FieldName = "HanMuc";
+            this.colHanMuc.Name = "colHanMuc";
+            this.colHanMuc.Visible = true;
+            this.colHanMuc.Width = 102;
             // 
             // colSoDuCuoi
             // 
@@ -681,6 +726,23 @@
             this.txtEmailGiaoDich.Name = "txtEmailGiaoDich";
             this.txtEmailGiaoDich.NullText = "-";
             this.txtEmailGiaoDich.EditValueChanged += new System.EventHandler(this.txtEmailGiaoDich_EditValueChanged);
+            // 
+            // gridBand2
+            // 
+            this.gridBand2.Caption = "Thông Tin Hợp Đồng";
+            this.gridBand2.Columns.Add(this.colNguoiDaiDienHD);
+            this.gridBand2.Columns.Add(this.colChinhSach);
+            this.gridBand2.Columns.Add(this.colEmailHD);
+            this.gridBand2.Columns.Add(this.colDiaChiHD);
+            this.gridBand2.Columns.Add(this.colTinhTrang);
+            this.gridBand2.Columns.Add(this.colGhiChu);
+            this.gridBand2.Columns.Add(this.colNgayKiQuy);
+            this.gridBand2.Columns.Add(this.colNVGiaoDich);
+            this.gridBand2.Columns.Add(this.colDuHoSo);
+            this.gridBand2.Columns.Add(this.colPhatQuyAm);
+            this.gridBand2.Name = "gridBand2";
+            this.gridBand2.VisibleIndex = 1;
+            this.gridBand2.Width = 915;
             // 
             // colNguoiDaiDienHD
             // 
@@ -811,59 +873,16 @@
             this.colDuHoSo.Name = "colDuHoSo";
             this.colDuHoSo.Visible = true;
             // 
+            // colPhatQuyAm
+            // 
+            this.colPhatQuyAm.Caption = "Miễn phạt";
+            this.colPhatQuyAm.FieldName = "MienPhat";
+            this.colPhatQuyAm.Name = "colPhatQuyAm";
+            this.colPhatQuyAm.Visible = true;
+            // 
             // toolTipController1
             // 
             this.toolTipController1.GetActiveObjectInfo += new DevExpress.Utils.ToolTipControllerGetActiveObjectInfoEventHandler(this.toolTipController1_GetActiveObjectInfo);
-            // 
-            // colHanMuc
-            // 
-            this.colHanMuc.Caption = "Hạn mức";
-            this.colHanMuc.DisplayFormat.FormatString = "{0:#,##0;(#,##0)}";
-            this.colHanMuc.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colHanMuc.FieldName = "HanMuc";
-            this.colHanMuc.Name = "colHanMuc";
-            this.colHanMuc.Visible = true;
-            this.colHanMuc.Width = 102;
-            // 
-            // gridBand1
-            // 
-            this.gridBand1.Caption = "Thông Tin Giao Dịch";
-            this.gridBand1.Columns.Add(this.colQuyAGS);
-            this.gridBand1.Columns.Add(this.colSIC);
-            this.gridBand1.Columns.Add(this.colID);
-            this.gridBand1.Columns.Add(this.colMaDL);
-            this.gridBand1.Columns.Add(this.colMaAGS);
-            this.gridBand1.Columns.Add(this.colTen);
-            this.gridBand1.Columns.Add(this.colLuuY);
-            this.gridBand1.Columns.Add(this.colNhomDaiLy);
-            this.gridBand1.Columns.Add(this.colNgayGDGN);
-            this.gridBand1.Columns.Add(this.colHanMuc);
-            this.gridBand1.Columns.Add(this.colSoDuCuoi);
-            this.gridBand1.Columns.Add(this.colSoDuCanhBao1);
-            this.gridBand1.Columns.Add(this.colZalo);
-            this.gridBand1.Columns.Add(this.colDienThoai);
-            this.gridBand1.Columns.Add(this.colDiDong);
-            this.gridBand1.Columns.Add(this.colEmailKeToan);
-            this.gridBand1.Columns.Add(this.colEmailGiaoDich);
-            this.gridBand1.Name = "gridBand1";
-            this.gridBand1.VisibleIndex = 0;
-            this.gridBand1.Width = 1672;
-            // 
-            // gridBand2
-            // 
-            this.gridBand2.Caption = "Thông Tin Hợp Đồng";
-            this.gridBand2.Columns.Add(this.colNguoiDaiDienHD);
-            this.gridBand2.Columns.Add(this.colChinhSach);
-            this.gridBand2.Columns.Add(this.colEmailHD);
-            this.gridBand2.Columns.Add(this.colDiaChiHD);
-            this.gridBand2.Columns.Add(this.colTinhTrang);
-            this.gridBand2.Columns.Add(this.colGhiChu);
-            this.gridBand2.Columns.Add(this.colNgayKiQuy);
-            this.gridBand2.Columns.Add(this.colNVGiaoDich);
-            this.gridBand2.Columns.Add(this.colDuHoSo);
-            this.gridBand2.Name = "gridBand2";
-            this.gridBand2.VisibleIndex = 1;
-            this.gridBand2.Width = 840;
             // 
             // frmDaiLy
             // 
@@ -979,8 +998,9 @@
         private DevExpress.XtraBars.BarEditItem barEditItem1;
         private DevExpress.XtraEditors.Repository.RepositoryItemComboBox rCMB;
         private DevExpress.XtraEditors.Repository.RepositoryItemMemoExEdit rM;
-        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand1;
         private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn colHanMuc;
+        private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand1;
         private DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand2;
+        private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn colPhatQuyAm;
     }
 }

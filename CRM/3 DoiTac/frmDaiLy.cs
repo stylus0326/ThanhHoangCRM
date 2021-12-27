@@ -5,6 +5,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using System;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,15 +14,17 @@ namespace CRM
 {
     public partial class frmDaiLy : XtraForm
     {
+        RefreshHelper helper;
         public frmDaiLy()
         {
             InitializeComponent();
+            helper = new RefreshHelper(GVDL, "id");
         }
 
         private void frmDaiLy_Load(object sender, EventArgs e)//
         {
-            btnSI.Visibility = DuLieuTaoSan.Q.Lv2SignIn ? BarItemVisibility.Always : BarItemVisibility.Never;
-            btneXCEL.Visibility = DuLieuTaoSan.Q.DaiLyAdmin ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnSI.Visibility = ClsDuLieu.Quyen.Lv2SignIn ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btneXCEL.Visibility = ClsDuLieu.Quyen.DaiLyAdmin ? BarItemVisibility.Always : BarItemVisibility.Never;
             DuLieu();
             DSNhanVien.DataSource = _DaiLyD.NhanVien();
             btnChiTiet.Click += BtnChiTiet_Click;
@@ -33,17 +36,20 @@ namespace CRM
         private void BtnSIC_Click(object sender, EventArgs e)
         {
             O_DAILY dl = GVDL.GetRow(GVDL.GetSelectedRows()[0]) as O_DAILY;
-            if (dl.SIC > 0)
+            string[] sic = dl.SIC.Split('/');
+            if (int.Parse(sic[1]) > 0)
                 new frmSignIn(dl).ShowDialog();
         }
 
 
         #region Dữ liệu 
         int KieuHienThi = 0;
-        public void DuLieu()
+        public void DuLieu(bool reSave = false)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
+            if (reSave)
+                helper.SaveViewInfo();
             tinhTrangOBindingSource.DataSource = new D_TRANGTHAI().DuLieu(0, true);
             chinhSachOBindingSource.DataSource = new D_CHINHSACH().All();
             _DaiLyD.ChaySoDu();
@@ -51,8 +57,10 @@ namespace CRM
                 daiLyOBindingSource.DataSource = _DaiLyD.DuLieu(index);
             else
                 daiLyOBindingSource.DataSource = _DaiLyD.DuLieu(index).Where(w => w.TrangThaiHoatDong.Equals(KieuHienThi));
-            XuLyGiaoDien.wait.CloseWaitForm();
-            colQuyAGS.Visible = DuLieuTaoSan.Q.NganHangThemSua;
+            if (reSave)
+                helper.LoadViewInfo();
+            ClsChucNang.wait.CloseWaitForm();
+            colQuyAGS.Visible = ClsDuLieu.Quyen.NganHangThemSua;
         }
         #endregion
 
@@ -92,7 +100,7 @@ namespace CRM
         bool IsTrue = false;
         private void grvDaiLy_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
         {
-            if (!DuLieuTaoSan.Q.DaiLyAdmin)
+            if (!ClsDuLieu.Quyen.DaiLyAdmin)
             {
                 IsTrue = !(GVDL.RowCount > 1);
 
@@ -212,7 +220,7 @@ namespace CRM
 
         private void ibtnNap_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            DuLieu();
+            DuLieu(true);
         }
 
         private void chkCty_CheckedChanged(object sender, ItemClickEventArgs e)
@@ -220,7 +228,7 @@ namespace CRM
             index = int.Parse((sender as BarCheckItem).Tag.ToString());
             DuLieu();
             Text = (sender as BarCheckItem).Caption;
-            btnSI.Visibility = DuLieuTaoSan.Q.Lv2SignIn ? BarItemVisibility.Always : BarItemVisibility.Never;
+            btnSI.Visibility = ClsDuLieu.Quyen.Lv2SignIn ? BarItemVisibility.Always : BarItemVisibility.Never;
         }
 
         private void btnSI_ItemClick(object sender, ItemClickEventArgs e)
@@ -273,11 +281,8 @@ namespace CRM
                     string _Text = string.Empty;
                     switch (info.Column.Name)
                     {
-                        case "colChiTiet":
+                        case "colSoDuCuoi":
                             _Text = "Xem công nợ";
-                            break;
-                        case "colThongKe":
-                            _Text = "thống kê hoạt động 12 tháng gần nhất";
                             break;
                         case "colQuyAGS":
                             _Text = "Up quỹ AGS";
@@ -301,6 +306,16 @@ namespace CRM
         {
             KieuHienThi = (sender as ComboBoxEdit).SelectedIndex;
             DuLieu();
+        }
+
+        private void GVDL_MeasurePreviewHeight(object sender, RowHeightEventArgs e)
+        {
+            GridView view = sender as GridView;
+            if (view == null)
+                return;
+            if (view.DataRowCount > 0)
+                if (((view.GetRow(e.RowHandle) as O_DAILY).LuuY ?? "").ToString().Trim() == String.Empty)
+                    e.RowHeight = 0;
         }
     }
 }

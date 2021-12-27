@@ -27,10 +27,6 @@ namespace CRM
         #endregion
 
         public static Dictionary<string, object> Adic = new Dictionary<string, object>();
-        public static O_NHOMQUYEN Q;
-        public static O_DAILY NV = new O_DAILY();
-
-        public string PhienBan = Assembly.GetExecutingAssembly().GetName().Version.ToString() + " - 20/05/2021";
 
         public static string[] MocThoiGian(string TenCot = "NgayGD")
         {
@@ -256,7 +252,7 @@ namespace CRM
                     break;
                 case 5:
                 case 7:
-                    List<O_NGANHANG> nganHangOs = new D_NGANHANG().All().Where(w => !w.ID.Equals(NganHang)).ToList();
+                    List<O_NGANHANG> nganHangOs = new D_NGANHANG().DuLieu().Where(w => !w.ID.Equals(NganHang)).ToList();
                     foreach (O_NGANHANG kh in nganHangOs)
                     {
                         G.Add(new IntString() { ID = kh.ID, Name = kh.Ten, Name2 = kh.TenTK });

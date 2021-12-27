@@ -27,7 +27,7 @@ namespace CRM
             dic.Add("TieuDe", iTieuDe.Text);
             dic.Add("NoiDung", iNoiDung.Text);
             dic.Add("GhiChuRieng", iGhiChu.Text);
-            dic.Add("TenNV", DuLieuTaoSan.NV.TenDangNhapCty);
+            dic.Add("TenNV", ClsDuLieu.NhanVien.TenDangNhapCty);
             long CapNhatNum = (ghiChu.ID > 0) ? (ghiChuD.CapNhat(dic, ghiChu.ID) > 0 ? ghiChu.ID : 0) : ghiChuD.ThemMoi(dic, true);
             if (XuLyGiaoDien.ThongBao(Text + ((ghiChu.ID > 0) ? " sửa" : " thêm"), CapNhatNum > 0))
             {
@@ -47,7 +47,7 @@ namespace CRM
         private void gridView1_DoubleClick(object sender, EventArgs e)
         {
             ghiChu = gridView1.GetRow(gridView1.GetSelectedRows()[0]) as O_GHICHU;
-            if (ghiChu.TenNV.Equals(DuLieuTaoSan.NV.TenDangNhapCty))
+            if (ghiChu.TenNV.Equals(ClsDuLieu.NhanVien.TenDangNhapCty))
             {
                 iTieuDe.Text = ghiChu.TieuDe;
                 iNoiDung.Text = ghiChu.NoiDung;

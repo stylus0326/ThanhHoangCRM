@@ -16,22 +16,22 @@ namespace CRM
         private void frmHangBay_Load(object sender, EventArgs e)
         {
             DuLieu();
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             intStringBindingSource.DataSource = DuLieuTaoSan.LoaiPhi(false);
         }
 
         #region Dữ liệu 
         public void DuLieu()
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             _NCCD.ChayLaiSD();
             hangBindingSource.DataSource = new D_HANGBAY().DuLieu();
             _lstNCCO = _NCCD.DuLieu(true);
             nCCOBindingSource.DataSource = _lstNCCO;
             nCCGDOBindingSource.DataSource = new D_NHACUNGCAP_GIAODICHPHATSINH().DuLieu();
-            if (XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.CloseWaitForm();
+            if (ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.CloseWaitForm();
         }
         #endregion
 

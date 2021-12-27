@@ -32,7 +32,7 @@ namespace CRM
             nhomKhachHangOBindingSource.DataSource = _ListNhomDaiLyO;
             _ListTinhTrangO = _TinhTrangD.DuLieu(_LoaiKhachHang, false);
             trangThaiOBindingSource.DataSource = _ListTinhTrangO;
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         private void GVNKH_Click(object sender, EventArgs e)
@@ -79,7 +79,7 @@ namespace CRM
             {
                 _ListNhomDaiLyO = _NhomDaiLyD.DuLieu(_LoaiKhachHang);
                 nhomKhachHangOBindingSource.DataSource = _ListNhomDaiLyO;
-                (Owner.ActiveMdiChild as frmDaiLy).DuLieu();
+                (Owner.ActiveMdiChild as frmDaiLy).DuLieu(true);
 
             }
         }
@@ -147,7 +147,7 @@ namespace CRM
             {
                 _ListTinhTrangO = _TinhTrangD.DuLieu(_LoaiKhachHang, false);
                 trangThaiOBindingSource.DataSource = _ListTinhTrangO;
-                (Owner.ActiveMdiChild as frmDaiLy).DuLieu();
+                (Owner.ActiveMdiChild as frmDaiLy).DuLieu(true);
             }
         }
     }

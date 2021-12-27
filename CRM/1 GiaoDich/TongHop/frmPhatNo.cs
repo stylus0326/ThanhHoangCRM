@@ -19,7 +19,7 @@ namespace CRM
         {
             dateEdit1.Properties.MaxValue = DateTime.Now.AddDays(-1);
             dateEdit1.EditValue = DateTime.Now.AddDays(-1);
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         #region Biến
@@ -47,7 +47,7 @@ namespace CRM
                     dic.Add("NgayCuonChieu", "getdate()");
                     dic.Add("LoaiKhachHang", 1);
                     dic.Add("LoaiGiaoDich", 10);
-                    dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                    dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                     dic.Add("IDKhachHang", lstDaiLy[i].ID);
                     dic.Add("TenKhach", "Phạt âm nợ 3 ngày liên tiếp, số dư cuối " + gridView1.Columns[4].Caption + " :" + (0 - lstDaiLy[i].SoDuCuoi1).ToString("#,###") + " * " + lstDaiLy[i].PhatQuyAm);
                     dic.Add("GiaHeThong", lstDaiLy[i].TienPhat);
@@ -56,7 +56,7 @@ namespace CRM
                     new D_GIAODICH().ThemMoi(dic);
                 };
                 XtraMessageBox.Show("Thực thi thành công", "Thông báo");
-                (Owner.ActiveMdiChild as frmTongHop).NapDatCho();
+                (Owner.ActiveMdiChild as frmTongHop).NapDatCho(true);
                 Close();
             }
         }

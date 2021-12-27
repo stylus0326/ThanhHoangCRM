@@ -31,6 +31,8 @@
                         return "Cá nhân";
                     case 1:
                         return "Công ty";
+                    case 3:
+                        return "Khác";
                     default:
                         return "Đóng";
                 }

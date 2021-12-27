@@ -30,8 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCongNo));
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode3 = new DevExpress.XtraGrid.GridLevelNode();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.checkEdit3 = new DevExpress.XtraEditors.CheckEdit();
             this.checkEdit4 = new DevExpress.XtraEditors.CheckEdit();
@@ -455,9 +455,9 @@
             // gridCTCongNo
             // 
             this.gridCTCongNo.DataSource = this.CTGiaoDichDindingSource;
-            gridLevelNode3.RelationName = "Level1";
+            gridLevelNode1.RelationName = "Level1";
             this.gridCTCongNo.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode3});
+            gridLevelNode1});
             this.gridCTCongNo.Location = new System.Drawing.Point(-159, 68);
             this.gridCTCongNo.MainView = this.grvCTCongNo;
             this.gridCTCongNo.Name = "gridCTCongNo";
@@ -784,9 +784,9 @@
             // 
             this.GCCN.DataSource = this.giaoDichOBindingSource;
             this.GCCN.Dock = System.Windows.Forms.DockStyle.Fill;
-            gridLevelNode1.RelationName = "Level1";
+            gridLevelNode2.RelationName = "Level1";
             this.GCCN.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode1});
+            gridLevelNode2});
             this.GCCN.Location = new System.Drawing.Point(2, 23);
             this.GCCN.MainView = this.GVCN;
             this.GCCN.Name = "GCCN";

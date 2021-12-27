@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNhanVienThem));
             DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions1 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
             DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions2 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
             DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions buttonImageOptions3 = new DevExpress.XtraEditors.ButtonsPanelControl.ButtonImageOptions();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmNhanVienThem));
             this.igroupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.iGioiTinhHD = new DevExpress.XtraEditors.LookUpEdit();
             this.gioiTinhBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -97,6 +97,7 @@
             this.gTenKhach = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
+            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.igroupControl1)).BeginInit();
             this.igroupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.iGioiTinhHD.Properties)).BeginInit();
@@ -143,6 +144,7 @@
             // 
             // igroupControl1
             // 
+            this.igroupControl1.Controls.Add(this.simpleButton1);
             this.igroupControl1.Controls.Add(this.iGioiTinhHD);
             this.igroupControl1.Controls.Add(this.iAnhCty);
             this.igroupControl1.Controls.Add(this.labelControl8);
@@ -188,7 +190,7 @@
             this.iAnhCty.Properties.NullText = "Nhấn để chọn";
             this.iAnhCty.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
             this.iAnhCty.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
-            this.iAnhCty.Size = new System.Drawing.Size(100, 118);
+            this.iAnhCty.Size = new System.Drawing.Size(85, 118);
             this.iAnhCty.TabIndex = 9;
             this.iAnhCty.MouseClick += new System.Windows.Forms.MouseEventHandler(this.iAnhCty_MouseClick);
             // 
@@ -209,11 +211,11 @@
             // 
             // labelControl7
             // 
-            this.labelControl7.Location = new System.Drawing.Point(274, 78);
+            this.labelControl7.Location = new System.Drawing.Point(286, 78);
             this.labelControl7.Name = "labelControl7";
-            this.labelControl7.Size = new System.Drawing.Size(51, 13);
+            this.labelControl7.Size = new System.Drawing.Size(39, 13);
             this.labelControl7.TabIndex = 14;
-            this.labelControl7.Text = "Ngày Cấp:";
+            this.labelControl7.Text = "Ngày C:";
             // 
             // iNgayCap
             // 
@@ -229,18 +231,19 @@
             // 
             // iCMND
             // 
+            this.iCMND.EditValue = "";
             this.iCMND.Location = new System.Drawing.Point(168, 75);
             this.iCMND.Name = "iCMND";
-            this.iCMND.Size = new System.Drawing.Size(100, 20);
+            this.iCMND.Size = new System.Drawing.Size(80, 20);
             this.iCMND.TabIndex = 3;
             // 
             // labelControl4
             // 
-            this.labelControl4.Location = new System.Drawing.Point(130, 78);
+            this.labelControl4.Location = new System.Drawing.Point(98, 78);
             this.labelControl4.Name = "labelControl4";
-            this.labelControl4.Size = new System.Drawing.Size(33, 13);
+            this.labelControl4.Size = new System.Drawing.Size(65, 13);
             this.labelControl4.TabIndex = 7;
-            this.labelControl4.Text = "CMND:";
+            this.labelControl4.Text = "CMND/CCCD:";
             // 
             // labelControl3
             // 
@@ -267,7 +270,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.iNgaySinhHD.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.iNgaySinhHD.Size = new System.Drawing.Size(100, 20);
+            this.iNgaySinhHD.Size = new System.Drawing.Size(109, 20);
             this.iNgaySinhHD.TabIndex = 1;
             // 
             // iNguoiDaiDienHD
@@ -372,7 +375,7 @@
             // 
             this.iDienThoaiCty.Location = new System.Drawing.Point(274, 54);
             this.iDienThoaiCty.Name = "iDienThoaiCty";
-            this.iDienThoaiCty.Size = new System.Drawing.Size(129, 20);
+            this.iDienThoaiCty.Size = new System.Drawing.Size(99, 20);
             this.iDienThoaiCty.TabIndex = 3;
             this.iDienThoaiCty.Tag = "SĐT Cty";
             // 
@@ -810,6 +813,15 @@
             "Mợ"});
             this.repositoryItemComboBox1.Name = "repositoryItemComboBox1";
             // 
+            // simpleButton1
+            // 
+            this.simpleButton1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton1.ImageOptions.SvgImage")));
+            this.simpleButton1.ImageOptions.SvgImageSize = new System.Drawing.Size(18, 18);
+            this.simpleButton1.Location = new System.Drawing.Point(253, 73);
+            this.simpleButton1.Name = "simpleButton1";
+            this.simpleButton1.Size = new System.Drawing.Size(24, 23);
+            this.simpleButton1.TabIndex = 20;
+            // 
             // frmNhanVienThem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -941,5 +953,6 @@
         private DevExpress.XtraBars.BarDockControl barDockControlTop;
         private DevExpress.XtraBars.BarDockControl barDockControlBottom;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        private DevExpress.XtraEditors.SimpleButton simpleButton1;
     }
 }

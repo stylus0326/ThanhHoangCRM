@@ -15,7 +15,7 @@ namespace CRM
 
         private void frmNhapMa_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         #region Dữ liệu 

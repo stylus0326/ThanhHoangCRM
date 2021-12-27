@@ -26,8 +26,8 @@ namespace CRM
         private void frmHangBayThem_Load(object sender, EventArgs e)
         {
             XuLyDuLieu.ConvertClassToTable(this, _HangBay);
-            XuLyGiaoDien.OpenForm(this);
-            btnLuu.Visible = DuLieuTaoSan.Q.HangBayThemSua;
+            ClsChucNang.OpenForm(this);
+            btnLuu.Visible = ClsDuLieu.Quyen.HangBayThemSua;
         }
 
         #region Biến
@@ -49,7 +49,7 @@ namespace CRM
         {
             List<KiemTra> kiemTras = new List<KiemTra>();
             kiemTras.Add(new KiemTra() { _Control = iTenHang, _Tu = 5, _Den = 30, });
-            kiemTras.Add(new KiemTra() { _Control = iTenTat, _Tu = 2, _Den = 5, _ChoQua = !_HangBayD.DaTonTai("TenTat", iTenTat.Text, _HangBay.ID), _ThongBao2 = "Đã tồn tại" });
+            kiemTras.Add(new KiemTra() { _Control = iTenTat, _Tu = 2, _Den = 5, _ChoQua = !_HangBayD.KiemTraTonTai(_HangBay.ID,"TenTat", iTenTat.Text), _ThongBao2 = "Đã tồn tại" });
 
             XuLyGiaoDien.KiemTra(kiemTras, dxValidationProvider1);
             if (!dxValidationProvider1.Validate())

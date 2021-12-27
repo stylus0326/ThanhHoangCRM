@@ -38,7 +38,7 @@ namespace CRM
             if (hangBayOBindingSource.Count < 21)
                 iHangBay.Properties.DropDownRows = hangBayOBindingSource.Count;
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, _SignInO);
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         #region Biến
@@ -50,7 +50,7 @@ namespace CRM
         private void btnLuu_Click(object sender, EventArgs e)
         {
             List<KiemTra> kiemTras = new List<KiemTra>() {
-            new KiemTra() { _Control = iSignIn,_Tu=2,_Den = 20,_ChoQua = !new D_SIGNIN().DaTonTai(string.Format("WHERE SignIn='{0}' AND ID <> {1}",iSignIn.Text,_SignInO.ID)), _ThongBao2 = "Đã tồn tại" }};
+            new KiemTra() { _Control = iSignIn,_Tu=2,_Den = 20,_ChoQua = !new D_SIGNIN().KiemTraTonTai(_SignInO.ID,"SignIn",iSignIn.Text), _ThongBao2 = "Đã tồn tại" }};
 
             XuLyGiaoDien.KiemTra(kiemTras, dxValidationProvider1);
             if (!dxValidationProvider1.Validate())

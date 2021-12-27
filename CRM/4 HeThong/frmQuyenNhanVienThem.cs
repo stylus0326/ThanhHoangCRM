@@ -65,8 +65,8 @@ namespace CRM
 
         private void frmQuyenNhanVienThem_Load(Object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
-            btnSave.Visible = DuLieuTaoSan.Q.QuyenThemSua;
+            ClsChucNang.OpenForm(this);
+            btnSave.Visible = ClsDuLieu.Quyen.QuyenThemSua;
         }
 
         private void btnSave_Click(Object sender, EventArgs e)

@@ -91,68 +91,6 @@ namespace CRM
             }
         }
 
-        #region Mở Form mờ
-        public static void OpenForm(Form frm)
-        {
-            new Thread(() =>
-            {
-                frm.KeyPreview = true;
-                for (double i = 0; i <= 1; i += 0.1)
-                {
-                    frm.Invoke(new MethodInvoker(() =>
-                    {
-                        frm.Opacity = i;
-                    }));
-                    Thread.Sleep(10);
-                }
-                frm.KeyDown += (s, e) =>
-                {
-                    if (e.Control && e.KeyCode == Keys.D1 && !frm.Name.Equals("frmChinh"))
-                    {
-                        using (var g = new Bitmap(frm.Width, frm.Height))
-                        {
-                            frm.DrawToBitmap(g, new Rectangle(0, 0, g.Width, g.Height));
-                            Clipboard.SetImage(g);
-
-                            if (!wait.IsSplashFormVisible)
-                                wait.ShowWaitForm();
-                            wait.SetWaitFormCaption("Thông báo");
-                            wait.SetWaitFormDescription("Đã sao chép hình ảnh");
-                            Thread.Sleep(500);
-                            if (wait.IsSplashFormVisible)
-                                wait.CloseWaitForm();
-                        }
-                    }
-                    else if (e.Control && e.KeyCode == Keys.D2)
-                    {
-                        frm.TopMost = true;
-                        Bitmap g;
-                        if (frm.Name.Equals("frmChinh"))
-                        {
-                            g = new Bitmap(Screen.PrimaryScreen.Bounds.Width,
-                                          Screen.PrimaryScreen.Bounds.Height);
-                            Graphics graphics = Graphics.FromImage(g as Image);
-                            graphics.CopyFromScreen(0, 0, 0, 0, g.Size);
-                        }
-                        else
-                        {
-                            g = new Bitmap(frm.Width, frm.Height);
-                            frm.DrawToBitmap(g, new Rectangle(0, 0, g.Width, g.Height));
-                        }
-                        new Snipping(g).ShowDialog(frm);
-                    }
-                };
-
-                GridViewHelper.SetFromGrid(frm);
-            }).Start();
-        }
-
-        public static DevExpress.XtraSplashScreen.SplashScreenManager wait;
-        public static void SplashScreen(Form frm)
-        {
-            wait = new DevExpress.XtraSplashScreen.SplashScreenManager(frm, typeof(global::CRM.CRMWaitForm), true, true);
-        }
-        #endregion
 
         #region Tạo thông báo
         public static void Alert(string msg, Form_Alert.enmType type)

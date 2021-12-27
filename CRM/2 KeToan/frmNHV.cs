@@ -22,7 +22,7 @@ namespace CRM
 
         private void frmNHV_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             colGiaThu.FieldName = _nCC ? "GiaNet" : "GiaThu";
             giaoDichOBindingSource.DataSource = new D_GIAODICH().DuLieuVe(_nCC, _NCC);
             nCCOBindingSource.DataSource = new D_NHACUNGCAP().DuLieu(true);

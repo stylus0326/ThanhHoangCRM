@@ -29,7 +29,7 @@ namespace CRM
 
         private void FrmRenameCaption_Load(object sender, EventArgs e)
         {
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         private void FrmRenameCaption_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)

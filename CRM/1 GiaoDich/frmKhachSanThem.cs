@@ -29,17 +29,17 @@ namespace CRM
         private void frmKhachSanThem_Load(object sender, EventArgs e)
         {
             #region NVGiaoDich
-            iNVGiaoDich.Properties.ReadOnly = iNVHoTro.Properties.ReadOnly = _ks.NVGiaoDich != DuLieuTaoSan.NV.ID;
+            iNVGiaoDich.Properties.ReadOnly = iNVHoTro.Properties.ReadOnly = _ks.NVGiaoDich != ClsDuLieu.NhanVien.ID;
             LoaiKhachDB.DataSource = DuLieuTaoSan.LoaiKhachHang_Ve();
 
-            if (_ks.NVGiaoDich == DuLieuTaoSan.NV.ID || _ks.NVGiaoDich < 1 || DuLieuTaoSan.NV.MienPhat)
-                _ks.NVGiaoDich = DuLieuTaoSan.NV.ID;
-            else if (_ks.NVHoTro < 1 || DuLieuTaoSan.NV.MienPhat)
-                _ks.NVHoTro = DuLieuTaoSan.NV.ID;
+            if (_ks.NVGiaoDich == ClsDuLieu.NhanVien.ID || _ks.NVGiaoDich < 1 || ClsDuLieu.NhanVien.MienPhat)
+                _ks.NVGiaoDich = ClsDuLieu.NhanVien.ID;
+            else if (_ks.NVHoTro < 1 || ClsDuLieu.NhanVien.MienPhat)
+                _ks.NVHoTro = ClsDuLieu.NhanVien.ID;
             #endregion
 
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, _ks);
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             DuLieu();
         }
 
@@ -100,7 +100,7 @@ namespace CRM
             if (XuLyGiaoDien.ThongBao(Text, a == lstDicS.Count))
             {
                 GhiChuCmt(_ks.ID);
-                (Owner.ActiveMdiChild as frmKhachSan).DuLieu();
+                (Owner.ActiveMdiChild as frmKhachSan).DuLieu(true);
                 Close();
             }
         }
@@ -121,7 +121,7 @@ namespace CRM
                 dic.Add("FormName", Text);
                 dic.Add("MaCho", iMaCho.Text);
                 dic.Add("NoiDung", NoiDung);
-                dic.Add("NVGiaoDich", DuLieuTaoSan.NV.ID);
+                dic.Add("NVGiaoDich", ClsDuLieu.NhanVien.ID);
                 dic.Add("LoaiKhachHang", 0);
                 dic.Add("Ma", 0);
                 if (NoiDung.Length > 10)

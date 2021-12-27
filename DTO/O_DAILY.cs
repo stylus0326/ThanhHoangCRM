@@ -25,7 +25,7 @@ namespace DataTransferObject
         public int ChinhSach { set; get; }
         public int TinhTrang { set; get; }
         public bool Nghi { set; get; }
-        public int TrangThaiHoatDong { set; get; } = 1;
+        public int TrangThaiHoatDong { set; get; } = 0;
 
         public string MaDL { set; get; }
         public string MaAGS { set; get; }
@@ -57,7 +57,7 @@ namespace DataTransferObject
 
         public bool End { set; get; }
         public int Diem { set; get; }
-        public int SIC { set; get; }
+        public string SIC { set; get; }
         public string TenTam { set; get; }
         public long SoDu { set; get; }
         public DateTime GiaoDichGanNhat { set; get; }

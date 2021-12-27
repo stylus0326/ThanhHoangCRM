@@ -19,7 +19,7 @@ namespace CRM
         private void frmKPIHangMuc_Load(object sender, EventArgs e)
         {
             TaiLaiKPI();
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
         List<O_KPIHANGMUC> lstSI = new List<O_KPIHANGMUC>();
         #region Dữ liệu 

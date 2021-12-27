@@ -17,7 +17,7 @@ namespace CRM
         {
             InitializeComponent();
             IDHD.Add(0);
-            _HoaDonO.NhanVien = DuLieuTaoSan.NV.ID;
+            _HoaDonO.NhanVien = ClsDuLieu.NhanVien.ID;
             Controls.Remove(iSoChungTu);
             aaa.Visible = false;
             Text += " thêm";
@@ -28,7 +28,7 @@ namespace CRM
             InitializeComponent();
             HD.ID = 0;
             _HoaDonO = HD;
-            _HoaDonO.NhanVien = DuLieuTaoSan.NV.ID;
+            _HoaDonO.NhanVien = ClsDuLieu.NhanVien.ID;
             iMaHD.Enabled = false;
             Text += " sửa";
         }
@@ -53,7 +53,7 @@ namespace CRM
             IntStringBindingSource.DataSource = DuLieuTaoSan.LoaiKhachHang_GiaoDich(false);
             hoaDonOBindingSource1.DataSource = _HoaDonD.LayThongTinMST();
             hangBayOBindingSource.DataSource = new D_HANGBAY().DuLieu();
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
             DuLieuTaoSan.Adic = XuLyDuLieu.ConvertClassToTable(this, _HoaDonO);
             daiLyOBindingSource.DataSource = daiLyDs.Where(w => w.LoaiKhachHang.Equals((int)iLoaiKhachHang.EditValue));
             bandedGridView1.BestFitColumns();
@@ -100,7 +100,6 @@ namespace CRM
         {
             GridView view = sender as GridView;
             int HTV = 0;
-            long a = 0;
             switch (e.Column.FieldName)
             {
                 case "GiaHeThong2":
@@ -116,13 +115,19 @@ namespace CRM
                         view.SetRowCellValue(e.RowHandle, view.Columns["CL4"], (long)view.GetRowCellValue(e.RowHandle, view.Columns["CL3"]) * (float)view.GetRowCellValue(e.RowHandle, view.Columns["PhanTram2"]) / 100);
                     }
 
-                    HTV = (int)view.GetRowCellValue(e.RowHandle, view.Columns["HanhTrinhVe"]);
-                    a = (long)view.GetRowCellValue(e.RowHandle, view.Columns["CL1"]) / (HTV > 0 ? 2 : 1);
+                    HTV = int.Parse((view.GetRowCellValue(e.RowHandle, view.Columns["HanhTrinhVe"]) ?? "0").ToString());
 
 
-                    if (a > 50000)
+                    if ((long)view.GetRowCellValue(e.RowHandle, view.Columns["CL1"]) / (HTV > 0 ? 2 : 1) > 50000)
+                    {
                         view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 10);
-                    a = 0;
+                        view.SetRowCellValue(e.RowHandle, view.Columns["CL2"], (long)view.GetRowCellValue(e.RowHandle, view.Columns["CL1"]) * (float)10 / 100);
+                    }
+                    else
+                    {
+                        view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 0);
+                        view.SetRowCellValue(e.RowHandle, view.Columns["CL2"], 0);
+                    }
                     bandedGridView1.BestFitColumns();
                     break;
                 case "PhanTram2":
@@ -132,12 +137,18 @@ namespace CRM
                         view.SetRowCellValue(e.RowHandle, view.Columns["CL4"], (long)view.GetRowCellValue(e.RowHandle, view.Columns["CL3"]) * (float)view.GetRowCellValue(e.RowHandle, view.Columns["PhanTram2"]) / 100);
                     break;
                 case "CL1":
-                    HTV = (int)view.GetRowCellValue(e.RowHandle, view.Columns["HanhTrinhVe"]);
-                    a = (long)view.GetRowCellValue(e.RowHandle, view.Columns["CL1"]) / (HTV > 0 ? 2 : 1);
+                    HTV = int.Parse((view.GetRowCellValue(e.RowHandle, view.Columns["HanhTrinhVe"]) ?? "0").ToString());
 
-                    if (a > 50000)
+                    if ((long)view.GetRowCellValue(e.RowHandle, view.Columns["CL1"]) / (HTV > 0 ? 2 : 1) > 50000)
+                    {
                         view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 10);
-                    a = 0;
+                        view.SetRowCellValue(e.RowHandle, view.Columns["CL2"], (long)view.GetRowCellValue(e.RowHandle, view.Columns["CL1"]) * (float)10 / 100);
+                    }
+                    else
+                    {
+                        view.SetRowCellValue(e.RowHandle, view.Columns["PhanTram"], 0);
+                        view.SetRowCellValue(e.RowHandle, view.Columns["CL2"], 0);
+                    }    
                     break;
             }
         }
@@ -170,7 +181,7 @@ namespace CRM
                 dic.Add("SoChungTu", _HoaDonD.TaoChungTu());
             else
             if (_HoaDonO.HoTro < 1)
-                _HoaDonO.HoTro = DuLieuTaoSan.NV.ID;
+                _HoaDonO.HoTro = ClsDuLieu.NhanVien.ID;
             for (int i = 0; i < bandedGridView1.RowCount; i++)
             {
                 Dictionary<string, object> dicS = new Dictionary<string, object>(dic);
@@ -195,7 +206,7 @@ namespace CRM
             long a = (_HoaDonO.ID > 0) ? _HoaDonD.SuaNhieu1Ban(lstDicS, lstCTV) : _HoaDonD.ThemNhieu1Ban(lstDicS);
             if (XuLyGiaoDien.ThongBao(Text, a == lstDicS.Count))
             {
-                (Owner.ActiveMdiChild as frmHoaDon).DuLieu();
+                (Owner.ActiveMdiChild as frmHoaDon).DuLieu(true);
                 Close();
             }
         }

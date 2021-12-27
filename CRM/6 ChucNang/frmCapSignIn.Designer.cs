@@ -45,8 +45,10 @@ namespace CRM
             this.colMatKhau = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colCanLam = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.signInOBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.btnThemNhieu = new DevExpress.XtraEditors.SimpleButton();
             this.iIDKhachHang = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colName2 = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -173,7 +175,8 @@ namespace CRM
             this.colDaiLyTT,
             this.colMatKhau,
             this.colCanLam,
-            this.gridColumn1});
+            this.gridColumn1,
+            this.gridColumn2});
             this.GVSI.GridControl = this.GCSI;
             this.GVSI.GroupCount = 1;
             this.GVSI.GroupSummary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
@@ -197,7 +200,7 @@ namespace CRM
             this.colSignIn.OptionsColumn.AllowMerge = DevExpress.Utils.DefaultBoolean.False;
             this.colSignIn.Visible = true;
             this.colSignIn.VisibleIndex = 1;
-            this.colSignIn.Width = 99;
+            this.colSignIn.Width = 103;
             // 
             // colHangTT
             // 
@@ -209,7 +212,7 @@ namespace CRM
             this.colHangTT.OptionsColumn.AllowEdit = false;
             this.colHangTT.Visible = true;
             this.colHangTT.VisibleIndex = 0;
-            this.colHangTT.Width = 46;
+            this.colHangTT.Width = 47;
             // 
             // lueHangBay
             // 
@@ -234,7 +237,7 @@ namespace CRM
             this.colChinh.OptionsColumn.AllowMerge = DevExpress.Utils.DefaultBoolean.False;
             this.colChinh.Visible = true;
             this.colChinh.VisibleIndex = 3;
-            this.colChinh.Width = 36;
+            this.colChinh.Width = 37;
             // 
             // colDaiLyTT
             // 
@@ -268,7 +271,7 @@ namespace CRM
             this.colMatKhau.Name = "colMatKhau";
             this.colMatKhau.Visible = true;
             this.colMatKhau.VisibleIndex = 2;
-            this.colMatKhau.Width = 85;
+            this.colMatKhau.Width = 88;
             // 
             // colCanLam
             // 
@@ -277,7 +280,7 @@ namespace CRM
             this.colCanLam.Name = "colCanLam";
             this.colCanLam.Visible = true;
             this.colCanLam.VisibleIndex = 4;
-            this.colCanLam.Width = 52;
+            this.colCanLam.Width = 54;
             // 
             // gridColumn1
             // 
@@ -286,7 +289,16 @@ namespace CRM
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
             this.gridColumn1.VisibleIndex = 5;
-            this.gridColumn1.Width = 45;
+            this.gridColumn1.Width = 52;
+            // 
+            // gridColumn2
+            // 
+            this.gridColumn2.Caption = "ID";
+            this.gridColumn2.FieldName = "ID";
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 6;
+            this.gridColumn2.Width = 24;
             // 
             // signInOBindingSource
             // 
@@ -294,6 +306,7 @@ namespace CRM
             // 
             // groupControl1
             // 
+            this.groupControl1.Controls.Add(this.btnThemNhieu);
             this.groupControl1.Controls.Add(this.iIDKhachHang);
             this.groupControl1.Controls.Add(this.labelControl6);
             this.groupControl1.Controls.Add(this.icmb);
@@ -313,6 +326,20 @@ namespace CRM
             this.groupControl1.Size = new System.Drawing.Size(430, 137);
             this.groupControl1.TabIndex = 6;
             this.groupControl1.Text = "Thêm SignIn";
+            // 
+            // btnThemNhieu
+            // 
+            this.btnThemNhieu.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.btnThemNhieu.Appearance.Options.UseFont = true;
+            this.btnThemNhieu.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnThemNhieu.ImageOptions.SvgImage")));
+            this.btnThemNhieu.ImageOptions.SvgImageSize = new System.Drawing.Size(18, 18);
+            this.btnThemNhieu.Location = new System.Drawing.Point(402, 24);
+            this.btnThemNhieu.Name = "btnThemNhieu";
+            this.btnThemNhieu.Size = new System.Drawing.Size(23, 23);
+            this.btnThemNhieu.TabIndex = 25;
+            this.btnThemNhieu.TabStop = false;
+            this.btnThemNhieu.Text = "Thêm";
+            this.btnThemNhieu.Click += new System.EventHandler(this.btnThemNhieu_Click);
             // 
             // iIDKhachHang
             // 
@@ -374,13 +401,10 @@ namespace CRM
             this.icmb.Properties.DropDownRows = 5;
             this.icmb.Properties.Items.AddRange(new object[] {
             "Câp mới",
-            "Khóa",
-            "Mở khóa",
             "Thu hồi",
             "Đổi mật khẩu"});
             this.icmb.Size = new System.Drawing.Size(120, 20);
             this.icmb.TabIndex = 20;
-            this.icmb.SelectedIndexChanged += new System.EventHandler(this.icmb_SelectedIndexChanged);
             // 
             // lSignIn
             // 
@@ -397,7 +421,7 @@ namespace CRM
             this.lSignIn.Properties.DropDownRows = 10;
             this.lSignIn.Properties.NullText = "";
             this.lSignIn.Properties.ValueMember = "ID";
-            this.lSignIn.Size = new System.Drawing.Size(120, 20);
+            this.lSignIn.Size = new System.Drawing.Size(93, 20);
             this.lSignIn.TabIndex = 19;
             this.lSignIn.Tag = "Hãng";
             this.lSignIn.EditValueChanged += new System.EventHandler(this.lookUpEdit1_EditValueChanged);
@@ -905,7 +929,6 @@ namespace CRM
             this.btnAddServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddServer.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnAddServer.Appearance.Options.UseFont = true;
-            this.btnAddServer.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton2.ImageOptions.SvgImage")));
             this.btnAddServer.ImageOptions.SvgImageSize = new System.Drawing.Size(18, 18);
             this.btnAddServer.Location = new System.Drawing.Point(302, 668);
             this.btnAddServer.Name = "btnAddServer";
@@ -920,7 +943,6 @@ namespace CRM
             this.btnNhapExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnNhapExcel.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnNhapExcel.Appearance.Options.UseFont = true;
-            this.btnNhapExcel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton3.ImageOptions.SvgImage")));
             this.btnNhapExcel.ImageOptions.SvgImageSize = new System.Drawing.Size(18, 18);
             this.btnNhapExcel.Location = new System.Drawing.Point(203, 668);
             this.btnNhapExcel.Name = "btnNhapExcel";
@@ -935,7 +957,6 @@ namespace CRM
             this.btnXuatExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnXuatExcel.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
             this.btnXuatExcel.Appearance.Options.UseFont = true;
-            this.btnXuatExcel.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("simpleButton4.ImageOptions.SvgImage")));
             this.btnXuatExcel.ImageOptions.SvgImageSize = new System.Drawing.Size(18, 18);
             this.btnXuatExcel.Location = new System.Drawing.Point(107, 668);
             this.btnXuatExcel.Name = "btnXuatExcel";
@@ -1093,5 +1114,7 @@ namespace CRM
         private DevExpress.XtraEditors.SimpleButton btnXuatExcel;
         private DevExpress.XtraEditors.SimpleButton btnNhapExcel;
         private DevExpress.XtraEditors.SimpleButton btnAddServer;
+        private DevExpress.XtraEditors.SimpleButton btnThemNhieu;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
     }
 }

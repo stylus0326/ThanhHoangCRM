@@ -22,7 +22,7 @@ namespace CRM
         {
             DuLieu();
             dt.Columns.Add("MaCho", typeof(string));
-            XuLyGiaoDien.OpenForm(this);
+            ClsChucNang.OpenForm(this);
         }
 
         private void main_RowCellStyle(object sender, DevExpress.XtraGrid.Views.Grid.RowCellStyleEventArgs e)

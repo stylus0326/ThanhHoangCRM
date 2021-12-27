@@ -1420,6 +1420,7 @@
             this.GVGD.Name = "GVGD";
             this.GVGD.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown;
             this.GVGD.OptionsView.ColumnAutoWidth = false;
+            this.GVGD.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
             this.GVGD.OptionsView.ShowFooter = true;
             this.GVGD.OptionsView.ShowGroupPanel = false;
             this.GVGD.RowHeight = 25;
@@ -1639,6 +1640,8 @@
             "Nghiệp vụ 0",
             "Nghiệp vụ có",
             "",
+            "DOWN THẢO LINH",
+            "NVU KHÔNG THÀNH",
             "Canh nhả chỗ",
             "Booker void vé để canh ",
             "Khách không bay booker tự void",

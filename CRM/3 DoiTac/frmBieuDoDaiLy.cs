@@ -16,12 +16,12 @@ namespace CRM
 
         private void frmBieuDoDaiLy_Load(object sender, EventArgs e)
         {
-            if (!XuLyGiaoDien.wait.IsSplashFormVisible)
-                XuLyGiaoDien.wait.ShowWaitForm();
+            if (!ClsChucNang.wait.IsSplashFormVisible)
+                ClsChucNang.wait.ShowWaitForm();
             DaiLyDB.DataSource = new D_DAILY().All(false).Where(w => w.LoaiKhachHang.Equals(1)).ToList();
             iIDKhachHang.EditValue = A;
-            XuLyGiaoDien.OpenForm(this);
-            XuLyGiaoDien.wait.CloseWaitForm();
+            ClsChucNang.OpenForm(this);
+            ClsChucNang.wait.CloseWaitForm();
         }
 
         private void iIDKhachHang_EditValueChanged(object sender, EventArgs e)

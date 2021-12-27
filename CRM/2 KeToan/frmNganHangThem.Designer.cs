@@ -183,7 +183,8 @@
             this.iNhom.Properties.Items.AddRange(new object[] {
             "Cá nhân",
             "Công ty",
-            "Đóng"});
+            "Đóng",
+            "Khác"});
             this.iNhom.Size = new System.Drawing.Size(92, 20);
             this.iNhom.TabIndex = 7;
             // 

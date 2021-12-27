@@ -40,6 +40,7 @@
             this.barLinkContainerItem2 = new DevExpress.XtraBars.BarLinkContainerItem();
             this.barHeaderItem2 = new DevExpress.XtraBars.BarHeaderItem();
             this.barHeaderItem1 = new DevExpress.XtraBars.BarHeaderItem();
+            this.barHeaderItem3 = new DevExpress.XtraBars.BarHeaderItem();
             this.TongHop = new DevExpress.XtraBars.BarButtonItem();
             this.Ve = new DevExpress.XtraBars.BarButtonItem();
             this.TheoDoiHoan = new DevExpress.XtraBars.BarButtonItem();
@@ -51,17 +52,12 @@
             this.HangBay = new DevExpress.XtraBars.BarButtonItem();
             this.DaiLy = new DevExpress.XtraBars.BarButtonItem();
             this.LichSu = new DevExpress.XtraBars.BarButtonItem();
-            this.BitemCWF = new DevExpress.XtraBars.BarButtonItem();
             this.KhachLe = new DevExpress.XtraBars.BarButtonItem();
-            this.chkGDMD = new DevExpress.XtraBars.BarCheckItem();
-            this.barSubItem2 = new DevExpress.XtraBars.BarSubItem();
-            this.chlDG = new DevExpress.XtraBars.BarCheckItem();
-            this.chkNC = new DevExpress.XtraBars.BarCheckItem();
             this.btnThoatNhanh = new DevExpress.XtraBars.BarButtonItem();
             this.TuyenBay = new DevExpress.XtraBars.BarButtonItem();
             this.HoaDon = new DevExpress.XtraBars.BarButtonItem();
             this.ChinhSach = new DevExpress.XtraBars.BarButtonItem();
-            this.skinRibbonGalleryBarItem1 = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
+            this.sGD = new DevExpress.XtraBars.SkinRibbonGalleryBarItem();
             this.CauHinhEmail = new DevExpress.XtraBars.BarButtonItem();
             this.SoSanh = new DevExpress.XtraBars.BarButtonItem();
             this.SoSanhVN = new DevExpress.XtraBars.BarButtonItem();
@@ -80,6 +76,12 @@
             this.KPIHangMuc = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem4 = new DevExpress.XtraBars.BarButtonItem();
+            this.barSubItem1 = new DevExpress.XtraBars.BarSubItem();
+            this.tsiKL = new DevExpress.XtraBars.BarToggleSwitchItem();
+            this.chkMD = new DevExpress.XtraBars.BarToggleSwitchItem();
+            this.tsiMNB = new DevExpress.XtraBars.BarToggleSwitchItem();
+            this.biColor = new DevExpress.XtraBars.BarEditItem();
+            this.rpColor = new DevExpress.XtraEditors.Repository.RepositoryItemColorEdit();
             this.R1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -102,6 +104,7 @@
             this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.applicationMenu1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rpColor)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.documentManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).BeginInit();
             this.SuspendLayout();
@@ -133,20 +136,15 @@
             this.HangBay,
             this.DaiLy,
             this.LichSu,
-            this.BitemCWF,
             this.KhachLe,
-            this.chkGDMD,
             this.GhiChuTong,
-            this.barSubItem2,
-            this.chlDG,
-            this.chkNC,
             this.btnThoatNhanh,
             this.TuyenBay,
             this.HoaDon,
             this.DoiMatKhau,
             this.btnDangXuat,
             this.ChinhSach,
-            this.skinRibbonGalleryBarItem1,
+            this.sGD,
             this.CauHinhEmail,
             this.SoSanh,
             this.SoSanhVN,
@@ -168,23 +166,30 @@
             this.NhanVienThem,
             this.Bdpi,
             this.barButtonItem1,
-            this.barButtonItem4});
+            this.barButtonItem4,
+            this.barSubItem1,
+            this.tsiKL,
+            this.barHeaderItem3,
+            this.tsiMNB,
+            this.chkMD,
+            this.biColor});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 45;
+            this.ribbonControl1.MaxItemId = 52;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.PageHeaderItemLinks.Add(this.btnThoatNhanh);
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.R1,
             this.R2,
             this.R3});
-            this.ribbonControl1.QuickToolbarItemLinks.Add(this.skinRibbonGalleryBarItem1);
-            this.ribbonControl1.QuickToolbarItemLinks.Add(this.barSubItem2);
-            this.ribbonControl1.QuickToolbarItemLinks.Add(this.BitemCWF);
+            this.ribbonControl1.QuickToolbarItemLinks.Add(this.barSubItem1);
+            this.ribbonControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.rpColor});
             this.ribbonControl1.RibbonCaptionAlignment = DevExpress.XtraBars.Ribbon.RibbonCaptionAlignment.Center;
             this.ribbonControl1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2019;
             this.ribbonControl1.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.True;
             this.ribbonControl1.ShowDisplayOptionsMenuButton = DevExpress.Utils.DefaultBoolean.True;
             this.ribbonControl1.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.False;
+            this.ribbonControl1.ShowItemCaptionsInCaptionBar = true;
             this.ribbonControl1.ShowItemCaptionsInPageHeader = true;
             this.ribbonControl1.ShowItemCaptionsInQAT = true;
             this.ribbonControl1.ShowPageHeadersInFormCaption = DevExpress.Utils.DefaultBoolean.True;
@@ -246,12 +251,13 @@
             // 
             // barLinkContainerItem2
             // 
-            this.barLinkContainerItem2.Caption = "barLinkContainerItem2";
+            this.barLinkContainerItem2.Caption = "Phím tắt";
             this.barLinkContainerItem2.Id = 38;
             this.barLinkContainerItem2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barLinkContainerItem2.ImageOptions.SvgImage")));
             this.barLinkContainerItem2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(this.barHeaderItem2),
-            new DevExpress.XtraBars.LinkPersistInfo(this.barHeaderItem1)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.barHeaderItem1),
+            new DevExpress.XtraBars.LinkPersistInfo(this.barHeaderItem3)});
             this.barLinkContainerItem2.Name = "barLinkContainerItem2";
             // 
             // barHeaderItem2
@@ -268,6 +274,12 @@
             this.barHeaderItem1.Id = 34;
             this.barHeaderItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barHeaderItem1.ImageOptions.SvgImage")));
             this.barHeaderItem1.Name = "barHeaderItem1";
+            // 
+            // barHeaderItem3
+            // 
+            this.barHeaderItem3.Caption = "Sửa lỗi thông báo chờ [Ctrl+3]";
+            this.barHeaderItem3.Id = 47;
+            this.barHeaderItem3.Name = "barHeaderItem3";
             // 
             // TongHop
             // 
@@ -380,14 +392,6 @@
             this.LichSu.Tag = "LichSu";
             this.LichSu.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.LinkClick);
             // 
-            // BitemCWF
-            // 
-            this.BitemCWF.Caption = "Dừng tải";
-            this.BitemCWF.Id = 42;
-            this.BitemCWF.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("BitemCWF.ImageOptions.SvgImage")));
-            this.BitemCWF.Name = "BitemCWF";
-            this.BitemCWF.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.BitemCWF_ItemClick);
-            // 
             // KhachLe
             // 
             this.KhachLe.Caption = "Khách lẻ";
@@ -398,42 +402,6 @@
             this.KhachLe.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithText;
             this.KhachLe.Tag = "ThongTinKhachLe";
             this.KhachLe.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.LinkClick);
-            // 
-            // chkGDMD
-            // 
-            this.chkGDMD.Caption = "Mặc định";
-            this.chkGDMD.GroupIndex = 1;
-            this.chkGDMD.Id = 62;
-            this.chkGDMD.Name = "chkGDMD";
-            this.chkGDMD.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.chkGD1_CheckedChanged);
-            // 
-            // barSubItem2
-            // 
-            this.barSubItem2.Caption = "Kiểu lọc";
-            this.barSubItem2.Id = 1;
-            this.barSubItem2.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barSubItem2.ImageOptions.SvgImage")));
-            this.barSubItem2.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.chlDG),
-            new DevExpress.XtraBars.LinkPersistInfo(this.chkNC)});
-            this.barSubItem2.Name = "barSubItem2";
-            // 
-            // chlDG
-            // 
-            this.chlDG.Caption = "Đơn giản";
-            this.chlDG.GroupIndex = 1;
-            this.chlDG.Id = 2;
-            this.chlDG.Name = "chlDG";
-            this.chlDG.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.chlDG_CheckedChanged);
-            // 
-            // chkNC
-            // 
-            this.chkNC.BindableChecked = true;
-            this.chkNC.Caption = "Nâng cao";
-            this.chkNC.Checked = true;
-            this.chkNC.GroupIndex = 1;
-            this.chkNC.Id = 3;
-            this.chkNC.Name = "chkNC";
-            this.chkNC.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.chlDG_CheckedChanged);
             // 
             // btnThoatNhanh
             // 
@@ -471,12 +439,13 @@
             this.ChinhSach.Name = "ChinhSach";
             this.ChinhSach.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.LinkClick);
             // 
-            // skinRibbonGalleryBarItem1
+            // sGD
             // 
-            this.skinRibbonGalleryBarItem1.Caption = "Chủ đề";
-            this.skinRibbonGalleryBarItem1.Id = 7;
-            this.skinRibbonGalleryBarItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("skinRibbonGalleryBarItem1.ImageOptions.SvgImage")));
-            this.skinRibbonGalleryBarItem1.Name = "skinRibbonGalleryBarItem1";
+            this.sGD.Caption = "Giao diện";
+            this.sGD.Id = 7;
+            this.sGD.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("sGD.ImageOptions.SvgImage")));
+            this.sGD.Name = "sGD";
+            this.sGD.GalleryPopupClose += new DevExpress.XtraBars.Ribbon.InplaceGalleryEventHandler(this.sGD_GalleryPopupClose);
             // 
             // CauHinhEmail
             // 
@@ -618,6 +587,62 @@
             this.barButtonItem4.Id = 44;
             this.barButtonItem4.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barButtonItem4.ImageOptions.SvgImage")));
             this.barButtonItem4.Name = "barButtonItem4";
+            // 
+            // barSubItem1
+            // 
+            this.barSubItem1.Caption = "Cài đặt";
+            this.barSubItem1.Id = 45;
+            this.barSubItem1.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("barSubItem1.ImageOptions.SvgImage")));
+            this.barSubItem1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
+            new DevExpress.XtraBars.LinkPersistInfo(this.tsiKL),
+            new DevExpress.XtraBars.LinkPersistInfo(this.sGD),
+            new DevExpress.XtraBars.LinkPersistInfo(this.chkMD),
+            new DevExpress.XtraBars.LinkPersistInfo(this.tsiMNB),
+            new DevExpress.XtraBars.LinkPersistInfo(this.biColor)});
+            this.barSubItem1.Name = "barSubItem1";
+            // 
+            // tsiKL
+            // 
+            this.tsiKL.BindableChecked = true;
+            this.tsiKL.Caption = "Lọc nâng cao";
+            this.tsiKL.Checked = true;
+            this.tsiKL.Id = 46;
+            this.tsiKL.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("tsiKL.ImageOptions.SvgImage")));
+            this.tsiKL.Name = "tsiKL";
+            this.tsiKL.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.tsiKL_CheckedChanged);
+            // 
+            // chkMD
+            // 
+            this.chkMD.Caption = "Làm mặc định";
+            this.chkMD.Id = 50;
+            this.chkMD.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("chkMD.ImageOptions.SvgImage")));
+            this.chkMD.Name = "chkMD";
+            this.chkMD.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.chkMD_CheckedChanged);
+            // 
+            // tsiMNB
+            // 
+            this.tsiMNB.BindableChecked = true;
+            this.tsiMNB.Caption = "Màu nổi bật";
+            this.tsiMNB.Checked = true;
+            this.tsiMNB.Id = 49;
+            this.tsiMNB.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("tsiMNB.ImageOptions.SvgImage")));
+            this.tsiMNB.Name = "tsiMNB";
+            this.tsiMNB.CheckedChanged += new DevExpress.XtraBars.ItemClickEventHandler(this.tsiMNB_CheckedChanged);
+            // 
+            // biColor
+            // 
+            this.biColor.Caption = "Màu";
+            this.biColor.Edit = this.rpColor;
+            this.biColor.Id = 51;
+            this.biColor.Name = "biColor";
+            // 
+            // rpColor
+            // 
+            this.rpColor.AutoHeight = false;
+            this.rpColor.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.rpColor.Name = "rpColor";
+            this.rpColor.EditValueChanged += new System.EventHandler(this.rpColor_EditValueChanged);
             // 
             // R1
             // 
@@ -795,6 +820,7 @@
             this.Load += new System.EventHandler(this.frmChinh_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.applicationMenu1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rpColor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.documentManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView1)).EndInit();
             this.ResumeLayout(false);
@@ -825,13 +851,8 @@
         private DevExpress.XtraBars.BarButtonItem LichSu;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
         private DevExpress.XtraBars.BarButtonItem barButtonItem3;
-        private DevExpress.XtraBars.BarButtonItem BitemCWF;
         private DevExpress.XtraBars.BarButtonItem KhachLe;
-        private DevExpress.XtraBars.BarCheckItem chkGDMD;
         private DevExpress.XtraBars.BarButtonItem GhiChuTong;
-        private DevExpress.XtraBars.BarSubItem barSubItem2;
-        private DevExpress.XtraBars.BarCheckItem chlDG;
-        private DevExpress.XtraBars.BarCheckItem chkNC;
         private DevExpress.XtraBars.BarButtonItem btnThoatNhanh;
         private DevExpress.XtraBars.Ribbon.ApplicationMenu applicationMenu1;
         private DevExpress.XtraBars.BarButtonItem TuyenBay;
@@ -843,7 +864,7 @@
         private DevExpress.XtraBars.Ribbon.RibbonPage R3;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
         private DevExpress.XtraBars.BarButtonItem ChinhSach;
-        private DevExpress.XtraBars.SkinRibbonGalleryBarItem skinRibbonGalleryBarItem1;
+        private DevExpress.XtraBars.SkinRibbonGalleryBarItem sGD;
         private DevExpress.XtraBars.BarButtonItem CauHinhEmail;
         private DevExpress.XtraBars.BarButtonItem SoSanh;
         private DevExpress.XtraBars.BarButtonItem SoSanhVN;
@@ -873,5 +894,12 @@
         private DevExpress.XtraBars.BarStaticItem Bdpi;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem4;
+        private DevExpress.XtraBars.BarSubItem barSubItem1;
+        private DevExpress.XtraBars.BarToggleSwitchItem tsiKL;
+        private DevExpress.XtraBars.BarHeaderItem barHeaderItem3;
+        private DevExpress.XtraBars.BarToggleSwitchItem chkMD;
+        private DevExpress.XtraBars.BarToggleSwitchItem tsiMNB;
+        private DevExpress.XtraBars.BarEditItem biColor;
+        private DevExpress.XtraEditors.Repository.RepositoryItemColorEdit rpColor;
     }
 }
